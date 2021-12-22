@@ -36,9 +36,5 @@ Route::get('schema', [HomeController::class, 'schemaGuest'])->name('schema.guest
 Route::get('/calls/home', [HomeController::class, 'callsHome'])->name('calls.home')->middleware('auth');
 Route::get('/schema/home', [HomeController::class, 'schemaHome'])->name('schema.home')->middleware('auth');
 
-//Route::get('/', 'HomeController@home')->name('home');
-//Route::get('/calls', 'HomeController@callsGuest')->name('calls.guest');
-//Route::get('/schema', 'HomeController@schemaGuest')->name('schema.guest');
-//Route::get('/calls/home', 'HomeController@callsHome')->name('calls.home')->middleware('auth');
-//Route::get('/schema/home', 'HomeController@schemaHome')->name('schema.home')->middleware('auth');
+
 

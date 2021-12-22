@@ -34,8 +34,7 @@ class CustomAuthController extends Controller
             return redirect()->intended($app.'/home')
                         ->withSuccess('Signed in');
         }
-  
-        return redirect("login")->withSuccess('Login details are not valid');
+        return redirect("login/schema")->withSuccess('Sorry, login details are not valid');
     }
 
 
