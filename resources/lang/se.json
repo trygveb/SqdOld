@@ -1,0 +1,23 @@
+{
+    "E-Mail Address" : "E-post-adress",
+    "Forgot Your Password?" : "Glömt Lösenord?",
+    "Hello!":"Hej!",
+    "If you did not request a password reset, no further action is required.":"Om du inte har begärt lösenordsåterställning behöver du inte göra någonting.",
+    "Login" : "Logga in",
+    "Login to" : "Logga in till",
+    "Logout" : "Logga ut",
+    "or" : "eller",
+    "Password" : "Lösenord",
+    "Please select application" : "Vänligen välj applikation",
+    "Regards" : "Hälsningar",
+    "Remember Me" : "Kom ihåg mig",
+    "Register" : "Registrera dig",
+    "Reset Password" : "Skapa nytt Lösenord",
+    "Reset Password Notification": "SdSchema: Återställning av lösenord",
+    "This password reset link will expire in :count minutes.":"Länken är giltlig i :count minuter.",
+    "Send Password Reset Link" : "Skicka länk för att återställa lösenord",
+    "Welcome to" : "Välkommen till",
+    "You are receiving this email because we received a password reset request for your account.":
+        "Du får detta eMail därför att vi har fått en begäran om att återställa ditt lösenord. Klicka på länken nedan för att skapa ett nytt lösenord",
+    "ZZZ" : "ZZZ"
+}

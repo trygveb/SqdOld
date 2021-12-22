@@ -4,15 +4,14 @@
 <div class="container">
    <div class="col-md-12 text-center">
 
-      <h1 class="text-center"> Välkommen till SdSchema</h1>
+      <h1 class="text-center"> {{ __('Welcome to')}} SdSchema</h1>
     
    @guest
       <br>
       <a class="nav-link" href="{{ route('login',['app' =>'schema']) }}">{{ __('Login') }}</a>
-       
-   @if (Route::has('register'))
-      eller
-      <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+   @if (Route::has('register-user'))
+      {{ __('or') }}
+      <a class="nav-link" href="{{ route('register-user') }}">{{ __('Register') }}</a>       
    @endif
    @endguest
    @auth

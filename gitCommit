@@ -6,7 +6,7 @@ else
   VFILE="resources/views/version.blade.php"
   TFILE="resources/views/versionTime.blade.php"
   MAJOR="1"
-  MINOR="5"
+  MINOR="0"
   PATCH="0"
   echo $MAJOR.$MINOR.$PATCH  >  $VFILE
   echo $(date "+%Y-%m-%d %H:%M")>  $TFILE
