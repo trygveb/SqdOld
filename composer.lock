@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f73264fe59047ebf73229a963e05d221",
+    "content-hash": "e205fc9d0f1988f5c03189966d929d75",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1658,6 +1658,82 @@
             "time": "2021-11-21T11:48:40+00:00"
         },
         {
+            "name": "mcamara/laravel-localization",
+            "version": "1.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mcamara/laravel-localization.git",
+                "reference": "645819da9ef29f3ba7588d9b4598799caf0b2463"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mcamara/laravel-localization/zipball/645819da9ef29f3ba7588d9b4598799caf0b2463",
+                "reference": "645819da9ef29f3ba7588d9b4598799caf0b2463",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.2.0||~5.3.0||~5.4.0||~5.5.0||~5.6.0||~5.7.0||~5.8.0||^6.0||^7.0||^8.0",
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "orchestra/testbench-browser-kit": "~3.4|~3.8|~4.0",
+                "phpunit/phpunit": "6.0.*|^8.0"
+            },
+            "suggest": {
+                "ext-intl": "*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mcamara\\LaravelLocalization\\LaravelLocalizationServiceProvider"
+                    ],
+                    "aliases": {
+                        "LaravelLocalization": "Mcamara\\LaravelLocalization\\Facades\\LaravelLocalization"
+                    }
+                }
+            },
+            "autoload": {
+                "classmap": [],
+                "psr-0": {
+                    "Mcamara\\LaravelLocalization": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marc Cámara",
+                    "email": "mcamara88@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easy localization for Laravel",
+            "homepage": "https://github.com/mcamara/laravel-localization",
+            "keywords": [
+                "laravel",
+                "localization",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/mcamara/laravel-localization/issues",
+                "source": "https://github.com/mcamara/laravel-localization/tree/1.6.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/iwasherefirst2",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/mcamara",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-10-24T11:55:35+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "2.3.5",
             "source": {
@@ -2845,6 +2921,129 @@
                 }
             ],
             "time": "2021-09-25T23:10:38+00:00"
+        },
+        {
+            "name": "stidges/country-flags",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stidges/country-flags.git",
+                "reference": "303f78f3f352c86a7d9bcf410b8bb91004843922"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stidges/country-flags/zipball/303f78f3f352c86a7d9bcf410b8bb91004843922",
+                "reference": "303f78f3f352c86a7d9bcf410b8bb91004843922",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.0",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Stidges\\CountryFlags\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stidges",
+                    "email": "info@stidges.com",
+                    "homepage": "https://stidges.com"
+                }
+            ],
+            "description": "A small package to convert a country code to the corresponding country flag emoji",
+            "homepage": "https://github.com/stidges/country-flags",
+            "keywords": [
+                "countries",
+                "country",
+                "country-flags",
+                "emoji",
+                "flag",
+                "unicode"
+            ],
+            "support": {
+                "issues": "https://github.com/stidges/country-flags/issues",
+                "source": "https://github.com/stidges/country-flags/tree/v2.0.0"
+            },
+            "time": "2021-01-08T13:52:23+00:00"
+        },
+        {
+            "name": "stidges/laravel-country-flags",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stidges/laravel-country-flags.git",
+                "reference": "215fd9c0e2b351a8f00baea6d188c554a94ef67a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stidges/laravel-country-flags/zipball/215fd9c0e2b351a8f00baea6d188c554a94ef67a",
+                "reference": "215fd9c0e2b351a8f00baea6d188c554a94ef67a",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^7.0|^8.0",
+                "php": "^7.3|^8.0",
+                "stidges/country-flags": "^2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Stidges\\LaravelCountryFlags\\CountryFlagsServiceProvider"
+                    ],
+                    "aliases": {
+                        "CountryFlag": "Stidges\\LaravelCountryFlags\\CountryFlagFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Stidges\\LaravelCountryFlags\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stidges",
+                    "email": "info@stidges.com",
+                    "homepage": "https://stidges.com"
+                }
+            ],
+            "description": "A Laravel 5.5 wrapper for the stidges/country-flags package",
+            "homepage": "https://github.com/stidges/laravel-country-flags",
+            "keywords": [
+                "countries",
+                "country",
+                "country-flags",
+                "emoji",
+                "flag",
+                "laravel",
+                "unicode"
+            ],
+            "support": {
+                "issues": "https://github.com/stidges/laravel-country-flags/issues",
+                "source": "https://github.com/stidges/laravel-country-flags/tree/v2.0.0"
+            },
+            "time": "2021-01-08T15:31:40+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

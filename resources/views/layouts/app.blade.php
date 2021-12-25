@@ -24,6 +24,15 @@
         
         <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
             <a  href="{{ route('home',[]) }}" style="color:white;">{{ config('app.name', 'sqd.se') }}</a>
+            <div class="flags">
+                
+         @if ( LaravelLocalization::getCurrentLocale()=="en")
+            <a href="{{ LaravelLocalization::getLocalizedURL('se', null, [], true) }}"> {{country_flag('SE');}}</a>
+         @else
+            <a href="{{ LaravelLocalization::getLocalizedURL('en', null, [], true) }}"> {{country_flag('GB');}}</a>
+         @endif   
+            </div>
+            
             <div class="container">
             @if (isset($training))
                 <a class="navbar-brand" href="{{ route('schema.index',['trainingId' => $training->id]) }}">
@@ -48,40 +57,25 @@
                     <ul class="navbar-nav mr-auto">
 
                     </ul>
-                    <!--if (isset($showAuthenticationLinks))-->
+                  @auth
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-<!--                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login',['app' =>'schema']) }}">{{ __('Login') }}</a>
-                            </li>
--->                            @if (Route::has('register-user'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register-user') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif<!--
-                        @else-->
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-dark" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('signout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('signout') }}" method="GET" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        <!--@endguest-->
+                        <li class="nav-item dropdown">
+                           <a id="navbarDropdown" class="nav-link dropdown-toggle text-dark" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                              {{ Auth::user()->name }}
+                           </a>
+                           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="{{ route('signout') }}"
+                                 onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}
+                              </a>
+                              <form id="logout-form" action="{{ route('signout') }}" method="GET" class="d-none">
+                                 @csrf
+                              </form>
+                           </div>
+                        </li>
                     </ul>
-<!--endif-->
+               @endauth
                 </div>
             </div>
         </nav>

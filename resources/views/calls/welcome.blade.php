@@ -4,19 +4,16 @@
 <div class="container">
    <div class="col-md-12 text-center">
 
-      <h1 class="text-center"> Välkommen till SdCalls</h1>
+      <h1 class="text-center"> {{ __('Welcome to')}} SdCalls</h1>
     
    @guest
       <br>
       <a class="nav-link" href="{{ route('login',['app' =>'calls']) }}">{{ __('Login') }}</a>
-       
-
-      
-   @if (Route::has('register'))
-      eller
-      <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-   @endif
+      {{ __('or') }}
+      <a class="nav-link" href="{{ route('register-user') }}">{{ __('Register') }}</a>       
    @endguest
+   @auth
+   @endauth
    </div>    
 </div>
 @endsection

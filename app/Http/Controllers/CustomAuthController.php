@@ -7,6 +7,8 @@ use Hash;
 use Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Registered;
+
 
 class CustomAuthController extends Controller
 {
@@ -47,6 +49,7 @@ class CustomAuthController extends Controller
 
     public function customRegistration(Request $request)
     {  
+
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
@@ -54,9 +57,14 @@ class CustomAuthController extends Controller
         ]);
            
         $data = $request->all();
-        $check = $this->create($data);
-         
-        return redirect("dashboard")->withSuccess('You have signed-in');
+        $user = $this->create($data);
+        
+        event(new Registered($user));
+
+//        Auth::login($user);
+        
+        //return redirect(route("welcome"))->withSuccess( __('You have signed-in') );
+        return redirect(route('verification.notice') );
     }
 
 
@@ -79,7 +87,10 @@ class CustomAuthController extends Controller
         return redirect("login")->withSuccess('You are not allowed to access');
     }
     
-
+    public function showVerifyEmail() {
+      return view('auth.verify-email');
+    }
+    
     public function signOut() {
         Session::flush();
         Auth::logout();

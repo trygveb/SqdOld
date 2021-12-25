@@ -106,3 +106,6 @@ table, tr, td {
     margin-left:auto !important;
     margin-right:auto !important;
 }
+.flags > a {
+    margin-left:10px;
+}

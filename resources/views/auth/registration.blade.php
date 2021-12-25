@@ -6,6 +6,11 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
+      @if(session()->has('success'))
+         <div class="alert alert-success">
+            {{ session()->get('success') }}
+         </div>
+      @endif
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register.custom') }}">
@@ -63,12 +68,13 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <x-submit-button submitText="{{ __('Register') }}"/>
+                                <x-submit-button submitText="{{ __('Register')}}" cancelText="{{ __('Cancel') }}"/>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 @endsection
