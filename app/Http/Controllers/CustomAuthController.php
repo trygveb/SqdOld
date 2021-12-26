@@ -8,6 +8,8 @@ use Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+
 
 class CustomAuthController extends Controller {
 
@@ -25,17 +27,18 @@ class CustomAuthController extends Controller {
 
       $credentials = $request->only('email', 'password');
       if (Auth::attempt($credentials)) {
-
-         if (Auth::user()->verified != 1) {
+         if (! Auth::user()->hasVerifiedEmail()) {
+            dd('! Auth::user()->hasVerifiedEmai');
+            // Auth::logout();
             return redirect()
-                            ->route('login',['app' =>'calls'])
-                            ->with('danger', 'You didnt confirm your email yet. ');
+                            ->route('verification.notice')
+                            ->with('danger', 'Please confirm your email before logging in. ');
          }
          return redirect()->intended($app . '/home')
                          ->withSuccess('Signed in');
       }
 
-      return redirect("login/schema")->withSuccess('Sorry, login details are not valid');
+      return redirect(route('login', ['app' => $app]))->withSuccess('Sorry, login details are not valid');
    }
 
    public function registration() {
@@ -78,6 +81,16 @@ class CustomAuthController extends Controller {
 
    public function showVerifyEmail() {
       return view('auth.verify-email');
+   }
+
+   public function sendEmailVerificationNotification(Request $request) {
+      $request->user()->sendEmailVerificationNotification();
+      return back()->with('message', 'Verification link sent!');
+   }
+
+   public function verificationVerify(EmailVerificationRequest $request) {
+      $request->fulfill();
+      return redirect('/home');
    }
 
    public function signOut() {
