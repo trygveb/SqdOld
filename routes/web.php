@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,7 +34,7 @@ Route::group(
    Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
    Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
    Route::get('welcome', [HomeController::class, 'welcome'])->name('welcome')->middleware('auth'); // For sqd.se, logged in, application not selected
-   Route::get('/email/verify', [CustomAuthController::class, 'showVerifyEmail'])->name('verification.notice');
+   Route::get('/email/showVerifyEmail/{app}', [CustomAuthController::class, 'showVerifyEmail'])->name('verification.notice');
 
    Route::get('/', [HomeController::class, 'home'])->name('home'); // For sqd.se, NOT logged in, application not selected
    Route::get('calls', [HomeController::class, 'callsGuest'])->name('calls.guest');
@@ -50,14 +52,16 @@ Route::group(
 //})->middleware('auth')->name('verification.notice');
 
 
-//Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-//    $request->fulfill();
-//    return redirect('/home');
-//})->middleware(['auth', 'signed'])->name('verification.verify');
-
-Route::get('/email/verify/{id}/{hash}', [CustomAuthController::class, 'verificationVerify'])
-   ->middleware(['auth', 'signed'])
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/home');
+})
+//   ->middleware(['auth', 'signed'])
    ->name('verification.verify');
+
+//Route::get('/email/verify/{id}/{hash}', [CustomAuthController::class, 'verificationVerify'])
+////   ->middleware(['auth', 'signed'])
+//   ->name('verification.verify');
 
 Route::post('/email/verification-notification', [CustomAuthController::class, 'sendEmailVerificationNotification'])
    ->middleware(['auth', 'throttle:6,1'])

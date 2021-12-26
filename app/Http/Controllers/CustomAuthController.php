@@ -8,7 +8,6 @@ use Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 
 class CustomAuthController extends Controller {
@@ -28,10 +27,10 @@ class CustomAuthController extends Controller {
       $credentials = $request->only('email', 'password');
       if (Auth::attempt($credentials)) {
          if (! Auth::user()->hasVerifiedEmail()) {
-            dd('! Auth::user()->hasVerifiedEmai');
+            
             // Auth::logout();
             return redirect()
-                            ->route('verification.notice')
+                            ->route('verification.notice', ['app' => $app])
                             ->with('danger', 'Please confirm your email before logging in. ');
          }
          return redirect()->intended($app . '/home')
@@ -42,7 +41,7 @@ class CustomAuthController extends Controller {
    }
 
    public function registration() {
-      return view('auth.registration');
+      return view('auth.registration')->with('application', 'schema');;
    }
 
    public function customRegistration(Request $request) {
@@ -57,10 +56,9 @@ class CustomAuthController extends Controller {
       $user = $this->create($data);
 
       event(new Registered($user));
-
-//        Auth::login($user);
+        Auth::login($user);
       //return redirect(route("welcome"))->withSuccess( __('You have signed-in') );
-      return redirect(route('verification.notice'));
+      return redirect(route('verification.notice', ['app' => $request->application]));
    }
 
    public function create(array $data) {
@@ -79,8 +77,8 @@ class CustomAuthController extends Controller {
       return redirect("login")->withSuccess('You are not allowed to access');
    }
 
-   public function showVerifyEmail() {
-      return view('auth.verify-email');
+   public function showVerifyEmail($app) {
+      return view('auth.verify-email-notice')->with('application', $app);
    }
 
    public function sendEmailVerificationNotification(Request $request) {
@@ -88,10 +86,12 @@ class CustomAuthController extends Controller {
       return back()->with('message', 'Verification link sent!');
    }
 
-   public function verificationVerify(EmailVerificationRequest $request) {
-      $request->fulfill();
-      return redirect('/home');
-   }
+//   public function verificationVerify(EmailVerificationRequest $request) {
+////   public function verificationVerify($id, $hash) {
+////      dd("verificationVerify hash=".$hash);
+//      $request->fulfill();
+//      return redirect('/home');
+//   }
 
    public function signOut() {
       Session::flush();
