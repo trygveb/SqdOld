@@ -4,6 +4,7 @@
     "E-Mail Address" : "E-post-adress",
     "Forgot Your Password?" : "Glömt Lösenord?",
     "Hello!":"Hej!",
+    "If you did not create an account, no further action is required." : "Om du inte skapade ett konto krävs ingen ytterligare åtgärd.",
     "If you did not request a password reset, no further action is required.":"Om du inte har begärt lösenordsåterställning behöver du inte göra någonting.",
     "Login" : "Logga in",
     "Login to" : "Logga in till",
@@ -11,6 +12,7 @@
     "Name" : "Namn",
     "or" : "eller",
     "Password" : "Lösenord",
+    "Please click the button below to verify your email address." : "Klicka på knappen nedan för att verifiera din e-postadress.",
     "Please select application" : "Vänligen välj applikation",
     "Regards" : "Hälsningar",
     "Remember Me" : "Kom ihåg mig",
@@ -20,6 +22,7 @@
     "Reset Password Notification": "SdSchema: Återställning av lösenord",
     "This password reset link will expire in :count minutes.":"Länken är giltlig i :count minuter.",
     "Send Password Reset Link" : "Skicka länk för att återställa lösenord",
+    "Verify Email Address" : "Verifiera e-postadressen",
     "Welcome to" : "Välkommen till",
     "You have signed-in" : "Du är inloggad",
     "You are receiving this email because we received a password reset request for your account.":

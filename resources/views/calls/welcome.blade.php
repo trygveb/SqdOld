@@ -10,7 +10,7 @@
       <br>
       <a class="nav-link" href="{{ route('login',['app' =>'calls']) }}">{{ __('Login') }}</a>
       {{ __('or') }}
-      <a class="nav-link" href="{{ route('register-user') }}">{{ __('Register') }}</a>       
+      <a class="nav-link" href="{{ route('register-user',['app' =>'calls']) }}">{{ __('Register') }}</a>       
    @endguest
    @auth
    @endauth

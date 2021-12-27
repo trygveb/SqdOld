@@ -31,7 +31,7 @@ Route::group(
    //require __DIR__.'/auth.php';
 
    Route::get('login/{app}', [CustomAuthController::class, 'index'])->name('login');
-   Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
+   Route::get('registration/{app}', [CustomAuthController::class, 'registration'])->name('register-user');
    Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
    Route::get('welcome', [HomeController::class, 'welcome'])->name('welcome')->middleware('auth'); // For sqd.se, logged in, application not selected
    Route::get('/email/showVerifyEmail/{app}', [CustomAuthController::class, 'showVerifyEmail'])->name('verification.notice');
@@ -41,28 +41,45 @@ Route::group(
    Route::get('schema', [HomeController::class, 'schemaGuest'])->name('schema.guest');
    Route::get('/calls/home', [HomeController::class, 'callsHome'])->name('calls.home')->middleware('auth');
    Route::get('/schema/home', [HomeController::class, 'schemaHome'])->name('schema.home')->middleware('auth');
+   Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom'); 
 
+   Route::get('/forgot-password', function () {
+    return view('auth.forgot-password');
+   })->middleware('guest')->name('password.request');   
+Route::post('/forgot-password', function (Request $request) {
+    $request->validate(['email' => 'required|email']);
+
+    $status = Password::sendResetLink(
+        $request->only('email')
+    );
+
+    return $status === Password::RESET_LINK_SENT
+                ? back()->with(['status' => __($status)])
+                : back()->withErrors(['email' => __($status)]);
+   })->middleware('guest')->name('password.email');   
+//   Route::post('/email/verification-notification', [CustomAuthController::class, 'sendEmailVerificationNotification'])
+//   ->middleware(['auth', 'throttle:6,1'])
+//   ->name('verification.send');
 }
 );
-   Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom'); 
-   Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom'); 
-   Route::get('/switchLocale', [HomeController::class, 'switchLocale'])->name('switchLocale');
+
+Route::post('/email/verification-notification', [CustomAuthController::class, 'sendEmailVerificationNotification'])
+   ->middleware(['auth', 'throttle:6,1'])
+   ->name('verification.send');
+
+
+Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom'); 
+Route::get('/switchLocale', [HomeController::class, 'switchLocale'])->name('switchLocale');
 
 //  Route::get('/email/verify', function () { return view('auth.verify-email');
 //})->middleware('auth')->name('verification.notice');
 
 
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+Route::get('/email/verify/{id}/{hash}/{application}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-    return redirect('/home');
+    return redirect(route($request->application.'.home'));
 })
 //   ->middleware(['auth', 'signed'])
    ->name('verification.verify');
 
-//Route::get('/email/verify/{id}/{hash}', [CustomAuthController::class, 'verificationVerify'])
-////   ->middleware(['auth', 'signed'])
-//   ->name('verification.verify');
 
-Route::post('/email/verification-notification', [CustomAuthController::class, 'sendEmailVerificationNotification'])
-   ->middleware(['auth', 'throttle:6,1'])
-   ->name('verification.send');
