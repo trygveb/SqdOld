@@ -1,7 +1,8 @@
 {
     "Cancel" : "Avbryt",
     "Confirm Password" : "Bekräfta Lösenord",
-    "E-Mail Address" : "E-post-adress",
+    "E-Mail" : "E-post",
+    "E-Mail Address" : "E-postadress",
     "Forgot Your Password?" : "Glömt Lösenord?",
     "Hello!":"Hej!",
     "If you did not create an account, no further action is required." : "Om du inte skapade ett konto krävs ingen ytterligare åtgärd.",
@@ -10,6 +11,7 @@
     "Login to" : "Logga in till",
     "Logout" : "Logga ut",
     "Name" : "Namn",
+    "No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one." : "Inga problem. Låt oss bara veta din e-postadress så skickar vi dig en länk för återställning av lösenord som gör att du kan välja en ny.",
     "or" : "eller",
     "Password" : "Lösenord",
     "Please click the button below to verify your email address." : "Klicka på knappen nedan för att verifiera din e-postadress.",
