@@ -10,6 +10,7 @@
             <file>file:/D:/Development/VagrantCode/sqd/routes/web.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/registration.blade.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/forgot-password.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/.env</file>
             <file>file:/D:/Development/VagrantCode/sqd/resources/views/components/submit-button.blade.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/login.blade.php</file>
         </group>

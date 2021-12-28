@@ -1,15 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-@if(session()->has('message'))
-   <div class="alert alert-success">
-      {{ session()->get('message') }}
-   </div>
-@endif
+
 <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8">
          <div class="card">
+      @if(session()->has('message'))
+         <div class="alert alert-success">
+            {{ session()->get('message') }}
+         </div>
+      @endif
             <div class="card-body">
                @if(session()->has('danger'))
                   @if ( LaravelLocalization::getCurrentLocale()=='se')
@@ -36,7 +37,6 @@
 
                <form method="POST" action="{{ route('verification.send') }}">
                    @csrf
-                   <input type="hidden" name="application" value="{{$application}}"><br>
                    <div>
                      <button type="submit" class="btn btn-primary">
                          {{ __('Resend Verification Email')}}

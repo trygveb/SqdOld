@@ -24,8 +24,11 @@
     "Reset Password Notification": "SdSchema: Återställning av lösenord",
     "This password reset link will expire in :count minutes.":"Länken är giltlig i :count minuter.",
     "Send Password Reset Link" : "Skicka länk för att återställa lösenord",
+    "Verification link sent!" : "Verifieringslänk har skickats!",
     "Verify Email Address" : "Verifiera e-postadressen",
+    "We can't find a user with that email address." : "Vi kan inte hitta en användare med den e-postadressen.",
     "Welcome to" : "Välkommen till",
+    "Whoops! Something went wrong" : "Oj då! Något gick fel",
     "You have signed-in" : "Du är inloggad",
     "You are receiving this email because we received a password reset request for your account.":
         "Du får detta eMail därför att vi har fått en begäran om att återställa ditt lösenord. Klicka på länken nedan för att skapa ett nytt lösenord",

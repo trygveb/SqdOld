@@ -23,38 +23,34 @@ use Illuminate\Support\Str;
 Route::group(
         ['prefix' => LaravelLocalization::setLocale(),
             'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
-//   Route::get('/', function () {
-//       return view('welcome');
-//   });
-//   Route::get('/dashboard', function () {
-//       return view('dashboard');
-//   })->middleware(['auth'])->name('dashboard');
-           //require __DIR__.'/auth.php';
 
            Route::get('login/{app}', [CustomAuthController::class, 'index'])->name('login');
-           Route::get('registration/{app}', [CustomAuthController::class, 'registration'])->name('register-user');
+           Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
            Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
            Route::get('welcome', [HomeController::class, 'welcome'])->name('welcome')->middleware('auth'); // For sqd.se, logged in, application not selected
-           Route::get('/email/showVerifyEmail/{app}', [CustomAuthController::class, 'showVerifyEmail'])->name('verification.notice');
+           Route::get('/email/showVerifyEmail}', [CustomAuthController::class, 'showVerifyEmail'])->name('verification.notice');
 
            Route::get('/', [HomeController::class, 'home'])->name('home'); // For sqd.se, NOT logged in, application not selected
            Route::get('calls', [HomeController::class, 'callsGuest'])->name('calls.guest');
            Route::get('schema', [HomeController::class, 'schemaGuest'])->name('schema.guest');
-           Route::get('/calls/home', [HomeController::class, 'callsHome'])->name('calls.home')->middleware('auth');
-           Route::get('/schema/home', [HomeController::class, 'schemaHome'])->name('schema.home')->middleware('auth');
+           Route::get('/calls/home', [HomeController::class, 'callsHome'])->name('calls.home')->middleware('verified');
+           Route::get('/schema/home', [HomeController::class, 'schemaHome'])->name('schema.home')->middleware('verified');
            Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
 
-           Route::get('/forgot-password', function () {
-              return view('auth.forgot-password');
-           })->middleware('guest')->name('password.request');
+           Route::get('/forgot-password', [CustomAuthController::class, 'showForgotPasswordForm'])
+               ->middleware('guest')
+               ->name('password.request');                   
 
-           Route::post('/forgot-password', function (Request $request) {
-              $request->validate(['email' => 'required|email']);
-              $status = Password::sendResetLink(
-                              $request->only('email')
-              );
-              return $status === Password::RESET_LINK_SENT ? back()->with(['status' => __($status)]) : back()->withErrors(['email' => __($status)]);
-           })->middleware('guest')->name('password.email');
+//           Route::post('/forgot-password', function (Request $request) {
+//              $request->validate(['email' => 'required|email']);
+//              $status = Password::sendResetLink(
+//                              $request->only('email')
+//              );
+//              return $status === Password::RESET_LINK_SENT ? back()->with(['status' => __($status)]) : back()->withErrors(['email' => __($status)]);
+//           })->middleware('guest')->name('password.email');
+         Route::post('sendPasswordResetLink', [CustomAuthController::class, 'sendPasswordResetLink'])
+            ->middleware('guest')
+            ->name('password.email');
 
            Route::get('/reset-password/{token}', function ($token) {
               return view('auth.reset-password', ['token' => $token]);
@@ -99,9 +95,9 @@ Route::get('/switchLocale', [HomeController::class, 'switchLocale'])->name('swit
 //})->middleware('auth')->name('verification.notice');
 
 
-Route::get('/email/verify/{id}/{hash}/{application}', function (EmailVerificationRequest $request) {
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
            $request->fulfill();
-           return redirect(route($request->application . '.home'));
+           return redirect(route('home'));
         })
 //   ->middleware(['auth', 'signed'])
         ->name('verification.verify');

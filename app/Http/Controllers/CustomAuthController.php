@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\App;
-
+use Illuminate\Support\Facades\Password;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class CustomAuthController extends Controller {
@@ -28,8 +28,8 @@ class CustomAuthController extends Controller {
 
       $credentials = $request->only('email', 'password');
       if (Auth::attempt($credentials)) {
-         if (! Auth::user()->hasVerifiedEmail()) {
-            
+         if (!Auth::user()->hasVerifiedEmail()) {
+
             // Auth::logout();
             return redirect()
                             ->route('verification.notice', ['app' => $app])
@@ -42,10 +42,6 @@ class CustomAuthController extends Controller {
       return redirect(route('login', ['app' => $app]))->withSuccess('Sorry, login details are not valid');
    }
 
-   public function registration($app) {
-      return view('auth.registration')->with('application', $app);;
-   }
-
    public function customRegistration(Request $request) {
 
       $request->validate([
@@ -56,12 +52,12 @@ class CustomAuthController extends Controller {
 
       $data = $request->all();
       $user = $this->create($data);
-      $user->application=$request->application;
+     // $user->application = $request->application;
       App::setLocale(LaravelLocalization::getCurrentLocale());
       event(new Registered($user));
-        Auth::login($user);
+      Auth::login($user);
       //return redirect(route("welcome"))->withSuccess( __('You have signed-in') );
-      return redirect(route('verification.notice', ['app' => $request->application]));
+      return redirect(route('verification.notice', []));
    }
 
    public function create(array $data) {
@@ -72,24 +68,38 @@ class CustomAuthController extends Controller {
       ]);
    }
 
-   public function dashboard() {
-      if (Auth::check()) {
-         return view('dashboard');
-      }
+   public function sendPasswordResetLink(Request $request) {
+      $request->validate(['email' => 'required|email']);
 
-      return redirect("login")->withSuccess('You are not allowed to access');
+//      $user = new User();
+//      $user->application = $request->application;
+//
+//      $request->user = $user;
+      $status = Password::sendResetLink($request->only('email'));
+      return $status === Password::RESET_LINK_SENT ? back()->with(['status' => __($status)]) : back()->withErrors(['email' => __($status)]);
+      
+//      return back()->with('message', 'Verification link sent!');
    }
 
-   public function showVerifyEmail($app) {
-      return view('auth.verify-email-notice')->with('application', $app);
+   public function showForgotPasswordForm() {
+      return view('auth.forgot-password');
+   }
+
+   public function registration() {
+      return view('auth.registration');
+      ;
+   }
+
+   public function showVerifyEmail() {
+      return view('auth.verify-email-notice');//->with('application', $app);
    }
 
    // User has asked for a new e-mail verification mail.
    public function sendEmailVerificationNotification(Request $request) {
-      
-      $user->application= $request->application;
+      $user=$request->user();
+      //$user->application = $request->application;
       $user->sendEmailVerificationNotification();
-      return back()->with('message', 'Verification link sent!');
+      return back()->with('message', __('Verification link sent!'));
    }
 
 //   public function verificationVerify(EmailVerificationRequest $request) {
