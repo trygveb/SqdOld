@@ -7,9 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'sqd.se') }}</title>
-
-    
+    <title>SdCalls</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -55,7 +53,7 @@
     </div>
     <footer class="footer">
       <div class="container" style="text-align:center;  padding-bottom:20px;">
-        <span class="text-muted" >sqd.se &nbsp;@include('version',[])&nbsp;&nbsp;(@include('versionTime',[]))</span>
+        <span class="text-muted" >sdCalls &nbsp;@include('calls.version',[])&nbsp;&nbsp;(@include('calls.versionTime',[]))</span>
       </div>
     </footer>  
     @yield('scripts')

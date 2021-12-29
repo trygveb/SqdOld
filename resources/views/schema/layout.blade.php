@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'sqd.se') }}</title>
+    <title>sdSchema</title>
 
     
 
@@ -34,6 +34,19 @@
             </div>
             
             <div class="container">
+            @if (isset($training))
+                <a class="navbar-brand" href="{{ route('schema.index',['trainingId' => $training->id]) }}">
+                    {{$training->name}}
+                </a>
+            @endif
+            
+            @auth
+            @if (Auth::user()->authority > 1)
+               @if (isset($training))
+               <a href="{{route('admin.showMenu',['training' =>$training])}}" class="btn btn-primary" role="button">Administration</a>
+               @endif
+            @endif
+            @endauth
             
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -55,7 +68,7 @@
     </div>
     <footer class="footer">
       <div class="container" style="text-align:center;  padding-bottom:20px;">
-        <span class="text-muted" >sqd.se &nbsp;@include('version',[])&nbsp;&nbsp;(@include('versionTime',[]))</span>
+        <span class="text-muted" >sdSchema &nbsp;@include('schema.version',[])&nbsp;&nbsp;(@include('schema.versionTime',[]))</span>
       </div>
     </footer>  
     @yield('scripts')
