@@ -24,7 +24,7 @@ Route::group(
         ['prefix' => LaravelLocalization::setLocale(),
             'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
 
-           Route::get('login/{app}', [CustomAuthController::class, 'index'])->name('login');
+           Route::get('login/{app}', [CustomAuthController::class, 'showLoginForm'])->name('login');
            Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
            Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
            Route::get('welcome', [HomeController::class, 'welcome'])->name('welcome')->middleware('auth'); // For sqd.se, logged in, application not selected
@@ -38,8 +38,8 @@ Route::group(
            Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
 
            Route::get('/forgot-password', [CustomAuthController::class, 'showForgotPasswordForm'])
-               ->middleware('guest')
-               ->name('password.request');                   
+                   ->middleware('guest')
+                   ->name('password.request');
 
 //           Route::post('/forgot-password', function (Request $request) {
 //              $request->validate(['email' => 'required|email']);
@@ -48,9 +48,9 @@ Route::group(
 //              );
 //              return $status === Password::RESET_LINK_SENT ? back()->with(['status' => __($status)]) : back()->withErrors(['email' => __($status)]);
 //           })->middleware('guest')->name('password.email');
-         Route::post('sendPasswordResetLink', [CustomAuthController::class, 'sendPasswordResetLink'])
-            ->middleware('guest')
-            ->name('password.email');
+           Route::post('sendPasswordResetLink', [CustomAuthController::class, 'sendPasswordResetLink'])
+                   ->middleware('guest')
+                   ->name('password.email');
 
            Route::get('/reset-password/{token}', function ($token) {
               return view('auth.reset-password', ['token' => $token]);
@@ -96,9 +96,9 @@ Route::get('/switchLocale', [HomeController::class, 'switchLocale'])->name('swit
 
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-           $request->fulfill();
-           return redirect(route('home'));
-        })
-//   ->middleware(['auth', 'signed'])
-        ->name('verification.verify');
+      $request->fulfill();
+      return redirect(route('home'));
+   })
+   ->middleware(['auth', 'signed'])
+   ->name('verification.verify');
 

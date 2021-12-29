@@ -25,7 +25,7 @@
     "This password reset link will expire in :count minutes.":"Länken är giltlig i :count minuter.",
     "Send Password Reset Link" : "Skicka länk för att återställa lösenord",
     "Verification link sent!" : "Verifieringslänk har skickats!",
-    "Verify Email Address" : "Verifiera e-postadressen",
+    "Verify email address on" : "Verifiera e-postadressen på",
     "We can't find a user with that email address." : "Vi kan inte hitta en användare med den e-postadressen.",
     "Welcome to" : "Välkommen till",
     "Whoops! Something went wrong" : "Oj då! Något gick fel",

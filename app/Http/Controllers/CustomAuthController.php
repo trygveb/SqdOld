@@ -14,7 +14,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class CustomAuthController extends Controller {
 
-   public function index($app) {
+   public function showLoginForm($app) {
 //        return view('auth.login');
       return view('auth.login', ['app' => $app]);
    }
@@ -99,7 +99,7 @@ class CustomAuthController extends Controller {
       $user=$request->user();
       //$user->application = $request->application;
       $user->sendEmailVerificationNotification();
-      return back()->with('message', __('Verification link sent!'));
+      return back()->with('link_sent', __('Verification link sent!'));
    }
 
 //   public function verificationVerify(EmailVerificationRequest $request) {
