@@ -7,14 +7,7 @@
         
         <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
             <a  href="{{ route('home',[]) }}" style="color:white;">{{ config('app.name', 'sqd.se') }}</a>
-            <div class="flags">
-                
-         @if ( LaravelLocalization::getCurrentLocale()=="en")
-            <a href="{{ LaravelLocalization::getLocalizedURL('se', null, [], true) }}"> {{country_flag('SE');}}</a>
-         @else
-            <a href="{{ LaravelLocalization::getLocalizedURL('en', null, [], true) }}"> {{country_flag('GB');}}</a>
-         @endif   
-            </div>
+            <x-flags-div />
             
             <div class="container">
             
@@ -25,7 +18,6 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
                     </ul>
                     <x-right-side-of-navbar />
                 </div>
@@ -35,14 +27,11 @@
         <main class="p-4">
             @yield('content')
         </main>
-    </div>
-    <footer class="footer">
-      <div class="container" style="text-align:center;  padding-bottom:20px;">
-        <span class="text-muted" >sdCalls &nbsp;@include('calls.version',[])&nbsp;&nbsp;(@include('calls.versionTime',[]))</span>
-      </div>
-    </footer>  
-    @yield('scripts')
-    <!-- Scripts -->
+   </div>
+   <x-footer subApp="sdCalls" />
+
+   @yield('scripts')
+   <!-- Scripts -->
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

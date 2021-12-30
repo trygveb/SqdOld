@@ -1,35 +1,12 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>sqd.se</title>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/bootstrapDarkly.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/sqd.css?v=12345678') }}" rel="stylesheet">
-</head>
+<x-html-head title="sqd.se" />
 <body>
     <div id="app">
         
         <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
             <a  href="{{ route('home',[]) }}" style="color:white;">{{ config('app.name', 'sqd.se') }}</a>
-            <div class="flags">
-                
-         @if ( LaravelLocalization::getCurrentLocale()=="en")
-            <a href="{{ LaravelLocalization::getLocalizedURL('se', null, [], true) }}"> {{country_flag('SE');}}</a>
-         @else
-            <a href="{{ LaravelLocalization::getLocalizedURL('en', null, [], true) }}"> {{country_flag('GB');}}</a>
-         @endif   
-            </div>
+            <x-flags-div />
             
             <div class="container">
             
@@ -51,11 +28,7 @@
             @yield('content')
         </main>
     </div>
-    <footer class="footer">
-      <div class="container" style="text-align:center;  padding-bottom:20px;">
-        <span class="text-muted" >sdCalls &nbsp;@include('version',[])&nbsp;&nbsp;(@include('versionTime',[]))</span>
-      </div>
-    </footer>  
+    <x-footer subApp="sqd.se" />
     @yield('scripts')
     <!-- Scripts -->
 
