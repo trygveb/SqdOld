@@ -37,25 +37,23 @@ Route::group(
            Route::get('/schema/home', [HomeController::class, 'schemaHome'])->name('schema.home')->middleware('verified');
            Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
 
+         // Show the form  for forgotten password
            Route::get('/forgot-password', [CustomAuthController::class, 'showForgotPasswordForm'])
                    ->middleware('guest')
                    ->name('password.request');
 
-//           Route::post('/forgot-password', function (Request $request) {
-//              $request->validate(['email' => 'required|email']);
-//              $status = Password::sendResetLink(
-//                              $request->only('email')
-//              );
-//              return $status === Password::RESET_LINK_SENT ? back()->with(['status' => __($status)]) : back()->withErrors(['email' => __($status)]);
-//           })->middleware('guest')->name('password.email');
+           // Handle the request for sending the forgotten password reset link
            Route::post('sendPasswordResetLink', [CustomAuthController::class, 'sendPasswordResetLink'])
                    ->middleware('guest')
                    ->name('password.email');
 
+           // Display the reset password form that is displayed when the user clicks
+           //  the reset password link
            Route::get('/reset-password/{token}', function ($token) {
               return view('auth.reset-password', ['token' => $token]);
            })->middleware('guest')->name('password.reset');
 
+           // Handle the password reset form submission
            Route::post('/reset-password', function (Request $request) {
               $request->validate([
                   'token' => 'required',

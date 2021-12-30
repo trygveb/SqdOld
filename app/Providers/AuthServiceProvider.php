@@ -6,7 +6,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 //use Illuminate\Support\Facades\Gate;
 //use App\User;
 use Illuminate\Auth\Notifications\VerifyEmail;
-//use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Lang;
 //use Illuminate\Support\Facades\URL;
@@ -39,6 +39,15 @@ class AuthServiceProvider extends ServiceProvider {
             ->action(Lang::get('Verify Email Address'), $url)
             ->salutation(new HtmlString(Lang::get('Regards') . '<br>Trygve Botnen, administratör på ' . config('app.name')))
             ->line(Lang::get('If you did not create an account, no further action is required.'));
+      });
+      ResetPassword::toMailUsing(function ($notifiable, $url) {
+         return (new MailMessage)
+            ->subject(Lang::get('Reset Password Notification for'). ' ' . config('app.name'))
+            ->line(Lang::get('You are receiving this email because we received a password reset request for your account.'))
+            ->action(Lang::get('Reset Password'), $url)
+            ->salutation(new HtmlString(Lang::get('Regards') . '<br>Trygve Botnen, '.Lang::get('administrator at').' ' . config('app.name')))
+            ->line(Lang::get('This password reset link will expire in :count minutes.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')]))
+            ->line(Lang::get('If you did not request a password reset, no further action is required.'));
       });
 
 //      // Adds current application (schema or call) to the url used in the verify email email,
