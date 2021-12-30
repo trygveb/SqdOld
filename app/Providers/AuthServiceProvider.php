@@ -41,6 +41,7 @@ class AuthServiceProvider extends ServiceProvider {
             ->line(Lang::get('If you did not create an account, no further action is required.'));
       });
       ResetPassword::toMailUsing(function ($notifiable, $url) {
+//         dd($url);
          return (new MailMessage)
             ->subject(Lang::get('Reset Password Notification for'). ' ' . config('app.name'))
             ->line(Lang::get('You are receiving this email because we received a password reset request for your account.'))

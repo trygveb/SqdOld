@@ -69,6 +69,7 @@ class CustomAuthController extends Controller {
    }
 
    public function sendPasswordResetLink(Request $request) {
+//      dd('frontend_url='.config('app.frontend_url'));
       $request->validate(['email' => 'required|email']);
 
 //      $user = new User();
