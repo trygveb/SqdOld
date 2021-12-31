@@ -5,10 +5,10 @@ use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
+//use Illuminate\Auth\Events\PasswordReset;
+//use Illuminate\Support\Facades\Hash;
+//use Illuminate\Support\Facades\Password;
+//use Illuminate\Support\Str;
 
 /*
   |--------------------------------------------------------------------------
@@ -37,13 +37,13 @@ Route::group(
            Route::get('/schema/home', [HomeController::class, 'schemaHome'])->name('schema.home')->middleware('verified');
            Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
 
-         // Show the form  for forgotten password
+         // Show the view with the password reset link request form:
            Route::get('/forgot-password', [CustomAuthController::class, 'showForgotPasswordForm'])
                    ->middleware('guest')
                    ->name('password.request');
 
            // Handle the request for sending the forgotten password reset link
-           Route::post('sendPasswordResetLink', [CustomAuthController::class, 'sendPasswordResetLink'])
+           Route::post('/forgot-password', [CustomAuthController::class, 'sendPasswordResetLink'])
                    ->middleware('guest')
                    ->name('password.email');
 
@@ -54,28 +54,9 @@ Route::group(
            })->middleware('guest')->name('password.reset');
 
            // Handle the password reset form submission
-           Route::post('/reset-password', function (Request $request) {
-              $request->validate([
-                  'token' => 'required',
-                  'email' => 'required|email',
-                  'password' => 'required|min:8|confirmed',
-              ]);
-
-              $status = Password::reset(
-                              $request->only('email', 'password', 'password_confirmation', 'token'),
-                              function ($user, $password) {
-                                 $user->forceFill([
-                                     'password' => Hash::make($password)
-                                 ])->setRememberToken(Str::random(60));
-
-                                 $user->save();
-
-                                 event(new PasswordReset($user));
-                              }
-              );
-
-              return $status === Password::PASSWORD_RESET ? redirect()->route('login')->with('status', __($status)) : back()->withErrors(['email' => [__($status)]]);
-           })->middleware('guest')->name('password.update');
+           Route::post('/reset-password', [CustomAuthController::class, 'handleThePasswordResetFormSubmission'])
+                   ->middleware('guest')
+                   ->name('password.update');
 //   Route::post('/email/verification-notification', [CustomAuthController::class, 'sendEmailVerificationNotification'])
 //   ->middleware(['auth', 'throttle:6,1'])
 //   ->name('verification.send');

@@ -106,6 +106,16 @@ table, tr, td {
     margin-left:auto !important;
     margin-right:auto !important;
 }
+.flags {
+    min-width:75px;
+}
 .flags > a {
     margin-left:10px;
+}
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }

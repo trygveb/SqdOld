@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'reset' => 'Ditt lösenord har blivit återställt!',
+    'reset' => 'Ditt lösenord har blivit återställt! Stäng det här fönstret och återgå till inloggningen.',
     'sent' => 'Vi har mailat en länk till dig för återställning av ditt lösenord!',
     'throttled' => 'Vänta innan du försöker igen.',
     'token' => 'Denna lösenordsåterställnings"token" är ogiltig.',

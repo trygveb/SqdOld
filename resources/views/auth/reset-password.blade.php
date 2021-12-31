@@ -1,48 +1,78 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@extends('layouts.app')
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('password.update') }}">
-            @csrf
-
-            <!-- Password Reset Token -->
-            <input type="hidden" name="token" value="{{ $request->route('token') }}">
-
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus />
+@section('content')
+<div class="container">
+   <div class="row justify-content-center">
+      <div class="col-md-8">
+         <div class="card">
+            <div class="card-header">{{ __('Reset Password') }}</div>
+         @if(session()->has('success'))
+            <div class="alert alert-success">
+               {{ session()->get('success') }}
             </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required />
+         @endif
+         @if(session()->has('status'))
+            <div class="alert alert-success">
+               {{ session()->get('status') }}
             </div>
+         @endif
 
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
+            <div class="card-body">
 
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                    type="password"
-                                    name="password_confirmation" required />
+            <!-- Validation Errors -->
+            <x-auth-validation-errors class="mb-4" :errors="$errors" />
+ 
+               <form method="POST" action="{{ route('password.update') }}">
+                  @csrf
+
+                  <!-- Password Reset Token -->
+                  <input type="hidden" name="token" value="{{ $token }}">
+
+                  <!-- Email Address -->
+                  <div class="form-group row">
+                     <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                     <div class="col-md-6">
+                        <input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                     </div>
+                  </div>
+
+                  <!-- Password -->
+                  <div class="form-group row">
+                     <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                     <div class="col-md-6">
+                        <input id="password" class="block mt-1 w-full" type="password" name="password" required />
+                     </div>
+                  </div>
+
+                  <!-- Confirm Password -->
+                   <div class="form-group row">
+                     <label for="password_confirmation" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                     <div class="col-md-6">
+                        <input id="password_confirmation" class="block mt-1 w-full"
+                                          type="password"
+                                          name="password_confirmation" required />
+                     </div>
+                  </div>
+                   <div class="col-md-6" style="margin-left:auto; margin-right:auto;">
+                 <button type="submit" class="btn btn-primary ">{{__('Reset Password')}}</button>
+                  <a style="margin-left:5px;" onclick="closeWindow()" href="" class="btn btn-secondary"> {{ __('Close window')}}</a>
+                   </div>
+                 
+               </form>
             </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Reset Password') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+         </div>
+      </div>
+   </div>
+</div>
+@endsection
+@section('scripts')
+<script>
+   
+function closeWindow() {
+   if (confirm("{{__('You are going to close the current window.')}}")) {
+      window.close('','_parent','');
+   } else {
+      txt = "You pressed Cancel!";
+   } 
+}
+</script>

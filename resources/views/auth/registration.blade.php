@@ -1,16 +1,16 @@
-@extends('layouts.app')
+   @extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-      @if(session()->has('success'))
-         <div class="alert alert-success">
-            {{ session()->get('success') }}
-         </div>
-      @endif
+   @section('content')
+   <div class="container">
+       <div class="row justify-content-center">
+           <div class="col-md-8">
+               <div class="card">
+                   <div class="card-header">{{ __('Register') }}</div>
+         @if(session()->has('success'))
+            <div class="alert alert-success">
+               {{ session()->get('success') }}
+            </div>
+         @endif
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register.custom') }}">
