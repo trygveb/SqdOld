@@ -1,4 +1,5 @@
 {
+    "administrator on" : "administratör på",
     "Back to login" : "Tillbaka till login",
     "Cancel" : "Avbryt",
     "Close window" : "Stäng fönstret",
@@ -7,7 +8,7 @@
     "E-Mail Address" : "E-postadress",
     "Forgot Your Password?" : "Glömt Lösenord?",
     "Hello!":"Hej!",
-    "If you did not create an account, no further action is required." : "Om du inte skapade ett konto krävs ingen ytterligare åtgärd.",
+    "If you did not create an account, no further action is required." : "Om du inte skapade ett konto kan du bortse från detta mail.",
     "If you did not request a password reset, no further action is required.":"Om du inte har begärt lösenordsåterställning behöver du inte göra någonting.",
     "Login" : "Logga in",
     "Login to" : "Logga in till",

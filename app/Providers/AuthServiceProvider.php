@@ -24,7 +24,9 @@ class AuthServiceProvider extends ServiceProvider {
    protected $policies = [
            // 'App\Models\Model' => 'App\Policies\ModelPolicy',
    ];
-
+   private function createSalutation() {
+      return sprintf('%s<br>%s, %s %s',__('Regards') ,config('app.mailFromName'),__('administrator on'), config('app.name'));
+   }
    /**
     * Register any authentication / authorization services.
     *
@@ -32,22 +34,25 @@ class AuthServiceProvider extends ServiceProvider {
     */
    public function boot() {
       $this->registerPolicies();
+      
       VerifyEmail::toMailUsing(function ($notifiable, $url) {
+         
          return (new MailMessage)
                  ->subject(Lang::get('Verify email address on') . ' ' . config('app.name'))
                  ->line(Lang::get('Please click the button below to verify your email address.'))
                  ->action(Lang::get('Verify Email Address'), $url)
-                 ->salutation(new HtmlString(Lang::get('Regards') . '<br>Trygve Botnen, administratör på ' . config('app.name')))
+                 ->salutation(new HtmlString($this->createSalutation()))
                  ->line(Lang::get('If you did not create an account, no further action is required.'));
       });
       ResetPassword::toMailUsing(function ($notifiable, $url) {
+         $xx=sprintf('%s<br>%s, %s %s',__('Regards') ,config('app.mailFromName'),__('administrator on'), config('app.name'));
          $url= config('app.frontend_url').'/reset-password/'.$url;
-//         dd($url);
+//         $xx=sprintf('%s<br>%s, %s %s',__('Regards') ,config('app.mailFromName'),__('administrator on'), config('app.name'));
          return (new MailMessage)
                  ->subject(Lang::get('Reset Password Notification for') . ' ' . config('app.name'))
                  ->line(Lang::get('You are receiving this email because we received a password reset request for your account.'))
                  ->action(Lang::get('Reset Password'), $url)
-                 ->salutation(new HtmlString(Lang::get('Regards') . '<br>Trygve Botnen, ' . Lang::get('administrator at') . ' ' . config('app.name')))
+                 ->salutation(new HtmlString($this->createSalutation()))
                  ->line(Lang::get('This password reset link will expire in :count minutes.', ['count' => config('auth.passwords.' . config('auth.defaults.passwords') . '.expire')]))
                  ->line(Lang::get('If you did not request a password reset, no further action is required.'));
       });

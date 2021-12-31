@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Password;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Illuminate\Support\Str;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+
 
 class CustomAuthController extends Controller {
 
@@ -70,6 +72,12 @@ class CustomAuthController extends Controller {
       ]);
    }
 
+   public function handleEmailVerification(EmailVerificationRequest $request) {
+      $request->fulfill();
+      
+      return back()->with('status', 'OK');//redirect(route('home'));
+   }
+
    public function handleThePasswordResetFormSubmission(Request $request) {
 
       $request->validate([
@@ -79,21 +87,21 @@ class CustomAuthController extends Controller {
       ]);
 
       $status = Password::reset(
-         $request->only('email', 'password', 'password_confirmation', 'token'),
-         function ($user, $password) {
-            $user->forceFill([
-                'password' => Hash::make($password)
-            ])->setRememberToken(Str::random(60));
+                      $request->only('email', 'password', 'password_confirmation', 'token'),
+                      function ($user, $password) {
+                         $user->forceFill([
+                             'password' => Hash::make($password)
+                         ])->setRememberToken(Str::random(60));
 
-            $user->save();
+                         $user->save();
 
-            event(new PasswordReset($user));
-         }
+                         event(new PasswordReset($user));
+                      }
       );
 
       //return $status === Password::PASSWORD_RESET ? redirect()->route('login')->with('status', __($status)) : back()->withErrors(['email' => [__($status)]]);
-      return $status === Password::PASSWORD_RESET ?  back()->with('status', __($status)) : back()->withErrors(['email' => [__($status)]]);
-      }
+      return $status === Password::PASSWORD_RESET ? back()->with('status', __($status)) : back()->withErrors(['email' => [__($status)]]);
+   }
 
    public function sendPasswordResetLink(Request $request) {
 //      dd('frontend_url='.config('app.frontend_url'));
@@ -113,7 +121,7 @@ class CustomAuthController extends Controller {
 
    // Show the view with the password reset link request form:
    public function showForgotPasswordForm($app) {
-      
+
       return view('auth.forgot-password')->with('application', $app);
    }
 

@@ -11,6 +11,11 @@
              {{ session()->get('link_sent') }}  Klicka på <a href="">denna länk</a> när du har klickat på länken i e-post-meddelandet..
          </div>
       @endif
+      @if(session()->has('status'))
+         <div class="alert alert-success">
+             Status={{ session()->get('status') }} 
+         </div>
+      @endif
             <div class="card-body">
                @if ( LaravelLocalization::getCurrentLocale()=='se')
                   @if(session()->has('danger'))
@@ -18,20 +23,26 @@
                      Länken gäller bara i en timme. Vi skickar gärna en ny länk.
                      Tänk på att dessa meddelanden kan hamna i din skräpkorg.
                   @else 
-                  Tack för att du registrerat dig! <br>
-                  Innan du fortsätter måste du verifiera din e-post-adress genom att klicka på länken vi just mailade till dig.<br>
-                  Om du inte har fått e-postmeddelandet skickar vi gärna ett till.<br>
+                  Tack för att du registrerat dig! Du är nu inloggad.<br>
+                  Innan du fortsätter måste du dock verifiera din e-post-adress genom att klicka på länken vi just mailade till dig.<br>
+                  Om du inte har fått e-postmeddelandet skickar vi gärna ett till.
+                  <br>
                   @endif
                   <br>
-                  Mailet har avsändare "trygve.botnen@gmail.com" och titeln "Verifiera e-postadressen på {{config('app.name')}}" och är undertecknat med Trygve Botnen, administratör på {{config('app.name')}}
+                  Mailet har avsändare "{{config('app.mailFromAdress')}}" och titeln "{{__('Verify email address on')}} {{config ('app.name')}}" och är undertecknat med {{config('app.mailFromName')}}, {{__('administrator on')}} {{config('app.name')}}
                @else
                   @if(session()->has('danger'))
                      Before you continue, you must verify your email address. You should have received an email with a link to click on for this purpose.
                      The link is only valid for one hour. We are happy to send you a new link.
                      Keep in mind that these messages may end up in your junk email folder.                     
                   @else 
-                     Thanks for signing up! Before you continue, you must verify your email address by clicking on the link we just emailed to you. If you didn\'t receive the email, we will gladly send you another.
+                  Thanks for signing up! You are noe logged in.<br>
+                  Before proceeding, however, you will need to verify your email address by clicking on the link we just emailed to you. <br>
+                  If you didn\'t receive the email, we will gladly send you another.
+                  <br>
                   @endif
+                  <br>
+                  The email has the sender "{{config('app.mailFromAdress')}}" and the title "{{__('Verify email address on')}} {{config ('app.name')}}" and is signed with {{config('app.mailFromName')}}, {{__('administrator on')}} {{config ('app.name') }}
                @endif
                <br><br>
            @if (session('status') == 'verification-link-sent')
