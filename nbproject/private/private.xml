@@ -5,12 +5,13 @@
         <group>
             <file>file:/D:/Development/VagrantCode/sqd/routes/auth.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/resources/lang/se.json</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/reset-password.blade.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/public/js/sqd.js</file>
             <file>file:/D:/Development/VagrantCode/sqd/routes/web.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/CustomAuthController.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/registration.blade.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/resources/views/layouts/app.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/CustomAuthController.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/forgot-password.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/components/submit-button.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/login.blade.php</file>
         </group>
     </open-files>
 </project-private>

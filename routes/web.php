@@ -38,7 +38,7 @@ Route::group(
            Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
 
          // Show the view with the password reset link request form:
-           Route::get('/forgot-password', [CustomAuthController::class, 'showForgotPasswordForm'])
+           Route::get('/forgot-password/{app}', [CustomAuthController::class, 'showForgotPasswordForm'])
                    ->middleware('guest')
                    ->name('password.request');
 

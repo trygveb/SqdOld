@@ -27,7 +27,12 @@
                    <br>
 <!--                  <div class="form-group row mb-0">
                      <div class="col-md-8 offset-md-4">-->
-                        <x-submit-button submitText="{{ __('Send Password Reset Link')}}" cancelText="{{ __('Cancel') }}"/>
+                        <!--<x-submit-button submitText="{{ __('Send Password Reset Link')}}" cancelText="{{ __('Cancel') }}"/>-->
+                        <p style="float:right;">
+                           <button type="submit" class="btn btn-primary">{{ __('Send Password Reset Link')}}</button>
+                           <a style="margin-left:5px;" href="{{url('login',['app' => $application])}}" class="btn btn-secondary"> {{ __('Back to login')}}</a>
+                        </p>
+
 <!--                     </div>                   
                   </div>-->
                </form>

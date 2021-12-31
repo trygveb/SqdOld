@@ -112,8 +112,9 @@ class CustomAuthController extends Controller {
    }
 
    // Show the view with the password reset link request form:
-   public function showForgotPasswordForm() {
-      return view('auth.forgot-password');
+   public function showForgotPasswordForm($app) {
+      
+      return view('auth.forgot-password')->with('application', $app);
    }
 
    public function registration() {
