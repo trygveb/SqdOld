@@ -5,7 +5,7 @@
        <div class="row justify-content-center">
            <div class="col-md-8">
                <div class="card">
-                   <div class="card-header">{{ __('Register') }}</div>
+                   <div class="card-header">{{ __('Register') }} for {{$application}}</div>
          @if(session()->has('success'))
             <div class="alert alert-success">
                {{ session()->get('success') }}
@@ -15,7 +15,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('register.custom') }}">
                         @csrf
-                        
+                        <input type="hidden" name="application" value="{{$application}}" />
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 

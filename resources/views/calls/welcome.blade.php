@@ -8,9 +8,9 @@
     
    @guest
       <br>
-      <a class="nav-link" href="{{ route('login',['app' =>'calls']) }}">{{ __('Login') }}</a>
+      <a class="nav-link" href="{{ route('login',['app' =>'SdCalls']) }}">{{ __('Login') }}</a>
       {{ __('or') }}
-      <a class="nav-link" href="{{ route('register-user',[]) }}">{{ __('Register') }}</a>       
+      <a class="nav-link" href="{{ route('register-user',['app' =>'SdCalls']) }}">{{ __('Register') }}</a>       
    @endguest
    @auth
    @endauth

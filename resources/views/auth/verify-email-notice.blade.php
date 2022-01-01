@@ -23,7 +23,7 @@
                      Länken gäller bara i en timme. Vi skickar gärna en ny länk.
                      Tänk på att dessa meddelanden kan hamna i din skräpkorg.
                   @else 
-                  Tack för att du registrerat dig! Du är nu inloggad.<br>
+                  Tack för att du registrerat dig till {{$application}}! Du är nu inloggad.<br>
                   Innan du fortsätter måste du dock verifiera din e-post-adress genom att klicka på länken vi just mailade till dig.<br>
                   Om du inte har fått e-postmeddelandet skickar vi gärna ett till.
                   <br>
@@ -54,11 +54,8 @@
                    @csrf
                    <div>
                        
- <x-submit-button submitText="{{ __('Resend Verification Email')}}" cancelText="{{ __('Cancel') }}"/>                       
-                       
-<!--                     <button type="submit" class="btn btn-primary">
-                         {{ __('Resend Verification Email')}}
-                     </button>-->
+                   <x-submit-button submitText="{{__('Resend Verification Email')}}" cancelText="{{__('Cancel')}}" />
+                      
                    </div>
                </form>
             </div>
@@ -66,4 +63,8 @@
       </div>
    </div>
 </div>
+@endsection
+
+@section('scripts')
+
 @endsection

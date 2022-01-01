@@ -18,9 +18,12 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 class CustomAuthController extends Controller {
 
-   public function showLoginForm($app) {
-//        return view('auth.login');
-      return view('auth.login', ['app' => $app]);
+   public function create(array $data) {
+      return User::create([
+                  'name' => $data['name'],
+                  'email' => $data['email'],
+                  'password' => Hash::make($data['password'])
+      ]);
    }
 
    public function customLogin(Request $request) {
@@ -56,20 +59,12 @@ class CustomAuthController extends Controller {
 
       $data = $request->all();
       $user = $this->create($data);
-      // $user->application = $request->application;
+      $application = $request->application;
       App::setLocale(LaravelLocalization::getCurrentLocale());
       event(new Registered($user));
       Auth::login($user);
       //return redirect(route("welcome"))->withSuccess( __('You have signed-in') );
-      return redirect(route('verification.notice', []));
-   }
-
-   public function create(array $data) {
-      return User::create([
-                  'name' => $data['name'],
-                  'email' => $data['email'],
-                  'password' => Hash::make($data['password'])
-      ]);
+      return redirect(route('verification.notice', ['application' => $application]));
    }
 
    public function handleEmailVerification(EmailVerificationRequest $request) {
@@ -103,6 +98,18 @@ class CustomAuthController extends Controller {
       return $status === Password::PASSWORD_RESET ? back()->with('status', __($status)) : back()->withErrors(['email' => [__($status)]]);
    }
 
+   public function registration($application) {
+      return view('auth.registration')->with('application', $application);
+   }
+
+   // User has asked for a new e-mail verification mail.
+   public function sendEmailVerificationNotification(Request $request) {
+      $user = $request->user();
+      //$user->application = $request->application;
+      $user->sendEmailVerificationNotification();
+      return back()->with('link_sent', __('Verification link sent!'));
+   }
+
    public function sendPasswordResetLink(Request $request) {
 //      dd('frontend_url='.config('app.frontend_url'));
       $request->validate(['email' => 'required|email']);
@@ -125,21 +132,13 @@ class CustomAuthController extends Controller {
       return view('auth.forgot-password')->with('application', $app);
    }
 
-   public function registration() {
-      return view('auth.registration');
-      ;
+   public function showLoginForm($app) {
+//        return view('auth.login');
+      return view('auth.login', ['app' => $app]);
    }
 
-   public function showVerifyEmail() {
-      return view('auth.verify-email-notice'); //->with('application', $app);
-   }
-
-   // User has asked for a new e-mail verification mail.
-   public function sendEmailVerificationNotification(Request $request) {
-      $user = $request->user();
-      //$user->application = $request->application;
-      $user->sendEmailVerificationNotification();
-      return back()->with('link_sent', __('Verification link sent!'));
+   public function showVerifyEmail($app) {
+      return view('auth.verify-email-notice')->with('application', $app);
    }
 
 //   public function verificationVerify(EmailVerificationRequest $request) {

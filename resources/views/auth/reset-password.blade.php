@@ -54,8 +54,9 @@
                      </div>
                   </div>
                    <div class="col-md-6" style="margin-left:auto; margin-right:auto;">
-                 <button type="submit" class="btn btn-primary ">{{__('Reset Password')}}</button>
+                  <button type="submit" class="btn btn-primary ">{{__('Reset Password')}}</button>
                   <a style="margin-left:5px;" onclick="closeWindow()" href="" class="btn btn-secondary"> {{ __('Close window')}}</a>
+
                    </div>
                  
                </form>
@@ -67,12 +68,17 @@
 @endsection
 @section('scripts')
 <script>
-   
-function closeWindow() {
-   if (confirm("{{__('You are going to close the current window.')}}")) {
-      window.close('','_parent','');
-   } else {
-      txt = "You pressed Cancel!";
-   } 
-}
+   /**
+    * Close this window. 
+    * The reason for having this function here instead of in public js folder
+    * is that it must cope with locale texts
+    */
+   function closeWindow() {
+      if (confirm("{{__('You are going to close the current window.')}}")) {
+         window.close('','_parent','');
+      } else {
+         txt = "You pressed Cancel!";
+      } 
+   }
 </script>
+@endsection

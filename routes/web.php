@@ -24,10 +24,10 @@ Route::group(
       'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
 
       Route::get('login/{app}', [CustomAuthController::class, 'showLoginForm'])->name('login');
-      Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
+      Route::get('registration/{app}', [CustomAuthController::class, 'registration'])->name('register-user');
       Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
       Route::get('welcome', [HomeController::class, 'welcome'])->name('welcome')->middleware('auth'); // For sqd.se, logged in, application not selected
-      Route::get('/email/showVerifyEmail}', [CustomAuthController::class, 'showVerifyEmail'])->name('verification.notice');
+      Route::get('/email/showVerifyEmail/{application}', [CustomAuthController::class, 'showVerifyEmail'])->name('verification.notice');
 
       Route::get('/', [HomeController::class, 'home'])->name('home'); // For sqd.se, NOT logged in, application not selected
       Route::get('calls', [HomeController::class, 'callsGuest'])->name('calls.guest');

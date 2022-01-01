@@ -8,10 +8,10 @@
     
    @guest
       <br>
-      <a class="nav-link" href="{{ route('login',['app' =>'schema']) }}">{{ __('Login') }}</a>
+      <a class="nav-link" href="{{ route('login',['app' =>'sdSchema']) }}">{{ __('Login') }}</a>
    @if (Route::has('register-user'))
       {{ __('or') }}
-      <a class="nav-link" href="{{ route('register-user', []) }}">{{ __('Register') }}</a>       
+      <a class="nav-link" href="{{ route('register-user', ['app' =>'sdSchema']) }}">{{ __('Register') }}</a>       
    @endif
    @endguest
    @auth
