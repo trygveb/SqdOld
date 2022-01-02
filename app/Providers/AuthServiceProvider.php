@@ -40,6 +40,8 @@ class AuthServiceProvider extends ServiceProvider {
          return (new MailMessage)
                  ->subject(Lang::get('Verify email address') . ', ' . config('app.name'))
                  ->line(Lang::get('Please click the button below to verify your email address.'))
+                 ->line(Lang::get('When you do that, a pop-up window will appear with a status message.'))
+                 ->line(Lang::get('After reading the status message, you may close the pop-up window.'))
                  ->action(Lang::get('Verify email address'), $url)
                  ->salutation(new HtmlString($this->createSalutation()))
                  ->line(Lang::get('If you did not create an account, no further action is required.'));

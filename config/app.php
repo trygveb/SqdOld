@@ -131,7 +131,7 @@ return [
      */
         
     'mailFromName' => env('MAIL_FROM_NAME'),
-    'mailFromAdress' => env('MAIL_FROM_ADRESS'),
+    'mailFromAdress' => env('MAIL_FROM_ADDRESS'),
 
     /*
     |--------------------------------------------------------------------------
