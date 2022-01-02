@@ -31,22 +31,21 @@ class CustomAuthController extends Controller {
           'email' => 'required',
           'password' => 'required',
       ]);
-      $app = $request->application;
-
+      $application = $request->application;
       $credentials = $request->only('email', 'password');
       if (Auth::attempt($credentials)) {
          if (!Auth::user()->hasVerifiedEmail()) {
 
             // Auth::logout();
             return redirect()
-                            ->route('verification.notice', ['app' => $app])
+                            ->route('verification.notice', ['application' => $application])
                             ->with('danger', __('Please confirm your email before logging in.'));
          }
-         return redirect()->intended($app . '/home')
+         return redirect()->intended($application . '/home')
                          ->withSuccess('Signed in');
       }
 
-      return redirect(route('login', ['app' => $app]))->withSuccess(__('Sorry, login details are not valid'));
+      return redirect(route('login', ['application' => $application]))->withSuccess(__('Sorry, login details are not valid'));
    }
 
    public function customRegistration(Request $request) {
@@ -70,7 +69,7 @@ class CustomAuthController extends Controller {
    public function handleEmailVerification(EmailVerificationRequest $request) {
       $request->fulfill();
       
-      return back()->with('status', 'OK');//redirect(route('home'));
+      return back()->with('status', 'EmailVerification_OK');//redirect(route('home'));
    }
 
    public function handleThePasswordResetFormSubmission(Request $request) {
@@ -107,11 +106,10 @@ class CustomAuthController extends Controller {
       $user = $request->user();
       //$user->application = $request->application;
       $user->sendEmailVerificationNotification();
-      return back()->with('link_sent', __('Verification link sent!'));
+      return back()->with('status', __('Verification link sent!'));
    }
 
    public function sendPasswordResetLink(Request $request) {
-//      dd('frontend_url='.config('app.frontend_url'));
       $request->validate(['email' => 'required|email']);
 
 //      $user = new User();
@@ -127,18 +125,19 @@ class CustomAuthController extends Controller {
    }
 
    // Show the view with the password reset link request form:
-   public function showForgotPasswordForm($app) {
+   public function showForgotPasswordForm($application) {
 
-      return view('auth.forgot-password')->with('application', $app);
+      return view('auth.forgot-password')->with('application', $application);
    }
 
-   public function showLoginForm($app) {
+   public function showLoginForm($application) {
 //        return view('auth.login');
-      return view('auth.login', ['app' => $app]);
+      return view('auth.login', ['application' => $application]);
    }
 
-   public function showVerifyEmail($app) {
-      return view('auth.verify-email-notice')->with('application', $app);
+   public function showVerifyEmail($application) {
+//      dd('showVerifyEmail application='.$application);  OK
+      return view('auth.verify-email-notice')->with('application', $application);
    }
 
 //   public function verificationVerify(EmailVerificationRequest $request) {

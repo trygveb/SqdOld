@@ -23,21 +23,21 @@ Route::group(
    ['prefix' => LaravelLocalization::setLocale(),
       'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
 
-      Route::get('login/{app}', [CustomAuthController::class, 'showLoginForm'])->name('login');
-      Route::get('registration/{app}', [CustomAuthController::class, 'registration'])->name('register-user');
+      Route::get('login/{application}', [CustomAuthController::class, 'showLoginForm'])->name('login');
+      Route::get('registration/{application}', [CustomAuthController::class, 'registration'])->name('register-user');
       Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
       Route::get('welcome', [HomeController::class, 'welcome'])->name('welcome')->middleware('auth'); // For sqd.se, logged in, application not selected
       Route::get('/email/showVerifyEmail/{application}', [CustomAuthController::class, 'showVerifyEmail'])->name('verification.notice');
 
       Route::get('/', [HomeController::class, 'home'])->name('home'); // For sqd.se, NOT logged in, application not selected
-      Route::get('calls', [HomeController::class, 'callsGuest'])->name('calls.guest');
-      Route::get('schema', [HomeController::class, 'schemaGuest'])->name('schema.guest');
-      Route::get('/calls/home', [HomeController::class, 'callsHome'])->name('calls.home')->middleware('verified');
-      Route::get('/schema/home', [HomeController::class, 'schemaHome'])->name('schema.home')->middleware('verified');
+      Route::get('sdCalls', [HomeController::class, 'callsGuest'])->name('sdCalls.guest');
+      Route::get('sdSchema', [HomeController::class, 'schemaGuest'])->name('sdSchema.guest');
+      Route::get('/sdCalls/home', [HomeController::class, 'callsHome'])->name('sdCalls.home')->middleware('verified');
+      Route::get('/sdSchema/home', [HomeController::class, 'schemaHome'])->name('sdSchema.home')->middleware('verified');
       Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
 
     // Show the view with the password reset link request form:
-      Route::get('/forgot-password/{app}', [CustomAuthController::class, 'showForgotPasswordForm'])
+      Route::get('/forgot-password/{application}', [CustomAuthController::class, 'showForgotPasswordForm'])
               ->middleware('guest')
               ->name('password.request');
 
@@ -64,11 +64,12 @@ Route::group(
       Route::get('/email/verify/{id}/{hash}',  [CustomAuthController::class, 'handleEmailVerification'])
       ->middleware(['auth', 'signed'])
       ->name('verification.verify');
+      
+      Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom');
 
 });
 
 
-Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom');
 Route::get('/switchLocale', [HomeController::class, 'switchLocale'])->name('switchLocale');
 
 //  Route::get('/email/verify', function () { return view('auth.verify-email');

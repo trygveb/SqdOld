@@ -17,11 +17,11 @@ class HomeController extends Controller {
       //$this->middleware('auth');
    }
    public function callsGuest() {
-      return view('calls.welcome', ['showAuthenticationLinks' => true]);
+      return view('sdCalls.welcome', ['showAuthenticationLinks' => true]);
    }
 
    public function callsHome() {
-      return view('calls.welcome', ['showAuthenticationLinks' => true]);
+      return view('sdCalls.welcome', ['showAuthenticationLinks' => true]);
    }
 
    public function home() {
@@ -30,7 +30,7 @@ class HomeController extends Controller {
     }
 
    public function schemaGuest() {
-      return view('schema.welcome', ['showAuthenticationLinks' => true]);
+      return view('sdSchema.welcome', ['showAuthenticationLinks' => true]);
    }
 
    public function schemaHome() {
@@ -41,7 +41,7 @@ class HomeController extends Controller {
 //         if ($count == 1) {
 //            return redirect(route('schema.index', ['trainingId' => $myMemberTrainings[0]->training_id]));
 //         } else {
-            return view('schema.welcome', [
+            return view('sdSchema.welcome', [
                 'myTrainingsCount' => $count,
             ]);
          }

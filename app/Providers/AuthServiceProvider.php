@@ -38,9 +38,9 @@ class AuthServiceProvider extends ServiceProvider {
       VerifyEmail::toMailUsing(function ($notifiable, $url) {
          
          return (new MailMessage)
-                 ->subject(Lang::get('Verify email address on') . ' ' . config('app.name'))
+                 ->subject(Lang::get('Verify email address') . ', ' . config('app.name'))
                  ->line(Lang::get('Please click the button below to verify your email address.'))
-                 ->action(Lang::get('Verify Email Address'), $url)
+                 ->action(Lang::get('Verify email address'), $url)
                  ->salutation(new HtmlString($this->createSalutation()))
                  ->line(Lang::get('If you did not create an account, no further action is required.'));
       });

@@ -3,9 +3,9 @@
      @if ($subApp=='sqd.se') 
     <span class="text-muted" >{{$subApp}} &nbsp;@include('version',[])&nbsp;&nbsp;(@include('versionTime',[]))</span>
     @elseif ($subApp=='sdCalls')
-    <span class="text-muted" >{{$subApp}} &nbsp;@include('calls.version',[])&nbsp;&nbsp;(@include('calls.versionTime',[]))</span>
+    <span class="text-muted" >{{$subApp}} &nbsp;@include('sdCalls.version',[])&nbsp;&nbsp;(@include('sdCalls.versionTime',[]))</span>
     @else
-    <span class="text-muted" >{{$subApp}} &nbsp;@include('schema.version',[])&nbsp;&nbsp;(@include('schema.versionTime',[]))</span>
+    <span class="text-muted" >{{$subApp}} &nbsp;@include('sdSchema.version',[])&nbsp;&nbsp;(@include('sdSchema.versionTime',[]))</span>
     @endif
     
   </div>

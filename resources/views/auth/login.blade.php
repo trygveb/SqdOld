@@ -14,14 +14,13 @@
             {{ session()->get('danger') }}
          </div>
       @endif
-      
             <div class="card">
-                <div class="card-header">{{ __('Login to') }} {{$app}}</div>
+                <div class="card-header">{{ __('Login to') }} {{$application}}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login.custom') }}">
                         @csrf
-                        <input type="hidden" name="application" value="{{$app}}">
+                        <input type="hidden" name="application" value="{{$application}}">
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
@@ -77,7 +76,7 @@
                                     {{ __('Login') }}
                                 </button>
                                 @if (Route::has('password.request'))  
-                                    <a class="btn btn-link" href="{{ route('password.request',['app' => $app]) }}">
+                                    <a class="btn btn-link" href="{{ route('password.request',['application' => $application]) }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif

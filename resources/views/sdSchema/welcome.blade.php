@@ -1,4 +1,4 @@
-@extends('schema.layout')
+@extends('sdSchema.layout')
 
 @section('content')
 <div class="container">
@@ -8,10 +8,10 @@
     
    @guest
       <br>
-      <a class="nav-link" href="{{ route('login',['app' =>'sdSchema']) }}">{{ __('Login') }}</a>
+      <a class="nav-link" href="{{ route('login',['application' =>'sdSchema']) }}">{{ __('Login') }}</a>
    @if (Route::has('register-user'))
       {{ __('or') }}
-      <a class="nav-link" href="{{ route('register-user', ['app' =>'sdSchema']) }}">{{ __('Register') }}</a>       
+      <a class="nav-link" href="{{ route('register-user', ['application' =>'sdSchema']) }}">{{ __('Register') }}</a>       
    @endif
    @endguest
    @auth

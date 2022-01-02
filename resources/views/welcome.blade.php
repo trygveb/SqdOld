@@ -11,9 +11,9 @@
                             {{ session('success') }}
                         </div>
                     @endif
-                    {{ __('Please select application') }} <a class="aMain" href="{{ route('calls.guest',[]) }}"> SdCalls </a>
+                    {{ __('Please select application') }} <a class="aMain" href="{{ route('sdCalls.guest',[]) }}"> SdCalls </a>
                     {{ __('or')}}
-                    <a class="aMain" href="{{ route('schema.guest',[]) }}"> SdSchema!</a>
+                    <a class="aMain" href="{{ route('sdSchema.guest',[]) }}"> SdSchema!</a>
                 </div>
             </div>
     </div>

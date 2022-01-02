@@ -56,9 +56,9 @@ class User extends Authenticatable implements MustVerifyEmailContract, CanResetP
       $this->save();
    }
 
-   public function hasVerifiedEmail() {
-      //dd('hasVerifiedEmail');
-      return !is_null($this->email_verified_at);
-   }
+//   public function hasVerifiedEmail() {
+//      //dd('hasVerifiedEmail');
+//      return !is_null($this->email_verified_at);
+//   }
 
 }
