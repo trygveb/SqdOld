@@ -14,9 +14,9 @@ return [
     */
 
     'reset' => 'Ditt lösenord har blivit återställt! Stäng det här fönstret och återgå till inloggningen.',
-    'sent' => 'Vi har mailat en länk till dig för återställning av ditt lösenord!',
-    'throttled' => 'Vänta innan du försöker igen.',
-    'token' => 'Denna lösenordsåterställnings"token" är ogiltig.',
+    'sent' => 'EmailVerification_OK',
+    'throttled' => 'Vänta lite till innan du försöker igen.',
+    'token' => 'Denna lösenordsåterställnings"token" är ogiltig. Kontrollera e-postadressen',
     'user' => "Vi kan inte hitta en användare med den e-postadressen.",
 
 ];

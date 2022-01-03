@@ -15,7 +15,7 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
          <div class="card">
-             emailVerified= {{$emailVerified}}  status={{$status}}<br>
+             <!--emailVerified= {{$emailVerified}}  status={{$status}}<br>-->
 
          @if ($emailVerified == 'YES')
             <div class="alert alert-success">
@@ -64,9 +64,11 @@
                       'signed' => config('app.mailFromName').', '.__('administrator on').config('app.name')])}}
                     <br>
             @endif
-          @endif
-          @if (session('status') == 'verification-link-sent')
+         @endif
+         @if (session('status') == 'verification-link-sent')
                {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+         @endif
+         @if ($emailVerified == 'YES' || session('status') == 'verification-link-sent')
                <a style="margin-left:5px;" onclick="closeWindow()" href="" class="btn btn-secondary"> {{ __('Close window')}}</a>
          @else
                <br>

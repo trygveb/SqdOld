@@ -1,10 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+   $emailVerified='NO';
+   $status='';
+   if (session()->has('status')) {
+      $status= session()->get('status');
+      if ($status=='EmailVerification_OK') {
+         $emailVerified='YES';
+      }
+   } 
+@endphp
 <div class="container">
    <div class="row justify-content-center">
       <div class="col-md-8">
          <div class="card">
+         <!--emailVerified= {{$emailVerified}}  status={{$status}}<br>-->             
             <div class="card-header">{{ __('Reset Password') }}</div>
          @if(session()->has('success'))
             <div class="alert alert-success">
@@ -16,6 +27,7 @@
                {{ session()->get('status') }}
             </div>
          @endif
+
 
             <div class="card-body">
 

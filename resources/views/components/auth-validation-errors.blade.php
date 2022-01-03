@@ -1,6 +1,8 @@
 @props(['errors'])
 
 @if ($errors->any())
+<div class="alert alert-primary">
+
     <div {{ $attributes }}>
         <div class="font-medium text-red-600">
             {{ __('Whoops! Something went wrong') }}.
@@ -12,4 +14,5 @@
             @endforeach
         </ul>
     </div>
+</div>
 @endif

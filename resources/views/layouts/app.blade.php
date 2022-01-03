@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<x-html-head title="sqd.se" />
+<x-html-head title="{{config('app.name')}}" />
 <body>
     <div id="app">
         
