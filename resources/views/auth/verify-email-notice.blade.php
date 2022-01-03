@@ -15,7 +15,7 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
          <div class="card">
-<!--             emailVerified= {{$emailVerified}}  status={{$status}}<br>-->
+             emailVerified= {{$emailVerified}}  status={{$status}}<br>
 
          @if ($emailVerified == 'YES')
             <div class="alert alert-success">
