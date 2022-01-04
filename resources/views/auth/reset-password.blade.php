@@ -65,13 +65,22 @@
                                           name="password_confirmation" required />
                      </div>
                   </div>
-                   <div class="col-md-6" style="margin-left:auto; margin-right:auto;">
-                  <button type="submit" class="btn btn-primary ">{{__('Reset Password')}}</button>
-                  <a style="margin-left:5px;" onclick="closeWindow()" href="" class="btn btn-secondary"> {{ __('Close window')}}</a>
+                 <div class="col-md-6" style="margin-left:auto; margin-right:auto;">
+                     <button type="submit" class="btn btn-primary">{{__('Reset Password')}}</button>
+                     <a style="margin-left:5px;" onclick="closeWindow()" href="" class="btn btn-secondary"> {{ __('Close window')}}</a>
+                  </div>
+                  </form>
 
-                   </div>
+                  </div>
+                  <br><br>
+                  
+                  {{__(config('app.passwordFormat1'))}}<br>
+                  <ol>
+                      <li>{{__(config('app.passwordFormat2'))}}</li>
+                     <li>{{__(config('app.passwordFormat3'))}}</li>
+                     <li>{{__(config('app.passwordFormat4'))}}</li>
+                  </ol>
                  
-               </form>
             </div>
          </div>
       </div>

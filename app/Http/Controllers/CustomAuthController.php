@@ -15,7 +15,6 @@ use Illuminate\Support\Str;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
-
 class CustomAuthController extends Controller {
 
    public function create(array $data) {
@@ -27,10 +26,14 @@ class CustomAuthController extends Controller {
    }
 
    public function customLogin(Request $request) {
+
       $request->validate([
           'email' => 'required',
-          'password' => 'required',
-      ]);
+          'password' => ['required',
+              config('app.passwordMinLength'),
+              config('app.passwordRegex')
+      ]]);
+
       $application = $request->application;
       $credentials = $request->only('email', 'password');
       if (Auth::attempt($credentials)) {
@@ -51,9 +54,12 @@ class CustomAuthController extends Controller {
    public function customRegistration(Request $request) {
 
       $request->validate([
-          'name' => 'required',
+          'name' => 'required|unique:users',
           'email' => 'required|email|unique:users',
-          'password' => 'required|min:6',
+          'password' => ['required',
+              config('app.passwordMinLength'),
+              config('app.passwordRegex')
+          ]
       ]);
 
       $data = $request->all();
@@ -68,8 +74,8 @@ class CustomAuthController extends Controller {
 
    public function handleEmailVerification(EmailVerificationRequest $request) {
       $request->fulfill();
-      
-      return back()->with('status', 'EmailVerification_OK');//redirect(route('home'));
+
+      return back()->with('status', 'EmailVerification_OK'); //redirect(route('home'));
    }
 
    public function handleThePasswordResetFormSubmission(Request $request) {
@@ -77,8 +83,10 @@ class CustomAuthController extends Controller {
       $request->validate([
           'token' => 'required',
           'email' => 'required|email',
-          'password' => 'required|min:6|confirmed',
-      ]);
+          'password' => ['required',
+              config('app.passwordMinLength'),
+              config('app.passwordRegex')
+      ]]);
 
       $status = Password::reset(
                       $request->only('email', 'password', 'password_confirmation', 'token'),

@@ -53,7 +53,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="showPassword" onclick="togglePassword()">
 
-                                    <label class="form-check-label" for="showPassword">Visa lösenord</label>
+                                    <label class="form-check-label" for="showPassword">{{__('Show password')}}</label>
                                 </div>
                             </div>
                         </div>

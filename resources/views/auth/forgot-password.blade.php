@@ -25,14 +25,16 @@
             <div class="card-header">{{ __('Forgot Your Password?') }}</div>            
             <div class="card-body">
          @if ($emailVerified=='NO')
-               {{ __('No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+               {{ __('OK. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
                <br>
          @else
+         <div class="alert alert-success">
                {{__('We have emailed your password reset link')}}!
                <br>
                {{__('Open the mail and click on the the button with text ":text"', ['text' => __('Reset Password')])}}.
                <br>
                {{__('After submitting the form for password reset in the pop-up window, you can close that and return to this window and press the "Back to login" button below')}}.
+         </div>
          @endif
                <br>
                <form method="POST" action="{{ route('password.email') }}">

@@ -132,6 +132,13 @@ return [
         
     'mailFromName' => env('MAIL_FROM_NAME'),
     'mailFromAdress' => env('MAIL_FROM_ADDRESS'),
+    'passwordRegex' => env('PASSWORD_REGEX'),
+    'passwordMinLength' => env('PASSWORD_MIN_LENGTH'),
+    'passwordFormat1' => env('PASSWORD_FORMAT_1'),
+    'passwordFormat2' => env('PASSWORD_FORMAT_2'),
+    'passwordFormat3' => env('PASSWORD_FORMAT_3'),
+    'passwordFormat4' => env('PASSWORD_FORMAT_4'),
+    
 
     /*
     |--------------------------------------------------------------------------

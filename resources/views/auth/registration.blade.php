@@ -72,7 +72,15 @@
                         </div>
                     </form>
                 </div>
+               <br>
+               {{__(config('app.passwordFormat1'))}}<br>
+               <ol>
+                   <li>{{__(config('app.passwordFormat2'))}}</li>
+                  <li>{{__(config('app.passwordFormat3'))}}</li>
+                  <li>{{__(config('app.passwordFormat4'))}}</li>
+               </ol>
             </div>
+         
         </div>
     </div>
 </div>
