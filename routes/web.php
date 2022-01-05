@@ -23,19 +23,30 @@ Route::group(
    ['prefix' => LaravelLocalization::setLocale(),
       'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
 
-      Route::name('showRegisterForm')->get('registration/{application}', [CustomAuthController::class, 'showRegisterForm']);
+// Registration routes//////////////////////////////////////////////////////////
+      // Show the registration form
+      Route::name('showRegisterForm')->get('registration/{application}', [CustomAuthController::class, 'showRegisterForm'])->middleware('guest');
+
+      // Handle the registration form
+      Route::name('register.custom')->post('custom-registration', [CustomAuthController::class, 'customRegistration']);
+
+      //Show the notice which tells the user to open the mail eith a link fot email verification
+      Route::name('verification.notice')->get('/email/showVerifyEmail/{application}', [CustomAuthController::class, 'showVerifyEmail']);
+
+      
+// Login routes/////////////////////////////////////////////////////////////////
+      
+      
       Route::name('login')->get('login/{application}', [CustomAuthController::class, 'showLoginForm']);
       Route::name('signout')->get('signout', [CustomAuthController::class, 'signOut']);
       
       Route::get('welcome', [HomeController::class, 'welcome'])->name('welcome')->middleware('auth'); // For sqd.se, logged in, application not selected
-      Route::get('/email/showVerifyEmail/{application}', [CustomAuthController::class, 'showVerifyEmail'])->name('verification.notice');
 
       Route::get('/', [HomeController::class, 'home'])->name('home'); // For sqd.se, NOT logged in, application not selected
       Route::get('sdCalls', [HomeController::class, 'callsGuest'])->name('sdCalls.guest');
       Route::get('sdSchema', [HomeController::class, 'schemaGuest'])->name('sdSchema.guest');
       Route::get('/sdCalls/home', [HomeController::class, 'callsHome'])->name('sdCalls.home')->middleware('verified');
       Route::get('/sdSchema/home', [HomeController::class, 'schemaHome'])->name('sdSchema.home')->middleware('verified');
-      Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
 
     // Show the view with the password reset link request form:
       Route::get('/forgot-password/{application}', [CustomAuthController::class, 'showForgotPasswordForm'])
@@ -70,11 +81,14 @@ Route::group(
 
 });
 
-
+// Routes not needing localization
 Route::get('/switchLocale', [HomeController::class, 'switchLocale'])->name('switchLocale');
-Route::name('showRegisterFormTest')->get('registration/{application}', [CustomAuthController::class, 'showRegisterForm']);
+
 //  Route::get('/email/verify', function () { return view('auth.verify-email');
 //})->middleware('auth')->name('verification.notice');
 
-
-
+// Test routes,  no localization ///////////////////////////////////////////////
+Route::name('test.')->group(function () {
+   Route::name('showRegisterForm')->get('registration/{application}', [CustomAuthController::class, 'showRegisterForm'])->middleware('guest');
+});
+////////////////////////////////////////////////////////////////////////////////

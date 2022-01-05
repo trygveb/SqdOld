@@ -143,6 +143,11 @@ class CustomAuthController extends Controller {
       return view('auth.login', ['application' => $application]);
    }
 
+   /**
+    * Shows the notice which tells the user to open the mail eith a link fot email verification
+    * @param type $application
+    * @return type
+    */
    public function showVerifyEmail($application) {
 //      dd('showVerifyEmail application='.$application);  OK
       return view('auth.verify-email-notice')->with('application', $application);

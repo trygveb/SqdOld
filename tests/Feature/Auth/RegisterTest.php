@@ -9,10 +9,7 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Models\Classing;
-use App\Models\RankModel;
-use App\Models\SystemTemplate;
-use App\User;
+use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
@@ -63,12 +60,8 @@ class RegisterTest extends TestCase {
    }
 
    protected function registerGetRoute() {
-      return route('showRegisterFormTest', ['application' => 'sdSchema']);
-//      return 'registration/sdSchema'; // 302
-//      return 'se/registration/sdSchema';  //404
-//      return 'en/registration/sdSchema';  //404
-//      return '/en/registration/sdSchema'; //404
-               
+//      return route('showRegisterFormTest', ['application' => 'sdSchema']);
+      return route('test.showRegisterForm', ['application' => 'sdSchema']);
    }
 
    protected function registerPostRoute() {
@@ -88,8 +81,8 @@ class RegisterTest extends TestCase {
    }
 
    public function testUserCannotViewARegistrationFormWhenAuthenticated() {
-      $user = factory(User::class)->make();
-
+//      $user = factory(User::class)->make();
+      $user = User::factory()->make();
       $response = $this->actingAs($user)->get($this->registerGetRoute());
 
       $response->assertRedirect($this->guestMiddlewareRoute());
