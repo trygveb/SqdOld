@@ -23,9 +23,10 @@ Route::group(
    ['prefix' => LaravelLocalization::setLocale(),
       'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
 
-      Route::get('login/{application}', [CustomAuthController::class, 'showLoginForm'])->name('login');
-      Route::get('registration/{application}', [CustomAuthController::class, 'registration'])->name('register-user');
-      Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
+      Route::name('showRegisterForm')->get('registration/{application}', [CustomAuthController::class, 'showRegisterForm']);
+      Route::name('login')->get('login/{application}', [CustomAuthController::class, 'showLoginForm']);
+      Route::name('signout')->get('signout', [CustomAuthController::class, 'signOut']);
+      
       Route::get('welcome', [HomeController::class, 'welcome'])->name('welcome')->middleware('auth'); // For sqd.se, logged in, application not selected
       Route::get('/email/showVerifyEmail/{application}', [CustomAuthController::class, 'showVerifyEmail'])->name('verification.notice');
 
@@ -71,7 +72,7 @@ Route::group(
 
 
 Route::get('/switchLocale', [HomeController::class, 'switchLocale'])->name('switchLocale');
-
+Route::name('showRegisterFormTest')->get('registration/{application}', [CustomAuthController::class, 'showRegisterForm']);
 //  Route::get('/email/verify', function () { return view('auth.verify-email');
 //})->middleware('auth')->name('verification.notice');
 

@@ -7,12 +7,10 @@
       <h1 class="text-center"> {{ __('Welcome to')}} SdSchema</h1>
     
    @guest
-      <br>
-      <a class="nav-link" href="{{ route('login',['application' =>'sdSchema']) }}">{{ __('Login') }}</a>
-   @if (Route::has('register-user'))
-      {{ __('or') }}
-      <a class="nav-link" href="{{ route('register-user', ['application' =>'sdSchema']) }}">{{ __('Register') }}</a>       
-   @endif
+   <br>
+   <a class="nav-link" href="{{ route('login',['application' =>'sdSchema']) }}">{{ __('Login') }}</a>
+   {{ __('or') }}
+   <a class="nav-link" href="{{ route('showRegisterForm', ['application' =>'sdSchema']) }}">{{ __('Register') }}</a>       
    @endguest
    @auth
    <!--$myTrainingsCount-->

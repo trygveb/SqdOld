@@ -105,7 +105,7 @@ class CustomAuthController extends Controller {
       return $status === Password::PASSWORD_RESET ? back()->with('status', __($status)) : back()->withErrors(['email' => [__($status)]]);
    }
 
-   public function registration($application) {
+   public function showRegisterForm($application) {
       return view('auth.registration')->with('application', $application);
    }
 

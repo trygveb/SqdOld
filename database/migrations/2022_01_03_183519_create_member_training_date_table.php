@@ -21,7 +21,7 @@ class CreateMemberTrainingDateTable extends Migration
             $table->unsignedTinyInteger('status')->default(0);
             $table->timestamps();
             
-            $table->foreign('user_id', 'member_training_date_FK_1')->references('id')->on('sqd.users')->onDelete('cascade')->onUpdate('cascade');
+//            $table->foreign('user_id', 'member_training_date_FK_1')->references('id')->on('sqd.users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('training_date_id', 'member_training_date_FK_2')->references('id')->on('training_date')->onDelete('cascade')->onUpdate('cascade');
         });
         DB::connection('sdSchema')->statement("ALTER TABLE `member_training_date` comment='This table contains the status for each member on each training date'");

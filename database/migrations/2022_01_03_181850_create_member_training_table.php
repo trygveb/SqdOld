@@ -19,7 +19,7 @@ class CreateMemberTrainingTable extends Migration
             $table->unsignedBigInteger('member_id');
             $table->unsignedBigInteger('training_id');
             $table->timestamps();
-            $table->foreign('member_id', 'member_training_FK_1')->references('id')->on('sqd.users')->onDelete('cascade')->onUpdate('cascade');
+//            $table->foreign('member_id', 'member_training_FK_1')->references('id')->on('sqd.users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('training_id', 'member_training_FK_2')->references('id')->on('training')->onDelete('cascade')->onUpdate('cascade');
         });
          DB::connection('sdSchema')->statement("ALTER TABLE `member_training` comment='This is a many-to-many relationship connecting members and trainings'");

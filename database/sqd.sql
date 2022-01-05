@@ -56,7 +56,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1),(2,'2014_10_12_100000_create_password_resets_table',1),(3,'2019_08_19_000000_create_failed_jobs_table',1),(4,'2019_12_14_000001_create_personal_access_tokens_table',1),(19,'2022_01_02_160613_add_column_authority_to_users_table',2),(20,'2022_01_03_155331_create_training_table',2),(21,'2022_01_03_180829_create_training_date_table',3),(22,'2022_01_03_181850_create_member_training_table',4),(23,'2022_01_03_183519_create_member_training_date_table',5);
+INSERT INTO `migrations` VALUES (10,'2014_10_12_000000_create_users_table',1),(11,'2014_10_12_100000_create_password_resets_table',1),(12,'2019_08_19_000000_create_failed_jobs_table',1),(13,'2019_12_14_000001_create_personal_access_tokens_table',1),(14,'2022_01_02_160613_add_column_authority_to_users_table',1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,7 +90,6 @@ CREATE TABLE `password_resets` (
 
 LOCK TABLES `password_resets` WRITE;
 /*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
-INSERT INTO `password_resets` VALUES ('arne.gusta@gmail.com','$2y$10$WiUACwiLzp/qBLdD4KPh.uf5GQYxRVDD1wwjJuZIJJZFqnlIxJbT6','2021-12-31 16:05:59'),('trygve.botnen@gmail.com','$2y$10$s/C7s5i1VnYQzZ8J4WTObuYObLzMqRt3HnRjwiQIBtH4l3G5tJXb.','2022-01-03 07:33:06');
 /*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,7 +144,7 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,7 +153,6 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Trygve Botnen',0,'trygve.botnen@gmail.com','2022-01-02 09:59:01','$2y$10$uQECk9xqD5zLlO3OpM/hKeOtIX8eOe6AWfrdprR6GnVQqUxHJTRXC','OmVaE1Ps6jwM29cpth1mVeRyeWQGxo7z5z7SSujEnD1PtsNCRgw9MJvsRXLP','2022-01-02 09:58:53','2022-01-03 06:58:33'),(11,'Arne',0,'arne.gusta@gmail.com','2022-01-03 05:47:35','$2y$10$p9dxRiUUenHvbBMOfRoiPuIpnOsuF/rySczxNA7xa2yB8LmhIzMc2',NULL,'2022-01-03 05:47:07','2022-01-03 05:47:35'),(12,'Lars',0,'lars.rawet@gmail.com','2022-01-03 05:54:29','$2y$10$LhgVx0mWwv38IJ8DmDZnBOV1xqiMKFY0hZR8czhetDapM8WK7s/3O','KbIwsq0NwC8iYfdsa0NK1odrHAINUVBVAF10Ysr6Nqw8bzi88TqSkGXnOiDZ','2022-01-03 05:54:10','2022-01-03 07:34:00');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,4 +169,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-03 19:33:51
+-- Dump completed on 2022-01-05  7:51:12
