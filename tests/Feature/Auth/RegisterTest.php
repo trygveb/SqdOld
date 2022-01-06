@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mcamara\LaravelLocalization\LaravelLocalization;
+//use Illuminate\Foundation\Testing\RefreshDatabase;
+//use Mcamara\LaravelLocalization\LaravelLocalization;
 
 /**
  * Register new user Tests.
@@ -28,7 +28,20 @@ class RegisterTest extends TestCase {
    //use RefreshDatabase;
 
    private $SEEDED_USERS = 0;
+   private $testUserName= 'John Doe';
+   private $testUserEmail= 'john@example.com';
+   private $testUserCorrectpassword= 'Qwerty123';
+   private $testApplication= 'sdSchema';
 
+    public static function setUpBeforeClass(): void
+    {
+//        fwrite(STDOUT, __METHOD__ . "\n");
+    }
+   
+    public static function tearDownAfterClass(): void
+    {
+//        fwrite(STDOUT, __METHOD__ . "\n");
+    }
    /**
     * Called before each test method
     * @return void
@@ -45,7 +58,7 @@ class RegisterTest extends TestCase {
    }
 
    public function tearDown(): void {
-      putenv(LaravelLocalization::ENV_ROUTE_KEY);
+//      putenv(LaravelLocalization::ENV_ROUTE_KEY);
       \DB::connection('sqd')->rollBack();
       \DB::connection('sdCalls')->rollBack();
       \DB::connection('sdSchema')->rollBack();
@@ -57,12 +70,12 @@ class RegisterTest extends TestCase {
    }
 
    protected function registerGetRoute() {
-      return route('test.showRegisterForm', ['application' => 'sdSchema']);
+      return route('showRegisterForm', ['application' => 'sdSchema']);
    }
 
    protected function registerPostRoute() {
-//      return route('register.custom');
-      return 'se/registration/sdSchema';
+      return route('register.custom');
+//      return 'se/registration/sdSchema';
    }
 
    protected function guestMiddlewareRoute() {
@@ -92,34 +105,33 @@ class RegisterTest extends TestCase {
     * */
    public function testUserCanRegister() {
       Event::fake();
-     
       $response = $this->post($this->registerPostRoute(), [
-          'name' => 'John Doe',
-          'email' => 'john@example.com',
-          'password' => 'i-love-laravel',
-          'password_confirmation' => 'i-love-laravel',
+          'name' => $this->testUserName,
+          'email' => $this->testUserEmail,
+          'password' => $this->testUserCorrectpassword,
+          'password_confirmation' => $this->testUserCorrectpassword,
+          'application' => $this->testApplication,
       ]);
 
-      $response->assertRedirect($this->successfulRegistrationRoute());
       $this->assertCount($this->SEEDED_USERS + 1, $users = User::all());
-      $user = User::where('email', 'john@example.com')->first();
+      $response->assertRedirect($this->successfulRegistrationRoute());
+      $user = User::where('email', $this->testUserEmail)->first();
       $this->assertNotNull($user);
-//        $this->assertAuthenticatedAs($user = $users->first());
-      $this->assertEquals('John Doe', $user->name);
-//        $this->assertEquals('john@example.com', $user->email);
-      $this->assertTrue(Hash::check('i-love-laravel', $user->password));
-      $this->abcTravRegisterTest($user);
+      $this->assertAuthenticatedAs($user = $users->first());
+      $this->assertEquals($this->testUserName, $user->name);
+      $this->assertTrue(Hash::check($this->testUserCorrectpassword, $user->password));
       Event::assertDispatched(Registered::class, function ($e) use ($user) {
          return $e->user->id === $user->id;
       });
    }
 
-   public function XtestUserCannotRegisterWithoutName() {
+   public function testUserCannotRegisterWithoutName() {
       $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
           'name' => '',
-          'email' => 'john@example.com',
-          'password' => 'i-love-laravel',
-          'password_confirmation' => 'i-love-laravel',
+          'email' => $this->testUserEmail,
+          'password' => $this->testUserCorrectpassword,
+          'password_confirmation' => $this->testUserCorrectpassword,
+          'application' => $this->testApplication,
       ]);
 
       $users = User::all();
@@ -132,12 +144,13 @@ class RegisterTest extends TestCase {
       $this->assertGuest();
    }
 
-   public function XtestUserCannotRegisterWithoutEmail() {
+   public function testUserCannotRegisterWithoutEmail() {
       $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
-          'name' => 'John Doe',
+          'name' => $this->testUserName,
           'email' => '',
-          'password' => 'i-love-laravel',
-          'password_confirmation' => 'i-love-laravel',
+          'password' => $this->testUserCorrectpassword,
+          'password_confirmation' => $this->testUserCorrectpassword,
+          'application' => $this->testApplication,
       ]);
 
       $users = User::all();
@@ -150,12 +163,13 @@ class RegisterTest extends TestCase {
       $this->assertGuest();
    }
 
-   public function XtestUserCannotRegisterWithInvalidEmail() {
+   public function testUserCannotRegisterWithInvalidEmail() {
       $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
-          'name' => 'John Doe',
-          'email' => 'invalid-email',
-          'password' => 'i-love-laravel',
-          'password_confirmation' => 'i-love-laravel',
+          'name' => $this->testUserName,
+          'email' => 'putte',
+          'password' => $this->testUserCorrectpassword,
+          'password_confirmation' => $this->testUserCorrectpassword,
+          'application' => $this->testApplication,
       ]);
 
       $users = User::all();
@@ -169,16 +183,16 @@ class RegisterTest extends TestCase {
       $this->assertGuest();
    }
 
-   public function XtestUserCannotRegisterWithoutPassword() {
+   public function testUserCannotRegisterWithoutPassword() {
       $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
-          'name' => 'John Doe',
-          'email' => 'john@example.com',
+          'name' => $this->testUserName,
+          'email' => $this->testUserEmail,
           'password' => '',
           'password_confirmation' => '',
+          'application' => $this->testApplication,
       ]);
 
       $users = User::all();
-
       $this->assertCount($this->SEEDED_USERS, $users);
       $response->assertRedirect($this->registerGetRoute());
       $response->assertSessionHasErrors('password');
@@ -188,12 +202,33 @@ class RegisterTest extends TestCase {
       $this->assertGuest();
    }
 
-   public function XtestUserCannotRegisterWithoutPasswordConfirmation() {
+   public function testUserCannotRegisterWithoutPasswordConfirmation() {
       $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
-          'name' => 'John Doe',
-          'email' => 'john@example.com',
-          'password' => 'i-love-laravel',
+          'name' => $this->testUserName,
+          'email' => $this->testUserEmail,
+          'password' => $this->testUserCorrectpassword,
           'password_confirmation' => '',
+          'application' => $this->testApplication,
+      ]);
+
+      $users = User::all();
+
+      $this->assertCount($this->SEEDED_USERS, $users);
+      $response->assertRedirect($this->registerGetRoute());
+      $response->assertSessionHasErrors('password_confirmation');
+      $this->assertTrue(session()->hasOldInput('name'));
+      $this->assertTrue(session()->hasOldInput('email'));
+      $this->assertFalse(session()->hasOldInput('password'));
+      $this->assertGuest();
+   }
+
+   public function testUserCannotRegisterWithPasswordsNotMatching() {
+      $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
+          'name' => $this->testUserName,
+          'email' => $this->testUserEmail,
+          'password' => $this->testUserCorrectpassword,
+          'password_confirmation' => 'helloDolly',
+          'application' => $this->testApplication,
       ]);
 
       $users = User::all();
@@ -206,13 +241,14 @@ class RegisterTest extends TestCase {
       $this->assertFalse(session()->hasOldInput('password'));
       $this->assertGuest();
    }
-
-   public function XtestUserCannotRegisterWithPasswordsNotMatching() {
+   
+   public function testUserCannotRegisterWithIllFormattedPasswords() {
       $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
-          'name' => 'John Doe',
-          'email' => 'john@example.com',
-          'password' => 'i-love-laravel',
-          'password_confirmation' => 'i-love-symfony',
+          'name' => $this->testUserName,
+          'email' => $this->testUserEmail,
+          'password' => 'helloDolly',
+          'password_confirmation' => 'helloDolly',
+          'application' => $this->testApplication,
       ]);
 
       $users = User::all();

@@ -32,7 +32,8 @@ class CustomAuthController extends Controller {
           'password' => ['required',
               config('app.passwordMinLength'),
               config('app.passwordRegex')
-      ]]);
+          ],
+      ]);
 
       $application = $request->application;
       $credentials = $request->only('email', 'password');
@@ -52,14 +53,16 @@ class CustomAuthController extends Controller {
    }
 
    public function customRegistration(Request $request) {
-
+      $data = $request->all();
       $request->validate([
           'name' => 'required|unique:users',
           'email' => 'required|email|unique:users',
           'password' => ['required',
               config('app.passwordMinLength'),
-              config('app.passwordRegex')
-          ]
+              config('app.passwordRegex'),
+              'same:password_confirmation'
+          ],
+         'password_confirmation' => 'required',
       ]);
 
       $data = $request->all();
@@ -144,7 +147,7 @@ class CustomAuthController extends Controller {
 
    // Show the Reset Password form
    public function showResetPasswordForm($token) {
-      return view('auth.reset-password')->with('token',$token);
+      return view('auth.reset-password')->with('token', $token);
    }
 
    /**

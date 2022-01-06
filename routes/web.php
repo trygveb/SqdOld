@@ -19,9 +19,9 @@ use Illuminate\Http\Request;
   | contains the "web" middleware group. Now create something great!
   |
  */
-Route::group(
-   ['prefix' => LaravelLocalization::setLocale(),
-      'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
+//Route::group(
+//   ['prefix' => LaravelLocalization::setLocale(),
+//      'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
 
 // Registration routes//////////////////////////////////////////////////////////
       // Show the registration form
@@ -82,7 +82,7 @@ Route::group(
       Route::name('sdSchema.home')->get('/sdSchema/home', [HomeController::class, 'schemaHome'])->middleware('verified');
 
 
-});
+//});
 
 // Routes not needing localization
 Route::get('/switchLocale', [HomeController::class, 'switchLocale'])->name('switchLocale');
@@ -91,7 +91,7 @@ Route::get('/switchLocale', [HomeController::class, 'switchLocale'])->name('swit
 //})->middleware('auth')->name('verification.notice');
 
 // Test routes,  no localization ///////////////////////////////////////////////
-Route::name('test.')->group(function () {
-   Route::name('showRegisterForm')->get('registration/{application}', [CustomAuthController::class, 'showRegisterForm'])->middleware('guest');
-});
+//Route::name('test.')->group(function () {
+//   Route::name('showRegisterForm')->get('registration/{application}', [CustomAuthController::class, 'showRegisterForm'])->middleware('guest');
+//});
 ////////////////////////////////////////////////////////////////////////////////
