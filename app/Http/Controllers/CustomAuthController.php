@@ -134,13 +134,17 @@ class CustomAuthController extends Controller {
 
    // Show the view with the password reset link request form:
    public function showForgotPasswordForm($application) {
-
       return view('auth.forgot-password')->with('application', $application);
    }
 
    public function showLoginForm($application) {
 //        return view('auth.login');
       return view('auth.login', ['application' => $application]);
+   }
+
+   // Show the Reset Password form
+   public function showResetPasswordForm($token) {
+      return view('auth.reset-password')->with('token',$token);
    }
 
    /**

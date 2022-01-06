@@ -34,41 +34,6 @@ Route::group(
       Route::name('verification.notice')->get('/email/showVerifyEmail/{application}', [CustomAuthController::class, 'showVerifyEmail']);
 
       
-// Login routes/////////////////////////////////////////////////////////////////
-      
-      
-      Route::name('login')->get('login/{application}', [CustomAuthController::class, 'showLoginForm']);
-      Route::name('signout')->get('signout', [CustomAuthController::class, 'signOut']);
-      
-      Route::get('welcome', [HomeController::class, 'welcome'])->name('welcome')->middleware('auth'); // For sqd.se, logged in, application not selected
-
-      Route::get('/', [HomeController::class, 'home'])->name('home'); // For sqd.se, NOT logged in, application not selected
-      Route::get('sdCalls', [HomeController::class, 'callsGuest'])->name('sdCalls.guest');
-      Route::get('sdSchema', [HomeController::class, 'schemaGuest'])->name('sdSchema.guest');
-      Route::get('/sdCalls/home', [HomeController::class, 'callsHome'])->name('sdCalls.home')->middleware('verified');
-      Route::get('/sdSchema/home', [HomeController::class, 'schemaHome'])->name('sdSchema.home')->middleware('verified');
-
-    // Show the view with the password reset link request form:
-      Route::get('/forgot-password/{application}', [CustomAuthController::class, 'showForgotPasswordForm'])
-              ->middleware('guest')
-              ->name('password.request');
-
-      // Handle the request for sending the forgotten password reset link
-      Route::post('/forgot-password', [CustomAuthController::class, 'sendPasswordResetLink'])
-              ->middleware('guest')
-              ->name('password.email');
-
-      // Display the reset password form that is displayed when the user clicks
-      //  the reset password link
-      Route::get('/reset-password/{token}', function ($token) {
-         return view('auth.reset-password', ['token' => $token]);
-      })->middleware('guest')->name('password.reset');
-
-      // Handle the password reset form submission
-      Route::post('/reset-password', [CustomAuthController::class, 'handleThePasswordResetFormSubmission'])
-         ->middleware('guest')
-         ->name('password.update');
-      
       Route::post('/email/verification-notification', [CustomAuthController::class, 'sendEmailVerificationNotification'])
         ->middleware(['auth', 'throttle:6,1'])
         ->name('verification.send');
@@ -77,7 +42,45 @@ Route::group(
       ->middleware(['auth', 'signed'])
       ->name('verification.verify');
       
-      Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom');
+// Forgoten Password routes /////////////////////////////////////////////////////
+      
+    // Show the view with the password reset link request form:
+      Route::name('password.request')->get('/forgot-password/{application}', [CustomAuthController::class, 'showForgotPasswordForm'])
+              ->middleware('guest');
+
+      // Handle the request for sending the forgotten password reset link
+      Route::name('password.email')->post('/forgot-password', [CustomAuthController::class, 'sendPasswordResetLink'])
+              ->middleware('guest');
+
+      // Display the reset password form that is displayed when the user clicks the reset password link
+      Route::name('password.reset')->get('/reset-password/{token}', [CustomAuthController::class, 'showResetPasswordForm'])
+              ->middleware('guest');
+      
+      // Handle the password reset form submission
+      Route::name('password.update')->post('/reset-password', [CustomAuthController::class, 'handleThePasswordResetFormSubmission'])
+         ->middleware('guest');
+      
+// Login/logout routes //////////////////////////////////////////////////////////
+      // Show login form
+      Route::name('login')->get('login/{application}', [CustomAuthController::class, 'showLoginForm'])->middleware('guest');
+      // Handle login request
+      Route::name('login.custom')->post('custom-login', [CustomAuthController::class, 'customLogin']);
+      // Logout user
+      Route::name('signout')->get('signout', [CustomAuthController::class, 'signOut'])->middleware('auth');
+      
+// Home and welcome routes //////////////////////////////////////////////////////
+
+      // For sqd.se, NOT logged in, application not selected
+      Route::name('home')->get('/', [HomeController::class, 'home']); 
+      
+      // Show application welcome view for guests, or authenticated but not verified (Prompt for login or registration)
+      Route::name('sdCalls.guest')->get('sdCalls', [HomeController::class, 'callsGuest']);
+      Route::name('sdSchema.guest')->get('sdSchema', [HomeController::class, 'schemaGuest']);
+      
+      // Show application welcome view for authenticated and verified users 
+      Route::name('sdCalls.home')->get('/sdCalls/home', [HomeController::class, 'callsHome'])->middleware('verified');
+      Route::name('sdSchema.home')->get('/sdSchema/home', [HomeController::class, 'schemaHome'])->middleware('verified');
+
 
 });
 

@@ -27,7 +27,7 @@ class RegisterTest extends TestCase {
 
    //use RefreshDatabase;
 
-   private $SEEDED_USERS = 2;
+   private $SEEDED_USERS = 0;
 
    /**
     * Called before each test method
@@ -35,9 +35,6 @@ class RegisterTest extends TestCase {
     */
    public function setUp(): void {
       parent::setUp();
-      $locale='se';
-//      putenv(LaravelLocalization::ENV_ROUTE_KEY);
-       putenv(LaravelLocalization::ENV_ROUTE_KEY . '=' . $locale);
       Artisan::call('db:wipe', ['--database' => 'sdCalls']);
       Artisan::call('db:wipe', ['--database' => 'sdSchema']);
       Artisan::call('db:wipe', ['--database' => 'sqd']);
@@ -56,16 +53,16 @@ class RegisterTest extends TestCase {
    }
 
    protected function successfulRegistrationRoute() {
-      return route('home');
+      return route('verification.notice', ['application' => 'sdSchema']);
    }
 
    protected function registerGetRoute() {
-//      return route('showRegisterFormTest', ['application' => 'sdSchema']);
       return route('test.showRegisterForm', ['application' => 'sdSchema']);
    }
 
    protected function registerPostRoute() {
-      return route('custom-registration');
+//      return route('register.custom');
+      return 'se/registration/sdSchema';
    }
 
    protected function guestMiddlewareRoute() {
@@ -73,15 +70,12 @@ class RegisterTest extends TestCase {
    }
 
    public function testUserCanViewARegistrationForm() {
-      printf("route=%s\n", $this->registerGetRoute());
       $response = $this->get($this->registerGetRoute());
-//      printf("%s \n",print_r($response, true));
       $response->assertSuccessful();
       $response->assertViewIs('auth.registration');
    }
 
    public function testUserCannotViewARegistrationFormWhenAuthenticated() {
-//      $user = factory(User::class)->make();
       $user = User::factory()->make();
       $response = $this->actingAs($user)->get($this->registerGetRoute());
 
@@ -96,8 +90,9 @@ class RegisterTest extends TestCase {
     * * Calls abcTravRegisterTest
     * Description
     * */
-   public function XtestUserCanRegister() {
+   public function testUserCanRegister() {
       Event::fake();
+     
       $response = $this->post($this->registerPostRoute(), [
           'name' => 'John Doe',
           'email' => 'john@example.com',

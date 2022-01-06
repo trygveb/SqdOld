@@ -16,23 +16,44 @@ class HomeController extends Controller {
    public function __construct() {
       //$this->middleware('auth');
    }
+
+
+   /**
+    * Show sdCalls welcome view for guests
+    * @return view
+    */
    public function callsGuest() {
-      return view('sdCalls.welcome', ['showAuthenticationLinks' => true]);
+      return view('sdCalls.welcome');
    }
 
+   /**
+    * Show sdCalls welcome view for authenticated and verified users
+    * @return view
+    */
    public function callsHome() {
-      return view('sdCalls.welcome', ['showAuthenticationLinks' => true]);
+      return view('sdCalls.welcome');
    }
 
+   /**
+    *  For sqd.se, NOT logged in, application not selected
+    * @return view
+    */
    public function home() {
-      return view('home', ['showAuthenticationLinks' => false]);
-   
-    }
-
-   public function schemaGuest() {
-      return view('sdSchema.welcome', ['showAuthenticationLinks' => true]);
+      return view('home');
    }
 
+   /**
+    * Show sdSchema welcome view for guests
+    * @return view
+    */
+   public function schemaGuest() {
+      return view('sdSchema.welcome');
+   }
+
+   /**
+    * Show sdSchema welcome view for authenticated and verified users
+    * @return view
+    */
    public function schemaHome() {
       $count = 0;
       if (Auth::check()) {
@@ -41,26 +62,28 @@ class HomeController extends Controller {
 //         if ($count == 1) {
 //            return redirect(route('schema.index', ['trainingId' => $myMemberTrainings[0]->training_id]));
 //         } else {
-            return view('sdSchema.welcome', [
-                'myTrainingsCount' => $count,
-            ]);
-         }
+         return view('sdSchema.welcome', [
+             'myTrainingsCount' => $count,
+         ]);
+      }
 //      } else {
 //         abort(403, 'Unauthorized action.');
 //      }
    }
 
    public function switchLocale() {
-       if (config('app.locale') == 'en') {
+      if (config('app.locale') == 'en') {
          config(['app.locale' => 'se']);
       } else {
          config(['app.locale' => 'en']);
       }
-      return redirect()->back()->withSuccess('You have switched to '.config('app.locale'));;
+      return redirect()->back()->withSuccess('You have switched to ' . config('app.locale'));
+      ;
    }
-   
+
    public function welcome() {
-      return view('welcome', ['showAuthenticationLinks' => false]);
-      
+//      return view('welcome', ['showAuthenticationLinks' => false]);
+      return view('welcome');
    }
+
 }
