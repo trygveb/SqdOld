@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
+use Tests\Feature\FixtureTrait;
 //use Illuminate\Foundation\Testing\RefreshDatabase;
 //use Mcamara\LaravelLocalization\LaravelLocalization;
 
@@ -25,7 +26,7 @@ use Illuminate\Auth\Events\Registered;
  */
 class RegisterTest extends TestCase {
 
-   //use RefreshDatabase;
+   use FixtureTrait;
 
    private $SEEDED_USERS = 0;
    private $testUserName= 'John Doe';
@@ -46,24 +47,6 @@ class RegisterTest extends TestCase {
     * Called before each test method
     * @return void
     */
-   public function setUp(): void {
-      parent::setUp();
-      Artisan::call('db:wipe', ['--database' => 'sdCalls']);
-      Artisan::call('db:wipe', ['--database' => 'sdSchema']);
-      Artisan::call('db:wipe', ['--database' => 'sqd']);
-      Artisan::call('migrate');
-      \DB::connection('sdSchema')->beginTransaction();
-      \DB::connection('sdCalls')->beginTransaction();
-      \DB::connection('sqd')->beginTransaction();
-   }
-
-   public function tearDown(): void {
-//      putenv(LaravelLocalization::ENV_ROUTE_KEY);
-      \DB::connection('sqd')->rollBack();
-      \DB::connection('sdCalls')->rollBack();
-      \DB::connection('sdSchema')->rollBack();
-      parent::tearDown();
-   }
 
    protected function successfulRegistrationRoute() {
       return route('verification.notice', ['application' => 'sdSchema']);

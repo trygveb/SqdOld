@@ -30,17 +30,15 @@ use Illuminate\Http\Request;
       // Handle the registration form
       Route::name('register.custom')->post('custom-registration', [CustomAuthController::class, 'customRegistration']);
 
-      //Show the notice which tells the user to open the mail eith a link fot email verification
+      //Show the notice which tells the user to open the mail With a link fot email verification
       Route::name('verification.notice')->get('/email/showVerifyEmail/{application}', [CustomAuthController::class, 'showVerifyEmail']);
 
       
-      Route::post('/email/verification-notification', [CustomAuthController::class, 'sendEmailVerificationNotification'])
-        ->middleware(['auth', 'throttle:6,1'])
-        ->name('verification.send');
+      Route::name('verification.send')->post('/email/verification-notification', [CustomAuthController::class, 'sendEmailVerificationNotification'])
+        ->middleware(['auth', 'throttle:6,1']);
         
-      Route::get('/email/verify/{id}/{hash}',  [CustomAuthController::class, 'handleEmailVerification'])
-      ->middleware(['auth', 'signed'])
-      ->name('verification.verify');
+      Route::name('verification.verify')->get('/email/verify/{id}/{hash}',  [CustomAuthController::class, 'handleEmailVerification'])
+      ->middleware(['auth', 'signed']);
       
 // Forgoten Password routes /////////////////////////////////////////////////////
       
