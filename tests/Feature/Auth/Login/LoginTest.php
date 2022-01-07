@@ -18,6 +18,7 @@ class LoginTest extends TestCase {
    private $testUserEmail = 'john@example.com';
    private $testUserCorrectpassword = 'Qwerty123';
    private $testApplication = 'sdSchema';
+   private $tooManyRequestsStatus= 429;
 
    protected function successfulLoginRoute() {
       return route($this->testApplication . '.home');
@@ -156,9 +157,6 @@ class LoginTest extends TestCase {
    }
 
    public function testUserCannotMakeMoreThanFiveAttemptsInOneMinute() {
-//      $user = factory(User::class)->create([
-//          'password' => Hash::make($password = 'i-love-laravel'),
-//      ]);
       $user = User::factory()->create([
           'password' => Hash::make($password = 'i-love-laravel'),
       ]);
@@ -171,21 +169,7 @@ class LoginTest extends TestCase {
          ]);
       }
 
-      $response->assertRedirect($this->loginGetRoute());
-      $response->assertSessionHasErrors('email');
-      $this->assertRegExp(
-              $this->getTooManyLoginAttemptsMessage(),
-              collect(
-                      $response
-                              ->baseResponse
-                              ->getSession()
-                              ->get('errors')
-                              ->getBag('default')
-                              ->get('email')
-              )->first()
-      );
-      $this->assertTrue(session()->hasOldInput('email'));
-      $this->assertFalse(session()->hasOldInput('password'));
+     $response->assertStatus($this->tooManyRequestsStatus);
       $this->assertGuest();
    }
 

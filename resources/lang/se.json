@@ -42,6 +42,7 @@
     "Reset Password Notification for": "Återställning av lösenord för",
     "Show password" : "Visa lösenord",
     "Sorry, login details are not valid" : "Tyvärr, inloggningsuppgifterna är inte giltiga",
+    "Sorry, you have made too many reuests in one minute. Please wait a while before retrying" :"Tyvärr, du har gjort för många försök på en minut. Vänta ett tag innan du försöker igen",
     "Thanks for signing up to  :application! You are noW logged in." : "Tack för att du registrerat dig till :application! Du är nu inloggad.",
     "The email has the sender \":mailFromAdress\" and the title \":title\" and is signed with \":signed\"" : 
         "E-postmeddelandet har avsändare \":mailFromAdress\" och titeln \":title\" och är undertecknat med \":signed\"",

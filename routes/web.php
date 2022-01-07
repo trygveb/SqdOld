@@ -62,7 +62,7 @@ use Illuminate\Http\Request;
       // Show login form
       Route::name('login')->get('login/{application}', [CustomAuthController::class, 'showLoginForm'])->middleware('guest');
       // Handle login request
-      Route::name('login.custom')->post('custom-login', [CustomAuthController::class, 'customLogin']);
+      Route::name('login.custom')->post('custom-login', [CustomAuthController::class, 'customLogin'])->middleware(env('LOGIN_THROTTLE','throttle:5,1'));
       // Logout user
       Route::name('signout')->get('signout', [CustomAuthController::class, 'signOut'])->middleware('auth');
       
