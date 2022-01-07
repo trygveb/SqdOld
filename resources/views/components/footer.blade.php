@@ -7,6 +7,6 @@
     @else
     <span class="text-muted" >{{$subApp}} &nbsp;@include('sdSchema.version',[])&nbsp;&nbsp;(@include('sdSchema.versionTime',[]))</span>
     @endif
-    
+@include('cookieConsent::index')
   </div>
 </footer>  

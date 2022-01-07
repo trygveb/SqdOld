@@ -2,188 +2,191 @@
 
 namespace Tests\Feature\Auth;
 
-use App\User;
+use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Feature\FixtureTrait;
 
-class LoginTest extends TestCase
-{
-    use  FixtureTrait;
-    private $SEEDED_USERS=0;
-    private $application='sdSchema';
-    
-    protected function successfulLoginRoute()
-    {
-        return route('home');
-    }
+class LoginTest extends TestCase {
 
-    protected function loginGetRoute()
-    {
-        return route('login',['application' => $this->application]);
-    }
+   use FixtureTrait;
 
-    protected function loginPostRoute()
-    {
-        return route('login.custom');
-    }
+   private $SEEDED_USERS = 0;
+   private $testUserName = 'John Doe';
+   private $testUserEmail = 'john@example.com';
+   private $testUserCorrectpassword = 'Qwerty123';
+   private $testApplication = 'sdSchema';
 
-    protected function logoutRoute()
-    {
-        return route('signout');
-    }
+   protected function successfulLoginRoute() {
+      return route($this->testApplication . '.home');
+   }
 
-    protected function successfulLogoutRoute()
-    {
-        return '/';
-    }
+   protected function loginGetRoute() {
+      return route('login', ['application' => $this->testApplication]);
+   }
 
-    protected function guestMiddlewareRoute()
-    {
-        return route('home');
-    }
+   protected function loginPostRoute() {
+      return route('login.custom');
+   }
 
-    protected function getTooManyLoginAttemptsMessage()
-    {
-        return sprintf('/^%s$/', str_replace('\:seconds', '\d+', preg_quote(__('auth.throttle'), '/')));
-    }
+   protected function logoutRoute() {
+      return route('signout');
+   }
 
-    public function testUserCanViewALoginForm()
-    {
-        $response = $this->get($this->loginGetRoute());
+   protected function successfulLogoutRoute() {
+      return '/';
+   }
 
-        $response->assertSuccessful();
-        $response->assertViewIs('auth.login');
-    }
+   protected function guestMiddlewareRoute() {
+      return route('home');
+   }
 
-    public function xtestUserCannotViewALoginFormWhenAuthenticated()
-    {
-        $user = factory(User::class)->make();
+   protected function getTooManyLoginAttemptsMessage() {
+      return sprintf('/^%s$/', str_replace('\:seconds', '\d+', preg_quote(__('auth.throttle'), '/')));
+   }
 
-        $response = $this->actingAs($user)->get($this->loginGetRoute());
+   public function testUserCanViewALoginForm() {
+      $response = $this->get($this->loginGetRoute());
 
-        $response->assertRedirect($this->guestMiddlewareRoute());
-    }
+      $response->assertSuccessful();
+      $response->assertViewIs('auth.login');
+   }
 
-    public function xtestUserCanLoginWithCorrectCredentials()
-    {
-        $user = factory(User::class)->create([
-            'password' => Hash::make($password = 'i-love-laravel'),
-        ]);
+   public function testUserCannotViewALoginFormWhenAuthenticated() {
+      $user = User::factory()->make();
+//        $user = factory(User::class)->make();
 
-        $response = $this->post($this->loginPostRoute(), [
-            'email' => $user->email,
-            'password' => $password,
-        ]);
+      $response = $this->actingAs($user)->get($this->loginGetRoute());
 
-        $response->assertRedirect($this->successfulLoginRoute());
-        $this->assertAuthenticatedAs($user);
-    }
+      $response->assertRedirect($this->guestMiddlewareRoute());
+   }
 
-    public function xtestRememberMeFunctionality()
-    {
-        $user = factory(User::class)->create([
-            'id' => random_int( $this->SEEDED_USERS+1, 100),
-            'password' => Hash::make($password = 'i-love-laravel'),
-        ]);
+   /**
+    * In this test we use a password which does not pass the format test
+    * because the application should let that pass at login, but not at registration
+    * nor at password reset
+    */
+   public function testUserCanLoginWithCorrectCredentials() {
+      $user = User::factory()->create([
+          'password' => Hash::make($password = 'i-love-laravel'),
+      ]);
 
-        $response = $this->post($this->loginPostRoute(), [
-            'email' => $user->email,
-            'password' => $password,
-            'remember' => 'on',
-        ]);
+      $response = $this->post($this->loginPostRoute(), [
+          'email' => $user->email,
+          'password' => $password,
+          'application' => $this->testApplication
+      ]);
 
-        $user = $user->fresh();
+      $response->assertRedirect($this->successfulLoginRoute());
+      $this->assertAuthenticatedAs($user);
+   }
 
-        $response->assertRedirect($this->successfulLoginRoute());
-        $response->assertCookie(Auth::guard()->getRecallerName(), vsprintf('%s|%s|%s', [
-            $user->id,
-            $user->getRememberToken(),
-            $user->password,
-        ]));
-        $this->assertAuthenticatedAs($user);
-    }
+   public function testRememberMeFunctionality() {
+      $user = User::factory()->create([
+          'id' => random_int($this->SEEDED_USERS + 1, 100),
+          'password' => Hash::make($password = $this->testUserCorrectpassword),
+      ]);
 
-    public function xtestUserCannotLoginWithIncorrectPassword()
-    {
-        $user = factory(User::class)->create([
-            'password' => Hash::make('i-love-laravel'),
-        ]);
+      $response = $this->post($this->loginPostRoute(), [
+          'email' => $user->email,
+          'password' => $this->testUserCorrectpassword,
+          'application' => $this->testApplication,
+          'remember' => 'on',
+      ]);
 
-        $response = $this->from($this->loginGetRoute())->post($this->loginPostRoute(), [
-            'email' => $user->email,
-            'password' => 'invalid-password',
-        ]);
+      $user = $user->fresh();
 
-        $response->assertRedirect($this->loginGetRoute());
-        $response->assertSessionHasErrors('email');
-        $this->assertTrue(session()->hasOldInput('email'));
-        $this->assertFalse(session()->hasOldInput('password'));
-        $this->assertGuest();
-    }
+      $response->assertRedirect($this->successfulLoginRoute());
+      $response->assertCookie(Auth::guard()->getRecallerName(), vsprintf('%s|%s|%s', [
+          $user->id,
+          $user->getRememberToken(),
+          $user->password,
+      ]));
+      $this->assertAuthenticatedAs($user);
+   }
 
-    public function xtestUserCannotLoginWithEmailThatDoesNotExist()
-    {
-        $response = $this->from($this->loginGetRoute())->post($this->loginPostRoute(), [
-            'email' => 'nobody@example.com',
-            'password' => 'invalid-password',
-        ]);
+   public function testUserCannotLoginWithIncorrectPassword() {
+      $user = User::factory()->create([
+          'password' => Hash::make('i-love-laravel'),
+      ]);
 
-        $response->assertRedirect($this->loginGetRoute());
-        $response->assertSessionHasErrors('email');
-        $this->assertTrue(session()->hasOldInput('email'));
-        $this->assertFalse(session()->hasOldInput('password'));
-        $this->assertGuest();
-    }
+      $response = $this->from($this->loginGetRoute())->post($this->loginPostRoute(), [
+          'email' => $user->email,
+          'password' => 'invalid-password',
+          'application' => $this->testApplication,
+      ]);
 
-    public function xtestUserCanLogout()
-    {
-        $this->be(factory(User::class)->create());
+      $response->assertRedirect($this->loginGetRoute());
+      $response->assertSessionHasErrors('email');
+      $this->assertFalse(session()->hasOldInput('email'));
+      $this->assertFalse(session()->hasOldInput('password'));
+      $this->assertGuest();
+   }
 
-        $response = $this->post($this->logoutRoute());
+   public function testUserCannotLoginWithEmailThatDoesNotExist() {
+      $response = $this->from($this->loginGetRoute())->post($this->loginPostRoute(), [
+          'email' => 'nobody@example.com',
+          'password' => 'invalid-password',
+          'application' => $this->testApplication,
+      ]);
 
-        $response->assertRedirect($this->successfulLogoutRoute());
-        $this->assertGuest();
-    }
+      $response->assertRedirect($this->loginGetRoute());
+      $response->assertSessionHasErrors('email');
+      $this->assertFalse(session()->hasOldInput('email'));
+      $this->assertFalse(session()->hasOldInput('password'));
+      $this->assertGuest();
+   }
 
-    public function xtestUserCannotLogoutWhenNotAuthenticated()
-    {
-        $response = $this->post($this->logoutRoute());
+   public function testUserCanLogout() {
+      $this->be(User::factory()->create());
 
-        $response->assertRedirect($this->successfulLogoutRoute());
-        $this->assertGuest();
-    }
+      $response = $this->get($this->logoutRoute());
 
-    public function xtestUserCannotMakeMoreThanFiveAttemptsInOneMinute()
-    {
-        $user = factory(User::class)->create([
-            'password' => Hash::make($password = 'i-love-laravel'),
-        ]);
+      $response->assertRedirect($this->successfulLogoutRoute());
+      $this->assertGuest();
+   }
 
-        foreach (range(0, 5) as $_) {
-            $response = $this->from($this->loginGetRoute())->post($this->loginPostRoute(), [
-                'email' => $user->email,
-                'password' => 'invalid-password',
-            ]);
-        }
+   public function testUserCannotLogoutWhenNotAuthenticated() {
+      $response = $this->get($this->logoutRoute());
 
-        $response->assertRedirect($this->loginGetRoute());
-        $response->assertSessionHasErrors('email');
-        $this->assertRegExp(
-            $this->getTooManyLoginAttemptsMessage(),
-            collect(
-                $response
-                ->baseResponse
-                ->getSession()
-                ->get('errors')
-                ->getBag('default')
-                ->get('email')
-            )->first()
-        );
-        $this->assertTrue(session()->hasOldInput('email'));
-        $this->assertFalse(session()->hasOldInput('password'));
-        $this->assertGuest();
-    }
+      $response->assertRedirect($this->successfulLogoutRoute());
+      $this->assertGuest();
+   }
+
+   public function testUserCannotMakeMoreThanFiveAttemptsInOneMinute() {
+//      $user = factory(User::class)->create([
+//          'password' => Hash::make($password = 'i-love-laravel'),
+//      ]);
+      $user = User::factory()->create([
+          'password' => Hash::make($password = 'i-love-laravel'),
+      ]);
+
+      foreach (range(0, 5) as $_) {
+         $response = $this->from($this->loginGetRoute())->post($this->loginPostRoute(), [
+             'email' => $user->email,
+             'password' => 'invalid-password',
+             'application' => $this->testApplication,
+         ]);
+      }
+
+      $response->assertRedirect($this->loginGetRoute());
+      $response->assertSessionHasErrors('email');
+      $this->assertRegExp(
+              $this->getTooManyLoginAttemptsMessage(),
+              collect(
+                      $response
+                              ->baseResponse
+                              ->getSession()
+                              ->get('errors')
+                              ->getBag('default')
+                              ->get('email')
+              )->first()
+      );
+      $this->assertTrue(session()->hasOldInput('email'));
+      $this->assertFalse(session()->hasOldInput('password'));
+      $this->assertGuest();
+   }
+
 }

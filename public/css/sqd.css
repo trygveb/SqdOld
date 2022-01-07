@@ -119,3 +119,9 @@ table, tr, td {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+div.cookie-consent {
+    margin-top: 50px;
+}
+button.cookie-consent__agree {
+    margin-left:10px;
+}

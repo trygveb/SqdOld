@@ -30,14 +30,15 @@ class CustomAuthController extends Controller {
       $request->validate([
           'email' => 'required',
           'password' => ['required',
-              config('app.passwordMinLength'),
-              config('app.passwordRegex')
+//              config('app.passwordMinLength'),  // This sould only be checked at registration or at password reset
+//              config('app.passwordRegex')
           ],
       ]);
 
       $application = $request->application;
+      $remember= $request->remember;
       $credentials = $request->only('email', 'password');
-      if (Auth::attempt($credentials)) {
+      if (Auth::attempt($credentials, $remember)) {
          if (!Auth::user()->hasVerifiedEmail()) {
 
             // Auth::logout();
@@ -49,7 +50,8 @@ class CustomAuthController extends Controller {
                          ->withSuccess('Signed in');
       }
 
-      return redirect(route('login', ['application' => $application]))->withSuccess(__('Sorry, login details are not valid'));
+     // return redirect(route('login', ['application' => $application]))->withSuccess(__('Sorry, login details are not valid'));
+     return redirect(route('login', ['application' => $application]))->withErrors(['email' => [__('Sorry, login details are not valid')]]);
    }
 
    public function customRegistration(Request $request) {

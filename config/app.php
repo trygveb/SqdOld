@@ -138,7 +138,7 @@ return [
     'passwordFormat2' => env('PASSWORD_FORMAT_2'),
     'passwordFormat3' => env('PASSWORD_FORMAT_3'),
     'passwordFormat4' => env('PASSWORD_FORMAT_4'),
-    
+    'cookieLifetime' => env('COOKIE_LIFETIME', 183),  // Lifetime for cookie for cookie consent
 
     /*
     |--------------------------------------------------------------------------
