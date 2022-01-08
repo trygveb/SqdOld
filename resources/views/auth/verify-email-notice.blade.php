@@ -12,10 +12,16 @@
    } 
 @endphp
 <div class="container">
+    <h2>Verify Email Notice</h2>
     <div class="row justify-content-center">
       <div class="col-md-8">
          <div class="card">
              <!--emailVerified= {{$emailVerified}}  status={{$status}}<br>-->
+         @if (session('status') == 'verification-link-sent')
+            <div id="verificatinLinkSent" class="alert alert-success">
+               {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+            </div>
+         @endif
 
          @if ($emailVerified == 'YES')
             <div class="alert alert-success">
@@ -55,7 +61,7 @@
                
                <br><br>
                {{__('If you did not receive the email, we will')}}
-                  <button style="padding:0;vertical-align:inherit" class="btn btn-link" role="link" type="submit" >
+                  <button style="padding:0;vertical-align:inherit" class="btn btn-link" role="link" type="submit" onclick="sendNewClicked()">
                {{__('gladly send you another')}}.</button>
                <br><br>
                   *){{__('The email has the sender ":mailFromAdress" and the title ":title" and is signed with ":signed"',
@@ -65,14 +71,11 @@
                     <br>
             @endif
          @endif
-         @if (session('status') == 'verification-link-sent')
-               {{ __('A new verification link has been sent to the email address you provided during registration.') }}
-         @endif
-         @if ($emailVerified == 'YES' || session('status') == 'verification-link-sent')
+         @if ($emailVerified == 'YES')
                <a style="margin-left:5px;" onclick="closeWindow()" href="" class="btn btn-secondary"> {{ __('Close window')}}</a>
          @else
                <br>
-               <a class="btn btn-primary" href="{{ route($application.'.home',[]) }}">{{__('Continue')}}</a>
+               <a class="btn btn-primary" href="{{ route($application.'.guest',[]) }}">{{__('Continue')}}</a>
          @endif
              </div>
             </form>
@@ -95,6 +98,9 @@
       } else {
          txt = "You pressed Cancel!";
       } 
+   }
+   function sendNewClicked() {
+      document.getElementById('verificatinLinkSent').innerHTML ="";
    }
 </script>
 

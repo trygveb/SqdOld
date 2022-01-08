@@ -8,7 +8,7 @@
     
    @guest
    <br>
-   <a class="nav-link" href="{{ route('login',['application' =>'sdSchema']) }}">{{ __('Login') }}</a>
+   <a class="nav-link" href="{{ route('showLoginForm',['application' =>'sdSchema']) }}">{{ __('Login') }}</a>
    {{ __('or') }}
    <a class="nav-link" href="{{ route('showRegisterForm', ['application' =>'sdSchema']) }}">{{ __('Register') }}</a>       
    @endguest

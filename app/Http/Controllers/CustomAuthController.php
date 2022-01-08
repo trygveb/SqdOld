@@ -51,7 +51,7 @@ class CustomAuthController extends Controller {
       }
 
      // return redirect(route('login', ['application' => $application]))->withSuccess(__('Sorry, login details are not valid'));
-     return redirect(route('login', ['application' => $application]))->withErrors(['email' => [__('Sorry, login details are not valid')]]);
+     return redirect(route('showLoginForm', ['application' => $application]))->withErrors(['email' => [__('Sorry, login details are not valid')]]);
    }
 
    /**
@@ -111,7 +111,7 @@ class CustomAuthController extends Controller {
                       }
       );
 
-      //return $status === Password::PASSWORD_RESET ? redirect()->route('login')->with('status', __($status)) : back()->withErrors(['email' => [__($status)]]);
+      //return $status === Password::PASSWORD_RESET ? redirect()->route('showLoginForm')->with('status', __($status)) : back()->withErrors(['email' => [__($status)]]);
       return $status === Password::PASSWORD_RESET ? back()->with('status', __($status)) : back()->withErrors(['email' => [__($status)]]);
    }
 
@@ -124,7 +124,7 @@ class CustomAuthController extends Controller {
       $user = $request->user();
       //$user->application = $request->application;
       $user->sendEmailVerificationNotification();
-      return back()->with('status', __('Verification link sent!'));
+      return back()->with('status', 'verification-link-sent');
    }
 
    public function sendPasswordResetLink(Request $request) {

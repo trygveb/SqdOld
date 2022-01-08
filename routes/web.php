@@ -3,11 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\HomeController;
-use Illuminate\Http\Request;
-//use Illuminate\Auth\Events\PasswordReset;
-//use Illuminate\Support\Facades\Hash;
-//use Illuminate\Support\Facades\Password;
-//use Illuminate\Support\Str;
 
 /*
   |--------------------------------------------------------------------------
@@ -38,8 +33,8 @@ use Illuminate\Http\Request;
         ->middleware(['auth', 'throttle:6,1']);
         
       // Handle the request for email verification sent from the email sent to the user. 
-      // NOTE! Do not change the name of this route, as it is tryggered by the event(new Registered($user))
-      Route::name('verification.verifyx')->get('/email/verify/{id}/{hash}',  [CustomAuthController::class, 'handleEmailVerification'])
+      // NOTE! Do not change the name of this route, as it is triggered by the event(new Registered($user))
+      Route::name('verification.verify')->get('/email/verify/{id}/{hash}',  [CustomAuthController::class, 'handleEmailVerification'])
       ->middleware(['auth', 'signed']);
       
 // Forgoten Password routes /////////////////////////////////////////////////////
@@ -62,7 +57,7 @@ use Illuminate\Http\Request;
       
 // Login/logout routes //////////////////////////////////////////////////////////
       // Show login form
-      Route::name('login')->get('login/{application}', [CustomAuthController::class, 'showLoginForm'])->middleware('guest');
+      Route::name('showLoginForm')->get('login/{application}', [CustomAuthController::class, 'showLoginForm'])->middleware('guest');
       // Handle login request
       Route::name('login.custom')->post('custom-login', [CustomAuthController::class, 'customLogin'])->middleware(env('LOGIN_THROTTLE','throttle:5,1'));
       // Logout user

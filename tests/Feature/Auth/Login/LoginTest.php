@@ -25,7 +25,7 @@ class LoginTest extends TestCase {
    }
 
    protected function loginGetRoute() {
-      return route('login', ['application' => $this->testApplication]);
+      return route('showLoginForm', ['application' => $this->testApplication]);
    }
 
    protected function loginPostRoute() {
