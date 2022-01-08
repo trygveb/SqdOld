@@ -70,17 +70,20 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-                                @if (Route::has('password.request'))  
-                                    <a class="btn btn-link" href="{{ route('password.request',['application' => $application]) }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
+                        <div class="row no-gutters">
+                           <div class="col-sm">
+                              <a class="nav-link" href="{{ route('showRegisterForm', ['application' => $application]) }}">{{ __('Register') }}</a>       
+                           </div>
+                           <div class="col-sm">
+                              <a class="btn btn-link" href="{{ route('showForgotPasswordForm',['application' => $application]) }}">
+                                    {{ __('Forgot Your Password?') }}
+                              </a>
+                           </div>
+                           <div class="col-sm">
+                              <button type="submit" class="btn btn-primary">
+                                 {{ __('Login') }}
+                              </button>
+                           </div>
                         </div>
                     </form>
                 </div>

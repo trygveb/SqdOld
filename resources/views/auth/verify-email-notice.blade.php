@@ -43,7 +43,7 @@
                <button style="padding:0;vertical-align:inherit" class="btn btn-link" role="link" type="submit" >happy to send you a new link.</button>
                Keep in mind that these messages may end up in your junk email folder.                     
             @else
-               {{__('Thanks for signing up to  :application! You are noW logged in.', ['application' => $application])}}
+               {{__('Thanks for signing up to  :application! You are now logged in.', ['application' => $application])}}
                <p>
                   <span style="font-size:larger;">
                      <b>{{__('Before proceeding, however, you will need to verify your email address')}}</b>

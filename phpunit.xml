@@ -11,6 +11,9 @@
         <testsuite name="Login">
             <directory suffix="Test.php">./tests/Feature/Auth/Login</directory>
         </testsuite>
+        <testsuite name="Password">
+            <directory suffix="Test.php">./tests/Feature/Auth/Password</directory>
+        </testsuite>
         <testsuite name="Register">
             <directory suffix="Test.php">./tests/Feature/Auth/Register</directory>
         </testsuite>

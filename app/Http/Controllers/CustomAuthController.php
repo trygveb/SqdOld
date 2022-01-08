@@ -54,7 +54,12 @@ class CustomAuthController extends Controller {
      return redirect(route('login', ['application' => $application]))->withErrors(['email' => [__('Sorry, login details are not valid')]]);
    }
 
-   public function customRegistration(Request $request) {
+   /**
+    * Handle the registration request
+    * @param Request $request
+    * @return type
+    */
+   public function handleRegistration(Request $request) {
       $data = $request->all();
       $request->validate([
           'name' => 'required|unique:users',

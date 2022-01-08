@@ -27,8 +27,8 @@ use Illuminate\Http\Request;
       // Show the registration form
       Route::name('showRegisterForm')->get('registration/{application}', [CustomAuthController::class, 'showRegisterForm'])->middleware('guest');
 
-      // Handle the registration form
-      Route::name('register.custom')->post('custom-registration', [CustomAuthController::class, 'customRegistration']);
+      // Handle the registration request
+      Route::name('handleRegistration')->post('custom-registration', [CustomAuthController::class, 'handleRegistration']);
 
       //Show the notice which tells the user to open the mail With a link fot email verification
       Route::name('verification.notice')->get('/email/showVerifyEmail/{application}', [CustomAuthController::class, 'showVerifyEmail']);
@@ -37,13 +37,15 @@ use Illuminate\Http\Request;
       Route::name('verification.send')->post('/email/verification-notification', [CustomAuthController::class, 'sendEmailVerificationNotification'])
         ->middleware(['auth', 'throttle:6,1']);
         
-      Route::name('verification.verify')->get('/email/verify/{id}/{hash}',  [CustomAuthController::class, 'handleEmailVerification'])
+      // Handle the request for email verification sent from the email sent to the user. 
+      // NOTE! Do not change the name of this route, as it is tryggered by the event(new Registered($user))
+      Route::name('verification.verifyx')->get('/email/verify/{id}/{hash}',  [CustomAuthController::class, 'handleEmailVerification'])
       ->middleware(['auth', 'signed']);
       
 // Forgoten Password routes /////////////////////////////////////////////////////
       
     // Show the view with the password reset link request form:
-      Route::name('password.request')->get('/forgot-password/{application}', [CustomAuthController::class, 'showForgotPasswordForm'])
+      Route::name('showForgotPasswordForm')->get('/forgot-password/{application}', [CustomAuthController::class, 'showForgotPasswordForm'])
               ->middleware('guest');
 
       // Handle the request for sending the forgotten password reset link

@@ -57,7 +57,7 @@ class RegisterTest extends TestCase {
    }
 
    protected function registerPostRoute() {
-      return route('register.custom');
+      return route('handleRegistration');
 //      return 'se/registration/sdSchema';
    }
 

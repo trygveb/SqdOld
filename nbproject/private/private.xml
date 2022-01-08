@@ -4,14 +4,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Development/VagrantCode/sqd/tests/Feature/Auth/Login/LoginTest.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/lang/se.json</file>
-            <file>file:/D:/Development/VagrantCode/sqd/config/app.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/login.blade.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/routes/web.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/tests/Feature/Auth/Password/ResetPasswordTest.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/app/Providers/AuthServiceProvider.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/PasswordFlow.xml</file>
             <file>file:/D:/Development/VagrantCode/sqd/tests/Feature/Auth/VerifyEmail/EmailVerificationTest.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/CustomAuthController.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/phpunit.xml</file>
-            <file>file:/D:/Development/VagrantCode/sqd/.env</file>
-            <file>file:/D:/Development/VagrantCode/sqd/tests/Feature/Auth/AuthenticationTXest.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/reset-password.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/forgot-password.blade.php</file>
         </group>
     </open-files>
 </project-private>

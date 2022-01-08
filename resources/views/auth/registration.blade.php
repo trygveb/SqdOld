@@ -13,7 +13,7 @@
          @endif
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register.custom') }}">
+                    <form method="POST" action="{{ route('handleRegistration') }}">
                         @csrf
                         <input type="hidden" name="application" value="{{$application}}" />
                         <div class="form-group row">
