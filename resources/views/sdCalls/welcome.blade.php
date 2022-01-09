@@ -8,9 +8,9 @@
     
    @guest
       <br>
-      <a class="nav-link" href="{{ route('showLoginForm',['application' =>'sdCalls']) }}">{{ __('Login') }}</a>
+      <a style="pointer-events: none" class="nav-link" href="{{ route('showLoginForm',['application' =>'sdCalls']) }}">{{ __('Login') }}</a>
       {{ __('or') }}
-      <a class="nav-link" href="{{ route('showRegisterForm',['application' =>'sdCalls']) }}">{{ __('Register') }}</a>       
+      <a style="pointer-events: none" class="nav-link" href="{{ route('showRegisterForm',['application' =>'sdCalls']) }}">{{ __('Register') }}</a>       
    @endguest
    @auth
    @if (! Auth::user()->hasVerifiedEmail())
