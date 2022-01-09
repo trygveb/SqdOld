@@ -14,7 +14,7 @@
    @endguest
    @auth
    @if (! Auth::user()->hasVerifiedEmail())
-   {{__('Please confirm your email')}}!
+   <a href="{{route('verification.notice',['application' => 'sdSchema'])}}">{{__('Please confirm your email')}}!</a>
    @else
    <!--$myTrainingsCount-->
       @if (0 > 0)

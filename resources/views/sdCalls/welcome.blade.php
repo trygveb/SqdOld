@@ -14,9 +14,21 @@
    @endguest
    @auth
    @if (! Auth::user()->hasVerifiedEmail())
-   {{__('Please confirm your email')}}!
+      <a href="{{route('verification.notice',['application' => 'sdSchema'])}}">{{__('Please confirm your email')}}!</a>
    @endif
    @endauth
-   </div>    
+   </div>
+   <div class="row justify-content-center">
+      <div class="col-md-8">
+         <div class="card">
+            <div class="card-header">SdCalls information</div>
+                <div class="card-body">
+                    SdCalls is an application under development.<br>
+                    Currently theres is nothing to see here.<br>
+                    Welcome back later!
+                </div>
+         </div>
+      </div>
+   </div>
 </div>
 @endsection

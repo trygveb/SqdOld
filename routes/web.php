@@ -25,7 +25,7 @@ use App\Http\Controllers\HomeController;
       // Handle the registration request
       Route::name('handleRegistration')->post('custom-registration', [CustomAuthController::class, 'handleRegistration']);
 
-      //Show the notice which tells the user to open the mail With a link fot email verification
+      //Show the notice which tells the user to open the mail with a link for email verification
       Route::name('verification.notice')->get('/email/showVerifyEmail/{application}', [CustomAuthController::class, 'showVerifyEmail']);
 
       
