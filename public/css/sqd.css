@@ -125,3 +125,11 @@ div.cookie-consent {
 button.cookie-consent__agree {
     margin-left:10px;
 }
+code {
+  font-family: Consolas,"courier new";
+  color: crimson;
+  background-color: #f1f1f1;
+  padding: 2px;
+  font-size: 105%;
+}
+

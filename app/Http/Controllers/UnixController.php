@@ -12,7 +12,8 @@ class UnixController extends Controller {
    public function index() {
       return view('unix.createApacheConfFiles', [
           'fileName1' => '',
-          'fileName2' => ''
+          'fileNameSSL' => '',
+          'subDomain' => ''
       ]);
       
    }
@@ -21,25 +22,27 @@ class UnixController extends Controller {
       $subDomain=$request->subDomain;
       
       
-      $fileName1= sprintf('%s.se.conf', $subDomain);
-      $confText1= view('unix.apacheConf', [
+//      $fileName1= sprintf('%s.se.conf', $subDomain);
+//      $confText1= view('unix.apacheConf', [
+//         'rootPath' => $rootPath,
+//         'subDomain' => $subDomain
+//      ]);
+//        
+//        Storage::put($fileName1, $confText1);
+//
+      //$fileName2= sprintf('%s.se-le-ssl.conf', $subDomain);
+      $fileNameSSL= sprintf('%s.se.conf', $subDomain);
+      $confTextSSL= view('unix.apacheConf-ssl', [
          'rootPath' => $rootPath,
          'subDomain' => $subDomain
       ]);
         
-        Storage::put($fileName1, $confText1);
-
-      $fileName2= sprintf('%s.se-le-ssl.conf', $subDomain);
-      $confText2= view('unix.apacheConf-ssl', [
-         'rootPath' => $rootPath,
-         'subDomain' => $subDomain
-      ]);
-        
-        Storage::put($fileName2, $confText2);
+        Storage::put($fileNameSSL, $confTextSSL);
       
       return view('unix.createApacheConfFiles', [
-          'fileName1' => $fileName1,
-          'fileName2' => $fileName2
+          'fileName1' => '',
+          'fileNameSSL' => $fileNameSSL,
+          'subDomain' => $subDomain
       ]);
       
    }

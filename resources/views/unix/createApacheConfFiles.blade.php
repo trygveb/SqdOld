@@ -7,8 +7,11 @@
      Configuration file {{$fileName1}} created
      <br>
      @endif
-     @if ($fileName2 != '')
-     Configuration file {{$fileName2}} created
+     @if ($fileNameSSL != '')
+     Configuration file {{$fileNameSSL}} created    
+     <br>sudo a2ensite {{$subDomain}}
+     <br>sudo apachectl configtest
+     <br>sudo systemctl reload apache2
      <br><br>
      @endif
    <fieldset>
@@ -27,12 +30,33 @@
          <button type="submit" class="btn btn-primary" style="float:right;">Create files</button>
       </form>   
    </fieldset>
-     
+     <br>
+     <code>
+   <br>sudo a2ensite subDomain
+   <br>sudo apachectl configtest
+   <br>sudo a2dissite subDomain
+   <br>sudo systemctl reload apache2
+   <br>sudo systemctl status apache2.service
+   <br>sudo journalctl -xe
+     </code>
  </div>
 <!--</div>-->
 @section('scripts')
 <script>
-     
+function myFunction() {
+  /* Get the text field */
+  var copyText = document.getElementById("myInput");
+
+  /* Select the text field */
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+   /* Copy the text inside the text field */
+  navigator.clipboard.writeText(copyText.value);
+
+  /* Alert the copied text */
+  alert("Copied the text: " + copyText.value);
+}      
 </script>
 @endsection
 

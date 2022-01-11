@@ -29,5 +29,4 @@ Include /etc/letsencrypt/options-ssl-apache.conf
    SSLCertificateKeyFile /etc/letsencrypt/live/{{$subDomain}}.se/privkey.pem
    </VirtualHost>
    # vim: syntax=apache ts=4 sw=4 sts=4
-   </VirtualHost>
 </IfModule>
