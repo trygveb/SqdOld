@@ -39,7 +39,25 @@ class HomeController extends Controller {
     * @return view
     */
    public function home() {
-      return view('home');
+    $origin = array("sqd.se", "schema.sqd.se", "test.sqd.se", "schema.test.sqd.se", "calls.sqd.se", "calls.test.sqd.se", "192.168.10.10");
+    $domain = parse_url(request()->root())['host'];
+    dd('fullUrl='.request()->fullUrl());
+     if (in_array($domain, $origin)) {
+        if (str_contains(request(),'192.168.10.10')) {
+            return view('home')->with('path', request()->path());
+        } 
+        else if ($domain === 'calls.test.sqd.se') {
+            return $this.callsGuest();
+        } 
+        else if ($domain === 'schema.test.sqd.se') {
+            return $this.schemaGuest();
+        } else {
+           
+        }
+    } else{ 
+        return view('unauthorized')->with('domain',$domain);
+    }
+
    }
 
    /**

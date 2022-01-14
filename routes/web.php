@@ -37,7 +37,7 @@ use App\Http\Controllers\HomeController;
       Route::name('verification.verify')->get('/email/verify/{id}/{hash}',  [CustomAuthController::class, 'handleEmailVerification'])
       ->middleware(['auth', 'signed']);
       
-// Forgoten Password routes /////////////////////////////////////////////////////
+// Forgotten Password routes /////////////////////////////////////////////////////
       
     // Show the view with the password reset link request form:
       Route::name('showForgotPasswordForm')->get('/forgot-password/{application}', [CustomAuthController::class, 'showForgotPasswordForm'])

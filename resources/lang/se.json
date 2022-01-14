@@ -42,6 +42,7 @@
     "Reset Password Notification for": "Återställning av lösenord för",
     "Show password" : "Visa lösenord",
     "Sorry, login details are not valid" : "Tyvärr, inloggningsuppgifterna är inte giltiga",
+    "Sorry, something went wrong" : "Ursäkta, något blev fel",
     "Sorry, you have made too many reuests in one minute. Please wait a while before retrying" :"Tyvärr, du har gjort för många försök på en minut. Vänta ett tag innan du försöker igen",
     "Thanks for signing up to  :application! You are now logged in." : "Tack för att du registrerat dig till :application! Du är nu inloggad.",
     "The email has the sender \":mailFromAdress\" and the title \":title\" and is signed with \":signed\"" : 
@@ -59,6 +60,7 @@
     "When you have done that, you can press the :BTN-button below" : "När du har gjort det kan du klicka på :BTN-knappen nedan",
     "Whoops! Something went wrong" : "Oj då! Något gick fel",
     "You are going to close the current window." : "Fönstret stängs.",
+    "You are not supposed to arrive here from domain:" : "Det är inte meningen att du ska kunna komma hit från domän:",
     "You are receiving this email because we received a password reset request for your account.":
         "Du får detta eMail därför att vi har fått en begäran om att återställa ditt lösenord. Klicka på länken nedan för att skapa ett nytt lösenord",
     "You have signed-in" : "Du är inloggad",

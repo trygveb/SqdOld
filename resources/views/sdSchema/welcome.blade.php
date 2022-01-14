@@ -5,7 +5,7 @@
    <div class="col-md-12 text-center">
 
       <h1 class="text-center"> {{ __('Welcome to')}} SdSchema</h1>
-    
+
    @guest
    <br>
    <a class="nav-link" href="{{ route('showLoginForm',['application' =>'sdSchema']) }}">{{ __('Login') }}</a>
