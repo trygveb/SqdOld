@@ -7,16 +7,10 @@
      Configuration file {{$fileName1}} created
      <br>
      @endif
-     @if ($fileNameSSL != '')
-     Configuration file {{$fileNameSSL}} created    
-     <br>sudo a2ensite {{$subDomain}}
-     <br>sudo apachectl configtest
-     <br>sudo systemctl reload apache2
-     <br><br>
-     @endif
    <fieldset>
    <legend>Create Apache config files</legend>
-      <form action="{{ route('createConfigFiles')}}"  method="POST">
+    <a href="{{route('createAllConfigFiles')}}" class="btn btn-primary" role="button" >Create all sqd.se conf files</a>
+      <form action="{{ route('createConfigFile')}}"  method="POST">
             {{ csrf_field() }}
         <div class="form-group">
           <label for="subDomain">Subdomain, including .se</label>

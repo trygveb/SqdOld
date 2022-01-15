@@ -82,7 +82,8 @@ use App\Http\Controllers\HomeController;
 // Routes not needing localization
 Route::get('/switchLocale', [HomeController::class, 'switchLocale'])->name('switchLocale');
 Route::get('/unix/home', [App\Http\Controllers\UnixController::class,'index'])->middleware('auth');
-Route::post('/unix/createConfigFiles', [App\Http\Controllers\UnixController::class, 'createConfigFiles'])->name('createConfigFiles');   
+Route::post('/unix/createConfigFile', [App\Http\Controllers\UnixController::class, 'createConfigFile'])->name('createConfigFile');   
+Route::get('/unix/createAllConfigFile', [App\Http\Controllers\UnixController::class, 'createAllConfigFiles'])->name('createAllConfigFiles');   
 
 
 //  Route::get('/email/verify', function () { return view('auth.verify-email');
