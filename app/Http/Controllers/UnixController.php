@@ -30,10 +30,10 @@ class UnixController extends Controller {
       $rootPaths = array(
           'sqd.se' => 'sqd.se',
           'test.sqd.se' => 'sqd.se/test',
-          'calls.sqd.se' => 'sqd.se/calls',
-          'calls.test.sqd.se' => 'sqd.se/test/calls',
-          'schema.sqd.se' => 'sqd.se/schema',
-          'schema.test.sqd.se' => 'sqd.se/test/schema',
+          'calls.sqd.se' => 'sqd.se',
+          'calls.test.sqd.se' => 'sqd.se/test',
+          'schema.sqd.se' => 'sqd.se',
+          'schema.test.sqd.se' => 'sqd.se/test',
       );
       foreach ($rootPaths as $subDomain => $rootPath) {
          $this->createOneConfigFile($rootPath, $subDomain);
