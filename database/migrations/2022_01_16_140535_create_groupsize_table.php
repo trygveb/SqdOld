@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateGroupsizeTable extends Migration
 {
-   protected $connection = 'sdSchema';
+   
     private $FK_NAME='groupsize_FK_1';
     /**
      * Run the migrations.
