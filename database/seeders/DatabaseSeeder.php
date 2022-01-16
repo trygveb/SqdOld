@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\SdSchema\Groupsize;
 use App\Models\SdSchema\Training;
 use App\Models\SdSchema\MemberTraining;
 use App\Models\SdSchema\MemberTrainingDate;
@@ -26,8 +27,8 @@ class DatabaseSeeder extends Seeder {
       DB::connection('sdSchema')->table('training_date')->delete();
       DB::connection('sdSchema')->table('training')->delete();
 
-      Artisan::call('migrate:rollback');
-      Artisan::call('migrate');
+//      Artisan::call('migrate:rollback');
+//      Artisan::call('migrate');
 
       $training = Training::firstOrCreate([
                   'name' => 'C3 Onsdagar'
@@ -36,10 +37,20 @@ class DatabaseSeeder extends Seeder {
       for ($w = 0; $w < 7; $w++) {
          $this->createTrainingDate($training, $start, $w);
       }
+      
       User::factory(10)->create();
       $users= User::all();
-       foreach ($users as $user) {
+      
+      $i=0;
+      foreach ($users as $user) {
           $this->addUserToTraining($user, $training);
+          $groupsize= new Groupsize;
+          $groupsize->user_id= $user->id;
+          if ($i <4) {
+             $groupsize->size=2;
+          }
+          $i++;
+          $groupsize->save();
        }
        $trainingDates=TrainingDate::all();
        foreach ($users as $user) {
