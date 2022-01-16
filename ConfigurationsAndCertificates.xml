@@ -9,7 +9,7 @@
   <Author>Trygve</Author>
   <LastAuthor>Trygve</LastAuthor>
   <Created>2022-01-15T13:17:56Z</Created>
-  <LastSaved>2022-01-15T14:26:22Z</LastSaved>
+  <LastSaved>2022-01-15T16:25:45Z</LastSaved>
   <Version>16.00</Version>
  </DocumentProperties>
  <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
@@ -47,7 +47,7 @@
   <NamedRange ss:Name="command" ss:RefersTo="=Blad1!R1C1"/>
  </Names>
  <Worksheet ss:Name="Blad1">
-  <Table ss:ExpandedColumnCount="7" ss:ExpandedRowCount="34" x:FullColumns="1"
+  <Table ss:ExpandedColumnCount="7" ss:ExpandedRowCount="33" x:FullColumns="1"
    x:FullRows="1" ss:DefaultRowHeight="15">
    <Column ss:AutoFitWidth="0" ss:Width="94.5"/>
    <Column ss:AutoFitWidth="0" ss:Width="159"/>
@@ -58,50 +58,57 @@
     <Cell ss:StyleID="s64"><Data ss:Type="String">a2ensite</Data><NamedCell
       ss:Name="command"/></Cell>
     <Cell ss:StyleID="s64"><Data ss:Type="String">a2disssite</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">a2ensite</Data></Cell>
    </Row>
    <Row>
     <Cell ss:Formula="=&quot;sudo &quot;&amp;command"><Data ss:Type="String">sudo a2ensite</Data></Cell>
     <Cell><Data ss:Type="String">sqd.se</Data></Cell>
     <Cell ss:Formula="=RC[-1]&amp;&quot;-le-ssl&quot;"><Data ss:Type="String">sqd.se-le-ssl</Data></Cell>
-    <Cell ss:Formula="=RC[-3]&amp;&quot; &quot;&amp;RC[-2]"><Data ss:Type="String">sudo a2ensite sqd.se</Data></Cell>
-    <Cell ss:Formula="=RC[-4]&amp;&quot; &quot;&amp;RC[-2]"><Data ss:Type="String">sudo a2ensite sqd.se-le-ssl</Data></Cell>
+    <Cell ss:Formula="=RC[-2]&amp;&quot;.conf&quot;"><Data ss:Type="String">sqd.se.conf</Data></Cell>
+    <Cell ss:Formula="=RC[-4]&amp;&quot; &quot;&amp;RC[-3]"><Data ss:Type="String">sudo a2ensite sqd.se</Data></Cell>
+    <Cell ss:Formula="=RC[-5]&amp;&quot; &quot;&amp;RC[-3]"><Data ss:Type="String">sudo a2ensite sqd.se-le-ssl</Data></Cell>
    </Row>
    <Row>
     <Cell ss:Formula="=&quot;sudo &quot;&amp;command"><Data ss:Type="String">sudo a2ensite</Data></Cell>
-    <Cell><Data ss:Type="String">sqd.se/test</Data></Cell>
-    <Cell ss:Formula="=RC[-1]&amp;&quot;-le-ssl&quot;"><Data ss:Type="String">sqd.se/test-le-ssl</Data></Cell>
-    <Cell ss:Formula="=RC[-3]&amp;&quot; &quot;&amp;RC[-2]"><Data ss:Type="String">sudo a2ensite sqd.se/test</Data></Cell>
-    <Cell ss:Formula="=RC[-4]&amp;&quot; &quot;&amp;RC[-2]"><Data ss:Type="String">sudo a2ensite sqd.se/test-le-ssl</Data></Cell>
+    <Cell><Data ss:Type="String">test.sqd.se</Data></Cell>
+    <Cell ss:Formula="=RC[-1]&amp;&quot;-le-ssl&quot;"><Data ss:Type="String">test.sqd.se-le-ssl</Data></Cell>
+    <Cell ss:Formula="=RC[-2]&amp;&quot;.conf&quot;"><Data ss:Type="String">test.sqd.se.conf</Data></Cell>
+    <Cell ss:Formula="=RC[-4]&amp;&quot; &quot;&amp;RC[-3]"><Data ss:Type="String">sudo a2ensite test.sqd.se</Data></Cell>
+    <Cell ss:Formula="=RC[-5]&amp;&quot; &quot;&amp;RC[-3]"><Data ss:Type="String">sudo a2ensite test.sqd.se-le-ssl</Data></Cell>
    </Row>
    <Row>
     <Cell ss:Formula="=&quot;sudo &quot;&amp;command"><Data ss:Type="String">sudo a2ensite</Data></Cell>
-    <Cell><Data ss:Type="String">sqd.se/calls</Data></Cell>
-    <Cell ss:Formula="=RC[-1]&amp;&quot;-le-ssl&quot;"><Data ss:Type="String">sqd.se/calls-le-ssl</Data></Cell>
-    <Cell ss:Formula="=RC[-3]&amp;&quot; &quot;&amp;RC[-2]"><Data ss:Type="String">sudo a2ensite sqd.se/calls</Data></Cell>
-    <Cell ss:Formula="=RC[-4]&amp;&quot; &quot;&amp;RC[-2]"><Data ss:Type="String">sudo a2ensite sqd.se/calls-le-ssl</Data></Cell>
+    <Cell><Data ss:Type="String">calls.sqd.se</Data></Cell>
+    <Cell ss:Formula="=RC[-1]&amp;&quot;-le-ssl&quot;"><Data ss:Type="String">calls.sqd.se-le-ssl</Data></Cell>
+    <Cell ss:Formula="=RC[-2]&amp;&quot;.conf&quot;"><Data ss:Type="String">calls.sqd.se.conf</Data></Cell>
+    <Cell ss:Formula="=RC[-4]&amp;&quot; &quot;&amp;RC[-3]"><Data ss:Type="String">sudo a2ensite calls.sqd.se</Data></Cell>
+    <Cell ss:Formula="=RC[-5]&amp;&quot; &quot;&amp;RC[-3]"><Data ss:Type="String">sudo a2ensite calls.sqd.se-le-ssl</Data></Cell>
    </Row>
    <Row>
     <Cell ss:Formula="=&quot;sudo &quot;&amp;command"><Data ss:Type="String">sudo a2ensite</Data></Cell>
-    <Cell><Data ss:Type="String">sqd.se/test/calls</Data></Cell>
-    <Cell ss:Formula="=RC[-1]&amp;&quot;-le-ssl&quot;"><Data ss:Type="String">sqd.se/test/calls-le-ssl</Data></Cell>
-    <Cell ss:Formula="=RC[-3]&amp;&quot; &quot;&amp;RC[-2]"><Data ss:Type="String">sudo a2ensite sqd.se/test/calls</Data></Cell>
-    <Cell ss:Formula="=RC[-4]&amp;&quot; &quot;&amp;RC[-2]"><Data ss:Type="String">sudo a2ensite sqd.se/test/calls-le-ssl</Data></Cell>
+    <Cell><Data ss:Type="String">calls.test.sqd.se</Data></Cell>
+    <Cell ss:Formula="=RC[-1]&amp;&quot;-le-ssl&quot;"><Data ss:Type="String">calls.test.sqd.se-le-ssl</Data></Cell>
+    <Cell ss:Formula="=RC[-2]&amp;&quot;.conf&quot;"><Data ss:Type="String">calls.test.sqd.se.conf</Data></Cell>
+    <Cell ss:Formula="=RC[-4]&amp;&quot; &quot;&amp;RC[-3]"><Data ss:Type="String">sudo a2ensite calls.test.sqd.se</Data></Cell>
+    <Cell ss:Formula="=RC[-5]&amp;&quot; &quot;&amp;RC[-3]"><Data ss:Type="String">sudo a2ensite calls.test.sqd.se-le-ssl</Data></Cell>
    </Row>
    <Row>
     <Cell ss:Formula="=&quot;sudo &quot;&amp;command"><Data ss:Type="String">sudo a2ensite</Data></Cell>
-    <Cell><Data ss:Type="String">sqd.se/schema</Data></Cell>
-    <Cell ss:Formula="=RC[-1]&amp;&quot;-le-ssl&quot;"><Data ss:Type="String">sqd.se/schema-le-ssl</Data></Cell>
-    <Cell ss:Formula="=RC[-3]&amp;&quot; &quot;&amp;RC[-2]"><Data ss:Type="String">sudo a2ensite sqd.se/schema</Data></Cell>
-    <Cell ss:StyleID="s67" ss:Formula="=RC[-4]&amp;&quot; &quot;&amp;RC[-2]"><Data
-      ss:Type="String">sudo a2ensite sqd.se/schema-le-ssl</Data></Cell>
+    <Cell><Data ss:Type="String">schema.sqd.se</Data></Cell>
+    <Cell ss:Formula="=RC[-1]&amp;&quot;-le-ssl&quot;"><Data ss:Type="String">schema.sqd.se-le-ssl</Data></Cell>
+    <Cell ss:Formula="=RC[-2]&amp;&quot;.conf&quot;"><Data ss:Type="String">schema.sqd.se.conf</Data></Cell>
+    <Cell ss:Formula="=RC[-4]&amp;&quot; &quot;&amp;RC[-3]"><Data ss:Type="String">sudo a2ensite schema.sqd.se</Data></Cell>
+    <Cell ss:StyleID="s67" ss:Formula="=RC[-5]&amp;&quot; &quot;&amp;RC[-3]"><Data
+      ss:Type="String">sudo a2ensite schema.sqd.se-le-ssl</Data></Cell>
    </Row>
    <Row>
     <Cell ss:Formula="=&quot;sudo &quot;&amp;command"><Data ss:Type="String">sudo a2ensite</Data></Cell>
-    <Cell><Data ss:Type="String">sqd.se/schema/calls</Data></Cell>
-    <Cell ss:Formula="=RC[-1]&amp;&quot;-le-ssl&quot;"><Data ss:Type="String">sqd.se/schema/calls-le-ssl</Data></Cell>
-    <Cell ss:Formula="=RC[-3]&amp;&quot; &quot;&amp;RC[-2]"><Data ss:Type="String">sudo a2ensite sqd.se/schema/calls</Data></Cell>
-    <Cell ss:StyleID="s67" ss:Formula="=RC[-4]&amp;&quot; &quot;&amp;RC[-2]"><Data
-      ss:Type="String">sudo a2ensite sqd.se/schema/calls-le-ssl</Data></Cell>
+    <Cell><Data ss:Type="String">schema.test.sqd.se</Data></Cell>
+    <Cell ss:Formula="=RC[-1]&amp;&quot;-le-ssl&quot;"><Data ss:Type="String">schema.test.sqd.se-le-ssl</Data></Cell>
+    <Cell ss:Formula="=RC[-2]&amp;&quot;.conf&quot;"><Data ss:Type="String">schema.test.sqd.se.conf</Data></Cell>
+    <Cell ss:Formula="=RC[-4]&amp;&quot; &quot;&amp;RC[-3]"><Data ss:Type="String">sudo a2ensite schema.test.sqd.se</Data></Cell>
+    <Cell ss:StyleID="s67" ss:Formula="=RC[-5]&amp;&quot; &quot;&amp;RC[-3]"><Data
+      ss:Type="String">sudo a2ensite schema.test.sqd.se-le-ssl</Data></Cell>
    </Row>
    <Row ss:Index="10">
     <Cell ss:StyleID="s64"><Data ss:Type="String">subdomain</Data></Cell>
@@ -112,7 +119,7 @@
     <Cell ss:Index="7" ss:StyleID="s64"><Data ss:Type="String">Document root</Data></Cell>
    </Row>
    <Row>
-    <Cell><Data ss:Type="String">sqd.se</Data></Cell>
+    <Cell ss:Formula="=R[-9]C[1]"><Data ss:Type="String">sqd.se</Data></Cell>
     <Cell><Data ss:Type="String">sqd.se</Data></Cell>
     <Cell ss:Formula="=&quot;var/www/&quot;&amp;RC[-1]&amp;&quot;/public_html&quot;"><Data
       ss:Type="String">var/www/sqd.se/public_html</Data></Cell>
@@ -121,7 +128,7 @@
     <Cell ss:Index="7" ss:Formula="=RC[-4]"><Data ss:Type="String">var/www/sqd.se/public_html</Data></Cell>
    </Row>
    <Row>
-    <Cell><Data ss:Type="String">test.sqd.se</Data></Cell>
+    <Cell ss:Formula="=R[-9]C[1]"><Data ss:Type="String">test.sqd.se</Data></Cell>
     <Cell><Data ss:Type="String">sqd.se/test</Data></Cell>
     <Cell ss:Formula="=&quot;var/www/&quot;&amp;RC[-1]&amp;&quot;/public_html&quot;"><Data
       ss:Type="String">var/www/sqd.se/test/public_html</Data></Cell>
@@ -130,7 +137,7 @@
     <Cell ss:Index="7" ss:Formula="=RC[-4]"><Data ss:Type="String">var/www/sqd.se/test/public_html</Data></Cell>
    </Row>
    <Row>
-    <Cell><Data ss:Type="String">calls.sqd.se</Data></Cell>
+    <Cell ss:Formula="=R[-9]C[1]"><Data ss:Type="String">calls.sqd.se</Data></Cell>
     <Cell><Data ss:Type="String">sqd.se/calls</Data></Cell>
     <Cell ss:Formula="=&quot;var/www/&quot;&amp;RC[-1]&amp;&quot;/public_html&quot;"><Data
       ss:Type="String">var/www/sqd.se/calls/public_html</Data></Cell>
@@ -139,7 +146,7 @@
     <Cell ss:Index="7" ss:Formula="=RC[-4]"><Data ss:Type="String">var/www/sqd.se/calls/public_html</Data></Cell>
    </Row>
    <Row>
-    <Cell><Data ss:Type="String">calls.test.sqd.se</Data></Cell>
+    <Cell ss:Formula="=R[-9]C[1]"><Data ss:Type="String">calls.test.sqd.se</Data></Cell>
     <Cell><Data ss:Type="String">sqd.se/test/calls</Data></Cell>
     <Cell ss:Formula="=&quot;var/www/&quot;&amp;RC[-1]&amp;&quot;/public_html&quot;"><Data
       ss:Type="String">var/www/sqd.se/test/calls/public_html</Data></Cell>
@@ -148,7 +155,7 @@
     <Cell ss:Index="7" ss:Formula="=RC[-4]"><Data ss:Type="String">var/www/sqd.se/test/calls/public_html</Data></Cell>
    </Row>
    <Row>
-    <Cell><Data ss:Type="String">schema.sqd.se</Data></Cell>
+    <Cell ss:Formula="=R[-9]C[1]"><Data ss:Type="String">schema.sqd.se</Data></Cell>
     <Cell><Data ss:Type="String">sqd.se/schema</Data></Cell>
     <Cell ss:Formula="=&quot;var/www/&quot;&amp;RC[-1]&amp;&quot;/public_html&quot;"><Data
       ss:Type="String">var/www/sqd.se/schema/public_html</Data></Cell>
@@ -157,7 +164,7 @@
     <Cell ss:Index="7" ss:Formula="=RC[-4]"><Data ss:Type="String">var/www/sqd.se/schema/public_html</Data></Cell>
    </Row>
    <Row>
-    <Cell><Data ss:Type="String">schema.test.sqd.se</Data></Cell>
+    <Cell ss:Formula="=R[-9]C[1]"><Data ss:Type="String">schema.test.sqd.se</Data></Cell>
     <Cell><Data ss:Type="String">sqd.se/schema/calls</Data></Cell>
     <Cell ss:Formula="=&quot;var/www/&quot;&amp;RC[-1]&amp;&quot;/public_html&quot;"><Data
       ss:Type="String">var/www/sqd.se/schema/calls/public_html</Data></Cell>
@@ -173,66 +180,63 @@
    </Row>
    <Row ss:Index="22">
     <Cell><Data ss:Type="String">certbot run &#45;-cert-name</Data></Cell>
-    <Cell ss:Formula="=RC[-1]&amp;&quot; &quot;&amp;R[-11]C[-1]"><Data
-      ss:Type="String">certbot run &#45;-cert-name sqd.se</Data></Cell>
+    <Cell ss:Formula="=&quot;sudo &quot;&amp;RC[-1]&amp;&quot; &quot;&amp;R[-11]C[-1]"><Data
+      ss:Type="String">sudo certbot run &#45;-cert-name sqd.se</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">certbot run &#45;-cert-name</Data></Cell>
-    <Cell ss:Formula="=RC[-1]&amp;&quot; &quot;&amp;R[-11]C[-1]"><Data
-      ss:Type="String">certbot run &#45;-cert-name test.sqd.se</Data></Cell>
+    <Cell ss:Formula="=&quot;sudo &quot;&amp;RC[-1]&amp;&quot; &quot;&amp;R[-11]C[-1]"><Data
+      ss:Type="String">sudo certbot run &#45;-cert-name test.sqd.se</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">certbot run &#45;-cert-name</Data></Cell>
-    <Cell ss:Formula="=RC[-1]&amp;&quot; &quot;&amp;R[-11]C[-1]"><Data
-      ss:Type="String">certbot run &#45;-cert-name calls.sqd.se</Data></Cell>
+    <Cell ss:Formula="=&quot;sudo &quot;&amp;RC[-1]&amp;&quot; &quot;&amp;R[-11]C[-1]"><Data
+      ss:Type="String">sudo certbot run &#45;-cert-name calls.sqd.se</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">certbot run &#45;-cert-name</Data></Cell>
-    <Cell ss:Formula="=RC[-1]&amp;&quot; &quot;&amp;R[-11]C[-1]"><Data
-      ss:Type="String">certbot run &#45;-cert-name calls.test.sqd.se</Data></Cell>
+    <Cell ss:Formula="=&quot;sudo &quot;&amp;RC[-1]&amp;&quot; &quot;&amp;R[-11]C[-1]"><Data
+      ss:Type="String">sudo certbot run &#45;-cert-name calls.test.sqd.se</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">certbot run &#45;-cert-name</Data></Cell>
-    <Cell ss:Formula="=RC[-1]&amp;&quot; &quot;&amp;R[-11]C[-1]"><Data
-      ss:Type="String">certbot run &#45;-cert-name schema.sqd.se</Data></Cell>
+    <Cell ss:Formula="=&quot;sudo &quot;&amp;RC[-1]&amp;&quot; &quot;&amp;R[-11]C[-1]"><Data
+      ss:Type="String">sudo certbot run &#45;-cert-name schema.sqd.se</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">certbot run &#45;-cert-name</Data></Cell>
-    <Cell ss:Formula="=RC[-1]&amp;&quot; &quot;&amp;R[-11]C[-1]"><Data
-      ss:Type="String">certbot run &#45;-cert-name schema.test.sqd.se</Data></Cell>
+    <Cell ss:Formula="=&quot;sudo &quot;&amp;RC[-1]&amp;&quot; &quot;&amp;R[-11]C[-1]"><Data
+      ss:Type="String">sudo certbot run &#45;-cert-name schema.test.sqd.se</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">certbot run &#45;-cert-name</Data></Cell>
-    <Cell ss:Formula="=RC[-1]&amp;&quot; &quot;&amp;R[-17]C[3]"><Data
-      ss:Type="String">certbot run &#45;-cert-name www.sqd.se</Data></Cell>
+    <Cell ss:Formula="=&quot;sudo &quot;&amp;RC[-1]&amp;&quot; &quot;&amp;R[-11]C[-1]"><Data
+      ss:Type="String">sudo certbot run &#45;-cert-name </Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">certbot run &#45;-cert-name</Data></Cell>
-    <Cell ss:Formula="=RC[-1]&amp;&quot; &quot;&amp;R[-17]C[3]"><Data
-      ss:Type="String">certbot run &#45;-cert-name www.test.sqd.se</Data></Cell>
+    <Cell ss:Formula="=&quot;sudo &quot;&amp;RC[-1]&amp;&quot; &quot;&amp;R[-11]C[-1]"><Data
+      ss:Type="String">sudo certbot run &#45;-cert-name </Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">certbot run &#45;-cert-name</Data></Cell>
-    <Cell ss:Formula="=RC[-1]&amp;&quot; &quot;&amp;R[-17]C[3]"><Data
-      ss:Type="String">certbot run &#45;-cert-name www.calls.sqd.se</Data></Cell>
+    <Cell ss:Formula="=&quot;sudo &quot;&amp;RC[-1]&amp;&quot; &quot;&amp;R[-11]C[-1]"><Data
+      ss:Type="String">sudo certbot run &#45;-cert-name sudo apachectl configtest</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">certbot run &#45;-cert-name</Data></Cell>
-    <Cell ss:Formula="=RC[-1]&amp;&quot; &quot;&amp;R[-17]C[3]"><Data
-      ss:Type="String">certbot run &#45;-cert-name www.calls.test.sqd.se</Data></Cell>
+    <Cell ss:Formula="=&quot;sudo &quot;&amp;RC[-1]&amp;&quot; &quot;&amp;R[-11]C[-1]"><Data
+      ss:Type="String">sudo certbot run &#45;-cert-name sudo systemctl reload apache2 </Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">certbot run &#45;-cert-name</Data></Cell>
-    <Cell ss:Formula="=RC[-1]&amp;&quot; &quot;&amp;R[-17]C[3]"><Data
-      ss:Type="String">certbot run &#45;-cert-name www.schema.sqd.se</Data></Cell>
+    <Cell ss:Formula="=&quot;sudo &quot;&amp;RC[-1]&amp;&quot; &quot;&amp;R[-11]C[-1]"><Data
+      ss:Type="String">sudo certbot run &#45;-cert-name </Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">certbot run &#45;-cert-name</Data></Cell>
-    <Cell ss:Formula="=RC[-1]&amp;&quot; &quot;&amp;R[-17]C[3]"><Data
-      ss:Type="String">certbot run &#45;-cert-name www.schema.test.sqd.se</Data></Cell>
-   </Row>
-   <Row>
-    <Cell><Data ss:Type="String">certbot run &#45;-cert-name</Data></Cell>
+    <Cell ss:Formula="=&quot;sudo &quot;&amp;RC[-1]&amp;&quot; &quot;&amp;R[-11]C[-1]"><Data
+      ss:Type="String">sudo certbot run &#45;-cert-name certbot run &#45;-cert-name</Data></Cell>
    </Row>
   </Table>
   <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
@@ -241,12 +245,17 @@
     <Footer x:Margin="0.3"/>
     <PageMargins x:Bottom="0.75" x:Left="0.7" x:Right="0.7" x:Top="0.75"/>
    </PageSetup>
+   <Print>
+    <ValidPrinterInfo/>
+    <PaperSizeIndex>9</PaperSizeIndex>
+    <HorizontalResolution>600</HorizontalResolution>
+    <VerticalResolution>600</VerticalResolution>
+   </Print>
    <Selected/>
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>33</ActiveRow>
-     <ActiveCol>1</ActiveCol>
+     <ActiveRow>19</ActiveRow>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>

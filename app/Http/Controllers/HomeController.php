@@ -39,7 +39,14 @@ class HomeController extends Controller {
     * @return view
     */
    public function home() {
-      return view('home')->with('extra', request()->fullUrl());
+      $fullUrl=request()->fullUrl();
+      if (str_contains($fullUrl,'schema')) {
+         return $this->schemaGuest();
+      }
+      elseif (str_contains($fullUrl,'calls')) {
+         return $this->callsGuest();
+      }
+      return view('home')->with('extra', $fullUrl);
 //    $origin = array("sqd.se", "schema.sqd.se", "test.sqd.se", "schema.test.sqd.se", "calls.sqd.se", "calls.test.sqd.se", "192.168.10.10");
 //    $domain = parse_url(request()->root())['host'];
 ////    dd('fullUrl='.request()->fullUrl());

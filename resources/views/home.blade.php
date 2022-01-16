@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
             <div class="card">
-                extra={{$extra}}<br>
+                fullUrl={{$extra}}<br>
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
