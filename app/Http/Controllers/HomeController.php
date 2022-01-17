@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MemberTraining;
+//use App\Models\SdSchema\MemberTraining;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\App;
+//use Illuminate\Support\Facades\App;
 
 class HomeController extends Controller {
 

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SchemaController;
 
 /*
   |--------------------------------------------------------------------------
@@ -14,9 +15,9 @@ use App\Http\Controllers\HomeController;
   | contains the "web" middleware group. Now create something great!
   |
  */
-//Route::group(
-//   ['prefix' => LaravelLocalization::setLocale(),
-//      'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
+Route::group(
+   ['prefix' => LaravelLocalization::setLocale(),
+      'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
 
 // Registration routes//////////////////////////////////////////////////////////
       // Show the registration form
@@ -76,8 +77,14 @@ use App\Http\Controllers\HomeController;
       Route::name('sdCalls.home')->get('/sdCalls/home', [HomeController::class, 'callsHome'])->middleware('verified');
       Route::name('sdSchema.home')->get('/sdSchema/home', [HomeController::class, 'schemaHome'])->middleware('verified');
 
+      // Show the schema
+      Route::name('schema.index')->get('/schema/{trainingId?}', [App\Http\Controllers\SchemaController::class, 'index']);
+      //Show edit view for one user for  attendance update
+      Route::name('schema.showEdit')->get('/schema/edit/{training}',[App\Http\Controllers\SchemaController::class, 'showViewEdit']);
 
-//});
+
+
+});
 
 // Routes not needing localization
 Route::get('/switchLocale', [HomeController::class, 'switchLocale'])->name('switchLocale');

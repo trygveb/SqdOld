@@ -13,4 +13,8 @@ class TrainingDate extends Model {
        'training_date',
    ];
 
+   public function training() {
+      return $this->belongsTo(Training::class);
+   }
+
 }

@@ -17,8 +17,8 @@
    <a href="{{route('verification.notice',['application' => 'sdSchema'])}}">{{__('Please confirm your email')}}!</a>
    @else
    <!--$myTrainingsCount-->
-      @if (0 > 0)
-         Välj schema <a href="{{route('schema.index',1)}}">C3 Onsdgagar</a>
+      @if (0 == 0)
+         Välj schema <a href="{{route('schema.index',2)}}">C2 Måndagar</a>
       @else
          Du är inte ansluten till något schema ännu.
       @endif

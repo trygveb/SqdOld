@@ -6,7 +6,7 @@ use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+//use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Feature\FixtureTrait;
 
 class LoginTest extends TestCase {
