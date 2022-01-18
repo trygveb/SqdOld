@@ -31,7 +31,7 @@ Route::group(
 
       
       Route::name('verification.send')->post('/email/verification-notification', [CustomAuthController::class, 'sendEmailVerificationNotification'])
-        ->middleware(['auth', 'throttle:6,1']);
+        ->middleware(['auth', 'throttle:5,1']);
         
       // Handle the request for email verification sent from the email sent to the user. 
       // NOTE! Do not change the name of this route, as it is triggered by the event(new Registered($user))
@@ -71,11 +71,11 @@ Route::group(
       
       // Show application welcome view for guests, or authenticated but not verified (Prompt for login or registration)
       Route::name('sdCalls.guest')->get('sdCalls', [HomeController::class, 'callsGuest']);
-      Route::name('sdSchema.guest')->get('sdSchema', [HomeController::class, 'schemaGuest']);
+//      Route::name('sdSchema.guest')->get('sdSchema', [HomeController::class, 'schemaHome']);
       
       // Show application welcome view for authenticated and verified users 
       Route::name('sdCalls.home')->get('/sdCalls/home', [HomeController::class, 'callsHome'])->middleware('verified');
-      Route::name('sdSchema.home')->get('/sdSchema/home', [HomeController::class, 'schemaHome'])->middleware('verified');
+      Route::name('sdSchema.home')->get('/sdSchema/home', [HomeController::class, 'schemaHome']);
 
       // Show the schema
       Route::name('schema.index')->get('/schema/{trainingId?}', [App\Http\Controllers\SchemaController::class, 'index']);

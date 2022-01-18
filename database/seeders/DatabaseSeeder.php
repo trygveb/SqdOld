@@ -45,32 +45,32 @@ class DatabaseSeeder extends Seeder {
       $memberTrainingDate = new MemberTrainingDate;
       $memberTrainingDate->user_id = $user->id;
       $memberTrainingDate->training_date_id = $trainingDate->id;
-      $groupSize= Groupsize::where('user_id', $user->id)->first()->size;
-      $year= substr($trainingDate->training_date,0,4);
-      $month= substr($trainingDate->training_date,5,2);
-      $day= substr($trainingDate->training_date,8,2);
-      $ms1= Carbon::createFromDate($year,$month,$day)->timestamp+ $user->id;
-      $status= $ms1 % 5;
-      if ($groupSize == 1 && $status==2) {
-         $status=1;
+      $groupSize = Groupsize::where('user_id', $user->id)->first()->size;
+      $year = substr($trainingDate->training_date, 0, 4);
+      $month = substr($trainingDate->training_date, 5, 2);
+      $day = substr($trainingDate->training_date, 8, 2);
+      $ms1 = Carbon::createFromDate($year, $month, $day)->timestamp + $user->id;
+      $status = $ms1 % 5;
+      if ($groupSize == 1 && $status == 2) {
+         $status = 1;
       }
       /*
- switch ($status) {
-                      case 1: if ($group==1) {
-                                 $statusName='Ja';
-                              } else {
-                                 $statusName='1';
-                              }
-                              break;
-                      case 2: $statusName='2';
-                              break;
-                      case 3: $statusName='Nej';
-                              break;
-                      case 4: $statusName='Kanske';
-                              break;
-                     }
+        switch ($status) {
+        case 1: if ($group==1) {
+        $statusName='Ja';
+        } else {
+        $statusName='1';
+        }
+        break;
+        case 2: $statusName='2';
+        break;
+        case 3: $statusName='Nej';
+        break;
+        case 4: $statusName='Kanske';
+        break;
+        }
        */
-      $memberTrainingDate->status= $status;
+      $memberTrainingDate->status = $status;
       $memberTrainingDate->save();
    }
 
@@ -83,11 +83,13 @@ class DatabaseSeeder extends Seeder {
    private function addUsersToTrainings($users, $trainings) {
       foreach ($trainings as $training) {
          $trainingDates = $training->trainingDates;
-         
+
          foreach ($users as $user) {
-            if (($user->id % 2) == ($training->id - 1)) {
-               $this->addOneUserToOneTraining($user, $training);
-               $this->addUserToTrainingDates($user, $trainingDates);
+            if ($user->name != 'Arne' && $user->name != 'Lasse') {
+               if (($user->id % 2) == ($training->id - 1)) {
+                  $this->addOneUserToOneTraining($user, $training);
+                  $this->addUserToTrainingDates($user, $trainingDates);
+               }
             }
          }
       }
@@ -120,17 +122,38 @@ class DatabaseSeeder extends Seeder {
    }
 
    private function createUsers() {
+      $titles= ['Dr.','Mr.','Mrs.','Ms.','Miss', 'Prof.'];
       $adninPassword = env('ADMIN_PASSWORD', 'i-love-laravel');
       $adninPasswordHashed = Hash::make($password = $adninPassword);
       User::factory()->create([
           'email' => 'trygve.botnen@gmail.com',
           'password' => $adninPasswordHashed,
-          'name' => 'Trygve Botnen',
+          'name' => 'Trygve',
           'authority' => 1
+      ]);
+      User::factory()->create([
+          'email' => 'arne@gmail.com',
+          'password' => $adninPasswordHashed,
+          'name' => 'Arne',
+          'authority' => 0
+      ]);
+      User::factory()->create([
+          'email' => 'lasse@gmail.com',
+          'password' => $adninPasswordHashed,
+          'name' => 'Lasse',
+          'authority' => 0,
+          'email_verified_at' => NULL
       ]);
       User::factory(20)->create();
       $users = User::all();
       foreach ($users as $user) {
+         $atoms= explode(' ', $user->name);
+         if (in_array($atoms[0],$titles )) {
+            $user->name= $atoms[1];
+         } else {
+            $user->name= $atoms[0];
+         }
+         $user->save();
          $groupsize = new Groupsize;
          $groupsize->user_id = $user->id;
          if ($user->id > 5) {
@@ -158,6 +181,5 @@ class DatabaseSeeder extends Seeder {
       DB::statement('ALTER TABLE sdSchema.member_training_date AUTO_INCREMENT=0;');
       DB::statement('ALTER TABLE sdSchema.groupsize AUTO_INCREMENT=0;');
    }
-
 
 }

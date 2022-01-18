@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-//use App\Models\SdSchema\MemberTraining;
+use App\Models\SdSchema\MemberTraining;
 use Illuminate\Support\Facades\Auth;
+
 //use Illuminate\Support\Facades\App;
 
 class HomeController extends Controller {
@@ -16,7 +17,6 @@ class HomeController extends Controller {
    public function __construct() {
       //$this->middleware('auth');
    }
-
 
    /**
     * Show sdCalls welcome view for guests
@@ -39,11 +39,10 @@ class HomeController extends Controller {
     * @return view
     */
    public function home() {
-      $fullUrl=request()->fullUrl();
-      if (str_contains($fullUrl,'schema')) {
+      $fullUrl = request()->fullUrl();
+      if (str_contains($fullUrl, 'schema')) {
          return $this->schemaGuest();
-      }
-      elseif (str_contains($fullUrl,'calls')) {
+      } elseif (str_contains($fullUrl, 'calls')) {
          return $this->callsGuest();
       }
       return view('home')->with('extra', $fullUrl);
@@ -65,10 +64,8 @@ class HomeController extends Controller {
 //    } else{ 
 //        return view('unauthorized')->with('domain',$domain);
 //    }
-
    }
-
-   /**
+      /**
     * Show sdSchema welcome view for guests
     * @return view
     */
@@ -77,10 +74,38 @@ class HomeController extends Controller {
    }
 
    /**
-    * Show sdSchema welcome view for authenticated and verified users
+    * Show sdSchema welcome view for guests
     * @return view
     */
    public function schemaHome() {
+      if (Auth::check()) {
+         if (Auth::user()->hasVerifiedEmail()) {
+
+            //dd('schemaGuest, auth');
+            $myMemberTrainings = MemberTraining::where('user_id', Auth::user()->id)->get();
+            $count = $myMemberTrainings->count();
+            if ($count == 1) {
+               return redirect(route('schema.index', ['trainingId' => $myMemberTrainings[0]->training_id]));
+            } else {
+               return view('sdSchema.welcome', [
+                   'myTrainingsCount' => $count,
+               ]);
+            }
+         } else {
+            return view('auth.verify-email-notice')
+               ->with('emailVerified','NO')
+               ->with('application', 'sdSchema');
+         }
+      }
+         return view('sdSchema.welcome')->with('myTrainingsCount' , 0);
+//      abort(403, 'Unauthorized action.');
+   }
+
+   /**
+    * Show sdSchema welcome view for authenticated and verified users
+    * @return view
+    */
+   public function schemaHomeOld() {
       $count = 0;
       if (Auth::check()) {
 //         $myMemberTrainings = MemberTraining::where('user_id', Auth::user()->id)->get();

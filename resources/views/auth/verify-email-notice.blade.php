@@ -12,9 +12,9 @@
    } 
 @endphp
 <div class="container">
-    <h2>Verify Email Notice</h2>
     <div class="row justify-content-center">
       <div class="col-md-8">
+    <h2>{{__('Verify Email Notice')}}</h2>
          <div class="card">
              <!--emailVerified= {{$emailVerified}}  status={{$status}}<br>-->
          @if (session('status') == 'verification-link-sent')
@@ -43,13 +43,7 @@
 
          @if ($emailVerified == 'NO')
             <div class="card-body">
-            @if(session()->has('danger'))
-               Before you continue, you must verify your email address. You should have received an email with a link to click on for this purpose.
-               The link is only valid for one hour. We are 
-               <button style="padding:0;vertical-align:inherit" class="btn btn-link" role="link" type="submit" >happy to send you a new link.</button>
-               Keep in mind that these messages may end up in your junk email folder.                     
-            @else
-               {{__('Thanks for signing up to  :application! You are now logged in.', ['application' => $application])}}
+                {{__('Thanks for signing up to  :application! You are now logged in.', ['application' => $application])}}
                <p>
                   <span style="font-size:larger;">
                      <b>{{__('Before proceeding, however, you will need to verify your email address')}}</b>
@@ -58,7 +52,6 @@
                               ['text' => __('Verify email address')])}}.
                </p>
                {{__('When you have done that, you can press the :BTN-button below', ['BTN' => __('Continue')])}}.
-               
                <br><br>
                {{__('If you did not receive the email, we will')}}
                   <button style="padding:0;vertical-align:inherit" class="btn btn-link" role="link" type="submit" onclick="sendNewClicked()">
@@ -67,15 +60,15 @@
                   *){{__('The email has the sender ":mailFromAdress" and the title ":title" and is signed with ":signed"',
                      ['mailFromAdress' => config('app.mailFromAdress'),
                       'title' => __('Verify email address').', '. config('app.name'),
-                      'signed' => config('app.mailFromName').', '.__('administrator on').config('app.name')])}}
+                      'signed' => config('app.mailFromName').', '.__('administrator on').' '.config('app.name')])}}
                     <br>
-            @endif
          @endif
+         
          @if ($emailVerified == 'YES')
                <a style="margin-left:5px;" onclick="closeWindow()" href="" class="btn btn-secondary"> {{ __('Close window')}}</a>
          @else
                <br>
-               <a class="btn btn-primary" href="{{ route($application.'.guest',[]) }}">{{__('Continue')}}</a>
+               <a class="btn btn-primary" href="{{ route($application.'.home',[]) }}">{{__('Continue')}}</a>
          @endif
              </div>
             </form>

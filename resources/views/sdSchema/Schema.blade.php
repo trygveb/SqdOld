@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-<h1>Schema för  {{$training->name}}
+<h1>{{__('Schedule for')}} {{$training->name}}
     <a href="{{route('schema.showEdit',['training' =>$training])}}" class="btn btn-primary" role="button" style="margin-left:5px;en">
-        Ändra min närvaro
+        {{__('Change my attendance')}}
     </a>
 </h1>
   <div class="container">
@@ -16,13 +16,13 @@
           <table class="table table-bordered">
         
             <thead style="height:100px; font-size:smaller;">
-              <th style="height:100px;padding-top:70px !important;vertical-align:middle;" class="fix text-nowrap text-center">Datum</th>
-              <th style="height:100px;" class="text-nowrap text-center">Kommentar</th>
+              <th style="height:100px;padding-top:70px !important;vertical-align:middle;" class="fix text-nowrap text-center">{{__('Date')}}</th>
+              <th style="height:100px;" class="text-nowrap text-center">{{__('Comment')}}</th>
              
              
-              <th class='vertical'>Ja</th>
-              <th class='vertical'>Nej</th>
-              <th class='vertical' style="width:30px;">Kanske</th>
+              <th class='vertical'>{{__('Yes')}}</th>
+              <th class='vertical'>{{__('No')}}</th>
+              <th class='vertical' style="width:30px;">{{__('Maybe')}}</th>
             
         @foreach ($names as $userId => $name)
                 <th class="text-nowrap text-center" style="font-size:smaller">{{$name}}</th>
