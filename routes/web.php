@@ -81,6 +81,9 @@ Route::group(
       Route::name('schema.index')->get('/schema/{trainingId?}', [App\Http\Controllers\SchemaController::class, 'index']);
       //Show edit view for one user for  attendance update
       Route::name('schema.showEdit')->get('/schema/edit/{training}',[App\Http\Controllers\SchemaController::class, 'showViewEdit']);
+      // Update attendance (for one user)
+      Route::name('schema.updateAttendance')->post('/schema.updateAttendance', [App\Http\Controllers\SchemaController::class,'updateAttendance']);
+
 
 
 

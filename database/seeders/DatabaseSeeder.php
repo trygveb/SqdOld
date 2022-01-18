@@ -46,12 +46,16 @@ class DatabaseSeeder extends Seeder {
       $memberTrainingDate->user_id = $user->id;
       $memberTrainingDate->training_date_id = $trainingDate->id;
       $groupSize = Groupsize::where('user_id', $user->id)->first()->size;
-      $year = substr($trainingDate->training_date, 0, 4);
-      $month = substr($trainingDate->training_date, 5, 2);
-      $day = substr($trainingDate->training_date, 8, 2);
-      $ms1 = Carbon::createFromDate($year, $month, $day)->timestamp + $user->id;
+      $ms1= rand(12345, 999999);
+//      echo "$ms1\n";
       $status = $ms1 % 5;
       if ($groupSize == 1 && $status == 2) {
+         $status = 1;
+      }
+      if ($status==0 && rand(0, 10) >4) {
+         $status = 1;
+      }
+      if ($status==4 && rand(0, 10) >3) {
          $status = 1;
       }
       /*

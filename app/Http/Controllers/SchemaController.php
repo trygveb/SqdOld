@@ -365,7 +365,7 @@ class SchemaController extends Controller {
          }
       }
 
-      return view('SchemaEdit', [
+      return view('sdSchema.schemaEdit', [
           'training' => $training,
           'currentUser' => Auth::user(),
           'trainingDates' => $trainingDates,
