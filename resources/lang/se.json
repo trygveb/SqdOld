@@ -45,7 +45,9 @@
     "Resend Verification Email" : "Skicka nytt verifikations-mail",
     "Reset Password" : "Skapa nytt Lösenord",
     "Reset Password Notification for": "Återställning av lösenord för",
+    "Save" : "Spara",
     "Schedule for" : "Schema för",
+    "Send Password Reset Link" : "Skicka länk för att återställa lösenord",
     "Show password" : "Visa lösenord",
     "Sorry, login details are not valid" : "Tyvärr, inloggningsuppgifterna är inte giltiga",
     "Sorry, something went wrong" : "Ursäkta, något blev fel",
@@ -56,7 +58,7 @@
         "administrator at" : "administratör på",
     "The password must be at least seven characters, and contain characters from each of the following three categories:" :
         "Lösenordet måste vara minst sju tecken långt, och innehålla tecken från var och en av de tre följande kategorierna:",
-    "Send Password Reset Link" : "Skicka länk för att återställa lösenord",
+    "Update attendance" : "Uppdatera närvaro",
     "Verification link sent!" : "Verifieringslänk har skickats!",
     "Verify email address" : "Verifiera e-postadressen",
     "Verify Email Notice" : "Verifiera e-postadress påminnelse",

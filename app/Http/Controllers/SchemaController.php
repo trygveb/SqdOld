@@ -190,7 +190,7 @@ class SchemaController extends Controller {
          $userId = $memberTraining->user_id;
          $user = User::find($userId);
          $names[$userId] = $user->name;
-         $groups[$userId] = $user->group;
+         $groups[$userId] = $user->groupsize->size;
       }
    }
 

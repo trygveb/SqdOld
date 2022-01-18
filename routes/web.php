@@ -73,8 +73,8 @@ Route::group(
       Route::name('sdCalls.guest')->get('sdCalls', [HomeController::class, 'callsGuest']);
 //      Route::name('sdSchema.guest')->get('sdSchema', [HomeController::class, 'schemaHome']);
       
-      // Show application welcome view for authenticated and verified users 
-      Route::name('sdCalls.home')->get('/sdCalls/home', [HomeController::class, 'callsHome'])->middleware('verified');
+      // Show application welcome view  
+      Route::name('sdCalls.home')->get('/sdCalls/home', [HomeController::class, 'callsHome']);
       Route::name('sdSchema.home')->get('/sdSchema/home', [HomeController::class, 'schemaHome']);
 
       // Show the schema

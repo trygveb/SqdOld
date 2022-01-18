@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('content')
-<h1>Uppdatera närvaro</h1>
+<h1>{{__('Update attendance')}}</h1>
 @php
     $userId=$currentUser->id;
     $tableMaxWidth=520;
-    $group= $currentUser->group;
+    $group= $currentUser->groupsize->size;
     if ($group > 1) {
         $tableMaxWidth=700;
     }
@@ -17,8 +17,8 @@
         <table class="table table-bordered" style="max-width:{{$tableMaxWidth}}px;">
         
             <thead>
-              <th style="vertical-align:middle;" class="text-nowrap text-center">Datum</th>
-              <th class="text-nowrap text-center">Kommentar</th>
+              <th style="vertical-align:middle;" class="text-nowrap text-center">{{__('Date')}}</th>
+              <th class="text-nowrap text-center">{{__('Comment')}}</th>
               <th class="text-nowrap text-center">{{$currentUser->name}}</th>
       
              </thead>
@@ -31,37 +31,23 @@
                   $commentName='comment_'.$trainingDate->id;
             @endphp
                <td style="padding:1px 7px;width:200px;vertical-align:middle;" >{{$trainingDate->comment}}</td>
-                @php
-                    $status= $statuses[$trainingDate->id];
-                    $statusName='-';
-                    switch ($status) {
-                      case 1: if ($group==1) {
-                                 $statusName='Ja';
-                              } else {
-                                 $statusName='1';
-                              }
-                              break;
-                      case 2: $statusName='2';
-                              break;
-                      case 3: $statusName='Nej';
-                              break;
-                      case 4: $statusName='Kanske';
-                              break;
-                     }
-                     $radioGroupName='status_'.$userId.'_'.$trainingDate->id;
-                   @endphp
+            @php
+               $status= $statuses[$trainingDate->id];
+               $statusName='-';
+               $radioGroupName='status_'.$userId.'_'.$trainingDate->id;
+            @endphp
 
                      <td>
                      @if ($group===1)
                         <table class="table-sd-schema" style='border:none;'>
                           <tr style='border:none;'>
                             <td style='border:none;width:40px;'><input type="radio" name="{{$radioGroupName}}" value="1" class="status" {{($status==1)?'checked':''}}>
-                              <span id="statusSpan">Ja</span></td>
+                              <span id="statusSpan">{{__('Yes')}}</span></td>
                             <td style='border:none;width:50px;'><input type="radio" name="{{$radioGroupName}}" value="3" class="status" {{($status==3)?'checked':''}}>
-                              <span id="statusSpan">Nej</span></td>
+                              <span id="statusSpan">{{__('No')}}</span></td>
                           <!--</tr><tr style='border:none;'>-->
                             <td style='border:none;text-align:center;width:50px;'><input type="radio" name="{{$radioGroupName}}" value="4" class="status" {{($status==4)?'checked':''}}>
-                              <span id="statusSpan">Kanske</span></td>
+                              <span id="statusSpan">{{__('Maybe')}}</span></td>
                           </tr>
                         </table>
                      @else
@@ -73,9 +59,9 @@
                               <span id="statusSpan">2</span></td>
                          <!--</tr><tr style='border:none;'>-->
                            <td style='border:none;width:55px;'><input type="radio" name="{{$radioGroupName}}" value="3" class="status" {{($status==3)?'checked':''}}>
-                             <span id="statusSpan">Nej</span></td>
+                             <span id="statusSpan">{{__('No')}}</span></td>
                            <td style='border:none;width:70px !important;'><input type="radio" name="{{$radioGroupName}}" value="4" class="status" {{($status==4)?'checked':''}}>
-                              <span id="statusSpan">Kanske</span></td>
+                              <span id="statusSpan">{{__('Maybe')}}</span></td>
                          </tr>
                        </table>
                      @endif
@@ -85,8 +71,8 @@
         @endforeach
               </tbody>
             </table>
-            <button type="submit" class="btn btn-primary">Spara</button>
-            <button type="cancel" class="btn btn-primary">Avbryt</button>
+            <button type="submit" class="btn btn-primary">{{__('Save')}}</button>
+            <button type="cancel" class="btn btn-primary">{{__('Cancel')}}</button>
 
         </form>
      </div>

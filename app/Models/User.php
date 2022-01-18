@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\SdSchema\Groupsize;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordInterface;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -59,6 +60,10 @@ class User extends Authenticatable implements MustVerifyEmailContract, CanResetP
    public function hasVerifiedEmail() {
       //dd('hasVerifiedEmail');
       return !is_null($this->email_verified_at);
+   }
+
+   public function groupsize() {
+      return $this->hasOne(Groupsize::class);
    }
 
 }

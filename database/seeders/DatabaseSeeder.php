@@ -58,22 +58,6 @@ class DatabaseSeeder extends Seeder {
       if ($status==4 && rand(0, 10) >3) {
          $status = 1;
       }
-      /*
-        switch ($status) {
-        case 1: if ($group==1) {
-        $statusName='Ja';
-        } else {
-        $statusName='1';
-        }
-        break;
-        case 2: $statusName='2';
-        break;
-        case 3: $statusName='Nej';
-        break;
-        case 4: $statusName='Kanske';
-        break;
-        }
-       */
       $memberTrainingDate->status = $status;
       $memberTrainingDate->save();
    }
@@ -160,7 +144,12 @@ class DatabaseSeeder extends Seeder {
          $user->save();
          $groupsize = new Groupsize;
          $groupsize->user_id = $user->id;
-         if ($user->id > 5) {
+         if ($user->id == 1) {
+            $groupsize->size = 1;   //Trygve
+         } elseif ($user->id == 2) {
+            $groupsize->size = 2;  // Arne
+         }
+         elseif ($user->id > 5) {
             $groupsize->size = 2;
          }
          $groupsize->save();
