@@ -46,16 +46,16 @@ class DatabaseSeeder extends Seeder {
       $memberTrainingDate->user_id = $user->id;
       $memberTrainingDate->training_date_id = $trainingDate->id;
       $groupSize = Groupsize::where('user_id', $user->id)->first()->size;
-      $ms1= rand(12345, 999999);
+      $ms1 = rand(12345, 999999);
 //      echo "$ms1\n";
       $status = $ms1 % 5;
       if ($groupSize == 1 && $status == 2) {
          $status = 1;
       }
-      if ($status==0 && rand(0, 10) >4) {
+      if ($status == 0 && rand(0, 10) > 4) {
          $status = 1;
       }
-      if ($status==4 && rand(0, 10) >3) {
+      if ($status == 4 && rand(0, 10) > 3) {
          $status = 1;
       }
       $memberTrainingDate->status = $status;
@@ -68,13 +68,19 @@ class DatabaseSeeder extends Seeder {
       }
    }
 
+   /**
+    * Add use3 Adam to both trainings
+    * Add all other users except Eva and Kain to one training.
+    * @param type $users
+    * @param type $trainings
+    */
    private function addUsersToTrainings($users, $trainings) {
       foreach ($trainings as $training) {
          $trainingDates = $training->trainingDates;
 
          foreach ($users as $user) {
-            if ($user->name != 'Arne' && $user->name != 'Lasse') {
-               if (($user->id % 2) == ($training->id - 1)) {
+            if ($user->name != 'Eve' && $user->name != 'Kain') {
+               if (($user->id % 2) == ($training->id - 1) || $user->name == 'Adam') {
                   $this->addOneUserToOneTraining($user, $training);
                   $this->addUserToTrainingDates($user, $trainingDates);
                }
@@ -109,37 +115,41 @@ class DatabaseSeeder extends Seeder {
       return $trainings;
    }
 
-   private function createUsers() {
-      $titles= ['Dr.','Mr.','Mrs.','Ms.','Miss', 'Prof.'];
-      $adninPassword = env('ADMIN_PASSWORD', 'i-love-laravel');
-      $adninPasswordHashed = Hash::make($password = $adninPassword);
+   private function createAdamAndEve() {
+      $password = env('ADMIN_PASSWORD', 'i-love-laravel');
+      $passwordHashed = Hash::make($password = $password);
       User::factory()->create([
-          'email' => 'trygve.botnen@gmail.com',
-          'password' => $adninPasswordHashed,
-          'name' => 'Trygve',
+          'email' => 'adam@gmail.com',
+          'password' => $passwordHashed,
+          'name' => 'Adam',
           'authority' => 1
       ]);
       User::factory()->create([
-          'email' => 'arne@gmail.com',
-          'password' => $adninPasswordHashed,
-          'name' => 'Arne',
+          'email' => 'eve.@gmail.com',
+          'password' => $passwordHashed,
+          'name' => 'Eve',
           'authority' => 0
       ]);
       User::factory()->create([
-          'email' => 'lasse@gmail.com',
-          'password' => $adninPasswordHashed,
-          'name' => 'Lasse',
+          'email' => 'kain@gmail.com',
+          'password' => $passwordHashed,
+          'name' => 'Kain',
           'authority' => 0,
           'email_verified_at' => NULL
       ]);
+   }
+
+   private function createUsers() {
+      $this->createAdamAndEve();
+      $titles = ['Dr.', 'Mr.', 'Mrs.', 'Ms.', 'Miss', 'Prof.'];
       User::factory(20)->create();
       $users = User::all();
       foreach ($users as $user) {
-         $atoms= explode(' ', $user->name);
-         if (in_array($atoms[0],$titles )) {
-            $user->name= $atoms[1];
+         $atoms = explode(' ', $user->name);
+         if (in_array($atoms[0], $titles)) {
+            $user->name = $atoms[1];
          } else {
-            $user->name= $atoms[0];
+            $user->name = $atoms[0];
          }
          $user->save();
          $groupsize = new Groupsize;
@@ -148,8 +158,7 @@ class DatabaseSeeder extends Seeder {
             $groupsize->size = 1;   //Trygve
          } elseif ($user->id == 2) {
             $groupsize->size = 2;  // Arne
-         }
-         elseif ($user->id > 5) {
+         } elseif ($user->id > 5) {
             $groupsize->size = 2;
          }
          $groupsize->save();

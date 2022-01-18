@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SdSchema\MemberTraining;
+use App\Models\SdSchema\V_MemberTraining;
 use Illuminate\Support\Facades\Auth;
 
 //use Illuminate\Support\Facades\App;
@@ -66,11 +66,13 @@ class HomeController extends Controller {
 //    }
    }
       /**
-    * Show sdSchema welcome view for guests
+    * Show sdSchema welcome view for logged out users
     * @return view
     */
    public function schemaGuest() {
-      return view('sdSchema.welcome');
+      return view('sdSchema.welcome', [
+          'myTrainingsCount' => 0,
+      ]);
    }
 
    /**
@@ -82,13 +84,14 @@ class HomeController extends Controller {
          if (Auth::user()->hasVerifiedEmail()) {
 
             //dd('schemaGuest, auth');
-            $myMemberTrainings = MemberTraining::where('user_id', Auth::user()->id)->get();
-            $count = $myMemberTrainings->count();
+            $vMemberTrainings = V_MemberTraining::where('user_id', Auth::user()->id)->get();
+            $count = $vMemberTrainings->count();
             if ($count == 1) {
-               return redirect(route('schema.index', ['trainingId' => $myMemberTrainings[0]->training_id]));
+               return redirect(route('schema.index', ['trainingId' => $vMemberTrainings[0]->training_id]));
             } else {
                return view('sdSchema.welcome', [
                    'myTrainingsCount' => $count,
+                   'vMemberTrainings' => $vMemberTrainings
                ]);
             }
          } else {

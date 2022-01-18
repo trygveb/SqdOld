@@ -7,22 +7,26 @@
       <h1 class="text-center"> {{ __('Welcome to')}} SdSchema</h1>
 
    @guest
-   <br>
-   <a class="nav-link" href="{{ route('showLoginForm',['application' =>'sdSchema']) }}">{{ __('Login') }}</a>
-   {{ __('or') }}
-   <a class="nav-link" href="{{ route('showRegisterForm', ['application' =>'sdSchema']) }}">{{ __('Register') }}</a>       
+      <br>
+      <a class="nav-link" href="{{ route('showLoginForm',['application' =>'sdSchema']) }}">{{ __('Login') }}</a>
+      {{ __('or') }}
+      <a class="nav-link" href="{{ route('showRegisterForm', ['application' =>'sdSchema']) }}">{{ __('Register') }}</a>       
    @endguest
    @auth
-   @if (! Auth::user()->hasVerifiedEmail())
-   <a href="{{route('verification.notice',['application' => 'sdSchema'])}}">{{__('Please confirm your email')}}!</a>
-   @else
-   <!--$myTrainingsCount-->
-      @if ($myTrainingsCount > 0)
-         Välj schema <a href="{{route('schema.index',2)}}">C2 Måndagar</a>
+      @if (! Auth::user()->hasVerifiedEmail())
+         <a href="{{route('verification.notice',['application' => 'sdSchema'])}}">{{__('Please confirm your email')}}!</a>
       @else
-         Du är inte ansluten till något schema ännu.
+         @if ($myTrainingsCount > 0)
+         {{__('Select schedule')}}<br>
+            <ul>
+         @foreach ($vMemberTrainings as $vMemberTraining)
+               <li><a href="{{route('schema.index',$vMemberTraining->training_id)}}">{{$vMemberTraining->training_name}}</a></li>
+         @endforeach
+            </ul>
+         @else
+         {{__('You are not registered with any schedule yet')}}.
+         @endif
       @endif
-   @endif
    @endauth
    </div>    
 </div>

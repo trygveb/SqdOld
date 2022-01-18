@@ -78,7 +78,7 @@ Route::group(
       Route::name('sdSchema.home')->get('/sdSchema/home', [HomeController::class, 'schemaHome']);
 
       // Show the schema
-      Route::name('schema.index')->get('/schema/{trainingId?}', [App\Http\Controllers\SchemaController::class, 'index']);
+      Route::name('schema.index')->get('/schema/show/{trainingId?}', [App\Http\Controllers\SchemaController::class, 'index']);
       //Show edit view for one user for  attendance update
       Route::name('schema.showEdit')->get('/schema/edit/{training}',[App\Http\Controllers\SchemaController::class, 'showViewEdit']);
       // Update attendance (for one user)
