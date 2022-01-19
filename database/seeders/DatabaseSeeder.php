@@ -69,8 +69,8 @@ class DatabaseSeeder extends Seeder {
    }
 
    /**
-    * Add use3 Adam to both trainings
-    * Add all other users except Eva and Kain to one training.
+    * Add user Adam to both trainings
+    * Add all other users except Kain to one training.
     * @param type $users
     * @param type $trainings
     */
@@ -79,7 +79,7 @@ class DatabaseSeeder extends Seeder {
          $trainingDates = $training->trainingDates;
 
          foreach ($users as $user) {
-            if ($user->name != 'Eve' && $user->name != 'Kain') {
+            if ($user->name != 'Kain') {
                if (($user->id % 2) == ($training->id - 1) || $user->name == 'Adam') {
                   $this->addOneUserToOneTraining($user, $training);
                   $this->addUserToTrainingDates($user, $trainingDates);
@@ -125,7 +125,7 @@ class DatabaseSeeder extends Seeder {
           'authority' => 1
       ]);
       User::factory()->create([
-          'email' => 'eve.@gmail.com',
+          'email' => 'eve@gmail.com',
           'password' => $passwordHashed,
           'name' => 'Eve',
           'authority' => 0

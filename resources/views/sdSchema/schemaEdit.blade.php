@@ -11,7 +11,7 @@
 @endphp
   <div class="container">
       <div class="table-responsive" style="overflow-x:auto; overflow-y:hidden;">
-        <form action="{{ route('schema.updateAttendance')}}" method="POST">
+        <form action="{{ route('sdSchema.updateAttendance')}}" method="POST">
           {{ csrf_field() }}
           <input type="hidden" name="trainingId" value="{{$training->id}}">
         <table class="table table-bordered" style="max-width:{{$tableMaxWidth}}px;">

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SchemaController;
-
+use App\Http\Controllers\UnixController;
 /*
   |--------------------------------------------------------------------------
   | Web Routes
@@ -15,7 +15,7 @@ use App\Http\Controllers\SchemaController;
   | contains the "web" middleware group. Now create something great!
   |
  */
-Route::group(
+Route::group(  // Comment out this when running tests
    ['prefix' => LaravelLocalization::setLocale(),
       'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
 
@@ -69,32 +69,39 @@ Route::group(
       // For sqd.se, NOT logged in, application not selected
       Route::name('home')->get('/', [HomeController::class, 'home']); 
       
-      // Show application welcome view for guests, or authenticated but not verified (Prompt for login or registration)
-      Route::name('sdCalls.guest')->get('sdCalls', [HomeController::class, 'callsGuest']);
-//      Route::name('sdSchema.guest')->get('sdSchema', [HomeController::class, 'schemaHome']);
       
+
+// Calls routes ///////////////////////////////////////////////////////////////
+   Route::name('calls.')->group(function () {
       // Show application welcome view  
-      Route::name('sdCalls.home')->get('/sdCalls/home', [HomeController::class, 'callsHome']);
-      Route::name('sdSchema.home')->get('/sdSchema/home', [HomeController::class, 'schemaHome']);
+      Route::name('home')->get('/sdCalls/home', [HomeController::class, 'callsHome']);
+      // Show application welcome view for guests, or authenticated but not verified (Prompt for login or registration)
+      Route::name('guest')->get('sdCalls', [HomeController::class, 'callsGuest']);
+   });
 
+// Schema routes ///////////////////////////////////////////////////////////////
+   Route::name('sdSchema.')->group(function () {
+      // Show application home/welcome view  
+      Route::name('home')->get('/sdSchema/home', [HomeController::class, 'schemaHome']);
       // Show the schema
-      Route::name('schema.index')->get('/schema/show/{trainingId?}', [App\Http\Controllers\SchemaController::class, 'index']);
+      Route::name('index')->get('/sdSchema/show/{trainingId?}', [SchemaController::class, 'index']);
       //Show edit view for one user for  attendance update
-      Route::name('schema.showEdit')->get('/schema/edit/{training}',[App\Http\Controllers\SchemaController::class, 'showViewEdit']);
+      Route::name('showEdit')->get('/sdSchema/edit/{training}',[SchemaController::class, 'showViewEdit']);
       // Update attendance (for one user)
-      Route::name('schema.updateAttendance')->post('/schema.updateAttendance', [App\Http\Controllers\SchemaController::class,'updateAttendance']);
+      Route::name('updateAttendance')->post('/sdSchema/updateAttendance', [SchemaController::class,'updateAttendance']);
+   });
+});   // Comment out this when running tests
 
-
-
-
-});
-
-// Routes not needing localization
+// Routes not needing localization /////////////////////////////////////////////
 Route::get('/switchLocale', [HomeController::class, 'switchLocale'])->name('switchLocale');
-Route::get('/unix/home', [App\Http\Controllers\UnixController::class,'index'])->middleware('auth');
-Route::post('/unix/createConfigFile', [App\Http\Controllers\UnixController::class, 'createConfigFile'])->name('createConfigFile');   
-Route::get('/unix/createAllConfigFile', [App\Http\Controllers\UnixController::class, 'createAllConfigFiles'])->name('createAllConfigFiles');   
 
+
+// Routes in dev environment only ///////////////////////////////////////////////
+Route::domain('schema.dev.sqd.se')->group(function () {
+   Route::get('/unix/home', [UnixController::class,'index'])->middleware('auth');
+   Route::post('/unix/createConfigFile', [UnixController::class, 'createConfigFile'])->name('createConfigFile');   
+   Route::get('/unix/createAllConfigFile', [UnixController::class, 'createAllConfigFiles'])->name('createAllConfigFiles');   
+});
 
 //  Route::get('/email/verify', function () { return view('auth.verify-email');
 //})->middleware('auth')->name('verification.notice');

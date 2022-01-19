@@ -87,7 +87,7 @@ class HomeController extends Controller {
             $vMemberTrainings = V_MemberTraining::where('user_id', Auth::user()->id)->get();
             $count = $vMemberTrainings->count();
             if ($count == 1) {
-               return redirect(route('schema.index', ['trainingId' => $vMemberTrainings[0]->training_id]));
+               return redirect(route('sdSchema.index', ['trainingId' => $vMemberTrainings[0]->training_id]));
             } else {
                return view('sdSchema.welcome', [
                    'myTrainingsCount' => $count,
@@ -114,7 +114,7 @@ class HomeController extends Controller {
 //         $myMemberTrainings = MemberTraining::where('user_id', Auth::user()->id)->get();
 //         $count = $myMemberTrainings->count();
 //         if ($count == 1) {
-//            return redirect(route('schema.index', ['trainingId' => $myMemberTrainings[0]->training_id]));
+//            return redirect(route('sdSchema.index', ['trainingId' => $myMemberTrainings[0]->training_id]));
 //         } else {
          return view('sdSchema.welcome', [
              'myTrainingsCount' => $count,

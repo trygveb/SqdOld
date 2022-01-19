@@ -10,7 +10,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    {{ __('Please select application') }} <a class="aMain" href="{{ route('sdCalls.home',['application' => 'sdCalls']) }}"> SdCalls </a>
+                    {{ __('Please select application') }} <a class="aMain" href="{{ route('calls.home',['application' => 'sdCalls']) }}"> SdCalls </a>
                     {{ __('or')}}
                     <a class="aMain" href="{{ route('sdSchema.home',['application' => 'sdSchema']) }}"> SdSchema!</a>
                 </div>

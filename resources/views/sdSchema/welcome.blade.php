@@ -20,7 +20,7 @@
          {{__('Select schedule')}}<br>
             <ul>
          @foreach ($vMemberTrainings as $vMemberTraining)
-               <li><a href="{{route('schema.index',$vMemberTraining->training_id)}}">{{$vMemberTraining->training_name}}</a></li>
+               <li><a href="{{route('sdSchema.index',$vMemberTraining->training_id)}}">{{$vMemberTraining->training_name}}</a></li>
          @endforeach
             </ul>
          @else

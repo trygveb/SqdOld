@@ -401,7 +401,7 @@ class SchemaController extends Controller {
             $trainingId = $value;
          }
       }
-      return redirect(route('schema.index', ['trainingId' => $trainingId]));
+      return redirect(route('sdSchema.index', ['trainingId' => $trainingId]));
    }
 
    // Update comemnts for one or more dates
@@ -421,7 +421,7 @@ class SchemaController extends Controller {
       }
       $training = Training::find($trainingId);
       // return redirect(route('admin.showMenu',['training' =>$training]));
-      return redirect(route('schema.index', ['trainingId' => $training->id]));
+      return redirect(route('sdSchema.index', ['trainingId' => $training->id]));
    }
 
 }

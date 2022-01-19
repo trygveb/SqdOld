@@ -8,17 +8,32 @@
             <a  href="{{ route('home',[]) }}" style="color:white;">{{ config('app.name', 'sqd.se') }}</a>
             <x-flags-div />
             
-            <div class="container">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
             @if (isset($training))
-                <a class="navbar-brand" href="{{ route('schema.index',['trainingId' => $training->id]) }}">
-                    {{$training->name}}
-                </a>
             @endif
             
             @auth
-            @if (Auth::user()->authority > 1)
+            @if (Auth::user()->authority > 0)
                @if (isset($training))
-               <a href="{{route('admin.showMenu',['training' =>$training])}}" class="btn btn-primary" role="button">Administration</a>
+                <ul class="navbar-nav mr-auto">
+                    
+               <li class="nav-item active">                    
+               <a href="{{route('sdSchema.showEdit',['training' =>$training])}}" class="nav-link" >
+               {{__('Change my attendance')}}
+               </a>
+               </li>                    
+               <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 Administration
+               </a>
+               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                 <a class="dropdown-item" href="#">Action</a>
+                 <a class="dropdown-item" href="#">Another action</a>
+                 <div class="dropdown-divider"></div>
+                 <a class="dropdown-item" href="#">Something else here</a>
+               </div>
+             </li>               
+                </ul>
                @endif
             @endif
             @endauth

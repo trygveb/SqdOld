@@ -1,10 +1,6 @@
-@extends('layouts.app')
+@extends('sdSchema.layout')
 @section('content')
-<h1>{{__('Schedule for')}} {{$training->name}}
-    <a href="{{route('schema.showEdit',['training' =>$training])}}" class="btn btn-primary" role="button" style="margin-left:5px;en">
-        {{__('Change my attendance')}}
-    </a>
-</h1>
+<h1>{{__('Schedule for')}} {{$training->name}}</h1>
   <div class="container">
       <div class="table-responsive" style="overflow-x:auto; overflow-y:hidden;">
 
