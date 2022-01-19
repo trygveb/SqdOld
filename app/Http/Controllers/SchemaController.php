@@ -161,7 +161,7 @@ class SchemaController extends Controller {
               ->where('training_date', '>=', $today)
               ->get();
       $memberTrainings = MemberTraining::where('training_id', $trainingId)->get();
-
+      $admin= $memberTrainings->where('user_id',Auth::user()->id)->first()->admin;
       // Initialize the arrays to use in the view
       $statusSums = array();
       $statuses = array();
@@ -180,7 +180,8 @@ class SchemaController extends Controller {
           'statuses' => $statuses,
           'names' => $names,
           'groups' => $groups,
-          'statusSums' => $statusSums
+          'statusSums' => $statusSums,
+          'admin' => $admin,
       ]);
    }
 

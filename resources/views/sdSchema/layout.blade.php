@@ -2,61 +2,47 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <x-html-head title="sdSchema" />
 <body>
-    <div id="app">
-        
-        <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
-            <a  href="{{ route('home',[]) }}" style="color:white;">{{ config('app.name', 'sqd.se') }}</a>
-            <x-flags-div />
-            
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            @if (isset($training))
-            @endif
-            
-            @auth
-            @if (Auth::user()->authority > 0)
-               @if (isset($training))
-                <ul class="navbar-nav mr-auto">
-                    
-               <li class="nav-item active">                    
-               <a href="{{route('sdSchema.showEdit',['training' =>$training])}}" class="nav-link" >
-               {{__('Change my attendance')}}
-               </a>
-               </li>                    
+   <div id="app">
+      <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
+         <a  href="{{ route('home',[]) }}" style="color:white;">{{ config('app.name', 'sqd.se') }}</a>
+         <x-flags-div />
+
+         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+         @if ($admin > 0)    
+            <ul class="navbar-nav mr-auto">
+
                <li class="nav-item dropdown">
-               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                 Administration
-               </a>
-               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                 <a class="dropdown-item" href="#">Action</a>
-                 <a class="dropdown-item" href="#">Another action</a>
-                 <div class="dropdown-divider"></div>
-                 <a class="dropdown-item" href="#">Something else here</a>
-               </div>
-             </li>               
-                </ul>
-               @endif
-            @endif
-            @endauth
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Administration
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                     <a class="dropdown-item" href="#">Action</a>
+                     <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                       <a class="dropdown-item" href="#">Something else here</a>
+                     </div>
+               </li>
+            </ul>
+         @endif
             
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-                    <x-right-side-of-navbar />
-                </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+               <!-- Left Side Of Navbar -->
+               <ul class="navbar-nav mr-auto">
+               </ul>
+               <x-right-side-of-navbar />
             </div>
-        </nav>
+         </div>
+      </nav>
 
-        <main class="p-4">
-            @yield('content')
-        </main>
-    </div>
-    <x-footer subApp="sdSchema" />
+   <main class="p-4">
+       @yield('content')
+   </main>
+   </div>
+   <x-footer subApp="sdSchema" />
 
     @yield('scripts')
     <!-- Scripts -->
