@@ -1,4 +1,7 @@
 @extends('sdSchema.layout')
+@section('menu1')
+   <a class="dropdown-item" href="{{route('sdSchema.showComments',['trainingId' => $training->id])}}">{{__('Manage comments')}}</a>
+   @endsection
 @section('content')
 <h1>{{__('Schedule for')}} {{$training->name}}
     <a href="{{route('sdSchema.showEdit',['training' =>$training])}}" class="btn btn-primary" role="button" style="margin-left:5px;en">

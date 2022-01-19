@@ -89,6 +89,14 @@ Route::group(  // Comment out this when running tests
       Route::name('showEdit')->get('/sdSchema/edit/{training}',[SchemaController::class, 'showViewEdit']);
       // Update attendance (for one user)
       Route::name('updateAttendance')->post('/sdSchema/updateAttendance', [SchemaController::class,'updateAttendance']);
+   // Show view AdminComments
+      Route::name('showComments')->get('/admin/comments/{trainingId}', [SchemaController::class,'showViewAdminComments']);
+   // Show add/remove members view
+      Route::name('showMembers')->get('/admin/members/{training}', [SchemaController::class, 'showViewMembers']);
+   // Update comments
+      Route::name('updateComments')->post('/sdSchema/updateComments', [SchemaController::class, 'updateComments']);
+
+      
    });
 });   // Comment out this when running tests
 

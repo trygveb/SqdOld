@@ -331,15 +331,17 @@ class SchemaController extends Controller {
    }
 
    // Show view AdminComments
-   public function showViewAdminComments(Training $training) {
+   public function showViewAdminComments($trainingId) {
+      
       // $training = Training::find($trainingId);
       $mytime = Carbon::now();
       $today = $mytime->toDateString();
-      $vMemberTrainingDates = V_MemberTrainingDate::where('training_date', '>=', $today)->get();
-      $trainingDates = TrainingDate::where('training_id', $training->id)
+//      $vMemberTrainingDates = V_MemberTrainingDate::where('training_date', '>=', $today)->get();
+      $training= Training::find($trainingId);
+      $trainingDates = TrainingDate::where('training_id', $trainingId)
               ->where('training_date', '>=', $today)
               ->get();
-      return view('AdminComments', [
+      return view('sdSchema.adminComments', [
           'training' => $training,
           'currentUser' => Auth::user(),
           'trainingDates' => $trainingDates,

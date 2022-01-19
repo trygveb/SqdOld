@@ -8,6 +8,9 @@
          <x-flags-div />
 
          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+         @php
+            $admin = 1;
+         @endphp
          @if ($admin > 0)    
             <ul class="navbar-nav mr-auto">
 
@@ -16,7 +19,7 @@
                   Administration
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                     <a class="dropdown-item" href="#">Action</a>
+                      @yield('menu1')
                      <a class="dropdown-item" href="#">Another action</a>
                     <div class="dropdown-divider"></div>
                        <a class="dropdown-item" href="#">Something else here</a>
