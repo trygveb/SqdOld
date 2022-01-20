@@ -10,6 +10,7 @@ use App\Models\SdSchema\MemberTrainingDate;
 use App\Models\SdSchema\Training;
 use App\Models\SdSchema\TrainingDate;
 use App\Models\User;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -58,8 +59,8 @@ class SchemaController extends Controller {
 
 
       DB::commit();
-      $training = Training::find($trainingId);
-      return redirect(route('admin.showAddRemoveDates', ['training' => $training]));
+//      $training = Training::find($trainingId);
+      return redirect(route('sdSchema.showAddRemoveDates', ['trainingId' => $trainingId]));
    }
 
    // Private function called from addDates
@@ -240,8 +241,8 @@ class SchemaController extends Controller {
 //            $trainingId = $value;
          }
       }
-      $training = Training::find($trainingId);
-      return redirect(route('admin.showAddRemoveDates', ['training' => $training]));
+//      $training = Training::find($trainingId);
+      return redirect(route('sdSchema.showAddRemoveDates', ['trainingId' => $trainingId]));
    }
 
    // Show the Register New User Form
@@ -251,15 +252,20 @@ class SchemaController extends Controller {
       ]);
    }
 
-   public function showViewAddRemoveDates(Training $training) {
-      
+   public function showViewAddRemoveDates($trainingId) {
+
+      $training = Training::find($trainingId);
       $lastTrainingDate = $this->getLastTrainingDate($training);
 
       $danceTime = '19:00';   // TODO: Remve this hardcoded time
       // Create a Carbopnd date in order to calculate next date a week ahead, and the day of the week
       $dt = Carbon::parse($lastTrainingDate->training_date); 
       $nextDate = substr($dt->addWeeks(1), 0, 10);
-      $weekDays = $dt->locale('sv')->dayName . 'ar';
+      $currentLocale=LaravelLocalization::getCurrentLocale();
+      if ($currentLocale ==='se') {
+         $currentLocale= 'sv';
+      }
+      $weekDays = $dt->locale($currentLocale)->dayName;
 
       // Get day of week (0=Sunday, e= Monday etc).
       // This non-ISO format is used to be compatible with Javascript
@@ -272,7 +278,7 @@ class SchemaController extends Controller {
               ->where('training_date', '>=', $today)
               ->get();
 
-      return view('AddRemoveDates', [
+      return view('sdSchema.addRemoveDates', [
           'training' => $training,
           'trainingDates' => $trainingDates,
           'currentUser' => Auth::user(),

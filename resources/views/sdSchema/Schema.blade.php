@@ -1,6 +1,7 @@
 @extends('sdSchema.layout')
 @section('menu1')
    <a class="dropdown-item" href="{{route('sdSchema.showComments',['trainingId' => $training->id])}}">{{__('Manage comments')}}</a>
+   <a class="dropdown-item" href="{{route('sdSchema.showAddRemoveDates',['trainingId' => $training->id])}}">{{__('Manage dates')}}</a>
    @endsection
 @section('content')
 <h1>{{__('Schedule for')}} {{$training->name}}

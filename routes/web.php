@@ -95,6 +95,12 @@ Route::group(  // Comment out this when running tests
       Route::name('showMembers')->get('/admin/members/{training}', [SchemaController::class, 'showViewMembers']);
    // Update comments
       Route::name('updateComments')->post('/sdSchema/updateComments', [SchemaController::class, 'updateComments']);
+   // Show add/remove dates view
+      Route::name('showAddRemoveDates')->get('/admin/AddRemoveDates/{trainingId}', [SchemaController::class, 'showViewAddRemoveDates']);
+   // Add dates
+      Route::name('addDates')->post('/admin/addDates', [SchemaController::class, 'addDates']);
+   // Remove dates
+      Route::name('removeDates')->post('/admin.removeDates', [SchemaController::class, 'removeDates']);
 
       
    });
