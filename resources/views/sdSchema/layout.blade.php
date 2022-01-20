@@ -13,13 +13,9 @@
          @endphp
          @if ($admin > 0)    
             <ul class="navbar-nav mr-auto">
-
                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Administration
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      @yield('menu1')
+  @yield('menu1')
+                    
                </li>
             </ul>
          @endif

@@ -1,8 +1,16 @@
 @extends('sdSchema.layout')
+
 @section('menu1')
+@if ($admin > 0)
+   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   Administration
+   </a>
+   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
    <a class="dropdown-item" href="{{route('sdSchema.showComments',['trainingId' => $training->id])}}">{{__('Manage comments')}}</a>
    <a class="dropdown-item" href="{{route('sdSchema.showAddRemoveDates',['trainingId' => $training->id])}}">{{__('Manage dates')}}</a>
-   @endsection
+   </div>
+@endif
+@endsection
 @section('content')
 <h1>{{__('Schedule for')}} {{$training->name}}
     <a href="{{route('sdSchema.showEdit',['training' =>$training])}}" class="btn btn-primary" role="button" style="margin-left:5px;en">
@@ -75,4 +83,11 @@
      </div>
  </div>
 <!--</div>-->
+@endsection
+@section('scripts')
+<script>
+window.onload = function() {
+  document.getElementsByTagName("title")[0].innerHTML="SdSchema {{$training->name}}";
+};
+</script>
 @endsection

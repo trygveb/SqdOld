@@ -3,12 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/lang/se.json</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/errors/429.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/lang/sv.json</file>
             <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/SchemaController.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/sdSchema/adminComments.blade.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/resources/views/sdSchema/schema.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/config/app.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/routes/web.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/sdSchema/layout.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/sdSchema/addRemoveDates.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/components/html-head.blade.php</file>
         </group>
     </open-files>
 </project-private>

@@ -13,7 +13,7 @@
      {{__('Latest date is')}} {{$lastTrainingDate->training_date}}
       <br><br>
          <div class="table-responsive" style="overflow-x:auto; overflow-y:hidden;">
-             Lägg till <input type="number" id="quantity" name="quantity" min="1" max="15" size="4" value="1"> 
+             {{__('Add')}} <input type="number" id="quantity" name="quantity" min="1" max="15" size="4" value="1"> 
             <select id="weekdays">
               <option value="0">{{__('Sundays')}}</option>
               <option value="1">{{__('Mondays')}}</option>
@@ -23,15 +23,12 @@
               <option value="5">{{__('Fridays')}}</option>
               <option value="6">{{__('Saturdays')}}</option>
             </select>
-             från och med
+              {{__('from')}} 
              <input type="date" id="startDate" name="startDate", oninput="dateIsChanged()" value="{{$nextDate}}">
         </div>
           <br>
-          <p style="float:right;">
-         <button type="submit" class="btn btn-primary" style="margin-right:10px;">Lägg till datum</button>
-            </a>
-          </p>
-          </fieldset>
+         <x-submit-button submitText="{{__('Add')}} {{__('date')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('sdSchema.index')}}" />
+         </fieldset>
 
       </form>
      <br>

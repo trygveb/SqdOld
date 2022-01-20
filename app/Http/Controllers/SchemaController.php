@@ -163,7 +163,7 @@ class SchemaController extends Controller {
               ->get();
       $memberTrainings = MemberTraining::where('training_id', $trainingId)->get();
       $admin= $memberTrainings->where('user_id',Auth::user()->id)->first()->admin;
-      // Initialize the arrays to use in the view
+            // Initialize the arrays to use in the view
       $statusSums = array();
       $statuses = array();
       $names = array();
@@ -262,9 +262,9 @@ class SchemaController extends Controller {
       $dt = Carbon::parse($lastTrainingDate->training_date); 
       $nextDate = substr($dt->addWeeks(1), 0, 10);
       $currentLocale=LaravelLocalization::getCurrentLocale();
-      if ($currentLocale ==='se') {
-         $currentLocale= 'sv';
-      }
+//      if ($currentLocale ==='se') {
+//         $currentLocale= 'sv';
+//      }
       $weekDays = $dt->locale($currentLocale)->dayName;
 
       // Get day of week (0=Sunday, e= Monday etc).

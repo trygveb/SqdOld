@@ -16,13 +16,13 @@
           {{ csrf_field() }}
           <input type="hidden" name="trainingId" value="{{$training->id}}">
           <fieldset>
-            <legend>Ändra kommentarer</legend>
+            <legend>{{__('Change comments')}}</legend>
             
         <table class="table table-bordered" style="max-width:{{$tableMaxWidth}}px;">
         
             <thead>
-              <th style="vertical-align:middle;" class="text-nowrap text-center">Datum</th>
-              <th class="text-nowrap text-center" style="width:290px;">Kommentar</th>
+              <th style="vertical-align:middle;" class="text-nowrap text-center">{{__('Date')}}</th>
+              <th class="text-nowrap text-center" style="width:290px;">{{__('Comment')}}</th>
             </thead>
             <tbody>
 
@@ -41,11 +41,8 @@
         @endforeach
             </tbody>
          </table>
-            <p style="float:right;">
-            <button  type="submit" class="btn btn-primary"  onclick="return checkDeletes()">Spara ändringar</button>
-            
-            </p>
-             </fieldset>
+            <x-submit-button submitText="{{ __('Save changes')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('sdSchema.index')}}" />
+              </fieldset>
 
         </form>
      </div>

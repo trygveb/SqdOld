@@ -19,14 +19,6 @@ class HomeController extends Controller {
    }
 
    /**
-    * Show sdCalls welcome view for guests
-    * @return view
-    */
-   public function callsGuest() {
-      return view('sdCalls.welcome');
-   }
-
-   /**
     * Show sdCalls welcome view for authenticated and verified users
     * @return view
     */
@@ -41,38 +33,11 @@ class HomeController extends Controller {
    public function home() {
       $fullUrl = request()->fullUrl();
       if (str_contains($fullUrl, 'schema')) {
-         return $this->schemaGuest();
+         return $this->schemaHome();
       } elseif (str_contains($fullUrl, 'calls')) {
-         return $this->callsGuest();
+         return $this->callsHome();
       }
       return view('home')->with('extra', $fullUrl);
-//    $origin = array("sqd.se", "schema.sqd.se", "test.sqd.se", "schema.test.sqd.se", "calls.sqd.se", "calls.test.sqd.se", "192.168.10.10");
-//    $domain = parse_url(request()->root())['host'];
-////    dd('fullUrl='.request()->fullUrl());
-//     if (in_array($domain, $origin)) {
-//        if (str_contains(request(),'192.168.10.10')) {
-//            return view('home')->with('extra', request()->fullUrl());
-//        } 
-//        else if ($domain === 'calls.test.sqd.se') {
-//            return $this.callsGuest();
-//        } 
-//        else if ($domain === 'schema.test.sqd.se') {
-//            return $this.schemaGuest();
-//        } else {
-//           
-//        }
-//    } else{ 
-//        return view('unauthorized')->with('domain',$domain);
-//    }
-   }
-      /**
-    * Show sdSchema welcome view for logged out users
-    * @return view
-    */
-   public function schemaGuest() {
-      return view('sdSchema.welcome', [
-          'myTrainingsCount' => 0,
-      ]);
    }
 
    /**
@@ -127,7 +92,7 @@ class HomeController extends Controller {
 
    public function switchLocale() {
       if (config('app.locale') == 'en') {
-         config(['app.locale' => 'se']);
+         config(['app.locale' => 'sv']);
       } else {
          config(['app.locale' => 'en']);
       }
