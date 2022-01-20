@@ -32,11 +32,15 @@ class DatabaseSeeder extends Seeder {
       $this->addUsersToTrainings($users, $trainings);
    }
 
+   
    private function addOneUserToOneTraining($user, $training) {
 //      printf("Adding user %d to training %s\n", $user->id, $training->id);
       $memberTraining = new MemberTraining;
       $memberTraining->user_id = $user->id;
       $memberTraining->training_id = $training->id;
+      if ($user->id== 1 || $user->id==2) {
+         $memberTraining->admin=1;  // Make user 1 and 2 admin for the training
+      }
       $memberTraining->save();
    }
 

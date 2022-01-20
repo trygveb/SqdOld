@@ -92,7 +92,14 @@ Route::group(  // Comment out this when running tests
    // Show view AdminComments
       Route::name('showComments')->get('/admin/comments/{trainingId}', [SchemaController::class,'showViewAdminComments']);
    // Show add/remove members view
-      Route::name('showMembers')->get('/admin/members/{training}', [SchemaController::class, 'showViewMembers']);
+      Route::name('showMembers')->get('/admin/members/{trainingId}', [SchemaController::class, 'showViewMembers']);
+   // Add existing users to a training
+      Route::name('addMember')->post('/admin/addMember', [SchemaController::class, 'addMember']);
+   // Remove member from a training
+      Route::name('removeMember')->post('/admin/removeMember', [SchemaController::class, 'removeMember']);
+   // Show register new user form
+      Route::name('showRegisterUser')->get('/admin/showRegisterUser/{trainingId}', [SchemaController::class, 'showRegisterUser']);
+
    // Update comments
       Route::name('updateComments')->post('/sdSchema/updateComments', [SchemaController::class, 'updateComments']);
    // Show add/remove dates view

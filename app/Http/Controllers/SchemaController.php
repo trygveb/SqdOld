@@ -246,9 +246,9 @@ class SchemaController extends Controller {
    }
 
    // Show the Register New User Form
-   public function showRegisterUser(Training $training) {
+   public function showRegisterUser($trainingId) {
       return view('RegisterUser', [
-          'training' => $training,
+          'trainingId' => $trainingId,
       ]);
    }
 
@@ -311,7 +311,8 @@ class SchemaController extends Controller {
    }
 
    // SHow the Members view
-   public function ShowViewMembers(Training $training) {
+   public function ShowViewMembers($trainingId) {
+      $training= Training::find($trainingId);
       $createEmailListAction = new CreateEmailListAction();
       $emailArray = $createEmailListAction->execute($training->id);
       $emails = '';
@@ -322,12 +323,13 @@ class SchemaController extends Controller {
 //      dd($emails);
       $members = V_MemberTraining::where('training_id', $training->id)->get();
 //      $nonMembers = V_MemberTraining::where('training_id', '<>', $training->id)->get();
+      $allUsers= User::all();
+      $nonMembers= $allUsers->diff($members);
+//      $nonMembers = User::whereNotIn('id', function ($q) use ($training) {
+//                 $q->select('user_id')->from('member_training')->where('training_id', $training->id);
+//              })->get();
 
-      $nonMembers = User::whereNotIn('id', function ($q) use ($training) {
-                 $q->select('user_id')->from('member_training')->where('training_id', $training->id);
-              })->get();
-
-      return view('Members', [
+      return view('sdSchema.members', [
           'training' => $training,
           'members' => $members,
           'nonMembers' => $nonMembers,

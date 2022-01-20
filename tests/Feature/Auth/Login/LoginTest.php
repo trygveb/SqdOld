@@ -161,7 +161,8 @@ class LoginTest extends TestCase {
           'password' => Hash::make($password = 'i-love-laravel'),
       ]);
 
-      foreach (range(0, 5) as $_) {
+      foreach (range(0, 3) as $_) {
+         
          $response = $this->from($this->loginGetRoute())->post($this->loginPostRoute(), [
              'email' => $user->email,
              'password' => 'invalid-password',

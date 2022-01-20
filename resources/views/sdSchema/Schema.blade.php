@@ -8,6 +8,7 @@
    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
    <a class="dropdown-item" href="{{route('sdSchema.showComments',['trainingId' => $training->id])}}">{{__('Manage comments')}}</a>
    <a class="dropdown-item" href="{{route('sdSchema.showAddRemoveDates',['trainingId' => $training->id])}}">{{__('Manage dates')}}</a>
+   <a class="dropdown-item" href="{{route('sdSchema.showMembers',['trainingId' => $training->id])}}">{{__('Manage memebers')}}</a>
    </div>
 @endif
 @endsection
