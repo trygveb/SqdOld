@@ -1,23 +1,23 @@
 @extends('layouts.app')
 @section('content')
-<h1>Medlemmar</h1>
+<h1>{{__('Members')}}</h1>
  <div class="container">
-      <label for="emailAdresses">Emailadresser: (markera alla och kopiera)</label><br>
+      <label for="emailAdresses">{{__('E-mail addresses: (select all and copy)')}}</label><br>
       <textarea style="background-color:#ccc" id="emailAdresses"  cols="80">{{$emails}}</textarea>
      <br>
       <form action="{{ route('sdSchema.addMember')}}" method="POST">
           {{ csrf_field() }}
          <input type="hidden" name="trainingId" value="{{$training->id}}">t
          <fieldset>
-             <legend>Ange medlem som skall läggas till schemat <span style="white-space: nowrap;">{{$training->name}}</span></legend>
+             <legend>{{__('Check members to be added to schedule')}}: <span style="white-space: nowrap;">{{$training->name}}</span></legend>
             <br>
             <div class="table-responsive" style="overflow-x:auto; overflow-y:hidden;">
       @if (count($nonMembers) > 0)
          <table class="table table-bordered table-sm" style="max-width:500px;"> 
-            <thead style="font-size:1.3em;font-weight:bold; text-decoration-line: underline;">
-               <th>Namn</th>
-               <th>epost</th>
-               <th>Antal</th>
+            <thead style="font-size:1em;font-weight:bold; text-decoration-line: underline;">
+               <th>{{__('Name')}}</th>
+               <th>{{__('E-Mail')}}</th>
+               <th>{{__('Group-size')}}</th>
                <th class="text-nowrap text-center">Admin</th>
                <th  class="text-center" style="max-width:80px;">Lägg till</th>
             </thead>
@@ -25,15 +25,19 @@
          @foreach  ($nonMembers as $member)
          @php
             $addName='add_'.$member->user_id;
+            $adminName='admin_'.$member->user_id;
          @endphp
 
                <tr>
                   <td class="text-nowrap">{{$member->user_name}}</td>
                   <td class="text-nowrap">{{$member->email}}</td>
                   <td class="text-center">{{$member->group}}</td>
-                  <td class="text-center">{{$member->admin}}</td>
                   <td style="padding:2px 5px 2px 5px;" class="text-center">
-                      <input type="checkbox"  class="cbAdd" onclick="hideOrShowAddButton()" name="{{$addName}}"></td>
+                  <input type="checkbox"  class="cbAdd" name="{{$adminName}}">
+                  </td>
+                  <td style="padding:2px 5px 2px 5px;" class="text-center">
+                      <input type="checkbox"  class="cbAdd" onclick="hideOrShowAddButton()" name="{{$addName}}">
+                  </td>
                </tr>
          @endforeach
             </tbody>
