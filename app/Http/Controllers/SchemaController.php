@@ -321,17 +321,34 @@ class SchemaController extends Controller {
       }
       $emails = substr($emails, 0, -2);
 //      dd($emails);
-      $members = V_MemberTraining::where('training_id', $training->id)->get();
-//      $nonMembers = V_MemberTraining::where('training_id', '<>', $training->id)->get();
+      $vMemberTrainings = V_MemberTraining::where('training_id', $training->id)->get();
+      $memberUserIds=[];
+      foreach ($vMemberTrainings as $member) {
+         array_push($memberUserIds,$member->user_id);
+      }
       $allUsers= User::all();
-      $nonMembers= $allUsers->diff($members);
-//      $nonMembers = User::whereNotIn('id', function ($q) use ($training) {
-//                 $q->select('user_id')->from('member_training')->where('training_id', $training->id);
-//              })->get();
+      
+      $nonMembers=collect();
+      foreach ($allUsers as $user) {
+         if (!in_array($user->id,$memberUserIds) ) {
+            $nonMember=new V_MemberTraining();
+           $nonMember->training_id= $training->id;
+           $nonMember->user_id= $user->id;
+           $nonMember->user_name= $user->name;
+           $nonMember->training_name= $training->name;
+           $nonMember->email= $user->email;
+           $nonMember->admin= 0; 
+           $nonMember->group= 1;          // TOD: FIX
+            $nonMembers->push($nonMember);
+         }
+      }
+//      dd($nonMembers);
+//      dd(sprintf('nonMemberIds=%d, memberUserIds=%d, allUserIds=%d',
+//              count($nonMemberIds), count($memberUserIds), $allUsers->count()));
 
       return view('sdSchema.members', [
           'training' => $training,
-          'members' => $members,
+          'vMemberTrainings' => $vMemberTrainings,
           'nonMembers' => $nonMembers,
           'currentUser' => Auth::user(),
           'emails' => $emails

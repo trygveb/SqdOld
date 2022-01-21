@@ -18,20 +18,20 @@
                <th>Namn</th>
                <th>epost</th>
                <th>Antal</th>
-               <th class="text-nowrap text-center">Behörighet</th>
+               <th class="text-nowrap text-center">Admin</th>
                <th  class="text-center" style="max-width:80px;">Lägg till</th>
             </thead>
             <tbody>
          @foreach  ($nonMembers as $member)
          @php
-            $addName='add_'.$member->id;
+            $addName='add_'.$member->user_id;
          @endphp
 
                <tr>
-                  <td class="text-nowrap">{{$member->name}}</td>
+                  <td class="text-nowrap">{{$member->user_name}}</td>
                   <td class="text-nowrap">{{$member->email}}</td>
                   <td class="text-center">{{$member->group}}</td>
-                  <td class="text-center">{{$member->authority}}</td>
+                  <td class="text-center">{{$member->admin}}</td>
                   <td style="padding:2px 5px 2px 5px;" class="text-center">
                       <input type="checkbox"  class="cbAdd" onclick="hideOrShowAddButton()" name="{{$addName}}"></td>
                </tr>
@@ -61,15 +61,17 @@
            <table class="table table-bordered table-sm" style="max-width:250px;">
                <thead style="font-size:1.3em;font-weight:bold; text-decoration-line: underline;">
                <th class="text-nowrap">Namn</th>
+               <th class="text-nowrap">Admin</th>
                <th class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">Ta bort</th>
                </thead>
                <tbody>
-         @foreach ($members as $member)
+         @foreach ($vMemberTrainings as $member)
             @php
                $deleteName='delete_'.$member->user_id;
             @endphp
                   <tr class='status'>
                      <td class="text-nowrap" >{{$member->user_name}}</td>
+                     <td class="text-nowrap" >{{$member->admin}}</td>
                      <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
                          <input type="checkbox"  class="cbRemove" onclick="hideOrShowRemoveButton()" name="{{$deleteName}}">
                      </td>
