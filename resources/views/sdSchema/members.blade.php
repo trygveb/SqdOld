@@ -1,4 +1,15 @@
-@extends('layouts.app')
+@extends('sdSchema.layout')
+@section('menu1')
+@if ($admin > 0)
+   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   Administration
+   </a>
+   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+   <a class="dropdown-item" href="{{route('sdSchema.showComments',['trainingId' => $training->id])}}">{{__('Manage comments')}}</a>
+   <a class="dropdown-item" href="{{route('sdSchema.showAddRemoveDates',['trainingId' => $training->id])}}">{{__('Manage dates')}}</a>
+   </div>
+@endif
+@endsection
 @section('content')
 <h1>{{__('Members')}}</h1>
  <div class="container">
@@ -43,17 +54,11 @@
             </tbody>
          </table>
       @else
-         Alla registrerade användare är redan anslutna till <span style="white-space: nowrap;">{{$training->name}}</span>.
+         {{__('All registered users are already connected to')}} <span style="white-space: nowrap;">{{$training->name}}</span>.
       @endif
             </div>
             <br>
-            <p style="float:right;">
-               <button type="submit" class="btn btn-primary" id="addButton" style="margin-right:10px;">Lägg till markerade</button>
-               <a href="{{route('sdSchema.showRegisterUser',['trainingId' => $training->id])}}" class="btn btn-primary" role="button">
-               Registrera ny användare
-               </a>
-               
-            </p>
+            <x-submit-button submitText="{{__('Add checked')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('sdSchema.index')}}" />
          </fieldset>
       </form>
       <br>

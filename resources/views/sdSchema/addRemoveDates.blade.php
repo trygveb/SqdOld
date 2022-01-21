@@ -1,4 +1,15 @@
-@extends('layouts.app')
+@extends('sdSchema.layout')
+@section('menu1')
+@if ($admin > 0)
+   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   Administration
+   </a>
+   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+   <a class="dropdown-item" href="{{route('sdSchema.showComments',['trainingId' => $training->id])}}">{{__('Manage comments')}}</a>
+   <a class="dropdown-item" href="{{route('sdSchema.showMembers',['trainingId' => $training->id])}}">{{__('Manage members')}}</a>
+   </div>
+@endif
+@endsection
 @section('content')
 <h1>{{__('Add/Remove dates')}}</h1>
  <div class="container">

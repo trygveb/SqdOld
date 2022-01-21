@@ -141,14 +141,16 @@ class DatabaseSeeder extends Seeder {
           'authority' => 0,
           'email_verified_at' => NULL
       ]);
+      return $passwordHashed;
    }
 
    private function createUsers() {
-      $this->createAdamAndEve();
+      $passwordHashed= $this->createAdamAndEve();
       $titles = ['Dr.', 'Mr.', 'Mrs.', 'Ms.', 'Miss', 'Prof.'];
       User::factory(20)->create();
       $users = User::all();
       foreach ($users as $user) {
+         $user->password= $passwordHashed;
          $atoms = explode(' ', $user->name);
          if (in_array($atoms[0], $titles)) {
             $user->name = $atoms[1];

@@ -60,7 +60,8 @@ class SchemaController extends Controller {
 
       DB::commit();
 //      $training = Training::find($trainingId);
-      return redirect(route('sdSchema.showAddRemoveDates', ['trainingId' => $trainingId]));
+      return redirect(route('sdSchema.showAddRemoveDates',
+              ['trainingId' => $trainingId, 'admin' => $this->isAdmin($trainingId)]));
    }
 
    // Private function called from addDates
@@ -162,7 +163,6 @@ class SchemaController extends Controller {
               ->where('training_date', '>=', $today)
               ->get();
       $memberTrainings = MemberTraining::where('training_id', $trainingId)->get();
-      $admin= $memberTrainings->where('user_id',Auth::user()->id)->first()->admin;
             // Initialize the arrays to use in the view
       $statusSums = array();
       $statuses = array();
@@ -182,7 +182,7 @@ class SchemaController extends Controller {
           'names' => $names,
           'groups' => $groups,
           'statusSums' => $statusSums,
-          'admin' => $admin,
+          'admin' => $this->isAdmin($trainingId)
       ]);
    }
 
@@ -286,7 +286,9 @@ class SchemaController extends Controller {
           'weekDaysNumber' => $weekDaysNumber,
           'lastTrainingDate' => $lastTrainingDate,
           'danceTime' => $danceTime,
-          'nextDate' => $nextDate
+          'nextDate' => $nextDate,
+          'admin' => $this->isAdmin($trainingId)
+
       ]);
    }
 
@@ -342,19 +344,22 @@ class SchemaController extends Controller {
             $nonMembers->push($nonMember);
          }
       }
-//      dd($nonMembers);
-//      dd(sprintf('nonMemberIds=%d, memberUserIds=%d, allUserIds=%d',
-//              count($nonMemberIds), count($memberUserIds), $allUsers->count()));
 
       return view('sdSchema.members', [
           'training' => $training,
           'vMemberTrainings' => $vMemberTrainings,
           'nonMembers' => $nonMembers,
           'currentUser' => Auth::user(),
-          'emails' => $emails
+          'emails' => $emails,
+          'admin' => $this->isAdmin($trainingId)
       ]);
    }
-
+   
+   // Return 1 if user is superAdmin or admin for  a given training
+   private function isAdmin($trainingId) {
+      $vMemberTrainings = V_MemberTraining::where('training_id', $trainingId)->get();
+      return $vMemberTrainings->where('user_id',Auth::user()->id)->first()->admin | Auth::user()->authority;
+   }
    // Show view AdminComments
    public function showViewAdminComments($trainingId) {
       
@@ -366,10 +371,15 @@ class SchemaController extends Controller {
       $trainingDates = TrainingDate::where('training_id', $trainingId)
               ->where('training_date', '>=', $today)
               ->get();
+      $vMemberTrainings = V_MemberTraining::where('training_id', $trainingId)->get();
+      $admin= $vMemberTrainings->where('user_id',Auth::user()->id)->first()->admin | Auth::user()->authority;
+
       return view('sdSchema.adminComments', [
           'training' => $training,
           'currentUser' => Auth::user(),
           'trainingDates' => $trainingDates,
+          'admin' => $this->isAdmin($trainingId)
+          
       ]);
    }
 
@@ -401,15 +411,15 @@ class SchemaController extends Controller {
       ]);
    }
 
-   // Show the Admin Menu. TODO: Cretae a real menu instead of a set of buttons
-   public function showAdminMenu(Training $training) {
-
-//      $training = Training::find($trainingId);
-      return view('AdminMenu', [
-          'training' => $training,
-          'currentUser' => Auth::user(),
-      ]);
-   }
+//   // Show the Admin Menu. TODO: Cretae a real menu instead of a set of buttons
+//   public function showAdminMenu(Training $training) {
+//
+////      $training = Training::find($trainingId);
+//      return view('AdminMenu', [
+//          'training' => $training,
+//          'currentUser' => Auth::user(),
+//      ]);
+//   }
 
    //Updating the member's attendance status
    public function updateAttendance(Request $request) {

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('sdSchema.app')
 @section('content')
 <h1>{{__('Update attendance')}}</h1>
 @php

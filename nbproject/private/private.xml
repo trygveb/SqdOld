@@ -7,9 +7,11 @@
             <file>file:/D:/Development/VagrantCode/sqd/resources/lang/sv.json</file>
             <file>file:/D:/Development/VagrantCode/sqd/resources/views/sdSchema/members.blade.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/SchemaController.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/sdSchema/adminComments.blade.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/resources/views/sdSchema/schema.blade.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/routes/web.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/app/Actions/CreateEmailListAction.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/database/seeders/DatabaseSeeder.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/sdSchema/addRemoveDates.blade.php</file>
         </group>
     </open-files>
 </project-private>
