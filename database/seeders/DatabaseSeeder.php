@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\SdSchema\Groupsize;
-use App\Models\SdSchema\Training;
-use App\Models\SdSchema\MemberTraining;
-use App\Models\SdSchema\MemberTrainingDate;
-use App\Models\SdSchema\TrainingDate;
+use App\Models\Schedule\Groupsize;
+use App\Models\Schedule\Schedule;
+use App\Models\Schedule\MemberSchedule;
+use App\Models\Schedule\MemberScheduleDate;
+use App\Models\Schedule\ScheduleDate;
 
 class DatabaseSeeder extends Seeder {
 
@@ -25,31 +25,33 @@ class DatabaseSeeder extends Seeder {
 
       $this->prepareSeed();
 
-      $trainings = $this->createTrainingsAndTrainingDates();
+      $schedules = $this->createSchedulesAndScheduleDates();
 
       $users = $this->createUsers();
 
-      $this->addUsersToTrainings($users, $trainings);
+      $this->addUsersToSchedules($users, $schedules);
    }
 
    
-   private function addOneUserToOneTraining($user, $training) {
-//      printf("Adding user %d to training %s\n", $user->id, $training->id);
-      $memberTraining = new MemberTraining;
-      $memberTraining->user_id = $user->id;
-      $memberTraining->training_id = $training->id;
+   private function addOneUserToOneSchedule($user, $schedule) {
+//      printf("Adding user %d to schedule %s\n", $user->id, $schedule->id);
+      $memberSchedule = new MemberSchedule;
+      $memberSchedule->user_id = $user->id;
+      $memberSchedule->schedule_id = $schedule->id;
       if ($user->id== 1 || $user->id==2) {
-         $memberTraining->admin=1;  // Make user 1 and 2 admin for the training
+         $memberSchedule->admin=1;  // Make user 1 and 2 admin for the schedule
       }
-      $memberTraining->save();
+      if ($user->id%3 === 0) {
+          $memberSchedule->group_size=2;  // Default is 1
+      }
+      $memberSchedule->save();
    }
 
-   private function addOneUserToOneTrainingDate($trainingDate, $user) {
-//      printf("Adding user %d to trainingDate %s\n", $user->id, $trainingDate->training_date);
-      $memberTrainingDate = new MemberTrainingDate;
-      $memberTrainingDate->user_id = $user->id;
-      $memberTrainingDate->training_date_id = $trainingDate->id;
-      $groupSize = Groupsize::where('user_id', $user->id)->first()->size;
+   private function addOneUserToOneScheduleDate($scheduleDate, $user, $groupSize) {
+//      printf("Adding user %d to scheduleDate %s\n", $user->id, $scheduleDate->schedule_date);
+      $memberScheduleDate = new MemberScheduleDate;
+      $memberScheduleDate->user_id = $user->id;
+      $memberScheduleDate->schedule_date_id = $scheduleDate->id;
       $ms1 = rand(12345, 999999);
 //      echo "$ms1\n";
       $status = $ms1 % 5;
@@ -62,61 +64,67 @@ class DatabaseSeeder extends Seeder {
       if ($status == 4 && rand(0, 10) > 3) {
          $status = 1;
       }
-      $memberTrainingDate->status = $status;
-      $memberTrainingDate->save();
+      $memberScheduleDate->status = $status;
+      $memberScheduleDate->save();
    }
 
-   private function addUserToTrainingDates($user, $trainingDates) {
-      foreach ($trainingDates as $trainingDate) {
-         $this->addOneUserToOneTrainingDate($trainingDate, $user);
+   private function addUserToScheduleDates($user, $scheduleDates) {
+      
+      foreach ($scheduleDates as $scheduleDate) {
+         $scheduleId= $scheduleDate->schedule_id;
+         $groupSize= MemberSchedule::where('schedule_id',$scheduleId)
+                 ->where('user_id',$user->id)
+                 ->first()
+                 ->group_size;;
+         $this->addOneUserToOneScheduleDate($scheduleDate, $user, $groupSize);
       }
    }
 
    /**
-    * Add user Adam to both trainings
-    * Add all other users except Kain to one training.
+    * Add user Adam to both schedules
+    * Add all other users except Kain to one schedule.
     * @param type $users
-    * @param type $trainings
+    * @param type $schedules
     */
-   private function addUsersToTrainings($users, $trainings) {
-      foreach ($trainings as $training) {
-         $trainingDates = $training->trainingDates;
+   private function addUsersToSchedules($users, $schedules) {
+      foreach ($schedules as $schedule) {
+         $scheduleDates = $schedule->scheduleDates;
 
          foreach ($users as $user) {
             if ($user->name != 'Kain') {
-               if (($user->id % 2) == ($training->id - 1) || $user->name == 'Adam') {
-                  $this->addOneUserToOneTraining($user, $training);
-                  $this->addUserToTrainingDates($user, $trainingDates);
+               if (($user->id % 2) == ($schedule->id - 1) || $user->name == 'Adam') {
+                  $this->addOneUserToOneSchedule($user, $schedule);
+                  $this->addUserToScheduleDates($user, $scheduleDates);
                }
             }
          }
       }
    }
 
-   private function createTrainingDate($training, $start, $w) {
-      $trainingDate = new TrainingDate;
-      $trainingDate->training_id = $training->id;
-      $trainingDate->training_date = $start->addWeeks($w);
-      $trainingDate->save();
+   private function createScheduleDate($schedule, $start, $w) {
+      $scheduleDate = new ScheduleDate;
+      $scheduleDate->schedule_id = $schedule->id;
+      $scheduleDate->schedule_date = $start->addWeeks($w);
+      $scheduleDate->save();
    }
 
-   private function createTrainingsAndTrainingDates() {
-      // Create trainings and training dates
-      Training::firstOrCreate([
+   private function createSchedulesAndScheduleDates() {
+      // Create schedules and schedule dates
+      Schedule::firstOrCreate([
           'name' => 'C3 Onsdagar'
       ]);
-      Training::firstOrCreate([
+      Schedule::firstOrCreate([
           'name' => 'C2 Måndagar'
       ]);
-      $trainings = Training::all();
+      $schedules = Schedule::all();
       $start = Carbon::now()->addDay();
-      foreach ($trainings as $training) {
+      foreach ($schedules as $schedule) {
          for ($w = 0; $w < 7; $w++) {
-            $this->createTrainingDate($training, $start, $w);
+            $this->createScheduleDate($schedule, $start, $w);
          }
          $start = Carbon::now()->addDays(2);
       }
-      return $trainings;
+      return $schedules;
    }
 
    private function createAdamAndEve() {
@@ -162,16 +170,6 @@ class DatabaseSeeder extends Seeder {
          $atoms[0]=$user->name.'.'.$lastName;
          $user->email= implode('@', $atoms);
          $user->save();
-         $groupsize = new Groupsize;
-         $groupsize->user_id = $user->id;
-         if ($user->id == 1) {
-            $groupsize->size = 1;   //Trygve
-         } elseif ($user->id == 2) {
-            $groupsize->size = 2;  // Arne
-         } elseif ($user->id > 5) {
-            $groupsize->size = 2;
-         }
-         $groupsize->save();
       }
 
       return User::all();
@@ -179,19 +177,18 @@ class DatabaseSeeder extends Seeder {
 
    private function prepareSeed() {
       // Delete all users. By the FK relationship ON DELETE CASCADE,
-      // the data in tables member_training and member_training will also be deleted.
-      DB::connection('sqd')->table('users')->delete();
+      // the data in tables member_schedule and member_schedule will also be deleted.
+      DB::connection('common')->table('users')->delete();
 
-      // Delete all trainings and By the FK relationship ON DELETE CASCADE,
-      // the data in table training_date will also be deleted.
-      DB::connection('sdSchema')->table('training')->delete();
+      // Delete all schedules and By the FK relationship ON DELETE CASCADE,
+      // the data in table schedule_date will also be deleted.
+      DB::connection('schedule')->table('schedule')->delete();
 
-      DB::statement('ALTER TABLE users AUTO_INCREMENT=0;');
-      DB::statement('ALTER TABLE sdSchema.training AUTO_INCREMENT=0;');
-      DB::statement('ALTER TABLE sdSchema.training_date AUTO_INCREMENT=0;');
-      DB::statement('ALTER TABLE sdSchema.member_training AUTO_INCREMENT=0;');
-      DB::statement('ALTER TABLE sdSchema.member_training_date AUTO_INCREMENT=0;');
-      DB::statement('ALTER TABLE sdSchema.groupsize AUTO_INCREMENT=0;');
+      DB::statement('ALTER TABLE common.users AUTO_INCREMENT=0;');
+      DB::statement('ALTER TABLE schedule.schedule AUTO_INCREMENT=0;');
+      DB::statement('ALTER TABLE schedule.schedule_date AUTO_INCREMENT=0;');
+      DB::statement('ALTER TABLE schedule.member_schedule AUTO_INCREMENT=0;');
+      DB::statement('ALTER TABLE schedule.member_schedule_date AUTO_INCREMENT=0;');
    }
 
 }

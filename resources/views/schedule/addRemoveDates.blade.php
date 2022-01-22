@@ -1,12 +1,12 @@
-@extends('sdSchema.layout')
+@extends('schedule.layout')
 @section('menu1')
 @if ($admin > 0)
    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
    Administration
    </a>
    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-   <a class="dropdown-item" href="{{route('sdSchema.showComments',['trainingId' => $training->id])}}">{{__('Manage comments')}}</a>
-   <a class="dropdown-item" href="{{route('sdSchema.showMembers',['trainingId' => $training->id])}}">{{__('Manage members')}}</a>
+   <a class="dropdown-item" href="{{route('schedule.showComments',['scheduleId' => $schedule->id])}}">{{__('Manage comments')}}</a>
+   <a class="dropdown-item" href="{{route('schedule.showMembers',['scheduleId' => $schedule->id])}}">{{__('Manage members')}}</a>
    </div>
 @endif
 @endsection
@@ -15,13 +15,13 @@
  <div class="container">
 
      <br>
-      <form action="{{ route('sdSchema.addDates')}}" method="POST">
+      <form action="{{ route('schedule.addDates')}}" method="POST">
           {{ csrf_field() }}
-          <input type="hidden" name="trainingId" value="{{$training->id}}">
+          <input type="hidden" name="scheduleId" value="{{$schedule->id}}">
           <fieldset>
             <legend>{{__('Enter a date to be added')}}</legend>
       {{__('Existing dates are')}} {{$weekdays}}{{__('s')}} kl. {{$danceTime}}
-     {{__('Latest date is')}} {{$lastTrainingDate->training_date}}
+     {{__('Latest date is')}} {{$lastScheduleDate->schedule_date}}
       <br><br>
          <div class="table-responsive" style="overflow-x:auto; overflow-y:hidden;">
              {{__('Add')}} <input type="number" id="quantity" name="quantity" min="1" max="15" size="4" value="1"> 
@@ -38,14 +38,14 @@
              <input type="date" id="startDate" name="startDate", oninput="dateIsChanged()" value="{{$nextDate}}">
         </div>
           <br>
-         <x-submit-button submitText="{{__('Add')}} {{__('date')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('sdSchema.index')}}" />
+         <x-submit-button submitText="{{__('Add')}} {{__('date')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('schedule.index')}}" />
          </fieldset>
 
       </form>
      <br>
-     <form action="{{ route('sdSchema.removeDates')}}" id="removeForm" method="POST">
+     <form action="{{ route('schedule.removeDates')}}" id="removeForm" method="POST">
           {{ csrf_field() }}
-          <input type="hidden" name="trainingId" value="{{$training->id}}">
+          <input type="hidden" name="scheduleId" value="{{$schedule->id}}">
           <fieldset>
             <legend>Markera datum som skall tas bort</legend>
             <table class="table table-bordered table-sm table-sd-schema" >
@@ -55,14 +55,14 @@
                   <th class="text-nowrap text-center" style="padding:2px 5px 2px 5px;width:25%;">Ta bort</th>
                </thead>
                <tbody>
-         @foreach ($trainingDates as $trainingDate)
+         @foreach ($scheduleDates as $scheduleDate)
             @php
-               $deleteName='delete_'.$trainingDate->id;
+               $deleteName='delete_'.$scheduleDate->id;
             @endphp
                   <tr class='status'>
-                     <td class="text-nowrap" style="padding:1px 7px;">{{$trainingDate->training_date}}</td>
+                     <td class="text-nowrap" style="padding:1px 7px;">{{$scheduleDate->schedule_date}}</td>
                      <td class="text-nowrap" style="padding:1px 7px;" >
-                         {{$trainingDate->comment}}
+                         {{$scheduleDate->comment}}
                      </td>
                      <td style="text-align:center"><input type="checkbox"  class="inp" onclick="hideOrShowRemoveButton()" name="{{$deleteName}}"> Bort</td>
                   </tr>
@@ -71,7 +71,7 @@
             </table>
             <br>
             
-            <x-submit-button submitText="{{ __('Remove date(s)')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('sdSchema.index')}}"
+            <x-submit-button submitText="{{ __('Remove date(s)')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('schedule.index')}}"
                              my-id="removeButton" onclick-function="return checkDeletes()" />
 
            

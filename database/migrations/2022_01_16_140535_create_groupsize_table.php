@@ -15,13 +15,15 @@ class CreateGroupsizeTable extends Migration
      */
     public function up()
     {
-        Schema::create('sdSchema.groupsize', function (Blueprint $table) {
+        Schema::create('schedule.groupsize', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('schedule_id');
             $table->unsignedTinyInteger('size')->default(1);
             $table->timestamps();
-            $table->foreign('user_id',$this->FK_NAME)->references('id')->on('sqd.users')->onUpdate('CASCADE')->onDelete('CASCADE');
-            
+            $table->foreign('user_id','groupsize_FK_1')->references('id')->on('common.users')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign('schedule_id','groupsize_FK_2')->references('id')->on('schedule')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->index(['user_id', 'schedule_id']);
         });
     }
 

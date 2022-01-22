@@ -13,10 +13,10 @@ trait FixtureTrait {
    public function setUp(): void {
       parent::setUp();
       Artisan::call('db:wipe', ['--database' => 'sdCalls']);
-      Artisan::call('db:wipe', ['--database' => 'sdSchema']);
+      Artisan::call('db:wipe', ['--database' => 'schedule']);
       Artisan::call('db:wipe', ['--database' => 'sqd']);
       Artisan::call('migrate');
-      \DB::connection('sdSchema')->beginTransaction();
+      \DB::connection('schedule')->beginTransaction();
       \DB::connection('sdCalls')->beginTransaction();
       \DB::connection('sqd')->beginTransaction();
    }
@@ -25,7 +25,7 @@ trait FixtureTrait {
 //      putenv(LaravelLocalization::ENV_ROUTE_KEY);
       \DB::connection('sqd')->rollBack();
       \DB::connection('sdCalls')->rollBack();
-      \DB::connection('sdSchema')->rollBack();
+      \DB::connection('schedule')->rollBack();
       parent::tearDown();
    }
    

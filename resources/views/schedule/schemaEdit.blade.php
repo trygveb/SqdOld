@@ -1,19 +1,18 @@
-@extends('sdSchema.app')
+@extends('schedule.layout')
 @section('content')
 <h1>{{__('Update attendance')}}</h1>
 @php
     $userId=$currentUser->id;
     $tableMaxWidth=520;
-    $group= $currentUser->groupsize->size;
-    if ($group > 1) {
+    if ($groupSize > 1) {
         $tableMaxWidth=700;
     }
 @endphp
   <div class="container">
       <div class="table-responsive" style="overflow-x:auto; overflow-y:hidden;">
-        <form action="{{ route('sdSchema.updateAttendance')}}" method="POST">
+        <form action="{{ route('schedule.updateAttendance')}}" method="POST">
           {{ csrf_field() }}
-          <input type="hidden" name="trainingId" value="{{$training->id}}">
+          <input type="hidden" name="scheduleId" value="{{$schedule->id}}">
         <table class="table table-bordered" style="max-width:{{$tableMaxWidth}}px;">
         
             <thead>
@@ -24,21 +23,21 @@
              </thead>
              <tbody>
 
-        @foreach ($trainingDates as $trainingDate)
+        @foreach ($scheduleDates as $scheduleDate)
                <tr class='status'>
-               <td class="text-nowrap" style="max-width:90px !important;height:32px; padding:2px 7px;vertical-align:middle;">{{$trainingDate->training_date}}</td>
+               <td class="text-nowrap" style="max-width:90px !important;height:32px; padding:2px 7px;vertical-align:middle;">{{$scheduleDate->schedule_date}}</td>
             @php
-                  $commentName='comment_'.$trainingDate->id;
+                  $commentName='comment_'.$scheduleDate->id;
             @endphp
-               <td style="padding:1px 7px;width:200px;vertical-align:middle;" >{{$trainingDate->comment}}</td>
+               <td style="padding:1px 7px;width:200px;vertical-align:middle;" >{{$scheduleDate->comment}}</td>
             @php
-               $status= $statuses[$trainingDate->id];
+               $status= $statuses[$scheduleDate->id];
                $statusName='-';
-               $radioGroupName='status_'.$userId.'_'.$trainingDate->id;
+               $radioGroupName='status_'.$userId.'_'.$scheduleDate->id;
             @endphp
 
                      <td>
-                     @if ($group===1)
+                     @if ($groupSize===1)
                         <table class="table-sd-schema" style='border:none;'>
                           <tr style='border:none;'>
                             <td style='border:none;width:40px;'><input type="radio" name="{{$radioGroupName}}" value="1" class="status" {{($status==1)?'checked':''}}>

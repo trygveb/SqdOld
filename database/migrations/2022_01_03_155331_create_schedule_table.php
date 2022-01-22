@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateTrainingTable extends Migration
+class CreateScheduleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,13 +14,13 @@ class CreateTrainingTable extends Migration
      */
     public function up()
     {
-        Schema::connection('sdSchema')->create('training', function (Blueprint $table) {
+        Schema::connection('schedule')->create('schedule', function (Blueprint $table) {
             $table->id();
             $table->string('name', 20)->unique();
             $table->string('comment', 250)->nullable();
             $table->timestamps();
         });
-        DB::connection('sdSchema')->statement("ALTER TABLE `training` comment='This table should contain a (unique) name for each training/course'");
+        DB::connection('schedule')->statement("ALTER TABLE `schedule` comment='This table should contain a (unique) name for each schedule/course'");
     }
 
     /**
@@ -30,6 +30,6 @@ class CreateTrainingTable extends Migration
      */
     public function down()
     {
-        Schema::connection('sdSchema')->dropIfExists('training');
+        Schema::connection('schedule')->dropIfExists('schedule');
     }
 }

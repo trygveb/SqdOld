@@ -1,12 +1,12 @@
-@extends('sdSchema.layout')
+@extends('schedule.layout')
 @section('menu1')
 @if ($admin > 0)
    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
    Administration
    </a>
    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-   <a class="dropdown-item" href="{{route('sdSchema.showAddRemoveDates',['trainingId' => $training->id])}}">{{__('Manage dates')}}</a>
-   <a class="dropdown-item" href="{{route('sdSchema.showMembers',['trainingId' => $training->id])}}">{{__('Manage members')}}</a>
+   <a class="dropdown-item" href="{{route('schedule.showAddRemoveDates',['scheduleId' => $schedule->id])}}">{{__('Manage dates')}}</a>
+   <a class="dropdown-item" href="{{route('schedule.showMembers',['scheduleId' => $schedule->id])}}">{{__('Manage members')}}</a>
    </div>
 @endif
 @endsection
@@ -23,9 +23,9 @@
   <div class="container">
       <div class="table-responsive" style="overflow-x:auto; overflow-y:hidden;">
 
-        <form id="myForm" action="{{ route('sdSchema.updateComments')}}" method="POST">
+        <form id="myForm" action="{{ route('schedule.updateComments')}}" method="POST">
           {{ csrf_field() }}
-          <input type="hidden" name="trainingId" value="{{$training->id}}">
+          <input type="hidden" name="scheduleId" value="{{$schedule->id}}">
           <fieldset>
             <legend>{{__('Change comments')}}</legend>
             
@@ -37,22 +37,22 @@
             </thead>
             <tbody>
 
-        @foreach ($trainingDates as $trainingDate)
+        @foreach ($scheduleDates as $scheduleDate)
                <tr class='status'>
-                  <td class="text-nowrap" style="max-width:90px !important;height:32px; padding:2px 7px;vertical-align:middle;">{{$trainingDate->training_date}}
+                  <td class="text-nowrap" style="max-width:90px !important;height:32px; padding:2px 7px;vertical-align:middle;">{{$scheduleDate->schedule_date}}
                   </td>
             @php
-                  $commentName='comment_'.$trainingDate->id;
-                  $deleteName='delete_'.$trainingDate->id;
+                  $commentName='comment_'.$scheduleDate->id;
+                  $deleteName='delete_'.$scheduleDate->id;
             @endphp
                   <td class="text-nowrap" style="padding:1px 7px;" >
-                     <input type="text" maxlength=50 size=40 name="{{$commentName}}" value="{{$trainingDate->comment}}">
+                     <input type="text" maxlength=50 size=40 name="{{$commentName}}" value="{{$scheduleDate->comment}}">
                   </td>
                </tr>
         @endforeach
             </tbody>
          </table>
-            <x-submit-button submitText="{{ __('Save changes')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('sdSchema.index')}}" />
+            <x-submit-button submitText="{{ __('Save changes')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('schedule.index')}}" />
               </fieldset>
 
         </form>

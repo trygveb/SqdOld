@@ -10,7 +10,7 @@ class Footer extends Component
    
    /**
     * Create a new component instance
-    * @param type $subApp         (sqd.se, sdCalls, sdSchema)
+    * @param type $subApp         (sqd.se, sdCalls, schedule)
     */
     public function __construct($subApp)
     {

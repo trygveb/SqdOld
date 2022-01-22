@@ -17,7 +17,7 @@ class ResetPasswordTest extends TestCase {
    use FixtureTrait;
 
    private $testUserCorrectpassword = 'Qwerty123';
-   private $testApplication = 'sdSchema';
+   private $testApplication = 'schedule';
 
    protected function getValidToken($user) {
       return Password::broker()->createToken($user);

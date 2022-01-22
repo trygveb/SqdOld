@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnAdminToMemberTrainingTable extends Migration
+class AddColumnAdminToMemberScheduleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddColumnAdminToMemberTrainingTable extends Migration
      */
     public function up()
     {
-        Schema::connection('sdSchema')->table('member_training', function (Blueprint $table) {
-         $table->unsignedTinyInteger('admin')->default(0)->after('training_id');
+        Schema::connection('schedule')->table('member_schedule', function (Blueprint $table) {
+         $table->unsignedTinyInteger('admin')->default(0)->after('schedule_id');
         });
     }
 
@@ -25,7 +25,7 @@ class AddColumnAdminToMemberTrainingTable extends Migration
      */
     public function down()
     {
-        Schema::connection('sdSchema')->table('member_training', function (Blueprint $table) {
+        Schema::connection('schedule')->table('member_schedule', function (Blueprint $table) {
             $table->dropColumn('admin');
         });
     }

@@ -4,9 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeignKeyMemberTrainingDateMember extends Migration
+class AddForeignKeyMemberScheduleMember extends Migration
 {
- private $FK_NAME='member_training_date_FK_1';
+   private $FK_NAME='member_schedule_FK_0';
     /**
      * Run the migrations.
      *
@@ -14,8 +14,8 @@ class AddForeignKeyMemberTrainingDateMember extends Migration
      */
     public function up()
     {
-        Schema::table('sdSchema.member_training_date', function (Blueprint $table) {
-            $table->foreign('user_id',$this->FK_NAME)->references('id')->on('sqd.users')->onUpdate('CASCADE')->onDelete('CASCADE');
+        Schema::table('schedule.member_schedule', function (Blueprint $table) {
+            $table->foreign('user_id',$this->FK_NAME)->references('id')->on('common.users')->onUpdate('CASCADE')->onDelete('CASCADE');
         
         });
         
@@ -28,7 +28,7 @@ class AddForeignKeyMemberTrainingDateMember extends Migration
      */
     public function down()
     {
-        Schema::table('sdSchema.member_training_date', function (Blueprint $table) {
+        Schema::table('schedule.member_schedule', function (Blueprint $table) {
            $table->dropForeign($this->FK_NAME);
         
         });

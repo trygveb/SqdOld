@@ -12,7 +12,7 @@
                     @endif
                     {{ __('Please select application') }} <a class="aMain" href="{{ route('calls.home',['application' => 'sdCalls']) }}"> SdCalls </a>
                     {{ __('or')}}
-                    <a class="aMain" href="{{ route('sdSchema.home',['application' => 'sdSchema']) }}"> SdSchema!</a>
+                    <a class="aMain" href="{{ route('schedule.home',['application' => 'schedule']) }}"> SdSchema!</a>
                 </div>
             </div>
     </div>

@@ -13,7 +13,7 @@ class AddUniqueIndexToTableGroupsize extends Migration
      */
     public function up()
     {
-        DB::statement('ALTER TABLE sdSchema.groupsize ADD CONSTRAINT groupsize_UN UNIQUE KEY (user_id)');
+        DB::statement('ALTER TABLE schedule.groupsize ADD CONSTRAINT groupsize_UN UNIQUE KEY (user_id)');
     }
 
     /**
@@ -23,6 +23,6 @@ class AddUniqueIndexToTableGroupsize extends Migration
      */
     public function down()
     {
-        DB::statement('ALTER TABLE sdSchema.groupsize DROP KEY groupsize_UN');
+        DB::statement('ALTER TABLE schedule.groupsize DROP KEY groupsize_UN');
     }
 }

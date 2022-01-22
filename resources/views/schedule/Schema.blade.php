@@ -1,4 +1,4 @@
-@extends('sdSchema.layout')
+@extends('schedule.layout')
 
 @section('menu1')
 @if ($admin > 0)
@@ -6,15 +6,15 @@
    Administration
    </a>
    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-   <a class="dropdown-item" href="{{route('sdSchema.showComments',['trainingId' => $training->id])}}">{{__('Manage comments')}}</a>
-   <a class="dropdown-item" href="{{route('sdSchema.showAddRemoveDates',['trainingId' => $training->id])}}">{{__('Manage dates')}}</a>
-   <a class="dropdown-item" href="{{route('sdSchema.showMembers',['trainingId' => $training->id])}}">{{__('Manage members')}}</a>
+   <a class="dropdown-item" href="{{route('schedule.showComments',['scheduleId' => $schedule->id])}}">{{__('Manage comments')}}</a>
+   <a class="dropdown-item" href="{{route('schedule.showAddRemoveDates',['scheduleId' => $schedule->id])}}">{{__('Manage dates')}}</a>
+   <a class="dropdown-item" href="{{route('schedule.showMembers',['scheduleId' => $schedule->id])}}">{{__('Manage members')}}</a>
    </div>
 @endif
 @endsection
 @section('content')
-<h1>{{__('Schedule for')}} {{$training->name}}
-    <a href="{{route('sdSchema.showEdit',['training' =>$training])}}" class="btn btn-primary" role="button" style="margin-left:5px;en">
+<h1>{{__('Schedule for')}} {{$schedule->name}}
+    <a href="{{route('schedule.showEdit',['schedule' =>$schedule])}}" class="btn btn-primary" role="button" style="margin-left:5px;en">
         {{__('Change my attendance')}}
     </a>
 </h1>
@@ -43,19 +43,19 @@
         @php
                $i=0;
         @endphp
-        @foreach ($trainingDates as $trainingDate)
+        @foreach ($scheduleDates as $scheduleDate)
                <tr class='status'>
-               <td class="fix text-nowrap" style="height:32px; padding:2px 7px;">{{$trainingDate->training_date}}</td>
+               <td class="fix text-nowrap" style="height:32px; padding:2px 7px;">{{$scheduleDate->schedule_date}}</td>
             @php
-                  $commentName='comment_'.$trainingDate->id;
+                  $commentName='comment_'.$scheduleDate->id;
             @endphp
-               <td style="padding:1px 7px;min-width:15ch;max-width:20ch;" >{{$trainingDate->comment}}</td>
+               <td style="padding:1px 7px;min-width:15ch;max-width:20ch;" >{{$scheduleDate->comment}}</td>
                <td class="text-center">{{$statusSums[$i]['Y']}}</td>
                <td class="text-center">{{$statusSums[$i]['N']}}</td>
                <td class="text-center">{{$statusSums[$i++]['M']}}</td>
             @foreach ( $names as $userId => $name )
                 @php
-                    $status= $statuses[$userId][$trainingDate->id];
+                    $status= $statuses[$userId][$scheduleDate->id];
                     $group= $groups[$userId];
                     $statusName='-';
                     switch ($status) {
@@ -72,7 +72,7 @@
                       case 4: $statusName='Kanske';
                               break;
                      }
-                     $radioGroupName='status_'.$userId.'_'.$trainingDate->id;
+                     $radioGroupName='status_'.$userId.'_'.$scheduleDate->id;
                 @endphp
                  <td class="text-center">{{$statusName}}</td>
             @endforeach
@@ -88,7 +88,7 @@
 @section('scripts')
 <script>
 window.onload = function() {
-  document.getElementsByTagName("title")[0].innerHTML="SdSchema {{$training->name}}";
+  document.getElementsByTagName("title")[0].innerHTML="SdSchema {{$schedule->name}}";
 };
 </script>
 @endsection

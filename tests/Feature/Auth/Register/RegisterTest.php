@@ -32,7 +32,7 @@ class RegisterTest extends TestCase {
    private $testUserName= 'John Doe';
    private $testUserEmail= 'john@example.com';
    private $testUserCorrectpassword= 'Qwerty123';
-   private $testApplication= 'sdSchema';
+   private $testApplication= 'schedule';
 
     public static function setUpBeforeClass(): void
     {
@@ -49,16 +49,16 @@ class RegisterTest extends TestCase {
     */
 
    protected function successfulRegistrationRoute() {
-      return route('verification.notice', ['application' => 'sdSchema']);
+      return route('verification.notice', ['application' => 'schedule']);
    }
 
    protected function registerGetRoute() {
-      return route('showRegisterForm', ['application' => 'sdSchema']);
+      return route('showRegisterForm', ['application' => 'schedule']);
    }
 
    protected function registerPostRoute() {
       return route('handleRegistration');
-//      return 'se/registration/sdSchema';
+//      return 'se/registration/schedule';
    }
 
    protected function guestMiddlewareRoute() {

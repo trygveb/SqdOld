@@ -16,7 +16,7 @@ class EmailVerificationTest extends TestCase {
    //use RefreshDatabase;
    use FixtureTrait;
    
-   private $application='sdSchema';
+   private $application='schedule';
 
    public function test_email_verification_screen_can_be_rendered() {
       $user = User::factory()->create([

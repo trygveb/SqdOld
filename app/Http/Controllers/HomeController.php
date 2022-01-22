@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SdSchema\V_MemberTraining;
+use App\Models\Schedule\V_MemberSchedule;
 use Illuminate\Support\Facades\Auth;
 
 //use Illuminate\Support\Facades\App;
@@ -41,7 +41,7 @@ class HomeController extends Controller {
    }
 
    /**
-    * Show sdSchema welcome view for guests
+    * Show schedule welcome view for guests
     * @return view
     */
    public function schemaHome() {
@@ -49,40 +49,40 @@ class HomeController extends Controller {
          if (Auth::user()->hasVerifiedEmail()) {
 
             //dd('schemaGuest, auth');
-            $vMemberTrainings = V_MemberTraining::where('user_id', Auth::user()->id)->get();
-            $count = $vMemberTrainings->count();
+            $vMemberSchedules = V_MemberSchedule::where('user_id', Auth::user()->id)->get();
+            $count = $vMemberSchedules->count();
             if ($count == 1) {
-               return redirect(route('sdSchema.index', ['trainingId' => $vMemberTrainings[0]->training_id]));
+               return redirect(route('schedule.index', ['scheduleId' => $vMemberSchedules[0]->schedule_id]));
             } else {
-               return view('sdSchema.welcome', [
-                   'myTrainingsCount' => $count,
-                   'vMemberTrainings' => $vMemberTrainings
+               return view('schedule.welcome', [
+                   'mySchedulesCount' => $count,
+                   'vMemberSchedules' => $vMemberSchedules
                ]);
             }
          } else {
             return view('auth.verify-email-notice')
                ->with('emailVerified','NO')
-               ->with('application', 'sdSchema');
+               ->with('application', 'schedule');
          }
       }
-         return view('sdSchema.welcome')->with('myTrainingsCount' , 0);
+         return view('schedule.welcome')->with('mySchedulesCount' , 0);
 //      abort(403, 'Unauthorized action.');
    }
 
    /**
-    * Show sdSchema welcome view for authenticated and verified users
+    * Show schedule welcome view for authenticated and verified users
     * @return view
     */
    public function schemaHomeOld() {
       $count = 0;
       if (Auth::check()) {
-//         $myMemberTrainings = MemberTraining::where('user_id', Auth::user()->id)->get();
-//         $count = $myMemberTrainings->count();
+//         $myMemberSchedules = MemberSchedule::where('user_id', Auth::user()->id)->get();
+//         $count = $myMemberSchedules->count();
 //         if ($count == 1) {
-//            return redirect(route('sdSchema.index', ['trainingId' => $myMemberTrainings[0]->training_id]));
+//            return redirect(route('schedule.index', ['scheduleId' => $myMemberSchedules[0]->schedule_id]));
 //         } else {
-         return view('sdSchema.welcome', [
-             'myTrainingsCount' => $count,
+         return view('schedule.welcome', [
+             'mySchedulesCount' => $count,
          ]);
       }
 //      } else {

@@ -2,17 +2,17 @@
 
 namespace App\Actions;
 
-use App\Models\SdSchema\V_MemberTraining;
+use App\Models\Schedule\V_MemberSchedule;
 
 
 class CreateEmailListAction {
 
-   public function execute($trainingId) {
-     // $training= Training::find($trainingId);
-      $vMemberTrainings= V_MemberTraining::where('training_id', $trainingId)->get();
+   public function execute($scheduleId) {
+     // $schedule= Schedule::find($scheduleId);
+      $vMemberSchedules= V_MemberSchedule::where('schedule_id', $scheduleId)->get();
       $emails= array();
-      foreach ($vMemberTrainings as $vMemberTraining) {
-         array_push($emails, $vMemberTraining->email);
+      foreach ($vMemberSchedules as $vMemberSchedule) {
+         array_push($emails, $vMemberSchedule->email);
       }
       return $emails;
    }

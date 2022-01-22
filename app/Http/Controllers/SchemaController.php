@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Actions\CreateEmailListAction;
-use App\Models\SdSchema\V_MemberTraining;
-use App\Models\SdSchema\V_MemberTrainingDate;
-use App\Models\SdSchema\MemberTraining;
-use App\Models\SdSchema\MemberTrainingDate;
-use App\Models\SdSchema\Training;
-use App\Models\SdSchema\TrainingDate;
+use App\Models\Schedule\V_MemberSchedule;
+use App\Models\Schedule\V_MemberScheduleDate;
+use App\Models\Schedule\MemberSchedule;
+use App\Models\Schedule\MemberScheduleDate;
+use App\Models\Schedule\Schedule;
+use App\Models\Schedule\ScheduleDate;
 use App\Models\User;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Illuminate\Support\Facades\Auth;
@@ -28,13 +28,13 @@ class SchemaController extends Controller {
       $this->middleware('auth');
    }
 
-// Add dates to a training 
+// Add dates to a schedule 
 // Returns to Add/Remove dates menu
    public function addDates(Request $request) {
       $data = request()->all();
       $numberOfDays = 0;
       $startDate = '';
-      $trainingId = $data["trainingId"];
+      $scheduleId = $data["scheduleId"];
       foreach ($data as $key => $value) {
          if (substr($key, 0, 8) === 'quantity') {
             $numberOfDays = $value;
@@ -47,11 +47,11 @@ class SchemaController extends Controller {
       DB::beginTransaction();
       try {
          for ($d1 = 0; $d1 < $numberOfDays; $d1++) {
-            $trainingDate = new TrainingDate();
-            $trainingDate->training_date = $date0->addDays(7 * $d1)->toDateString();
-            $trainingDate->training_id = $trainingId;
-            $trainingDate->save();
-            $this->addMembersToTrainingDate($trainingId, $trainingDate->id);
+            $scheduleDate = new ScheduleDate();
+            $scheduleDate->schedule_date = $date0->addDays(7 * $d1)->toDateString();
+            $scheduleDate->schedule_id = $scheduleId;
+            $scheduleDate->save();
+            $this->addMembersToScheduleDate($scheduleId, $scheduleDate->id);
          }
       } catch (\Exception $e) {
          DB::rollBack();
@@ -59,38 +59,38 @@ class SchemaController extends Controller {
 
 
       DB::commit();
-//      $training = Training::find($trainingId);
-      return redirect(route('sdSchema.showAddRemoveDates',
-                      ['trainingId' => $trainingId, 'admin' => $this->isAdmin($trainingId)]));
+//      $schedule = Schedule::find($scheduleId);
+      return redirect(route('schedule.showAddRemoveDates',
+                      ['scheduleId' => $scheduleId, 'admin' => $this->isAdmin($scheduleId)]));
    }
 
 // Private function called from addDates
-   private function addMembersToTrainingDate($trainingId, $trainingDateId) {
-      $memberTrainings = MemberTraining::where('training_id', $trainingId)->get();
-      foreach ($memberTrainings as $memberTraining) {
-         $memberTrainingDate = new MemberTrainingDate();
-         $memberTrainingDate->user_id = $memberTraining->user_id;
-         $memberTrainingDate->training_date_id = $trainingDateId;
-         $memberTrainingDate->save();
+   private function addMembersToScheduleDate($scheduleId, $scheduleDateId) {
+      $memberSchedules = MemberSchedule::where('schedule_id', $scheduleId)->get();
+      foreach ($memberSchedules as $memberSchedule) {
+         $memberScheduleDate = new MemberScheduleDate();
+         $memberScheduleDate->user_id = $memberSchedule->user_id;
+         $memberScheduleDate->schedule_date_id = $scheduleDateId;
+         $memberScheduleDate->save();
       }
    }
 
-// Adds members to a training 
+// Adds members to a schedule 
 // Returns Members view
    public function addMember(Request $request) {
       $data = request()->all();
-      $trainingId = $data["trainingId"];
-      $training = Training::find($trainingId);
-      $trainingDates = TrainingDate::where('training_id', $trainingId)->get();
+      $scheduleId = $data["scheduleId"];
+      $schedule = Schedule::find($scheduleId);
+      $scheduleDates = ScheduleDate::where('schedule_id', $scheduleId)->get();
       DB::beginTransaction();
       try {
          foreach ($data as $key => $value) {
             if (substr($key, 0, 4) === 'add_') {
                $atoms = explode('_', $key);
                $userId = $atoms[1];
-               $memberTraining = MemberTraining::firstOrCreate(['user_id' => $userId, 'training_id' => $trainingId]);
-               foreach ($trainingDates as $trainingDate) {
-                  $memberTrainingDate = MemberTrainingDate::firstOrCreate(['user_id' => $userId, 'training_date_id' => $trainingDate->id]);
+               $memberSchedule = MemberSchedule::firstOrCreate(['user_id' => $userId, 'schedule_id' => $scheduleId]);
+               foreach ($scheduleDates as $scheduleDate) {
+                  $memberScheduleDate = MemberScheduleDate::firstOrCreate(['user_id' => $userId, 'schedule_date_id' => $scheduleDate->id]);
                }
             }
          }
@@ -98,15 +98,15 @@ class SchemaController extends Controller {
          DB::rollBack();
       }
       DB::commit();
-      return $this->ShowViewMembers($trainingId);
+      return $this->ShowViewMembers($scheduleId);
    }
 
 // Adds a new user to the database (table Users)
 // Returns Members view
    public function addNewUser(Request $request) {
       $data = request()->all();
-      $trainingId = $data["trainingId"];
-      $training = Training::find($trainingId);
+      $scheduleId = $data["scheduleId"];
+      $schedule = Schedule::find($scheduleId);
       $validatedData = $request->validate([
           'name' => ['required', 'unique:users', 'max:50'],
           'first_name' => ['required', 'max:50'],
@@ -124,61 +124,60 @@ class SchemaController extends Controller {
       $user->authority = $data["authority"];
       $user->first_name = $data["first_name"];
       $user->last_name = $data["last_name"];
-      $user->group = $data["group"];
-      $user->save();
+       $user->save();
 
-      return $this->ShowViewMembers($trainingId);
+      return $this->ShowViewMembers($scheduleId);
    }
 
-// Removes a member from a training 
+// Removes a member from a schedule 
 // Returns Members view
    public function updateMember(Request $request) {
       $data = request()->all();
-      $trainingId = $data["trainingId"];
-//      $training = Training::find($trainingId);
+      $scheduleId = $data["scheduleId"];
+//      $schedule = Schedule::find($scheduleId);
 
-      $userIds = MemberTraining::where('training_id', $trainingId)->get()->pluck('user_id');
+      $userIds = MemberSchedule::where('schedule_id', $scheduleId)->get()->pluck('user_id');
       
       foreach ($userIds as $userId) {
          $adminName = 'admin_' . $userId;
-         $memberTraining = MemberTraining::where('user_id', $userId)
-                 ->where('training_id', $trainingId)
+         $memberSchedule = MemberSchedule::where('user_id', $userId)
+                 ->where('schedule_id', $scheduleId)
                  ->first();
          if ($request->has($adminName)) {
-            $memberTraining->admin = 1;
+            $memberSchedule->admin = 1;
          } else {
-            $memberTraining->admin = 0;
+            $memberSchedule->admin = 0;
          }
-         $memberTraining->save();
+         $memberSchedule->save();
       }
 
       foreach ($data as $key => $value) {
          if (substr($key, 0, 6) === 'delete') {
             $atoms = explode('_', $key);
             $userId = $atoms[1];
-            $memberTraining = MemberTraining::where('user_id', $userId)
-                    ->where('training_id', $trainingId)
+            $memberSchedule = MemberSchedule::where('user_id', $userId)
+                    ->where('schedule_id', $scheduleId)
                     ->first();
-            $memberTraining->delete();
-// memberTrainingDates will be removed by the ON DELETE CASCADE clause in MySql
+            $memberSchedule->delete();
+// memberScheduleDates will be removed by the ON DELETE CASCADE clause in MySql
          }
       }
 
-      return $this->ShowViewMembers($trainingId);
+      return $this->ShowViewMembers($scheduleId);
    }
 
 //Show the schema
-   public function index($trainingId = 1) {
+   public function index($scheduleId = 1) {
       $mytime = Carbon::now();
       $today = $mytime->toDateString();
 
 //Fetch data from the database
-      $training = Training::find($trainingId);
-      $vMemberTrainingDates = V_MemberTrainingDate::where('training_date', '>=', $today)->get();
-      $trainingDates = TrainingDate::where('training_id', $trainingId)
-              ->where('training_date', '>=', $today)
+      $schedule = Schedule::find($scheduleId);
+      $vMemberScheduleDates = V_MemberScheduleDate::where('schedule_date', '>=', $today)->get();
+      $scheduleDates = ScheduleDate::where('schedule_id', $scheduleId)
+              ->where('schedule_date', '>=', $today)
               ->get();
-      $memberTrainings = MemberTraining::where('training_id', $trainingId)->get();
+      $memberSchedules = MemberSchedule::where('schedule_id', $scheduleId)->get();
 // Initialize the arrays to use in the view
       $statusSums = array();
       $statuses = array();
@@ -186,37 +185,37 @@ class SchemaController extends Controller {
       $groups = array();
 
 // Create the arrays
-      $this->calaculateStatusSums($trainingDates, $vMemberTrainingDates, $statuses, $statusSums);
-      $this->createNamesAndGroupsArrays($memberTrainings, $names, $groups);
+      $this->calaculateStatusSums($scheduleDates, $vMemberScheduleDates, $statuses, $statusSums);
+      $this->createNamesAndGroupsArrays($memberSchedules, $names, $groups);
 
-      return view('sdSchema.schema', [
-          'training' => $training,
-          'numberOfDates' => count($trainingDates),
+      return view('schedule.schema', [
+          'schedule' => $schedule,
+          'numberOfDates' => count($scheduleDates),
           'currentUser' => Auth::user(),
-          'trainingDates' => $trainingDates,
+          'scheduleDates' => $scheduleDates,
           'statuses' => $statuses,
           'names' => $names,
           'groups' => $groups,
           'statusSums' => $statusSums,
-          'admin' => $this->isAdmin($trainingId)
+          'admin' => $this->isAdmin($scheduleId)
       ]);
    }
 
 //Called from the index function
-   private function createNamesAndGroupsArrays($memberTrainings, &$names, &$groups) {
-      foreach ($memberTrainings as $memberTraining) {
-         $userId = $memberTraining->user_id;
+   private function createNamesAndGroupsArrays($memberSchedules, &$names, &$groups) {
+      foreach ($memberSchedules as $memberSchedule) {
+         $userId = $memberSchedule->user_id;
          $user = User::find($userId);
          $names[$userId] = $user->name;
-         $groups[$userId] = $user->groupsize->size;
+         $groups[$userId] = $memberSchedule->group_size;
       }
    }
 
 // Called from the index function
-   private function calaculateStatusSums($trainingDates, $vMemberTrainingDates, &$statuses, &$statusSums) {
-      foreach ($trainingDates as $trainingDate) {
-         $memberTrainingsForDate = $vMemberTrainingDates
-                 ->where('training_date', $trainingDate->training_date)
+   private function calaculateStatusSums($scheduleDates, $vMemberScheduleDates, &$statuses, &$statusSums) {
+      foreach ($scheduleDates as $scheduleDate) {
+         $memberSchedulesForDate = $vMemberScheduleDates
+                 ->where('schedule_date', $scheduleDate->schedule_date)
                  ->all();
          $sum = array(
              'Y' => 0,
@@ -224,18 +223,18 @@ class SchemaController extends Controller {
              'M' => 0, // M= Maybe
              'NA' => 0, // NA=No Answer
          );
-         foreach ($memberTrainingsForDate as $memberTrainingForDate) {
-            $statuses[$memberTrainingForDate->user_id][$trainingDate->id] = $memberTrainingForDate->status;
-            switch ($memberTrainingForDate->status) {
+         foreach ($memberSchedulesForDate as $memberScheduleForDate) {
+            $statuses[$memberScheduleForDate->user_id][$scheduleDate->id] = $memberScheduleForDate->status;
+            switch ($memberScheduleForDate->status) {
                case 0: $sum['NA']++;
                   break;
                case 1: $sum['Y']++;
                   break;
                case 2: $sum['Y'] += 2;
                   break;
-               case 3: $sum['N'] += $memberTrainingForDate->group;
+               case 3: $sum['N'] += $memberScheduleForDate->group_size;
                   break;
-               default: $sum['M'] += $memberTrainingForDate->group;
+               default: $sum['M'] += $memberScheduleForDate->group_size;
                   break;
             }
          }
@@ -243,39 +242,39 @@ class SchemaController extends Controller {
       }
    }
 
-// Remove da´tes from a training
+// Remove da´tes from a schedule
    public function removeDates(Request $request) {
       $data = request()->all();
-      $trainingId = $data["trainingId"];
+      $scheduleId = $data["scheduleId"];
       foreach ($data as $key => $value) {
          if (substr($key, 0, 6) === 'delete') {
             $atoms = explode('_', $key);
-            $trainingDateId = $atoms[1];
-            $trainingDate = TrainingDate::find($trainingDateId);
-            $trainingDate->delete();
-         } else if (substr($key, 0, 10) === 'trainingId') {
-//            $trainingId = $value;
+            $scheduleDateId = $atoms[1];
+            $scheduleDate = ScheduleDate::find($scheduleDateId);
+            $scheduleDate->delete();
+         } else if (substr($key, 0, 10) === 'scheduleId') {
+//            $scheduleId = $value;
          }
       }
-//      $training = Training::find($trainingId);
-      return redirect(route('sdSchema.showAddRemoveDates', ['trainingId' => $trainingId]));
+//      $schedule = Schedule::find($scheduleId);
+      return redirect(route('schedule.showAddRemoveDates', ['scheduleId' => $scheduleId]));
    }
 
 // Show the Register New User Form
-   public function showRegisterUser($trainingId) {
+   public function showRegisterUser($scheduleId) {
       return view('RegisterUser', [
-          'trainingId' => $trainingId,
+          'scheduleId' => $scheduleId,
       ]);
    }
 
-   public function showViewAddRemoveDates($trainingId) {
+   public function showViewAddRemoveDates($scheduleId) {
 
-      $training = Training::find($trainingId);
-      $lastTrainingDate = $this->getLastTrainingDate($training);
+      $schedule = Schedule::find($scheduleId);
+      $lastScheduleDate = $this->getLastScheduleDate($schedule);
 
       $danceTime = '19:00';   // TODO: Remve this hardcoded time
 // Create a Carbopnd date in order to calculate next date a week ahead, and the day of the week
-      $dt = Carbon::parse($lastTrainingDate->training_date);
+      $dt = Carbon::parse($lastScheduleDate->schedule_date);
       $nextDate = substr($dt->addWeeks(1), 0, 10);
       $currentLocale = LaravelLocalization::getCurrentLocale();
 //      if ($currentLocale ==='se') {
@@ -290,35 +289,35 @@ class SchemaController extends Controller {
       $mytime = Carbon::now();
       $today = $mytime->toDateString();
 
-      $trainingDates = TrainingDate::where('training_id', $training->id)
-              ->where('training_date', '>=', $today)
+      $scheduleDates = ScheduleDate::where('schedule_id', $schedule->id)
+              ->where('schedule_date', '>=', $today)
               ->get();
 
-      return view('sdSchema.addRemoveDates', [
-          'training' => $training,
-          'trainingDates' => $trainingDates,
+      return view('schedule.addRemoveDates', [
+          'schedule' => $schedule,
+          'scheduleDates' => $scheduleDates,
           'currentUser' => Auth::user(),
           'weekdays' => $weekDays,
           'weekDaysNumber' => $weekDaysNumber,
-          'lastTrainingDate' => $lastTrainingDate,
+          'lastScheduleDate' => $lastScheduleDate,
           'danceTime' => $danceTime,
           'nextDate' => $nextDate,
-          'admin' => $this->isAdmin($trainingId)
+          'admin' => $this->isAdmin($scheduleId)
       ]);
    }
 
 // Called from showViewAddRemoveDates
-// Return the last training date for a training. If no date exist, return today's date
-   private function getLastTrainingDate($training) {
-      $lastTrainingDate = TrainingDate::where('training_id', $training->id)
-              ->orderByDesc('training_date')
+// Return the last schedule date for a schedule. If no date exist, return today's date
+   private function getLastScheduleDate($schedule) {
+      $lastScheduleDate = ScheduleDate::where('schedule_id', $schedule->id)
+              ->orderByDesc('schedule_date')
               ->first();
 
-      if (is_null($lastTrainingDate)) {
-         $lastTrainingDate = new TrainingDate();
-         $lastTrainingDate->training_date = substr(Carbon::now()->toISOString(), 0, 10);
+      if (is_null($lastScheduleDate)) {
+         $lastScheduleDate = new ScheduleDate();
+         $lastScheduleDate->schedule_date = substr(Carbon::now()->toISOString(), 0, 10);
       }
-      return $lastTrainingDate;
+      return $lastScheduleDate;
    }
 
 // The functionality in the AddRemoveGroup view is not implemented
@@ -328,19 +327,19 @@ class SchemaController extends Controller {
    }
 
 // SHow the Members view
-   public function ShowViewMembers($trainingId) {
-      $training = Training::find($trainingId);
+   public function ShowViewMembers($scheduleId) {
+      $schedule = Schedule::find($scheduleId);
       $createEmailListAction = new CreateEmailListAction();
-      $emailArray = $createEmailListAction->execute($training->id);
+      $emailArray = $createEmailListAction->execute($schedule->id);
       $emails = '';
       foreach ($emailArray as $email) {
          $emails .= $email . ', ';
       }
       $emails = substr($emails, 0, -2);
 //      dd($emails);
-      $vMemberTrainings = V_MemberTraining::where('training_id', $training->id)->get();
+      $vMemberSchedules = V_MemberSchedule::where('schedule_id', $schedule->id)->get();
       $memberUserIds = [];
-      foreach ($vMemberTrainings as $member) {
+      foreach ($vMemberSchedules as $member) {
          array_push($memberUserIds, $member->user_id);
       }
       $allUsers = User::all();
@@ -348,11 +347,11 @@ class SchemaController extends Controller {
       $nonMembers = collect();
       foreach ($allUsers as $user) {
          if (!in_array($user->id, $memberUserIds)) {
-            $nonMember = new V_MemberTraining();
-            $nonMember->training_id = $training->id;
+            $nonMember = new V_MemberSchedule();
+            $nonMember->schedule_id = $schedule->id;
             $nonMember->user_id = $user->id;
             $nonMember->user_name = $user->name;
-            $nonMember->training_name = $training->name;
+            $nonMember->schedule_name = $schedule->name;
             $nonMember->email = $user->email;
             $nonMember->admin = 0;
             $nonMember->group = 1;          // TOD: FIX
@@ -360,120 +359,124 @@ class SchemaController extends Controller {
          }
       }
 
-      return view('sdSchema.adminMembers', [
-          'training' => $training,
-          'vMemberTrainings' => $vMemberTrainings,
+      return view('schedule.adminMembers', [
+          'schedule' => $schedule,
+          'vMemberSchedules' => $vMemberSchedules,
           'nonMembers' => $nonMembers,
           'currentUser' => Auth::user(),
           'emails' => $emails,
-          'admin' => $this->isAdmin($trainingId)
+          'admin' => $this->isAdmin($scheduleId)
       ]);
    }
 
-// Return 1 if user is superAdmin or admin for  a given training
-   private function isAdmin($trainingId) {
-      $vMemberTrainings = V_MemberTraining::where('training_id', $trainingId)->get();
-      return $vMemberTrainings->where('user_id', Auth::user()->id)->first()->admin | Auth::user()->authority;
+// Return 1 if user is superAdmin or admin for  a given schedule
+   private function isAdmin($scheduleId) {
+      $vMemberSchedules = V_MemberSchedule::where('schedule_id', $scheduleId)->get();
+      return $vMemberSchedules->where('user_id', Auth::user()->id)->first()->admin | Auth::user()->authority;
    }
 
 // Show view AdminComments
-   public function showViewAdminComments($trainingId) {
+   public function showViewAdminComments($scheduleId) {
 
-// $training = Training::find($trainingId);
+// $schedule = Schedule::find($scheduleId);
       $mytime = Carbon::now();
       $today = $mytime->toDateString();
-//      $vMemberTrainingDates = V_MemberTrainingDate::where('training_date', '>=', $today)->get();
-      $training = Training::find($trainingId);
-      $trainingDates = TrainingDate::where('training_id', $trainingId)
-              ->where('training_date', '>=', $today)
+//      $vMemberScheduleDates = V_MemberScheduleDate::where('schedule_date', '>=', $today)->get();
+      $schedule = Schedule::find($scheduleId);
+      $scheduleDates = ScheduleDate::where('schedule_id', $scheduleId)
+              ->where('schedule_date', '>=', $today)
               ->get();
-      $vMemberTrainings = V_MemberTraining::where('training_id', $trainingId)->get();
-      $admin = $vMemberTrainings->where('user_id', Auth::user()->id)->first()->admin | Auth::user()->authority;
+      $vMemberSchedules = V_MemberSchedule::where('schedule_id', $scheduleId)->get();
+      $admin = $vMemberSchedules->where('user_id', Auth::user()->id)->first()->admin | Auth::user()->authority;
 
-      return view('sdSchema.adminComments', [
-          'training' => $training,
+      return view('schedule.adminComments', [
+          'schedule' => $schedule,
           'currentUser' => Auth::user(),
-          'trainingDates' => $trainingDates,
-          'admin' => $this->isAdmin($trainingId)
+          'scheduleDates' => $scheduleDates,
+          'admin' => $this->isAdmin($scheduleId)
       ]);
    }
 
 // Show view SchemaEdit for updating the member's attendance status
-   public function showViewEdit(Training $training) {
+   public function showViewEdit(Schedule $schedule) {
 
       $mytime = Carbon::now();
       $today = $mytime->toDateString();
-      $vMemberTrainingDates = V_MemberTrainingDate::where('training_date', '>=', $today)->get();
-      $trainingDates = TrainingDate::where('training_id', $training->id)
-              ->where('training_date', '>=', $today)
+      $vMemberScheduleDates = V_MemberScheduleDate::where('schedule_date', '>=', $today)->get();
+      $scheduleDates = ScheduleDate::where('schedule_id', $schedule->id)
+              ->where('schedule_date', '>=', $today)
               ->get();
       $statuses = array();
-      foreach ($trainingDates as $trainingDate) {
-         $memberTrainingsForDate = $vMemberTrainingDates
-                 ->where('training_date', $trainingDate->training_date)
+      foreach ($scheduleDates as $scheduleDate) {
+         $memberSchedulesForDate = $vMemberScheduleDates
+                 ->where('schedule_date', $scheduleDate->schedule_date)
                  ->where('user_id', Auth::user()->id)
                  ->all();
-         foreach ($memberTrainingsForDate as $memberTrainingForDate) {
-            $statuses[$trainingDate->id] = $memberTrainingForDate->status;
+         foreach ($memberSchedulesForDate as $memberScheduleForDate) {
+            $statuses[$scheduleDate->id] = $memberScheduleForDate->status;
          }
       }
-
-      return view('sdSchema.schemaEdit', [
-          'training' => $training,
+      $groupSize= MemberSchedule::where('schedule_id',$schedule->id)
+              ->where('user_id',Auth::user()->id)
+              ->first()
+              ->group_size;;
+      return view('schedule.schemaEdit', [
+          'schedule' => $schedule,
           'currentUser' => Auth::user(),
-          'trainingDates' => $trainingDates,
+          'scheduleDates' => $scheduleDates,
+          'groupSize' => $groupSize,
           'statuses' => $statuses, // TODO: Only the statuses of the current user is needed
       ]);
    }
 
 //   // Show the Admin Menu. TODO: Cretae a real menu instead of a set of buttons
-//   public function showAdminMenu(Training $training) {
+//   public function showAdminMenu(Schedule $schedule) {
 //
-////      $training = Training::find($trainingId);
+////      $schedule = Schedule::find($scheduleId);
 //      return view('AdminMenu', [
-//          'training' => $training,
+//          'schedule' => $schedule,
 //          'currentUser' => Auth::user(),
 //      ]);
 //   }
 //Updating the member's attendance status
    public function updateAttendance(Request $request) {
       $data = request()->all();
-      $trainingId = 0;
+      $scheduleId = 0;
       foreach ($data as $key => $value) {
          if (substr($key, 0, 6) === 'status') {
             $atoms = explode('_', $key);
             $userId = $atoms[1];
-            $trainingDateId = $atoms[2];
-            $memberTrainingDate = MemberTrainingDate::where('user_id', $userId)
-                    ->where('training_date_id', $trainingDateId)
+            $scheduleDateId = $atoms[2];
+            $memberScheduleDate = MemberScheduleDate::where('user_id', $userId)
+                    ->where('schedule_date_id', $scheduleDateId)
                     ->first();
-            $memberTrainingDate->status = $value;
-            $memberTrainingDate->save();
-         } else if (substr($key, 0, 10) === 'trainingId') {
-            $trainingId = $value;
+            $memberScheduleDate->status = $value;
+            $memberScheduleDate->save();
+         } else if (substr($key, 0, 10) === 'scheduleId') {
+            $scheduleId = $value;
          }
       }
-      return redirect(route('sdSchema.index', ['trainingId' => $trainingId]));
+      return redirect(route('schedule.index', ['scheduleId' => $scheduleId]));
    }
 
 // Update comemnts for one or more dates
    public function updateComments(Request $request) {
       $data = request()->all();
-      $trainingId = 0;
+      $scheduleId = 0;
       foreach ($data as $key => $value) {
          if (substr($key, 0, 7) === 'comment') {
             $atoms = explode('_', $key);
-            $trainingDateId = $atoms[1];
-            $trainingDate = TrainingDate::find($trainingDateId);
-            $trainingDate->comment = $value;
-            $trainingDate->save();
-         } else if (substr($key, 0, 10) === 'trainingId') {
-            $trainingId = $value;
+            $scheduleDateId = $atoms[1];
+            $scheduleDate = ScheduleDate::find($scheduleDateId);
+            $scheduleDate->comment = $value;
+            $scheduleDate->save();
+         } else if (substr($key, 0, 10) === 'scheduleId') {
+            $scheduleId = $value;
          }
       }
-      $training = Training::find($trainingId);
-// return redirect(route('admin.showMenu',['training' =>$training]));
-      return redirect(route('sdSchema.index', ['trainingId' => $training->id]));
+      $schedule = Schedule::find($scheduleId);
+// return redirect(route('admin.showMenu',['schedule' =>$schedule]));
+      return redirect(route('schedule.index', ['scheduleId' => $schedule->id]));
    }
 
 }

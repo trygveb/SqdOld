@@ -80,30 +80,30 @@ Route::group(  // Comment out this when running tests
    });
 
 // Schema routes ///////////////////////////////////////////////////////////////
-   Route::name('sdSchema.')->group(function () {
+   Route::name('schedule.')->group(function () {
       // Show application home/welcome view  
-      Route::name('home')->get('/sdSchema/home', [HomeController::class, 'schemaHome']);
+      Route::name('home')->get('/schedule/home', [HomeController::class, 'schemaHome']);
       // Show the schema
-      Route::name('index')->get('/sdSchema/show/{trainingId?}', [SchemaController::class, 'index']);
+      Route::name('index')->get('/schedule/show/{scheduleId?}', [SchemaController::class, 'index']);
       //Show edit view for one user for  attendance update
-      Route::name('showEdit')->get('/sdSchema/edit/{training}',[SchemaController::class, 'showViewEdit']);
+      Route::name('showEdit')->get('/schedule/edit/{schedule}',[SchemaController::class, 'showViewEdit']);
       // Update attendance (for one user)
-      Route::name('updateAttendance')->post('/sdSchema/updateAttendance', [SchemaController::class,'updateAttendance']);
+      Route::name('updateAttendance')->post('/schedule/updateAttendance', [SchemaController::class,'updateAttendance']);
    // Show view AdminComments
-      Route::name('showComments')->get('/admin/comments/{trainingId}', [SchemaController::class,'showViewAdminComments']);
+      Route::name('showComments')->get('/admin/comments/{scheduleId}', [SchemaController::class,'showViewAdminComments']);
    // Show add/remove members view
-      Route::name('showMembers')->get('/admin/members/{trainingId}', [SchemaController::class, 'showViewMembers']);
-   // Add existing users to a training
+      Route::name('showMembers')->get('/admin/members/{scheduleId}', [SchemaController::class, 'showViewMembers']);
+   // Add existing users to a schedule
       Route::name('addMember')->post('/admin/addMember', [SchemaController::class, 'addMember']);
-   // Update admin status or rRemove member from a training
+   // Update admin status or rRemove member from a schedule
       Route::name('updateMember')->post('/admin/updateMember', [SchemaController::class, 'updateMember']);
    // Show register new user form
-      Route::name('showRegisterUser')->get('/admin/showRegisterUser/{trainingId}', [SchemaController::class, 'showRegisterUser']);
+      Route::name('showRegisterUser')->get('/admin/showRegisterUser/{scheduleId}', [SchemaController::class, 'showRegisterUser']);
 
    // Update comments
-      Route::name('updateComments')->post('/sdSchema/updateComments', [SchemaController::class, 'updateComments']);
+      Route::name('updateComments')->post('/schedule/updateComments', [SchemaController::class, 'updateComments']);
    // Show add/remove dates view
-      Route::name('showAddRemoveDates')->get('/admin/AddRemoveDates/{trainingId}', [SchemaController::class, 'showViewAddRemoveDates']);
+      Route::name('showAddRemoveDates')->get('/admin/AddRemoveDates/{scheduleId}', [SchemaController::class, 'showViewAddRemoveDates']);
    // Add dates
       Route::name('addDates')->post('/admin/addDates', [SchemaController::class, 'addDates']);
    // Remove dates

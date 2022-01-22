@@ -14,7 +14,7 @@
    @endguest
    @auth
    @if (! Auth::user()->hasVerifiedEmail())
-      <a href="{{route('verification.notice',['application' => 'sdSchema'])}}">{{__('Please confirm your email')}}!</a>
+      <a href="{{route('verification.notice',['application' => 'schedule'])}}">{{__('Please confirm your email')}}!</a>
    @endif
    @endauth
    </div>

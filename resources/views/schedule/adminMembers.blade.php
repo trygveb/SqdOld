@@ -1,12 +1,12 @@
-@extends('sdSchema.layout')
+@extends('schedule.layout')
 @section('menu1')
 @if ($admin > 0)
    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
    Administration
    </a>
    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-   <a class="dropdown-item" href="{{route('sdSchema.showComments',['trainingId' => $training->id])}}">{{__('Manage comments')}}</a>
-   <a class="dropdown-item" href="{{route('sdSchema.showAddRemoveDates',['trainingId' => $training->id])}}">{{__('Manage dates')}}</a>
+   <a class="dropdown-item" href="{{route('schedule.showComments',['scheduleId' => $schedule->id])}}">{{__('Manage comments')}}</a>
+   <a class="dropdown-item" href="{{route('schedule.showAddRemoveDates',['scheduleId' => $schedule->id])}}">{{__('Manage dates')}}</a>
    </div>
 @endif
 @endsection
@@ -16,11 +16,11 @@
       <label for="emailAdresses">{{__('E-mail addresses: (select all and copy)')}}</label><br>
       <textarea style="background-color:#ccc" id="emailAdresses"  cols="80">{{$emails}}</textarea>
      <br>
-      <form action="{{ route('sdSchema.updateMember')}}" method="POST">
+      <form action="{{ route('schedule.updateMember')}}" method="POST">
           {{ csrf_field() }}
-          <input type="hidden" name="trainingId" value="{{$training->id}}">
+          <input type="hidden" name="scheduleId" value="{{$schedule->id}}">
           <fieldset>
-            <legend>{{__('Members in schema')}} <span style="white-space: nowrap;">{{$training->name}}</span></legend>
+            <legend>{{__('Members in schema')}} <span style="white-space: nowrap;">{{$schedule->name}}</span></legend>
            <table class="table table-bordered table-sm" style="max-width:250px;">
                <thead style="font-weight:bold; text-decoration-line: underline;">
                <th class="text-nowrap">{{__('Name')}}</th>
@@ -28,7 +28,7 @@
                <th class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">{{__('Remove')}}</th>
                </thead>
                <tbody>
-         @foreach ($vMemberTrainings as $member)
+         @foreach ($vMemberSchedules as $member)
             @php
                $deleteName='delete_'.$member->user_id;
                $adminName='admin_'.$member->user_id;
@@ -52,7 +52,7 @@
             <br>
             <x-submit-button submitText="{{__('Update')}}"
                              cancelText="{{ __('Cancel')}}"
-                             cancelUrl="{{route('sdSchema.index')}}"
+                             cancelUrl="{{route('schedule.index')}}"
                              myId="removeButton"
                              onclickFunction="return checkDeletes()" />
 

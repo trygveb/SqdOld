@@ -17,7 +17,7 @@ class LoginTest extends TestCase {
    private $testUserName = 'John Doe';
    private $testUserEmail = 'john@example.com';
    private $testUserCorrectpassword = 'Qwerty123';
-   private $testApplication = 'sdSchema';
+   private $testApplication = 'schedule';
    private $tooManyRequestsStatus= 429;
 
    protected function successfulLoginRoute() {
