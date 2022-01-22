@@ -95,8 +95,8 @@ Route::group(  // Comment out this when running tests
       Route::name('showMembers')->get('/admin/members/{trainingId}', [SchemaController::class, 'showViewMembers']);
    // Add existing users to a training
       Route::name('addMember')->post('/admin/addMember', [SchemaController::class, 'addMember']);
-   // Remove member from a training
-      Route::name('removeMember')->post('/admin/removeMember', [SchemaController::class, 'removeMember']);
+   // Update admin status or rRemove member from a training
+      Route::name('updateMember')->post('/admin/updateMember', [SchemaController::class, 'updateMember']);
    // Show register new user form
       Route::name('showRegisterUser')->get('/admin/showRegisterUser/{trainingId}', [SchemaController::class, 'showRegisterUser']);
 

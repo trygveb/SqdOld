@@ -7,6 +7,7 @@
     "After submitting the form for password reset in the pop-up window, you can close that and return to this window and press the \"Back to login\" button below" :
          "Efter att ha skickat in formuläret för lösenordsåterställning i popup-fönstret kan du stänga det och återgå till det här fönstret och trycka på knappen \"Tillbaka till inloggning\" nedan",
     "All registered users are already connected to" : "Alla registrerade användare är redan anslutna till",
+    "Are you sure? You have selected" : "Är du säker? Du har markerat ",
     "Back to login" : "Tillbaka till inloggning",
     "Before proceeding, however, you will need to verify your email address" : "Innan du fortsätter måste du dock verifiera din e-post-adress",
     "by clicking on the the button with text \":text\" in the email* which you should have just received" : "genom att klicka på knappen med texten \":text\" i e-postmeddelandet* som du ska ha fått nyss.",
@@ -46,6 +47,8 @@
     "Manage members" : "Hantera medlemmar",
     "Maybe" : "Kankse",
     "Members" : "Medlemmar",
+    "members for removal" : "medlemmar för borttag",
+    "Members in schema" : "Medlemmar i schema",
     "Mondays" : "Måndagar",
     "Name" : "Namn",
     "No" : "Nej",
@@ -61,6 +64,8 @@
     "Regards" : "Hälsningar",
     "Register" : "Registrera dig",
     "Remember Me" : "Kom ihåg mig",
+    "Remove" : "Ta bort",
+    "Remove member" : "Ta bort medlem",
     "Remove date(s)" : "Ta bort datum",
     "Resend Verification Email" : "Skicka nytt verifikations-mail",
     "Reset Password" : "Skapa nytt Lösenord",
@@ -83,8 +88,11 @@
         "administrator at" : "administratör på",
     "The password must be at least seven characters, and contain characters from each of the following three categories:" :
         "Lösenordet måste vara minst sju tecken långt, och innehålla tecken från var och en av de tre följande kategorierna:",
+    "This can not be undone. If the member wants to join again later, he/she must register again" :
+        "Detta kan inte göras ogjort. Om medlemmen vill vara med igen senare, måste denne anmäla sig igen",
     "Thursdays" : "Torsdagar",
     "Tuesdays" : "Tisdagar",
+    "Update" : "Uppdatera",
     "Update attendance" : "Uppdatera närvaro",
     "Verification link sent!" : "Verifieringslänk har skickats!",
     "Verify email address" : "Verifiera e-postadressen",
@@ -103,6 +111,7 @@
     "You are receiving this email because we received a password reset request for your account.":
         "Du får detta eMail därför att vi har fått en begäran om att återställa ditt lösenord. Klicka på länken nedan för att skapa ett nytt lösenord",
     "You have signed-in" : "Du är inloggad",
+    "You must have at least one admin in each schedule" : "Du måste ha minst en administratör i varje schema",
     "Your e-mail is verified" : "Din e-postadress är verifierad",
     "ZZZ" : "ZZZ"
 }

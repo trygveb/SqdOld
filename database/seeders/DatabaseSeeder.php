@@ -125,19 +125,19 @@ class DatabaseSeeder extends Seeder {
       User::factory()->create([
           'email' => 'adam@gmail.com',
           'password' => $passwordHashed,
-          'name' => 'Adam',
+          'name' => 'Adam First',
           'authority' => 1
       ]);
       User::factory()->create([
           'email' => 'eve@gmail.com',
           'password' => $passwordHashed,
-          'name' => 'Eve',
+          'name' => 'Eve Second',
           'authority' => 0
       ]);
       User::factory()->create([
           'email' => 'kain@gmail.com',
           'password' => $passwordHashed,
-          'name' => 'Kain',
+          'name' => 'Kain Third',
           'authority' => 0,
           'email_verified_at' => NULL
       ]);
@@ -152,11 +152,15 @@ class DatabaseSeeder extends Seeder {
       foreach ($users as $user) {
          $user->password= $passwordHashed;
          $atoms = explode(' ', $user->name);
+         $lastName=$atoms[count($atoms)-1];
          if (in_array($atoms[0], $titles)) {
             $user->name = $atoms[1];
          } else {
             $user->name = $atoms[0];
          }
+         $atoms = explode('@', $user->email);
+         $atoms[0]=$user->name.'.'.$lastName;
+         $user->email= implode('@', $atoms);
          $user->save();
          $groupsize = new Groupsize;
          $groupsize->user_id = $user->id;
