@@ -24,7 +24,11 @@ class EnsureUserIsAdmin {
          if (str_contains($url, '/admin/')) {
             $atoms = explode('/', $url);
             $scheduleId = $atoms[count($atoms) - 1];
-            $adminForSchedule = V_MemberSchedule::where('schedule_id', $scheduleId)
+            if (!is_numeric($scheduleId)) {
+               $data = request()->all();
+               $scheduleId = $data["scheduleId"];               
+            }
+               $adminForSchedule = V_MemberSchedule::where('schedule_id', $scheduleId)
                     ->where('user_id', Auth::user()->id)
                     ->pluck('admin')
                     ->first();

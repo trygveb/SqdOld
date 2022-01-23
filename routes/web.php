@@ -79,39 +79,42 @@ Route::group(  // Comment out this when running tests
       Route::name('guest')->get('sdCalls', [HomeController::class, 'callsGuest']);
    });
 
-// Schema routes ///////////////////////////////////////////////////////////////
+// Schedule routes ///////////////////////////////////////////////////////////////
    Route::name('schedule.')->group(function () {
       // Show application home/welcome view  
       Route::name('home')->get('/schedule/home', [HomeController::class, 'schemaHome']);
       
-      //Route::controller(SchemaController::class)->group(function () {
+      Route::controller(SchemaController::class)->group(function () {
       // Show the schema
-      Route::name('index')->get('/schedule/show/{scheduleId?}', [SchemaController::class, 'index']);
-      //Show edit view for one user for  attendance update
-      Route::name('showEdit')->get('/schedule/edit/{schedule}',[SchemaController::class, 'showViewEdit']);
-      // Update attendance (for one user)
-      Route::name('updateAttendance')->post('/schedule/updateAttendance', [SchemaController::class,'updateAttendance']);
+         Route::name('index')->get('/schedule/show/{scheduleId?}', 'index');
+         //Show edit view for one user for  attendance update
+         Route::name('showEdit')->get('/schedule/edit/{schedule}', 'showViewEdit');
+         // Update attendance (for one user)
+         Route::name('updateAttendance')->post('/schedule/updateAttendance', 'updateAttendance');
 
-      Route::middleware(['isAdmin'])->group(function () {
-         // Show view AdminComments
-         Route::name('showComments')->get('/admin/comments/{scheduleId}', [SchemaController::class,'showViewAdminComments']);
-      // Show add/remove members view
-         Route::name('showMembers')->get('/admin/members/{scheduleId}', [SchemaController::class, 'showViewMembers']);
-      // Add existing users to a schedule
-         Route::name('addMember')->post('/admin/addMember', [SchemaController::class, 'addMember']);
-      // Update admin status or rRemove member from a schedule
-         Route::name('updateMember')->post('/admin/updateMember', [SchemaController::class, 'updateMember']);
-      // Show register new user form
-         Route::name('showRegisterUser')->get('/admin/showRegisterUser/{scheduleId}', [SchemaController::class, 'showRegisterUser']);
+      // Routes requiring admin authority on schedules /////////////////////////
+         Route::middleware(['isAdmin'])->group(function () {
+            // Show view AdminComments
+            Route::name('showComments')->get('/admin/comments/{scheduleId}', 'showViewAdminComments');
+         // Show add/remove members view
+            Route::name('showMembers')->get('/admin/members/{scheduleId}', 'showViewMembers');
+         // Add existing users to a schedule
+           // Route::name('addMember')->post('/admin/addMember', 'addMember');
+         // Update admin status or rRemove member from a schedule
+            Route::name('updateMember')->post('/admin/updateMember', 'updateMember');
+         // Show register new user form
+            Route::name('showRegisterUser')->get('/admin/showRegisterUser/{scheduleId}', 'showRegisterUser');
 
-      // Update comments
-         Route::name('updateComments')->post('/admin/updateComments', [SchemaController::class, 'updateComments']);
-      // Show add/remove dates view
-         Route::name('showAddRemoveDates')->get('/admin/AddRemoveDates/{scheduleId}', [SchemaController::class, 'showViewAddRemoveDates']);
-      // Add dates
-         Route::name('addDates')->post('/admin/addDates', [SchemaController::class, 'addDates']);
-      // Remove dates
-         Route::name('removeDates')->post('/admin.removeDates', [SchemaController::class, 'removeDates']);
+         // Update comments
+            Route::name('updateComments')->post('/admin/updateComments', 'updateComments');
+         // Show add/remove dates view
+            Route::name('showAddRemoveDates')->get('/admin/AddRemoveDates/{scheduleId}', 'showViewAddRemoveDates');
+         // Add dates
+            Route::name('addDates')->post('/admin/addDates', 'addDates');
+         // Remove dates
+            Route::name('removeDates')->post('/admin/removeDates', 'removeDates');
+         });
+         
       });
       
    });
