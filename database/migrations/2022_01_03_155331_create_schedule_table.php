@@ -16,8 +16,9 @@ class CreateScheduleTable extends Migration
     {
         Schema::connection('schedule')->create('schedule', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 20)->unique();
-            $table->string('comment', 250)->nullable();
+            $table->string('name', 30)->unique();
+            $table->text('description')->nullable();
+            $table->string('password')->nullable();
             $table->timestamps();
         });
         DB::connection('schedule')->statement("ALTER TABLE `schedule` comment='This table should contain a (unique) name for each schedule/course'");

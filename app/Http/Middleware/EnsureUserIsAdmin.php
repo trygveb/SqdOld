@@ -5,12 +5,12 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Schedule\V_MemberSchedule;
 
 class EnsureUserIsAdmin {
 
    /**
-    * Handle an incoming request.
+    * Check that user is "superuser" ($user->authority > 0 ) or has admin authority on the schedule
     *
     * @param  \Illuminate\Http\Request  $request
     * @param  \Closure  $next
@@ -18,14 +18,24 @@ class EnsureUserIsAdmin {
     */
    public function handle(Request $request, Closure $next) {
       if (Auth::check()) {
-         $user=$request->user();
-         $authority= $user->authority;
-         if ($authority > 1) {
+         $user = $request->user();
+         $adminForSchedule = 0;
+         $url = url()->full();
+         if (str_contains($url, '/admin/')) {
+            $atoms = explode('/', $url);
+            $scheduleId = $atoms[count($atoms) - 1];
+            $adminForSchedule = V_MemberSchedule::where('schedule_id', $scheduleId)
+                    ->where('user_id', Auth::user()->id)
+                    ->pluck('admin')
+                    ->first();
+         }
+         if ($user->authority > 0 || $adminForSchedule > 0) {
             return $next($request);
          }
       }
+      // No authority, just go back with no message
+      return redirect()->back();
 
-      return redirect('login');
    }
 
 }

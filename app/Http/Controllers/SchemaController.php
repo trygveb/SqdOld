@@ -328,7 +328,15 @@ class SchemaController extends Controller {
 
 // SHow the Members view
    public function ShowViewMembers($scheduleId) {
+   
       $schedule = Schedule::find($scheduleId);
+      $admin = V_MemberSchedule::where('schedule_id', $scheduleId)
+              ->where('user_id', Auth::user()->id)
+              ->pluck('admin')
+              ->first();
+      if ($admin==0) {
+          return view('errors.403');
+      }
       $createEmailListAction = new CreateEmailListAction();
       $emailArray = $createEmailListAction->execute($schedule->id);
       $emails = '';

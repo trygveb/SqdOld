@@ -27,22 +27,21 @@ class DatabaseSeeder extends Seeder {
 
       $schedules = $this->createSchedulesAndScheduleDates();
 
-      $users = $this->createUsers();
+      $users = $this->createOtherUsers();
 
       $this->addUsersToSchedules($users, $schedules);
    }
 
-   
    private function addOneUserToOneSchedule($user, $schedule) {
 //      printf("Adding user %d to schedule %s\n", $user->id, $schedule->id);
       $memberSchedule = new MemberSchedule;
       $memberSchedule->user_id = $user->id;
       $memberSchedule->schedule_id = $schedule->id;
-      if ($user->id== 1 || $user->id==2) {
-         $memberSchedule->admin=1;  // Make user 1 and 2 admin for the schedule
+      if ($user->id == 1 || $user->id == 2) {
+         $memberSchedule->admin = 1;  // Make user 1 and 2 admin for the schedule
       }
-      if ($user->id%3 === 0) {
-          $memberSchedule->group_size=2;  // Default is 1
+      if ($user->id % 3 === 0) {
+         $memberSchedule->group_size = 2;  // Default is 1
       }
       $memberSchedule->save();
    }
@@ -69,13 +68,14 @@ class DatabaseSeeder extends Seeder {
    }
 
    private function addUserToScheduleDates($user, $scheduleDates) {
-      
+
       foreach ($scheduleDates as $scheduleDate) {
-         $scheduleId= $scheduleDate->schedule_id;
-         $groupSize= MemberSchedule::where('schedule_id',$scheduleId)
-                 ->where('user_id',$user->id)
-                 ->first()
-                 ->group_size;;
+         $scheduleId = $scheduleDate->schedule_id;
+         $groupSize = MemberSchedule::where('schedule_id', $scheduleId)
+                         ->where('user_id', $user->id)
+                         ->first()
+                 ->group_size;
+         ;
          $this->addOneUserToOneScheduleDate($scheduleDate, $user, $groupSize);
       }
    }
@@ -101,17 +101,28 @@ class DatabaseSeeder extends Seeder {
       }
    }
 
+   private function createHashedPassword() {
+      $password = env('ADMIN_PASSWORD', 'i-love-laravel');
+      $hashedPassword = Hash::make($password);
+      if (!Hash::check($password, $hashedPassword)) {
+         echo "Pasword does not match!\n";
+      }
+      return$hashedPassword;
+   }
+   
    private function createScheduleDate($schedule, $start, $w) {
       $scheduleDate = new ScheduleDate;
       $scheduleDate->schedule_id = $schedule->id;
       $scheduleDate->schedule_date = $start->addWeeks($w);
       $scheduleDate->save();
    }
+   
 
    private function createSchedulesAndScheduleDates() {
       // Create schedules and schedule dates
       Schedule::firstOrCreate([
-          'name' => 'C3 Onsdagar'
+          'name' => 'C3 Onsdagar',
+          'password' => $this->createHashedPassword()
       ]);
       Schedule::firstOrCreate([
           'name' => 'C2 Måndagar'
@@ -127,49 +138,59 @@ class DatabaseSeeder extends Seeder {
       return $schedules;
    }
 
-   private function createAdamAndEve() {
-      $password = env('ADMIN_PASSWORD', 'i-love-laravel');
-      $passwordHashed = Hash::make($password = $password);
+   private function createFirstUsers() {
+      $hashedPassword = $this->createHashedPassword();
       User::factory()->create([
           'email' => 'adam@gmail.com',
-          'password' => $passwordHashed,
-          'name' => 'Adam First',
+          'password' => $hashedPassword,
+          'name' => 'Adam',
           'authority' => 1
       ]);
       User::factory()->create([
           'email' => 'eve@gmail.com',
-          'password' => $passwordHashed,
-          'name' => 'Eve Second',
+          'password' => $hashedPassword,
+          'name' => 'Eve',
           'authority' => 0
       ]);
       User::factory()->create([
           'email' => 'kain@gmail.com',
-          'password' => $passwordHashed,
-          'name' => 'Kain Third',
+          'password' => $hashedPassword,
+          'name' => 'Kain',
           'authority' => 0,
           'email_verified_at' => NULL
       ]);
-      return $passwordHashed;
+      User::factory()->create([
+          'email' => 'abel@gmail.com',
+          'password' => $hashedPassword,
+          'name' => 'Abel',
+          'authority' => 0,
+          'email_verified_at' => NULL
+      ]);
+      return User::count();
    }
 
-   private function createUsers() {
-      $passwordHashed= $this->createAdamAndEve();
+   private function createOtherUsers() {
+      $numberOfFirstUsers = $this->createFirstUsers();
+      $hashedPassword = $this->createHashedPassword();
+
       $titles = ['Dr.', 'Mr.', 'Mrs.', 'Ms.', 'Miss', 'Prof.'];
       User::factory(20)->create();
       $users = User::all();
       foreach ($users as $user) {
-         $user->password= $passwordHashed;
-         $atoms = explode(' ', $user->name);
-         $lastName=$atoms[count($atoms)-1];
-         if (in_array($atoms[0], $titles)) {
-            $user->name = $atoms[1];
-         } else {
-            $user->name = $atoms[0];
+         if ($user->id > $numberOfFirstUsers) {
+            $user->password = $hashedPassword;
+            $userAtoms = explode(' ', $user->name);
+            $lastName = $userAtoms[count($userAtoms) - 1];
+            if (in_array($userAtoms[0], $titles)) {
+               $user->name = $userAtoms[1];
+            } else {
+               $user->name = $userAtoms[0];
+            }
+            $emailAtoms = explode('@', $user->email);
+            $emailAtoms[0] = $user->name . '.' . $lastName;
+            $user->email = strtolower(implode('@', $emailAtoms));
+            $user->save();
          }
-         $atoms = explode('@', $user->email);
-         $atoms[0]=$user->name.'.'.$lastName;
-         $user->email= implode('@', $atoms);
-         $user->save();
       }
 
       return User::all();
