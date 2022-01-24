@@ -17,30 +17,44 @@
             <thead>
               <th style="vertical-align:middle;" class="text-nowrap text-center">{{__('Name')}}</th>
               <th class="text-nowrap text-center" >{{__('Description')}}</th>
+              <th class="text-nowrap text-center" >{{__('Admins')}}</th>
+              <th class="text-nowrap text-center" >{{__('Restricted')}}</th>
               <th class="text-nowrap text-center" >{{__('Member')}}</th>
             </thead>
             <tbody>
 
-        @foreach ($mySchemaIds as $schemaId)
+        @foreach ($myVMemberSchemas as $myVMemberSchema)
                <tr class='status'>
                   <td class="text-nowrap" >
-                      {{$schemaId}}
+                      {{$myVMemberSchema->schedule_name}}
                   </td>
                   <td class="text-nowrap">
-                      Member
+                      {{$myVMemberSchema->schedule_description}}
+                  </td>
+                  <td class="text-nowrap">
+                      {{strlen($myVMemberSchema->password)===0 ? $myVMemberSchema->admins : ''}}
+                  </td>
+                  <td class="text-nowrap">
+                      {{strlen($myVMemberSchema->password)===0?'No':'Yes'}}
                   </td>
                   <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
                         <input type="checkbox"   checked name="yes">
                   </td>
                </tr>
         @endforeach
-        @foreach ($otherSchemaIds as $schemaId)
+        @foreach ($otherSchemas as $otherSchema)
                <tr class='status'>
                   <td class="text-nowrap" >
-                      {{$schemaId}}
+                      {{$otherSchema->name}}
                   </td>
                   <td class="text-nowrap">
-                      Not member
+                      {{$otherSchema->description}}
+                  </td>
+                  <td class="text-nowrap">
+                      {{strlen($otherSchema->password)===0 ? $otherSchema->admins : ''}}                      
+                  </td>
+                  <td class="text-nowrap">
+                      {{strlen($otherSchema->password)===0?'No':'Yes'}}
                   </td>
                   <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
                         <input type="checkbox"   name="yes">

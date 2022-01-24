@@ -78,9 +78,9 @@ Route::group(// Comment out this when running tests
 // Schedule routes ///////////////////////////////////////////////////////////////
            Route::name('schedule.')->group(function () {
               // Show application home/welcome view  
-              Route::name('home')->get('/schedule/home', [HomeController::class, 'schemaHome']);
+            Route::name('home')->get('/schedule/home', [HomeController::class, 'schemaHome']);
 
-                 Route::middleware(['verified'])->group(function () {
+            Route::middleware(['verified'])->group(function () {
               Route::controller(SchemaController::class)->group(function () {
                     // Show the schema
                     Route::name('index')->get('/schedule/show/{scheduleId?}', 'index');

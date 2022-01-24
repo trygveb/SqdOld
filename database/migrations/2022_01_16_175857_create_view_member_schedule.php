@@ -18,6 +18,7 @@ class CreateViewMemberSchedule extends Migration
              `u`.`email` AS `email`,
              `t`.`id` AS `schedule_id`,
              `t`.`name` AS `schedule_name`,
+             `t`.`description` AS `schedule_description`,
              `t`.`password` AS `password`,
              `mt`.`group_size` AS `group_size`,
              `mt`.`admin` AS `admin`

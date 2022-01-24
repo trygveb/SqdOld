@@ -379,12 +379,23 @@ class SchemaController extends Controller {
 
    // Show my schemas
   public function showMySchemas() {
-      $mySchemaIds= V_MemberSchedule::where('user_id',Auth::id())->get()->pluck('schedule_id');
-     $otherSchemaIds= V_MemberSchedule::all()->pluck('schedule_id')->unique()->diff($mySchemaIds);
-//     $schemas=Schedule::all();
+      $myVMemberSchemas= V_MemberSchedule::where('user_id',Auth::id())->get();
+      $mySchemaIds= $myVMemberSchemas->pluck('schedule_id');
+      foreach ($myVMemberSchemas as $myVMemberSchema) {
+         $myVMemberSchema->admins= V_MemberSchedule::where('schedule_id',$myVMemberSchema->schedule_id)
+                 ->where('admin',1)
+                 ->get()->implode('user_name',',');
+      }
+       $otherSchemas= Schedule::all()->except($mySchemaIds->toArray());
+       foreach ($otherSchemas as $otherSchema) {
+         $otherSchema->admins= V_MemberSchedule::where('schedule_id',$otherSchema->id)
+                 ->where('admin',1)
+                 ->get()->implode('user_name',',');
+      }
+
      return view('schedule.mySchemas', [
-          'mySchemaIds' => $mySchemaIds,
-          'otherSchemaIds' => $otherSchemaIds,
+          'myVMemberSchemas' => $myVMemberSchemas,
+          'otherSchemas' => $otherSchemas,
           'admin' =>  Auth::user()->authority
       ]);
   }
