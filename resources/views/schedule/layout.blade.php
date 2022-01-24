@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<x-html-head title="schedule" />
+<x-html-head title="sdSchema" />
 <body>
    <div id="app">
       <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
@@ -37,7 +37,7 @@
        @yield('content')
    </main>
    </div>
-   <x-footer subApp="schedule" />
+   <x-footer subApp="sdSchema" />
 
    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

@@ -21,13 +21,26 @@
             </thead>
             <tbody>
 
-        @foreach ($schemas as $schema)
+        @foreach ($mySchemaIds as $schemaId)
                <tr class='status'>
                   <td class="text-nowrap" >
-                      {{$schema->name}}
+                      {{$schemaId}}
                   </td>
                   <td class="text-nowrap">
-                      {{$schema->description}}
+                      Member
+                  </td>
+                  <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
+                        <input type="checkbox"   checked name="yes">
+                  </td>
+               </tr>
+        @endforeach
+        @foreach ($otherSchemaIds as $schemaId)
+               <tr class='status'>
+                  <td class="text-nowrap" >
+                      {{$schemaId}}
+                  </td>
+                  <td class="text-nowrap">
+                      Not member
                   </td>
                   <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
                         <input type="checkbox"   name="yes">

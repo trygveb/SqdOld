@@ -379,16 +379,23 @@ class SchemaController extends Controller {
 
    // Show my schemas
   public function showMySchemas() {
-     $schemas=Schedule::all();
+      $mySchemaIds= V_MemberSchedule::where('user_id',Auth::id())->get()->pluck('schedule_id');
+     $otherSchemaIds= V_MemberSchedule::all()->pluck('schedule_id')->unique()->diff($mySchemaIds);
+//     $schemas=Schedule::all();
      return view('schedule.mySchemas', [
-          'schemas' => $schemas,
+          'mySchemaIds' => $mySchemaIds,
+          'otherSchemaIds' => $otherSchemaIds,
           'admin' =>  Auth::user()->authority
       ]);
   }
 // Return 1 if user is superAdmin or admin for  a given schedule
    private function isAdmin($scheduleId) {
       $vMemberSchedules = V_MemberSchedule::where('schedule_id', $scheduleId)->get();
+      if (is_null($vMemberSchedules->where('user_id', Auth::user()->id)->first())) {
+         return 0;
+      } else {
       return $vMemberSchedules->where('user_id', Auth::user()->id)->first()->admin | Auth::user()->authority;
+      }
    }
 
 // Show view AdminComments
