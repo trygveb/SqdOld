@@ -21,7 +21,7 @@ class CreateGroupsizeTable extends Migration
             $table->unsignedBigInteger('schedule_id');
             $table->unsignedTinyInteger('size')->default(1);
             $table->timestamps();
-            $table->foreign('user_id','groupsize_FK_1')->references('id')->on('common.users')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign('user_id','groupsize_FK_1')->references('id')->on('laravel.users')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreign('schedule_id','groupsize_FK_2')->references('id')->on('schedule')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->index(['user_id', 'schedule_id']);
         });

@@ -20,7 +20,7 @@ class CreateMemberScheduleDateTable extends Migration
             $table->unsignedBigInteger('schedule_date_id');
             $table->unsignedTinyInteger('status')->default(0);
             $table->timestamps();
-            $table->foreign('user_id', 'member_schedule_date_FK_1')->references('id')->on('common.users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id', 'member_schedule_date_FK_1')->references('id')->on('laravel.users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('schedule_date_id', 'member_schedule_date_FK_2')->references('id')->on('schedule_date')->onDelete('cascade')->onUpdate('cascade');
         });
         DB::connection('schedule')->statement("ALTER TABLE `member_schedule_date` comment='This table contains the status for each member on each schedule date'");

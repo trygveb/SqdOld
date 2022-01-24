@@ -15,7 +15,7 @@ class AddForeignKeyMemberScheduleMember extends Migration
     public function up()
     {
         Schema::table('schedule.member_schedule', function (Blueprint $table) {
-            $table->foreign('user_id',$this->FK_NAME)->references('id')->on('common.users')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign('user_id',$this->FK_NAME)->references('id')->on('laravel.users')->onUpdate('CASCADE')->onDelete('CASCADE');
         
         });
         

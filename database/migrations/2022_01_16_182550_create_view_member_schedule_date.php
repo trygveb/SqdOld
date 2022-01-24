@@ -26,7 +26,7 @@ class CreateViewMemberScheduleDate extends Migration
          ((`vmt`.`user_id` = `mtd`.`user_id`)))
      left join `schedule`.`schedule_date` `td` on
          ((`td`.`id` = `mtd`.`schedule_date_id`)))
-     left join `common`.`users` `u` on
+     left join `laravel`.`users` `u` on
          ((`u`.`id` = `mtd`.`user_id`)))
      ');
     }

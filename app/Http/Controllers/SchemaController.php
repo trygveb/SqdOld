@@ -377,6 +377,14 @@ class SchemaController extends Controller {
       ]);
    }
 
+   // Show my schemas
+  public function showMySchemas() {
+     $schemas=Schedule::all();
+     return view('schedule.mySchemas', [
+          'schemas' => $schemas,
+          'admin' =>  Auth::user()->authority
+      ]);
+  }
 // Return 1 if user is superAdmin or admin for  a given schedule
    private function isAdmin($scheduleId) {
       $vMemberSchedules = V_MemberSchedule::where('schedule_id', $scheduleId)->get();

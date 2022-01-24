@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Schedule\Groupsize;
+
 use App\Models\Schedule\Schedule;
 use App\Models\Schedule\MemberSchedule;
 use App\Models\Schedule\MemberScheduleDate;
@@ -122,10 +122,12 @@ class DatabaseSeeder extends Seeder {
       // Create schedules and schedule dates
       Schedule::firstOrCreate([
           'name' => 'C3 Onsdagar',
+          'description' => 'By invitation only',
           'password' => $this->createHashedPassword()
       ]);
       Schedule::firstOrCreate([
-          'name' => 'C2 Måndagar'
+          'name' => 'C2 Måndagar',
+          'description' => 'Open for all',
       ]);
       $schedules = Schedule::all();
       $start = Carbon::now()->addDay();
@@ -199,13 +201,13 @@ class DatabaseSeeder extends Seeder {
    private function prepareSeed() {
       // Delete all users. By the FK relationship ON DELETE CASCADE,
       // the data in tables member_schedule and member_schedule will also be deleted.
-      DB::connection('common')->table('users')->delete();
+      DB::connection('laravel')->table('users')->delete();
 
       // Delete all schedules and By the FK relationship ON DELETE CASCADE,
       // the data in table schedule_date will also be deleted.
       DB::connection('schedule')->table('schedule')->delete();
 
-      DB::statement('ALTER TABLE common.users AUTO_INCREMENT=0;');
+      DB::statement('ALTER TABLE laravel.users AUTO_INCREMENT=0;');
       DB::statement('ALTER TABLE schedule.schedule AUTO_INCREMENT=0;');
       DB::statement('ALTER TABLE schedule.schedule_date AUTO_INCREMENT=0;');
       DB::statement('ALTER TABLE schedule.member_schedule AUTO_INCREMENT=0;');

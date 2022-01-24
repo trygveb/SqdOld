@@ -21,7 +21,7 @@ class CreateViewMemberSchedule extends Migration
       `mt`.`admin` AS `admin`
         from`schedule`.`member_schedule` `mt`
         left join `schedule`.`schedule` `t` on `t`.`id` = `mt`.`schedule_id`
-        left join `common`.`users` `u` on `u`.`id` = `mt`.`user_id`;
+        left join `laravel`.`users` `u` on `u`.`id` = `mt`.`user_id`;
      ');
     }
 

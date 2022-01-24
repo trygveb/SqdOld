@@ -89,6 +89,10 @@ Route::group(  // Comment out this when running tests
          Route::name('index')->get('/schedule/show/{scheduleId?}', 'index');
          //Show edit view for one user for  attendance update
          Route::name('showEdit')->get('/schedule/edit/{schedule}', 'showViewEdit');
+
+         // Show user's schmas
+         Route::name('showMySchemas')->get('/schedule/showSchedules', 'showMySchemas');
+
          // Update attendance (for one user)
          Route::name('updateAttendance')->post('/schedule/updateAttendance', 'updateAttendance');
 
