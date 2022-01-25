@@ -90,6 +90,10 @@ Route::group(// Comment out this when running tests
                     // Show user's schmas
                     Route::name('showMySchemas')->get('/schedule/showSchedules', 'showMySchemas');
 
+                     // Register or unregister for schemas
+                    Route::name('register')->post('/schedule/register', 'registerForSchemas');
+
+                    
                     // Update attendance (for one user)
                     Route::name('updateAttendance')->post('/schedule/updateAttendance', 'updateAttendance');
 

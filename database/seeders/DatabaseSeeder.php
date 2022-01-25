@@ -121,13 +121,22 @@ class DatabaseSeeder extends Seeder {
    private function createSchedulesAndScheduleDates() {
       // Create schedules and schedule dates
       Schedule::firstOrCreate([
-          'name' => 'C3 Onsdagar',
+          'name' => 'C3 Wednesdays',
+          'description' => '',
+          'password' => $this->createHashedPassword()
+      ]);
+      Schedule::firstOrCreate([
+          'name' => 'C2 Mondays',
+          'description' => 'For beginners',
+      ]);
+      Schedule::firstOrCreate([
+          'name' => 'C4 part 3',
           'description' => 'By invitation only',
           'password' => $this->createHashedPassword()
       ]);
       Schedule::firstOrCreate([
-          'name' => 'C2 Måndagar',
-          'description' => 'Open for all',
+          'name' => 'C1 Mondays',
+          'description' => 'Training',
       ]);
       $schedules = Schedule::all();
       $start = Carbon::now()->addDay();

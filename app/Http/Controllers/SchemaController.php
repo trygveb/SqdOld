@@ -326,6 +326,29 @@ class SchemaController extends Controller {
       ]);
    }
 
+   public function registerForSchemas(Request $request) {
+//      array:9 [▼
+//  "_token" => "IeFCBPiskZJhzmo1yKw8mFTK3551qTPzU4Ox3eNn"
+//  "userId" => "2"
+//  "mySchedule_1" => "1"
+//  "pwInput_2" => null
+//  "otherSchedule_2" => "0"
+//  "pwInput_3" => "asasas"
+//  "otherSchedule_3" => "1"
+//  "pwInput_4" => null
+//  "otherSchedule_4" => "0"
+          
+      $dataFields = request()->all();
+      $userId=request()->userId;
+      foreach ($dataFields as $key => $value) {
+         if (str_starts_with($key, 'mySchedule_')) {
+            $scheduleId=substr($key,11);
+            //dd('userId='.$userId.', scheduleId='.$scheduleId.' value='.$value);
+            
+         }
+      }
+   }
+
 // SHow the Members view
    public function ShowViewMembers($scheduleId) {
    
@@ -379,23 +402,23 @@ class SchemaController extends Controller {
 
    // Show my schemas
   public function showMySchemas() {
-      $myVMemberSchemas= V_MemberSchedule::where('user_id',Auth::id())->get();
-      $mySchemaIds= $myVMemberSchemas->pluck('schedule_id');
-      foreach ($myVMemberSchemas as $myVMemberSchema) {
-         $myVMemberSchema->admins= V_MemberSchedule::where('schedule_id',$myVMemberSchema->schedule_id)
+      $myVMemberSchedules= V_MemberSchedule::where('user_id',Auth::id())->get();
+      $myScheduleIds= $myVMemberSchedules->pluck('schedule_id');
+      foreach ($myVMemberSchedules as $myVMemberSchedule) {
+         $myVMemberSchedule->admins= V_MemberSchedule::where('schedule_id',$myVMemberSchedule->schedule_id)
                  ->where('admin',1)
                  ->get()->implode('user_name',',');
       }
-       $otherSchemas= Schedule::all()->except($mySchemaIds->toArray());
-       foreach ($otherSchemas as $otherSchema) {
-         $otherSchema->admins= V_MemberSchedule::where('schedule_id',$otherSchema->id)
+       $otherSchedules= Schedule::all()->except($myScheduleIds->toArray());
+       foreach ($otherSchedules as $otherSchedule) {
+         $otherSchedule->admins= V_MemberSchedule::where('schedule_id',$otherSchedule->id)
                  ->where('admin',1)
                  ->get()->implode('user_name',',');
       }
 
      return view('schedule.mySchemas', [
-          'myVMemberSchemas' => $myVMemberSchemas,
-          'otherSchemas' => $otherSchemas,
+          'myVMemberSchedules' => $myVMemberSchedules,
+          'otherSchedules' => $otherSchedules,
           'admin' =>  Auth::user()->authority
       ]);
   }
