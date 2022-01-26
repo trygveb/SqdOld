@@ -13,6 +13,11 @@ class CreateViewMemberScheduleDate extends Migration
      */
    public function up()
     {
+      $env = env('APP_ENV', 'test');
+      $laravelDatabase='laravel';
+      if ($env==='test') {
+         $laravelDatabase='laravelTest';
+      }
       DB::statement('CREATE OR REPLACE VIEW `schedule`.`v_member_schedule_date` AS select
          `mtd`.`user_id` AS `user_id`,
          `vmt`.`user_name` AS `user_name`,
@@ -26,7 +31,7 @@ class CreateViewMemberScheduleDate extends Migration
          ((`vmt`.`user_id` = `mtd`.`user_id`)))
      left join `schedule`.`schedule_date` `td` on
          ((`td`.`id` = `mtd`.`schedule_date_id`)))
-     left join `laravel`.`users` `u` on
+     left join `'.$laravelDatabase.'`.`users` `u` on
          ((`u`.`id` = `mtd`.`user_id`)))
      ');
     }
