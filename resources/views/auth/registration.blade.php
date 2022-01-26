@@ -68,7 +68,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <x-submit-button submitText="{{ __('Register')}}" cancelText="{{ __('Cancel')}}" myId="" onclickFunction="" cancelUrl="{{ route($application.'.home') }}"/>
+                                <x-submit-button submitText="{{ __('Register')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{ route($application.'.home') }}"/>
                         </div>
                     </form>
                 </div>
