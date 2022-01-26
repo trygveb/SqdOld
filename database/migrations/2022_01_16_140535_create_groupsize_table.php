@@ -14,7 +14,7 @@ class CreateGroupsizeTable extends Migration {
     * @return void
     */
    public function up() {
-      Schema::create('schedule.groupsize', function (Blueprint $table) {
+       Schema::connection('schedule')->create('groupsize', function (Blueprint $table) {
          $env = env('APP_ENV', 'test');
          $table->id();
          $table->unsignedBigInteger('user_id');
