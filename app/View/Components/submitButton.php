@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class submitButton extends Component
+class SubmitButton extends Component
 {
    public $submitText;
    public $cancelText;

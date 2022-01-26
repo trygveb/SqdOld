@@ -3,15 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/lang/sv.json</file>
-            <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/SchemaController.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/schedule/layout.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/tests/Feature/Auth/Login/LoginTest.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/tests/Feature/FixtureTrait.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/app/Models/User.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/config/database.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/CustomAuthController.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/routes/web.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/database/seeders/DatabaseSeeder.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/components/right-side-of-navbar.blade.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/schedule/mySchemas.blade.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/schedule/adminMembers.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/tests/Feature/Auth/Register/RegisterTest.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/login.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/app/Models/Schedule/Schedule.php</file>
         </group>
     </open-files>
 </project-private>
