@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use App\Models\User;
-
 use App\Models\Schedule\Schedule;
 use App\Models\Schedule\MemberSchedule;
 use App\Models\Schedule\MemberScheduleDate;
@@ -72,10 +71,9 @@ class DatabaseSeeder extends Seeder {
       foreach ($scheduleDates as $scheduleDate) {
          $scheduleId = $scheduleDate->schedule_id;
          $groupSize = MemberSchedule::where('schedule_id', $scheduleId)
-                         ->where('user_id', $user->id)
-                         ->first()
-                 ->group_size;
-         ;
+            ->where('user_id', $user->id)
+            ->first()
+            ->group_size;
          $this->addOneUserToOneScheduleDate($scheduleDate, $user, $groupSize);
       }
    }
@@ -109,14 +107,13 @@ class DatabaseSeeder extends Seeder {
       }
       return$hashedPassword;
    }
-   
+
    private function createScheduleDate($schedule, $start, $w) {
       $scheduleDate = new ScheduleDate;
       $scheduleDate->schedule_id = $schedule->id;
       $scheduleDate->schedule_date = $start->addWeeks($w);
       $scheduleDate->save();
    }
-   
 
    private function createSchedulesAndScheduleDates() {
       // Create schedules and schedule dates

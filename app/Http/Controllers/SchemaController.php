@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\CreateEmailListAction;
+use App\Classes\CreateEmailList;
 use App\Models\Schedule\V_MemberSchedule;
 use App\Models\Schedule\V_MemberScheduleDate;
 use App\Models\Schedule\MemberSchedule;
@@ -124,11 +124,13 @@ class SchemaController extends Controller {
       $user->authority = $data["authority"];
       $user->first_name = $data["first_name"];
       $user->last_name = $data["last_name"];
-       $user->save();
+      $user->save();
 
       return $this->ShowViewMembers($scheduleId);
    }
 
+
+   
 // Removes a member from a schedule 
 // Returns Members view
    public function updateMember(Request $request) {
@@ -137,7 +139,7 @@ class SchemaController extends Controller {
 //      $schedule = Schedule::find($scheduleId);
 
       $userIds = MemberSchedule::where('schedule_id', $scheduleId)->get()->pluck('user_id');
-      
+
       foreach ($userIds as $userId) {
          $adminName = 'admin_' . $userId;
          $memberSchedule = MemberSchedule::where('user_id', $userId)
@@ -327,40 +329,52 @@ class SchemaController extends Controller {
    }
 
    public function registerForSchemas(Request $request) {
-//      array:9 [▼
-//  "_token" => "IeFCBPiskZJhzmo1yKw8mFTK3551qTPzU4Ox3eNn"
-//  "userId" => "2"
-//  "mySchedule_1" => "1"
-//  "pwInput_2" => null
-//  "otherSchedule_2" => "0"
-//  "pwInput_3" => "asasas"
-//  "otherSchedule_3" => "1"
-//  "pwInput_4" => null
-//  "otherSchedule_4" => "0"
-          
+
       $dataFields = request()->all();
-      $userId=request()->userId;
+      $userId = request()->userId;
       foreach ($dataFields as $key => $value) {
-         if (str_starts_with($key, 'mySchedule_')) {
-            $scheduleId=substr($key,11);
+         if (str_starts_with($key, 'mySchedule_') && $value == 0) {
+            // User wants to unregister
+            $scheduleId = substr($key, 11);
+            $memberSchedule = MemberSchedule::where('user_id', $userId)
+                            ->where('schedule_id', $scheduleId)->first();
+            if (!is_null($memberSchedule)) {      
+                    $memberSchedule->delete();
+            }
             //dd('userId='.$userId.', scheduleId='.$scheduleId.' value='.$value);
+         } else if (str_starts_with($key, 'otherSchedule_') && $value == 1) {
+            // User wants register
+            $scheduleId = substr($key, 14);
+            $pwKey = 'pwInput_' . $scheduleId;
+            $password = $dataFields[$pwKey];
+            $groupsSizeKey='numberInput_'.$scheduleId;
+            $groupSize=$dataFields[$groupsSizeKey];
+            $schedule = Schedule::find($scheduleId);
+            if (strlen($schedule->password) == 0 || Hash::check($password, $schedule->password)) {
+               $schedule->addMember($userId,$groupSize);
+            } else {
+               return $this->showMySchemas();  // Bad passord
+               
+            }
+         } else {
             
          }
       }
+      return $this->showMySchemas();
    }
 
 // SHow the Members view
    public function ShowViewMembers($scheduleId) {
-   
+
       $schedule = Schedule::find($scheduleId);
       $admin = V_MemberSchedule::where('schedule_id', $scheduleId)
               ->where('user_id', Auth::user()->id)
               ->pluck('admin')
               ->first();
-      if ($admin==0) {
-          return view('errors.403');
+      if ($admin == 0) {
+         return view('errors.403');
       }
-      $createEmailListAction = new CreateEmailListAction();
+      $createEmailListAction = new CreateEmailList();
       $emailArray = $createEmailListAction->execute($schedule->id);
       $emails = '';
       foreach ($emailArray as $email) {
@@ -401,34 +415,35 @@ class SchemaController extends Controller {
    }
 
    // Show my schemas
-  public function showMySchemas() {
-      $myVMemberSchedules= V_MemberSchedule::where('user_id',Auth::id())->get();
-      $myScheduleIds= $myVMemberSchedules->pluck('schedule_id');
+   public function showMySchemas() {
+      $myVMemberSchedules = V_MemberSchedule::where('user_id', Auth::id())->get();
+      $myScheduleIds = $myVMemberSchedules->pluck('schedule_id');
       foreach ($myVMemberSchedules as $myVMemberSchedule) {
-         $myVMemberSchedule->admins= V_MemberSchedule::where('schedule_id',$myVMemberSchedule->schedule_id)
-                 ->where('admin',1)
-                 ->get()->implode('user_name',',');
+         $myVMemberSchedule->admins = V_MemberSchedule::where('schedule_id', $myVMemberSchedule->schedule_id)
+                         ->where('admin', 1)
+                         ->get()->implode('user_name', ',');
       }
-       $otherSchedules= Schedule::all()->except($myScheduleIds->toArray());
-       foreach ($otherSchedules as $otherSchedule) {
-         $otherSchedule->admins= V_MemberSchedule::where('schedule_id',$otherSchedule->id)
-                 ->where('admin',1)
-                 ->get()->implode('user_name',',');
+      $otherSchedules = Schedule::all()->except($myScheduleIds->toArray());
+      foreach ($otherSchedules as $otherSchedule) {
+         $otherSchedule->admins = V_MemberSchedule::where('schedule_id', $otherSchedule->id)
+                         ->where('admin', 1)
+                         ->get()->implode('user_name', ',');
       }
 
-     return view('schedule.mySchemas', [
+      return view('schedule.mySchemas', [
           'myVMemberSchedules' => $myVMemberSchedules,
           'otherSchedules' => $otherSchedules,
-          'admin' =>  Auth::user()->authority
+          'admin' => Auth::user()->authority,
       ]);
-  }
+   }
+
 // Return 1 if user is superAdmin or admin for  a given schedule
    private function isAdmin($scheduleId) {
       $vMemberSchedules = V_MemberSchedule::where('schedule_id', $scheduleId)->get();
       if (is_null($vMemberSchedules->where('user_id', Auth::user()->id)->first())) {
          return 0;
       } else {
-      return $vMemberSchedules->where('user_id', Auth::user()->id)->first()->admin | Auth::user()->authority;
+         return $vMemberSchedules->where('user_id', Auth::user()->id)->first()->admin | Auth::user()->authority;
       }
    }
 
@@ -473,10 +488,11 @@ class SchemaController extends Controller {
             $statuses[$scheduleDate->id] = $memberScheduleForDate->status;
          }
       }
-      $groupSize= MemberSchedule::where('schedule_id',$schedule->id)
-              ->where('user_id',Auth::user()->id)
-              ->first()
-              ->group_size;;
+      $groupSize = MemberSchedule::where('schedule_id', $schedule->id)
+                      ->where('user_id', Auth::user()->id)
+                      ->first()
+              ->group_size;
+      ;
       return view('schedule.schemaEdit', [
           'schedule' => $schedule,
           'currentUser' => Auth::user(),

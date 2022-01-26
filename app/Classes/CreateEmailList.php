@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Actions;
+namespace App\Classes;
 
 use App\Models\Schedule\V_MemberSchedule;
 
 
-class CreateEmailListAction {
+class CreateEmailList {
 
    public function execute($scheduleId) {
      // $schedule= Schedule::find($scheduleId);

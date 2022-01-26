@@ -4,6 +4,7 @@
 @section('content')
 
   <div class="container">
+
       <div class="table-responsive" style="overflow-x:auto; overflow-y:hidden;">
 
         <form id="myForm" action="{{ route('schedule.register')}}" method="POST">
@@ -12,16 +13,17 @@
           <fieldset>
             <legend>{{__('Schedules')}}</legend>
             
-        <table class="table table-bordered" >
-        
-            <thead>
+        <table class="table table-bordered">
+            <caption>{{__('My schedules')}}</caption>
+            <tr>
               <th style="vertical-align:middle;" class="text-nowrap text-center">{{__('Name')}}</th>
               <th class="text-nowrap text-center" >{{__('Description')}}</th>
               <th class="text-nowrap text-center" >{{__('Admin(s)')}}</th>
               <th class="text-nowrap text-center" >{{__('Restricted')}}</th>
               <th class="text-nowrap text-center" >{{__('Member')}}</th>
-            </thead>
-            <tbody>
+              <th class="text-nowrap text-center" >{{__('Number')}}</th>
+            </tr>
+            <!--<tbody>-->
 
         @foreach ($myVMemberSchedules as $myVMemberSchedule)
          @php
@@ -30,7 +32,7 @@
          @endphp
                <tr class='status'>
                   <td class="text-nowrap" >
-                      {{$myVMemberSchedule->schedule_name}}
+                      <a href="{{route('schedule.index',$myVMemberSchedule->schedule_id)}}">{{$myVMemberSchedule->schedule_name}}</a>
                   </td>
                   <td class="text-nowrap">
                       {{$myVMemberSchedule->schedule_description}}
@@ -45,13 +47,30 @@
                       <input type="hidden" name="{{$cbName}}" value="0" />
                         <input type="checkbox" checked name="{{$cbName}}" id="{{$cbName}}" onclick='myScheduleClicked(this.name)' value="1">
                   </td>
+                  <td class="text-nowrap">
+                      {{$myVMemberSchedule->group_size}}
+                  </td>
                </tr>
          @endforeach
+         </table>
+         <table class="table table-bordered">
+            <caption>{{__('Other schedules')}}</caption>
+            <tr>
+              <th style="vertical-align:middle;" class="text-nowrap text-center">{{__('Name')}}</th>
+              <th class="text-nowrap text-center" >{{__('Description')}}</th>
+              <th class="text-nowrap text-center" >{{__('Admin(s)')}}</th>
+              <th class="text-nowrap text-center" >{{__('Restricted')}}</th>
+              <th class="text-nowrap text-center" >{{__('Member')}}</th>
+              <th class="text-nowrap text-center" >{{__('Number')}}</th>
+            </tr>
+            
+
          @foreach ($otherSchedules as $otherSchedule)
             @php
                $cbName='otherSchedule_'.$otherSchedule->id;
                $columnId='otherCol_'.$otherSchedule->id;
                $pwInputName='pwInput_'.$otherSchedule->id;
+               $numberInputName='numberInput_'.$otherSchedule->id;
             @endphp
                <tr class='status'>
                   <td class="text-nowrap" >
@@ -71,9 +90,12 @@
                       <input type="hidden" name="{{$cbName}}" value="0" />
                         <input type="checkbox" name="{{$cbName}}" id="{{$cbName}}" onclick='otherScheduleClicked(this.name)' value="1">
                   </td>
+                  <td class="text-nowrap">
+                      <input type="number" name="{{$numberInputName}}" value="2" min="1" max="2" size="3">
+                  </td>
                </tr>
         @endforeach
-            </tbody>
+            <!--</tbody>-->
          </table>
             <x-submit-button submitText="{{ __('Save changes')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('schedule.index')}}"/>
               </fieldset>
@@ -89,14 +111,20 @@
       scheduleId=name.substr(14);
       restricted= document.getElementById('otherCol_'+scheduleId).innerHTML.trim();
       if (cb.checked && restricted==='Yes') {
-         let password= prompt('Please enter the Password');
+         let password= prompt("{{__('Please enter the Password')}}."+
+                 " {{__('If the password is correct, you will be added to the schedule when you press the')}}"+
+                 " {{__('Save changes')}}"+
+                 " {{__('button')}}.");
          document.getElementById('pwInput_'+scheduleId).value=password;
       }
    }
    function myScheduleClicked(name) {
       cb= document.getElementById(name);
       if (! cb.checked) {
-          alert("{{__('Do you really want to remove yourself from this schedule?')}}");
+          alert("{{__('Do you really want to remove yourself from this schedule')}}?"+
+                " {{__('You will be removed from the schedule when you press the')}}"+
+                " {{__('Save changes')}}"+
+                " {{__('button')}}.");
        }
    }
 </script>
