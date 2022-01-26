@@ -16,7 +16,7 @@ class CreateViewMemberSchedule extends Migration
       if ($env==='test') {
          $laravelDatabase='laravelTest';
       }
-      DB::statement('CREATE OR REPLACE VIEW `schedule`.`v_member_schedule` AS
+      DB::connection('schedule')->statement('CREATE OR REPLACE VIEW `v_member_schedule` AS
          select
              `u`.`id` AS `user_id`,
              `u`.`name` AS `user_name`,
@@ -28,8 +28,8 @@ class CreateViewMemberSchedule extends Migration
              `mt`.`group_size` AS `group_size`,
              `mt`.`admin` AS `admin`
          from
-             ((`schedule`.`member_schedule` `mt`
-         left join `schedule`.`schedule` `t` on
+             ((`member_schedule` `mt`
+         left join `schedule` `t` on
              ((`t`.`id` = `mt`.`schedule_id`)))
          left join `'.$laravelDatabase.'`.`users` `u` on
              ((`u`.`id` = `mt`.`user_id`)))');
@@ -42,6 +42,6 @@ class CreateViewMemberSchedule extends Migration
      */
     public function down()
     {
-        DB::statement('DROP VIEW IF EXISTS `schedule`.`v_member_schedule`');
+        DB::connection('schedule')->statement('DROP VIEW IF EXISTS `v_member_schedule`');
     }
 }
