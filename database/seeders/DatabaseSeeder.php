@@ -213,11 +213,11 @@ class DatabaseSeeder extends Seeder {
       // the data in table schedule_date will also be deleted.
       DB::connection('schedule')->table('schedule')->delete();
 
-      DB::statement('ALTER TABLE laravel.users AUTO_INCREMENT=0;');
-      DB::statement('ALTER TABLE schedule.schedule AUTO_INCREMENT=0;');
-      DB::statement('ALTER TABLE schedule.schedule_date AUTO_INCREMENT=0;');
-      DB::statement('ALTER TABLE schedule.member_schedule AUTO_INCREMENT=0;');
-      DB::statement('ALTER TABLE schedule.member_schedule_date AUTO_INCREMENT=0;');
+      DB::connection('laravel')->statement('ALTER TABLE users AUTO_INCREMENT=0;');
+      DB::connection('schedule')->statement('ALTER TABLE schedule AUTO_INCREMENT=0;');
+      DB::connection('schedule')->statement('ALTER TABLE schedule_date AUTO_INCREMENT=0;');
+      DB::connection('schedule')->statement('ALTER TABLE member_schedule AUTO_INCREMENT=0;');
+      DB::connection('schedule')->statement('ALTER TABLE member_schedule_date AUTO_INCREMENT=0;');
    }
 
 }
