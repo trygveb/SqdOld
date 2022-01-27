@@ -35,11 +35,23 @@ class SchemaController extends Controller {
 
 //Fetch data from the database
       $schedule = Schedule::find($scheduleId);
-      $vMemberScheduleDates = V_MemberScheduleDate::where('schedule_date', '>=', $today)->get();
+      $memberSchedules = MemberSchedule::where('schedule_id', $scheduleId)->get();
+      // Check if user is member, if not redirect back
+      
+      if ($memberSchedules->where('user_id', Auth::id())->count() ==0) {
+         $vMemberSchedules= V_MemberSchedule::where('user_id', Auth::id())->get();
+            return view('schedule.welcome', [
+                   'mySchedulesCount' => $vMemberSchedules->count(),
+                   'vMemberSchedules' => $vMemberSchedules
+               ]);         
+      }
+      
+      $vMemberScheduleDates = V_MemberScheduleDate::where('schedule_date', '>=', $today)
+              ->where('schedule_id', $scheduleId)
+              ->get();
       $scheduleDates = ScheduleDate::where('schedule_id', $scheduleId)
               ->where('schedule_date', '>=', $today)
               ->get();
-      $memberSchedules = MemberSchedule::where('schedule_id', $scheduleId)->get();
 // Initialize the arrays to use in the view
       $statusSums = array();
       $statuses = array();
@@ -72,8 +84,13 @@ class SchemaController extends Controller {
          $groups[$userId] = $memberSchedule->group_size;
       }
    }
-
-// Called from the index function
+   
+   /**Calcualte status sums. NOTE! Will only work for group size 1 or 2.
+    * 
+    * @param collection ScheduleDates          all (future) ScheduleDates for the given schedule
+    * @param collection $vMemberScheduleDates  all (future) V_MemberScheduleDates for the given  schedule
+    * @param out $statusSums
+    */
    private function calaculateStatusSums($scheduleDates, $vMemberScheduleDates, &$statuses, &$statusSums) {
       foreach ($scheduleDates as $scheduleDate) {
          $memberSchedulesForDate = $vMemberScheduleDates
@@ -88,13 +105,14 @@ class SchemaController extends Controller {
          foreach ($memberSchedulesForDate as $memberScheduleForDate) {
             $statuses[$memberScheduleForDate->user_id][$scheduleDate->id] = $memberScheduleForDate->status;
             switch ($memberScheduleForDate->status) {
-               case 0: $sum['NA']++;
-                  break;
-               case 1: $sum['Y']++;
-                  break;
-               case 2: $sum['Y'] += 2;
-                  break;
-               case 3: $sum['N'] += $memberScheduleForDate->group_size;
+               case 0:  $sum['NA'] += $memberScheduleForDate->group_size;
+                        break;
+               case 1:  $sum['Y']++; // If one member says yes, the others says no
+                        $sum['N'] += ($memberScheduleForDate->group_size-1);
+                        break;
+               case 2:  $sum['Y'] += 2;
+                        break;
+               case 3:  $sum['N'] += $memberScheduleForDate->group_size;
                   break;
                default: $sum['M'] += $memberScheduleForDate->group_size;
                   break;

@@ -34,9 +34,10 @@
               <th class='vertical'>{{__('Yes')}}</th>
               <th class='vertical'>{{__('No')}}</th>
               <th class='vertical' style="width:30px;">{{__('Maybe')}}</th>
+              <th class='vertical' style="width:30px;">-</th>
             
         @foreach ($names as $userId => $name)
-                <th class="text-nowrap text-center" style="font-size:smaller">{{$name}}</th>
+                <th class="text-nowrap text-center" style="font-size:smaller">{{$name}}/{{$groups[$userId]}}</th>
         @endforeach
              </thead>
              <tbody>
@@ -52,7 +53,8 @@
                <td style="padding:1px 7px;min-width:15ch;max-width:20ch;" >{{$scheduleDate->comment}}</td>
                <td class="text-center">{{$statusSums[$i]['Y']}}</td>
                <td class="text-center">{{$statusSums[$i]['N']}}</td>
-               <td class="text-center">{{$statusSums[$i++]['M']}}</td>
+               <td class="text-center">{{$statusSums[$i]['M']}}</td>
+               <td class="text-center">{{$statusSums[$i++]['NA']}}</td>
             @foreach ( $names as $userId => $name )
                 @php
                     $status= $statuses[$userId][$scheduleDate->id];
