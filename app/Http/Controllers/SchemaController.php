@@ -28,147 +28,7 @@ class SchemaController extends Controller {
       $this->middleware('auth');
    }
 
-// Add dates to a schedule 
-// Returns to Add/Remove dates menu
-   public function addDates(Request $request) {
-      $data = request()->all();
-      $numberOfDays = 0;
-      $startDate = '';
-      $scheduleId = $data["scheduleId"];
-      foreach ($data as $key => $value) {
-         if (substr($key, 0, 8) === 'quantity') {
-            $numberOfDays = $value;
-         } else if (substr($key, 0, 9) === 'startDate') {
-            $startDate = $value;
-         }
-      }
-// dd('numberOfDays='.$numberOfDays.' startDate='.$startDate);
-      $date0 = Carbon::createFromFormat('Y-m-d', $startDate);
-      DB::beginTransaction();
-      try {
-         for ($d1 = 0; $d1 < $numberOfDays; $d1++) {
-            $scheduleDate = new ScheduleDate();
-            $scheduleDate->schedule_date = $date0->addDays(7 * $d1)->toDateString();
-            $scheduleDate->schedule_id = $scheduleId;
-            $scheduleDate->save();
-            $this->addMembersToScheduleDate($scheduleId, $scheduleDate->id);
-         }
-      } catch (\Exception $e) {
-         DB::rollBack();
-      }
-
-
-      DB::commit();
-//      $schedule = Schedule::find($scheduleId);
-      return redirect(route('schedule.showAddRemoveDates',
-                      ['scheduleId' => $scheduleId, 'admin' => $this->isAdmin($scheduleId)]));
-   }
-
-// Private function called from addDates
-   private function addMembersToScheduleDate($scheduleId, $scheduleDateId) {
-      $memberSchedules = MemberSchedule::where('schedule_id', $scheduleId)->get();
-      foreach ($memberSchedules as $memberSchedule) {
-         $memberScheduleDate = new MemberScheduleDate();
-         $memberScheduleDate->user_id = $memberSchedule->user_id;
-         $memberScheduleDate->schedule_date_id = $scheduleDateId;
-         $memberScheduleDate->save();
-      }
-   }
-
-// Adds members to a schedule 
-// Returns Members view
-   public function addMember(Request $request) {
-      $data = request()->all();
-      $scheduleId = $data["scheduleId"];
-      $schedule = Schedule::find($scheduleId);
-      $scheduleDates = ScheduleDate::where('schedule_id', $scheduleId)->get();
-      DB::beginTransaction();
-      try {
-         foreach ($data as $key => $value) {
-            if (substr($key, 0, 4) === 'add_') {
-               $atoms = explode('_', $key);
-               $userId = $atoms[1];
-               $memberSchedule = MemberSchedule::firstOrCreate(['user_id' => $userId, 'schedule_id' => $scheduleId]);
-               foreach ($scheduleDates as $scheduleDate) {
-                  $memberScheduleDate = MemberScheduleDate::firstOrCreate(['user_id' => $userId, 'schedule_date_id' => $scheduleDate->id]);
-               }
-            }
-         }
-      } catch (\Exception $e) {
-         DB::rollBack();
-      }
-      DB::commit();
-      return $this->ShowViewMembers($scheduleId);
-   }
-
-// Adds a new user to the database (table Users)
-// Returns Members view
-   public function addNewUser(Request $request) {
-      $data = request()->all();
-      $scheduleId = $data["scheduleId"];
-      $schedule = Schedule::find($scheduleId);
-      $validatedData = $request->validate([
-          'name' => ['required', 'unique:users', 'max:50'],
-          'first_name' => ['required', 'max:50'],
-          'last_name' => ['required', 'max:50'],
-          'password' => ['required',
-              'min:6',
-              'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/',
-          ],
-          'email' => ['required', 'unique:users', 'max:100'],
-      ]);
-      $user = new User();
-      $user->name = $data["name"];
-      $user->email = $data["email"];
-      $user->password = Hash::make($data["password"]);
-      $user->authority = $data["authority"];
-      $user->first_name = $data["first_name"];
-      $user->last_name = $data["last_name"];
-      $user->save();
-
-      return $this->ShowViewMembers($scheduleId);
-   }
-
-
-   
-// Removes a member from a schedule 
-// Returns Members view
-   public function updateMember(Request $request) {
-      $data = request()->all();
-      $scheduleId = $data["scheduleId"];
-//      $schedule = Schedule::find($scheduleId);
-
-      $userIds = MemberSchedule::where('schedule_id', $scheduleId)->get()->pluck('user_id');
-
-      foreach ($userIds as $userId) {
-         $adminName = 'admin_' . $userId;
-         $memberSchedule = MemberSchedule::where('user_id', $userId)
-                 ->where('schedule_id', $scheduleId)
-                 ->first();
-         if ($request->has($adminName)) {
-            $memberSchedule->admin = 1;
-         } else {
-            $memberSchedule->admin = 0;
-         }
-         $memberSchedule->save();
-      }
-
-      foreach ($data as $key => $value) {
-         if (substr($key, 0, 6) === 'delete') {
-            $atoms = explode('_', $key);
-            $userId = $atoms[1];
-            $memberSchedule = MemberSchedule::where('user_id', $userId)
-                    ->where('schedule_id', $scheduleId)
-                    ->first();
-            $memberSchedule->delete();
-// memberScheduleDates will be removed by the ON DELETE CASCADE clause in MySql
-         }
-      }
-
-      return $this->ShowViewMembers($scheduleId);
-   }
-
-//Show the schema
+//Show a schedule
    public function index($scheduleId = 1) {
       $mytime = Carbon::now();
       $today = $mytime->toDateString();
@@ -244,7 +104,43 @@ class SchemaController extends Controller {
       }
    }
 
-// Remove da´tes from a schedule
+// Add dates to a schedule 
+// Returns to Add/Remove dates menu
+   public function addDates(Request $request) {
+      $data = request()->all();
+      $numberOfDays = 0;
+      $startDate = '';
+      $scheduleId = $data["scheduleId"];
+      foreach ($data as $key => $value) {
+         if (substr($key, 0, 8) === 'quantity') {
+            $numberOfDays = $value;
+         } else if (substr($key, 0, 9) === 'startDate') {
+            $startDate = $value;
+         }
+      }
+// dd('numberOfDays='.$numberOfDays.' startDate='.$startDate);
+      $date0 = Carbon::createFromFormat('Y-m-d', $startDate);
+      DB::beginTransaction();
+      try {
+         for ($d1 = 0; $d1 < $numberOfDays; $d1++) {
+            $scheduleDate = new ScheduleDate();
+            $scheduleDate->schedule_date = $date0->addDays(7 * $d1)->toDateString();
+            $scheduleDate->schedule_id = $scheduleId;
+            $scheduleDate->save();
+            $this->addMembersToScheduleDate($scheduleId, $scheduleDate->id);
+         }
+      } catch (\Exception $e) {
+         DB::rollBack();
+      }
+
+
+      DB::commit();
+//      $schedule = Schedule::find($scheduleId);
+      return redirect(route('schedule.showAddRemoveDates',
+                      ['scheduleId' => $scheduleId, 'admin' => $this->isAdmin($scheduleId)]));
+   }
+
+// Remove dates from a schedule
    public function removeDates(Request $request) {
       $data = request()->all();
       $scheduleId = $data["scheduleId"];
@@ -260,6 +156,88 @@ class SchemaController extends Controller {
       }
 //      $schedule = Schedule::find($scheduleId);
       return redirect(route('schedule.showAddRemoveDates', ['scheduleId' => $scheduleId]));
+   }
+
+// Private function called from addDates
+   private function addMembersToScheduleDate($scheduleId, $scheduleDateId) {
+      $memberSchedules = MemberSchedule::where('schedule_id', $scheduleId)->get();
+      foreach ($memberSchedules as $memberSchedule) {
+         $memberScheduleDate = new MemberScheduleDate();
+         $memberScheduleDate->user_id = $memberSchedule->user_id;
+         $memberScheduleDate->schedule_date_id = $scheduleDateId;
+         $memberScheduleDate->save();
+      }
+   }
+
+// Adds members to a schedule 
+// Returns Members view
+   public function addMember(Request $request) {
+      dd('jomenvisst');
+      $data = request()->all();
+      $scheduleId = $data["scheduleId"];
+      $schedule = Schedule::find($scheduleId);
+      $scheduleDates = ScheduleDate::where('schedule_id', $scheduleId)->get();
+      DB::beginTransaction();
+      try {
+         foreach ($data as $key => $value) {
+            if (substr($key, 0, 4) === 'add_') {
+               $atoms = explode('_', $key);
+               $userId = $atoms[1];
+               $memberSchedule = MemberSchedule::firstOrCreate(['user_id' => $userId, 'schedule_id' => $scheduleId]);
+               foreach ($scheduleDates as $scheduleDate) {
+                  $memberScheduleDate = MemberScheduleDate::firstOrCreate(['user_id' => $userId, 'schedule_date_id' => $scheduleDate->id]);
+               }
+            }
+         }
+      } catch (\Exception $e) {
+         DB::rollBack();
+      }
+      DB::commit();
+      return $this->ShowViewMembers($scheduleId);
+   }
+
+// Update the admin flags or remove members from a schedule 
+// Returns Members view
+   public function updateMember(Request $request) {
+      $data = request()->all();
+      $scheduleId = $data["scheduleId"];
+//      $schedule = Schedule::find($scheduleId);
+
+
+// Update admin flags. Loop over all users in the schedule
+      $userIds = MemberSchedule::where('schedule_id', $scheduleId)->get()->pluck('user_id');
+      foreach ($userIds as $userId) {
+         $adminName = 'admin_' . $userId;
+         $memberSchedule = MemberSchedule::where('user_id', $userId)
+                 ->where('schedule_id', $scheduleId)
+                 ->first();
+         if ($request->has($adminName)) {
+            $memberSchedule->admin = 1;
+         } else {
+            $memberSchedule->admin = 0;
+         }
+         $memberSchedule->save();
+      }
+      // Remove member(s) from all scheduledates in the schedule
+      $scheduleDates=ScheduleDate::where('schedule_id', $scheduleId)->get();
+      foreach ($data as $key => $value) {
+         if (substr($key, 0, 6) === 'delete') {
+            $atoms = explode('_', $key);
+            $userId = $atoms[1];
+            foreach($scheduleDates as $scheduleDate) {
+                $memberScheduleDate= MemberScheduleDate::where('user_id',$userId)->where('schedule_date_id',$scheduleDate->id)->first();
+                $memberScheduleDate->delete();
+            }
+            $memberSchedule = MemberSchedule::where('user_id', $userId)
+                    ->where('schedule_id', $scheduleId)
+                    ->first();
+            $memberSchedule->delete();
+            
+            
+         }
+      }
+
+      return $this->ShowViewMembers($scheduleId);
    }
 
 // Show the Register New User Form
@@ -322,12 +300,11 @@ class SchemaController extends Controller {
       return $lastScheduleDate;
    }
 
-// The functionality in the AddRemoveGroup view is not implemented
-   public function showViewAddRemoveGroup() {
-      return view('AddRemoveGroup', [
-      ]);
-   }
-
+   /**
+    * 
+    * @param Request $request
+    * @return type
+    */
    public function registerForSchemas(Request $request) {
 
       $dataFields = request()->all();
