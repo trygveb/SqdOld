@@ -366,7 +366,7 @@ class SchemaController extends Controller {
               ->where('user_id', Auth::user()->id)
               ->pluck('admin')
               ->first();
-      if ($admin == 0) {
+      if ($admin === 0 && Auth::user()->authority === 0) {
          return view('errors.403');
       }
       $createEmailListAction = new CreateEmailList();
