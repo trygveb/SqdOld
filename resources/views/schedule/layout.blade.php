@@ -3,9 +3,12 @@
 <x-html-head title="sdSchema" />
 <body>
    <div id="app">
-      <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
-         <a  href="{{ route('home',[]) }}" style="color:white;">{{ config('app.name', 'sqd.se') }}</a>
+      <nav class="navbar navbar-expand-sm navbar-light bg-light">
+         <a  href="{{ route('home',[]) }}" style="color:white;">{{__('Home')}}</a>
          <x-flags-div />
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+             <span class="navbar-toggler-icon"></span>
+         </button>
 
          <div class="collapse navbar-collapse" id="navbarSupportedContent">
          @php
@@ -20,16 +23,11 @@
             </ul>
          @endif
             
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
                <!-- Left Side Of Navbar -->
                <ul class="navbar-nav mr-auto">
                </ul>
-               <x-right-side-of-navbar />
-            </div>
+         <x-right-side-of-navbar />
          </div>
       </nav>
 

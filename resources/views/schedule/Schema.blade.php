@@ -37,7 +37,7 @@
               <th class='vertical' style="width:30px;">-</th>
             
         @foreach ($names as $userId => $name)
-                <th class="text-nowrap text-center" style="font-size:smaller">{{$name}}/{{$groups[$userId]}}</th>
+                <th class="text-nowrap text-center" style="font-size:smaller">{{$name}}</th>
         @endforeach
              </thead>
              <tbody>
