@@ -206,7 +206,7 @@ class DatabaseSeeder extends Seeder {
 
    private function prepareSeed() {
       // Delete all users. By the FK relationship ON DELETE CASCADE,
-      // the data in tables member_schedule and member_schedule will also be deleted.
+      // the data in tables member_schedule and member_schedule_date will also be deleted.
       DB::connection('laravel')->table('users')->delete();
 
       // Delete all schedules and By the FK relationship ON DELETE CASCADE,
