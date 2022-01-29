@@ -23,7 +23,7 @@ class Mailme extends Mailable {
     }
 
     public function build() {
-        $subject = 'AbcTrav kontakt';
+        $subject = 'sqd.se kontakt';
         //return $this->view('emails.mailme')->from($this->myAdress, $this->myName)->subject($subject);
         
         return $this->view('emails.mailme')->with([
