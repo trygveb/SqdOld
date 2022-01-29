@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\SchemaController;
 use App\Http\Controllers\UnixController;
 
@@ -63,9 +65,12 @@ Route::group(// Comment out this when running tests
            // Logout user
            Route::name('signout')->get('signout', [CustomAuthController::class, 'signOut'])->middleware('auth');
 
-// Home and welcome routes //////////////////////////////////////////////////////
-           // For sqd.se, NOT logged in, application not selected
+// Home and menu routes //////////////////////////////////////////////////////
            Route::name('home')->get('/', [HomeController::class, 'home']);
+           Route::name('about')->get('/about', [MenuController::class, 'about']);
+           Route::name('contact.showForm')->get('/contactForm', [ContactController::class, 'showForm']);
+           Route::name('contact.sendMail')->post('/contacts', [ContactController::class, 'sendMail']);
+
 
 // Calls routes ///////////////////////////////////////////////////////////////
            Route::name('calls.')->group(function () {
