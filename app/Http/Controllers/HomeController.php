@@ -32,6 +32,7 @@ class HomeController extends Controller {
     */
    public function home() {
       $fullUrl = request()->fullUrl();
+      
       if (str_contains($fullUrl, 'schema')) {
          return $this->schemaHome();
       } elseif (str_contains($fullUrl, 'calls')) {
@@ -45,6 +46,18 @@ class HomeController extends Controller {
     * @return view
     */
    public function schemaHome() {
+       $fullUrl = request()->fullUrl();
+      $sub='';
+      $env= config('env');
+      if ($env==='local') {
+         $sub='dev.';
+      } else if ($env==='test') {
+         $sub='test.';
+      }
+  
+         $url= sprintf('https://schema.%s%s', $sub,config('app.topDomain'));
+         dd($url);
+         return Redirect::to($url);
       if (Auth::check()) {
          if (Auth::user()->hasVerifiedEmail()) {
 

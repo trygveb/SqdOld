@@ -11,6 +11,12 @@
                {{ session()->get('success') }}
             </div>
          @endif
+      @if(session()->has('error'))
+      <!-- Captcha test not  passed -->
+         <div class="alert alert-danger">
+            {{ session()->get('error') }}
+         </div>
+      @endif
 
                 <div class="card-body">
                     <form method="POST" id="contactForm" action="{{ route('contact.sendMail') }}">

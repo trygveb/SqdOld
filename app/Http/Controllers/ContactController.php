@@ -21,7 +21,16 @@ class ContactController extends Controller {
             'application' => $application,
            ]);
     }
-
+    
+    /**
+     * Currently we have no captcha test, as Googles terms are unacceptable,
+     * and other tests user unfriendly
+     * @return boolean
+     */
+    private function captcha() {
+       return true;
+    }
+    
     public function sendMail(Request $request) {
         $this->validate($request, [
             'name' => 'required',
@@ -32,17 +41,11 @@ class ContactController extends Controller {
         $name = $request->input('name');
         $adress = $request->input('email');
         $msg = $request->input('message');
-        $correctAnswer=$request->input('add1')+$request->input('add2');
-        $userAnswer=$request->input('addSum');
-        if ( $correctAnswer == $userAnswer) {
-           // TODO: email adress in env
-            \Mail::to('trygve.botnen@gmail.com')->send(new Mailme('contact@abctrav.se', $name, $msg, $adress));
-//            \Mail::to('trygve.botnen@gmail.com')->send(new Mailme($adress, $name, $msg));
-//            return \View::make('emails.emailsent');
-            $application='sqd.se'; // TODO: not needed?
-            return redirect(route('contact.showForm', ['application' => $application]))->withSuccess(__('Email sent'));
+        if ( $this->captcha()) {
+            \Mail::to(config('app.adminEmail'))->send(new Mailme('contact@abctrav.se', $name, $msg, $adress));
+            return redirect(route('contact.showForm'))->withSuccess(__('E-Mail sent!'));
         } else {
-            return \View::make('emails.emailNotSent');
+           return redirect(route('contact.showForm'))->withError(__('E-Mail not sent!'));
         }
     }
 }
