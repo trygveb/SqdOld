@@ -32,7 +32,7 @@ class HomeController extends Controller {
     */
    public function home() {
       $fullUrl = request()->fullUrl();
-      
+     // dd($fullUrl); //"http://schema.dev.sqd.se/sv
       if (str_contains($fullUrl, 'schema')) {
          return $this->schemaHome();
       } elseif (str_contains($fullUrl, 'calls')) {
@@ -40,24 +40,34 @@ class HomeController extends Controller {
       }
       return view('home')->with('extra', $fullUrl);
    }
-
+   
+   /**
+    * Find subdomain indicating dev, test or production
+    * The APP_NAME environment variable is supposed to be 
+    *  dev.TOP_DOMAIN, test.TOP_DOMAIN or just TOP_DOMAIN (for production)
+    * where TOP_DOMAIN is an environment variable (i.e. sqd.se)
+    * @return string 'dev.', 'test.' or ''
+    */
+   private function getSub() {
+      $sub='';
+      $appName= config('app.name');
+      
+      $atoms=explode('.', $appName);
+      if (count($atoms)==3) {
+         $sub=$atoms[0].'.';
+      }
+      return $sub;
+   }
    /**
     * Show schedule welcome view for guests
     * @return view
     */
    public function schemaHome() {
-       $fullUrl = request()->fullUrl();
-      $sub='';
-      $env= config('env');
-      if ($env==='local') {
-         $sub='dev.';
-      } else if ($env==='test') {
-         $sub='test.';
-      }
+
+      $sub=$this->getSub();
   
-         $url= sprintf('https://schema.%s%s', $sub,config('app.topDomain'));
-         dd($url);
-         return Redirect::to($url);
+      $urlRoot= sprintf('https://schema.%s%s', $sub,config('app.topDomain'));
+      
       if (Auth::check()) {
          if (Auth::user()->hasVerifiedEmail()) {
 
@@ -65,12 +75,11 @@ class HomeController extends Controller {
             $vMemberSchedules = V_MemberSchedule::where('user_id', Auth::user()->id)->get();
             $count = $vMemberSchedules->count();
             if ($count == 1) {
-               return redirect(route('schedule.index', ['scheduleId' => $vMemberSchedules[0]->schedule_id]));
+               $url= sprintf('%s/schedule/show/%d', $urlRoot,$vMemberSchedules[0]->schedule_id);
+               return redirect($url);
             } else {
-               return view('schedule.welcome', [
-                   'mySchedulesCount' => $count,
-                   'vMemberSchedules' => $vMemberSchedules
-               ]);
+               $url= sprintf('%s/schedule/welcome', $urlRoot);
+               return redirect($url);
             }
          } else {
             return view('auth.verify-email-notice')

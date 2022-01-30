@@ -4,19 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/MenuController.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/lang/sv.json</file>
-            <file>file:/D:/Development/VagrantCode/sqd/app/Mail/Mailme.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/Controller.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/routes/web.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/layouts/app.blade.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/components/right-side-of-navbar.blade.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/forgot-password.blade.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/ContactController.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/home.blade.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/menu/contact.blade.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/schedule/addRemoveDates.blade.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/.env</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/login.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/HomeController.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/app/Classes/Utility.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/menu/about.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/app/Classes/CreateEmailList.php</file>
         </group>
     </open-files>
 </project-private>

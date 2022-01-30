@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 //use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Classes\Utility;
+
 class MenuController extends Controller {
 
     private $currentUser;
@@ -14,7 +16,9 @@ class MenuController extends Controller {
     }
     
     public function about() {
+       $app=Utility::getApp();
         return view('menu.about', [
+            'application' => $app,
             'title'=>'About']);
     }
 

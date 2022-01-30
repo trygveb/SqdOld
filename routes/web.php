@@ -87,8 +87,10 @@ Route::group(// Comment out this when running tests
 
             Route::middleware(['verified'])->group(function () {
               Route::controller(SchemaController::class)->group(function () {
-                    // Show the schema
+                    // Show one schema
                     Route::name('index')->get('/schedule/show/{scheduleId?}', 'index');
+                    // Show welcome for users with multiple schemas
+                    Route::name('welcome')->get('/schedule/welcome', 'welcome');
                     //Show edit view for one user for  attendance update
                     Route::name('showEdit')->get('/schedule/edit/{schedule}', 'showViewEdit');
 

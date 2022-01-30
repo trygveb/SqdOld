@@ -546,5 +546,16 @@ class SchemaController extends Controller {
 // return redirect(route('admin.showMenu',['schedule' =>$schedule]));
       return redirect(route('schedule.index', ['scheduleId' => $schedule->id]));
    }
+   
+   public function welcome() {
+      $vMemberSchedules = V_MemberSchedule::where('user_id', Auth::user()->id)->get();
+      $count = $vMemberSchedules->count();
+
+      return view('schedule.welcome', [
+          'mySchedulesCount' => $count,
+          'vMemberSchedules' => $vMemberSchedules
+      ]);
+      
+   }
 
 }
