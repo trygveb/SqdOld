@@ -9,7 +9,6 @@ use App\Mail\Mailme;
 
 class ContactController extends Controller {
 
-    public $add1, $add2;
     
         public function __construct()    {
 //        $getCurrentUser= true;               // We need current user in this controller
@@ -17,11 +16,9 @@ class ContactController extends Controller {
     }
     
     public function showForm(Request $request) {
-        $this->add1=rand(1, 20); 
-        $this->add2=rand(1, 20); 
+       $application='sqd.se';
         return view('menu.contact', [
-            'add1' => $this->add1,
-            'add2' => $this->add2
+            'application' => $application,
            ]);
     }
 
@@ -38,9 +35,12 @@ class ContactController extends Controller {
         $correctAnswer=$request->input('add1')+$request->input('add2');
         $userAnswer=$request->input('addSum');
         if ( $correctAnswer == $userAnswer) {
+           // TODO: email adress in env
             \Mail::to('trygve.botnen@gmail.com')->send(new Mailme('contact@abctrav.se', $name, $msg, $adress));
 //            \Mail::to('trygve.botnen@gmail.com')->send(new Mailme($adress, $name, $msg));
-            return \View::make('emails.emailsent');
+//            return \View::make('emails.emailsent');
+            $application='sqd.se'; // TODO: not needed?
+            return redirect(route('contact.showForm', ['application' => $application]))->withSuccess(__('Email sent'));
         } else {
             return \View::make('emails.emailNotSent');
         }
