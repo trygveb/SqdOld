@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Hash;
 use Session;
 use App\Models\User;
+use App\Http\Controllers\BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\App;
@@ -15,7 +16,7 @@ use Illuminate\Support\Str;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
-class CustomAuthController extends Controller {
+class CustomAuthController extends BaseController {
 
    public function create(array $data) {
       return User::create([
@@ -35,7 +36,6 @@ class CustomAuthController extends Controller {
           ],
       ]);
 
-      $application = $request->application;
       $remember= $request->remember;
       $credentials = $request->only('email', 'password');
       if (Auth::attempt($credentials, $remember)) {
@@ -43,15 +43,14 @@ class CustomAuthController extends Controller {
 
             // Auth::logout();
             return redirect()
-                            ->route('verification.notice', ['application' => $application])
+                            ->route('verification.notice', ['application' => $this->names()['application']])
                             ->with('danger', __('Please confirm your email before logging in.'));
          }
-         return redirect()->intended($application . '/home')
+         return redirect()->intended($this->names()['routeRoot'] . '/home')
                          ->withSuccess('Signed in');
       }
 
-     // return redirect(route('login', ['application' => $application]))->withSuccess(__('Sorry, login details are not valid'));
-     return redirect(route('showLoginForm', ['application' => $application]))->withErrors(['email' => [__('Sorry, login details are not valid')]]);
+     return redirect(route('showLoginForm', ['application' => $this->names()['application']]))->withErrors(['email' => [__('Sorry, login details are not valid')]]);
    }
 
    /**
@@ -74,12 +73,11 @@ class CustomAuthController extends Controller {
 
       $data = $request->all();
       $user = $this->create($data);
-      $application = $request->application;
       App::setLocale(LaravelLocalization::getCurrentLocale());
       event(new Registered($user));
       Auth::login($user);
       //return redirect(route("welcome"))->withSuccess( __('You have signed-in') );
-      return redirect(route('verification.notice', ['application' => $application]));
+      return redirect(route('verification.notice', ['application' => $this->names()['application']]));
    }
 
    public function handleEmailVerification(EmailVerificationRequest $request) {
@@ -115,8 +113,11 @@ class CustomAuthController extends Controller {
       return $status === Password::PASSWORD_RESET ? back()->with('status', __($status)) : back()->withErrors(['email' => [__($status)]]);
    }
 
-   public function showRegisterForm($application) {
-      return view('auth.registration')->with('application', $application);
+   public function showRegisterForm() {
+      
+      return view('auth.registration')
+              ->with('application', $this->names()['application'])
+              ->with('routeRoot', $this->names()['routeRoot']);
    }
 
    // User has asked for a new e-mail verification mail.
@@ -144,12 +145,12 @@ class CustomAuthController extends Controller {
 
    // Show the view with the password reset link request form:
    public function showForgotPasswordForm($application) {
-      return view('auth.forgot-password')->with('application', $application);
+      return view('auth.forgot-password')->with('application', $this->names()['application']);
    }
 
    public function showLoginForm($application) {
 //        return view('auth.login');
-      return view('auth.login', ['application' => $application]);
+      return view('auth.login', ['application' => $this->names()['application']]);
    }
 
    // Show the Reset Password form
@@ -164,7 +165,7 @@ class CustomAuthController extends Controller {
     */
    public function showVerifyEmail($application) {
 //      dd('showVerifyEmail application='.$application);  OK
-      return view('auth.verify-email-notice')->with('application', $application);
+      return view('auth.verify-email-notice')->with('application', $this->names()['application']);
    }
 
 //   public function verificationVerify(EmailVerificationRequest $request) {

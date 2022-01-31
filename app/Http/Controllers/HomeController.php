@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Schedule\V_MemberSchedule;
+use App\Http\Controllers\BaseController;
+
 use Illuminate\Support\Facades\Auth;
 
 //use Illuminate\Support\Facades\App;
 
-class HomeController extends Controller {
+class HomeController extends BaseController {
 
    /**
     * Create a new controller instance.
@@ -23,7 +25,7 @@ class HomeController extends Controller {
     * @return view
     */
    public function callsHome() {
-      return view('sdCalls.welcome');
+      return view('sdCalls.welcome')->with('names', $this->names());
    }
 
    /**
@@ -31,14 +33,14 @@ class HomeController extends Controller {
     * @return view
     */
    public function home() {
-      $fullUrl = request()->fullUrl();
+//      $fullUrl = request()->fullUrl();
      // dd($fullUrl); //"http://schema.dev.sqd.se/sv
-      if (str_contains($fullUrl, 'schema')) {
+      if ($this->names()['application']==='SdSchema') {
          return $this->schemaHome();
-      } elseif (str_contains($fullUrl, 'calls')) {
+      } elseif ($this->names()['application']==='SdCalls') {
          return $this->callsHome();
       }
-      return view('home')->with('extra', $fullUrl);
+      return view('errors.403');
    }
    
    /**
@@ -67,7 +69,7 @@ class HomeController extends Controller {
       $sub=$this->getSub();
   
       $urlRoot= sprintf('https://schema.%s%s', $sub,config('app.topDomain'));
-      
+      //$application=$this->getApplication();
       if (Auth::check()) {
          if (Auth::user()->hasVerifiedEmail()) {
 
@@ -84,10 +86,15 @@ class HomeController extends Controller {
          } else {
             return view('auth.verify-email-notice')
                ->with('emailVerified','NO')
-               ->with('application', 'schedule');
+               ->with('application', $this->names()['application']);
          }
       }
-         return view('schedule.welcome')->with('mySchedulesCount' , 0);
+         return view('schedule.welcome')
+                 ->with('mySchedulesCount' , 0)
+                 ->with('application', $this->names()['application'])
+                 ->with('routeRoot', $this->names()['routeRoot'])
+                 ;
+;
 //      abort(403, 'Unauthorized action.');
    }
 
@@ -123,8 +130,8 @@ class HomeController extends Controller {
    }
 
    public function welcome() {
-//      return view('welcome', ['showAuthenticationLinks' => false]);
-      return view('welcome');
+      $application=$this->getApplication();
+      return view('welcome')->with('application',$application);
    }
 
 }

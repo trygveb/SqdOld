@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+   $application='SdSchema';
+   $applicationRouteRoot='schedule';
+@endphp
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -72,7 +77,7 @@
 
                         <div class="row no-gutters">
                            <div class="col-sm">
-                              <a class="nav-link" href="{{ route('showRegisterForm', ['application' => $application]) }}">{{ __('Register') }}</a>       
+                              <a class="nav-link" href="{{ route('showRegisterForm') }}">{{ __('Register') }}</a>       
                            </div>
                            <div class="col-sm">
                               <a class="btn btn-link" href="{{ route('showForgotPasswordForm',['application' => $application]) }}">

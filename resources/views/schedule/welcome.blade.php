@@ -1,6 +1,8 @@
 @extends('schedule.layout')
 
 @section('content')
+
+
 <div class="container">
    <div class="col-md-12 text-center">
 
@@ -8,13 +10,18 @@
 
    @guest
       <br>
-      <a class="nav-link" href="{{ route('showLoginForm',['application' =>'schedule']) }}">{{ __('Login') }}</a>
+      <a class="nav-link" href="{{ route('showLoginForm',
+         ['application' => $application, 'routeRoot' => $routeRoot]) }}">
+          {{ __('Login') }}
+      </a>
       {{ __('or') }}
-      <a class="nav-link" href="{{ route('showRegisterForm', ['application' =>'schedule']) }}">{{ __('Register') }}</a>       
+      <a class="nav-link" href="{{ route('showRegisterForm')}}">
+         {{ __('Register') }}
+      </a>       
    @endguest
    @auth
       @if (! Auth::user()->hasVerifiedEmail())
-         <a href="{{route('verification.notice',['application' => 'schedule'])}}">{{__('Please confirm your email')}}!</a>
+         <a href="{{route('verification.notice',['application' =>  $application])}}">{{__('Please confirm your email')}}!</a>
       @else
          @if ($mySchedulesCount > 0)
          {{__('Select schedule')}}<br>

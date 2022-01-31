@@ -5,7 +5,7 @@
     <div id="app">
         
         <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
-            <a  href="{{ route('home',[]) }}" style="color:white;">{{ config('app.name', 'sqd.se') }}</a>
+            <a  href="{{ route('home',[]) }}" style="color:white;">{{__('Home')}}</a>
             <x-flags-div />
             
             <div class="container">

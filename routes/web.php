@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
@@ -24,7 +23,7 @@ Route::group(// Comment out this when running tests
 
 // Registration routes//////////////////////////////////////////////////////////
            // Show the registration form
-           Route::name('showRegisterForm')->get('registration/{application}', [CustomAuthController::class, 'showRegisterForm'])->middleware('guest');
+           Route::name('showRegisterForm')->get('registration', [CustomAuthController::class, 'showRegisterForm'])->middleware('guest');
 
            // Handle the registration request
            Route::name('handleRegistration')->post('custom-registration', [CustomAuthController::class, 'handleRegistration']);
@@ -68,8 +67,7 @@ Route::group(// Comment out this when running tests
 // Home and menu routes //////////////////////////////////////////////////////
            Route::name('home')->get('/', [HomeController::class, 'home']);
            Route::name('about')->get('/about', [MenuController::class, 'about']);
-           Route::name('contact.showForm')->get('/contactForm', [ContactController::class, 'showForm']);
-           Route::name('contact.sendMail')->post('/contacts', [ContactController::class, 'sendMail']);
+           Route::name('contact.sendMail')->post('/contacts', [MenuController::class, 'sendMail']);
 
 
 // Calls routes ///////////////////////////////////////////////////////////////

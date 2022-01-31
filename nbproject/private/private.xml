@@ -5,9 +5,16 @@
         <group>
             <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/MenuController.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/HomeController.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/lang/sv.json</file>
+            <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/SchemaController.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/app/Classes/Utility.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/BaseController.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/resources/views/menu/about.blade.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/app/Classes/CreateEmailList.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/routes/web.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/registration.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/CustomAuthController.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/login.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/schedule/welcome.blade.php</file>
         </group>
     </open-files>
 </project-private>

@@ -1,4 +1,4 @@
-<h1>Kontaktmail</h1>
+<h1>Kontaktmail för {{$application}}</h1>
 
 <p>{{$myMessage}}</p>
 <br>

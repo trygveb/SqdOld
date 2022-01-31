@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 //use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\BaseController;
+use App\Mail\Mailme;
 use App\Classes\Utility;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
-class MenuController extends Controller {
+class MenuController extends BaseController {
 
     private $currentUser;
    
@@ -16,7 +18,7 @@ class MenuController extends Controller {
     }
     
     public function about() {
-       $app=Utility::getApp();
+       $app=$this->names()['application'];
         return view('menu.about', [
             'application' => $app,
             'title'=>'About']);
@@ -64,5 +66,26 @@ class MenuController extends Controller {
         return view ('home.help', [
             'currentUser' => $this->currentUser,
             'title'=>'Hjälp']);
+    }
+       private function captcha() {
+       return true;
+    }
+    
+    public function sendMail(Request $request) {
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email',
+            'message' => 'required'
+        ]);
+        //ContactUs::create($request->all());
+        $name = $request->input('name');
+        $adress = $request->input('email');
+        $msg = $request->input('message');
+        if ( $this->captcha()) {
+            \Mail::to(config('app.adminEmail'))->send(new Mailme($this->names()['application'], 'contact@abctrav.se', $name, $msg, $adress));
+            return redirect(route('about'))->withSuccess(__('E-Mail sent!'));
+        } else {
+           return redirect(route('about'))->withError(__('E-Mail not sent!'));
+        }
     }
 }
