@@ -17,9 +17,9 @@ use App\Http\Controllers\UnixController;
   | contains the "web" middleware group. Now create something great!
   |
  */
-Route::group(// Comment out this when running tests
-        ['prefix' => LaravelLocalization::setLocale(),
-            'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
+//Route::group(// Comment out this when running tests
+//        ['prefix' => LaravelLocalization::setLocale(),
+//            'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
 
 // Registration routes//////////////////////////////////////////////////////////
            // Show the registration form
@@ -29,7 +29,7 @@ Route::group(// Comment out this when running tests
            Route::name('handleRegistration')->post('custom-registration', [CustomAuthController::class, 'handleRegistration']);
 
            //Show the notice which tells the user to open the mail with a link for email verification
-           Route::name('verification.notice')->get('/email/showVerifyEmail/{application}', [CustomAuthController::class, 'showVerifyEmail']);
+           Route::name('verification.notice')->get('/email/showVerifyEmail', [CustomAuthController::class, 'showVerifyEmail']);
 
            Route::name('verification.send')->post('/email/verification-notification', [CustomAuthController::class, 'sendEmailVerificationNotification'])
                    ->middleware(['auth', 'throttle:5,1']);
@@ -41,7 +41,7 @@ Route::group(// Comment out this when running tests
 
 // Forgotten Password routes /////////////////////////////////////////////////////
            // Show the view with the password reset link request form:
-           Route::name('showForgotPasswordForm')->get('/forgot-password/{application}', [CustomAuthController::class, 'showForgotPasswordForm'])
+           Route::name('showForgotPasswordForm')->get('/forgot-password', [CustomAuthController::class, 'showForgotPasswordForm'])
                    ->middleware('guest');
 
            // Handle the request for sending the forgotten password reset link
@@ -58,7 +58,7 @@ Route::group(// Comment out this when running tests
 
 // Login/logout routes //////////////////////////////////////////////////////////
            // Show login form
-           Route::name('showLoginForm')->get('login/{application}', [CustomAuthController::class, 'showLoginForm'])->middleware('guest');
+           Route::name('showLoginForm')->get('login', [CustomAuthController::class, 'showLoginForm'])->middleware('guest');
            // Handle login request
            Route::name('login.custom')->post('custom-login', [CustomAuthController::class, 'customLogin'])->middleware(env('LOGIN_THROTTLE', 'throttle:5,1'));
            // Logout user
@@ -81,14 +81,14 @@ Route::group(// Comment out this when running tests
 // Schedule routes ///////////////////////////////////////////////////////////////
            Route::name('schedule.')->group(function () {
               // Show application home/welcome view  
-            Route::name('home')->get('/schedule/home', [HomeController::class, 'schemaHome']);
+            Route::name('home')->get('/home', [HomeController::class, 'schemaHome']);
 
             Route::middleware(['verified'])->group(function () {
               Route::controller(SchemaController::class)->group(function () {
                     // Show one schema
                     Route::name('index')->get('/schedule/show/{scheduleId?}', 'index');
                     // Show welcome for users with multiple schemas
-                    Route::name('welcome')->get('/schedule/welcome', 'welcome');
+                    Route::name('welcome')->get('/welcome', 'welcome');
                     //Show edit view for one user for  attendance update
                     Route::name('showEdit')->get('/schedule/edit/{schedule}', 'showViewEdit');
 
@@ -116,7 +116,7 @@ Route::group(// Comment out this when running tests
                        // Update comments
                        Route::name('updateComments')->post('/admin/updateComments', 'updateComments');
                        // Show add/remove dates view
-                       Route::name('showAddRemoveDates')->get('/admin/AddRemoveDates/{scheduleId}', 'showViewAddRemoveDates');
+                       Route::name('showAddRemoveDates')->get('/admin/AddRemoveDates/{scheduleId}', 'showAddRemoveDates');
                        // Add dates
                        Route::name('addDates')->post('/admin/addDates', 'addDates');
                        // Remove dates
@@ -125,7 +125,7 @@ Route::group(// Comment out this when running tests
                  });
               });
            });
-        });   // Comment out this when running tests
+//        });   // Comment out this when running tests
 // Routes not needing localization /////////////////////////////////////////////
 Route::get('/switchLocale', [HomeController::class, 'switchLocale'])->name('switchLocale');
 

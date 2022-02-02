@@ -68,6 +68,7 @@
     "Mondays" : "Måndagar",
     "My schedules" : "Mina scheman",
     "Name" : "Namn",
+    "N" : "N",
     "No" : "Nej",
     "Number" : "Antal",
     "OK. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one." :
@@ -83,6 +84,7 @@
     "Please select application" : "Vänligen välj applikation",
     "Regards" : "Hälsningar",
     "Register" : "Registrera dig",
+    "Register for" : "Registrera dig för",
     "Remember Me" : "Kom ihåg mig",
     "Remove" : "Ta bort",
     "Remove member" : "Ta bort medlem",
@@ -129,7 +131,8 @@
     "Welcome to" : "Välkommen till",
     "When you do that, a pop-up window will appear with a status message." : "När du gör det visas ett popup-fönster med ett statusmeddelande.",
     "When you have done that, you can press the :BTN-button below" : "När du har gjort det kan du klicka på :BTN-knappen nedan",
-    "Whoops! Something went wrong" : "Oj då! Något gick fel",
+    "Whoops! Something went wrong" : "Tyvärr, något gick fel",
+    "Y" : "J",
     "Yes" : "Ja",
     "You are going to close the current window." : "Fönstret stängs.",
     "You are not registered with any schedule yet" : "Du är inte ansluten till något schema ännu",
@@ -140,5 +143,6 @@
     "You must have at least one admin in each schedule" : "Du måste ha minst en administratör i varje schema",
     "You will be removed from the schedule when you press the" : "Du kommer att tas bort från schemat när du klickar på",
     "Your e-mail is verified" : "Din e-postadress är verifierad",
+    "Your password has been reset" : "Ditt lösenord har återställts",
     "ZZZ" : "ZZZ"
 }

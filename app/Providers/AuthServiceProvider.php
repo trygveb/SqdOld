@@ -46,10 +46,11 @@ class AuthServiceProvider extends ServiceProvider {
                  ->salutation(new HtmlString($this->createSalutation()))
                  ->line(Lang::get('If you did not create an account, no further action is required.'));
       });
-      ResetPassword::toMailUsing(function ($notifiable, $url) {
-         $xx=sprintf('%s<br>%s, %s %s',__('Regards') ,config('app.mailFromName'),__('administrator on'), config('app.name'));
-         $url= config('app.frontend_url').'/reset-password/'.$url;
-//         $xx=sprintf('%s<br>%s, %s %s',__('Regards') ,config('app.mailFromName'),__('administrator on'), config('app.name'));
+      ResetPassword::toMailUsing(function ($notifiable, $token) {
+          $fullUrl = request()->fullUrl();
+          $url= str_replace('forgot-password','reset-password/'.$token, $fullUrl);
+//         dd(sprintf('fullUrl=%s, url=%s',$fullUrl,$url));
+         //$url= config('app.frontend_url').'/reset-password/'.$url;
          return (new MailMessage)
                  ->subject(Lang::get('Reset Password Notification for') . ' ' . config('app.name'))
                  ->line(Lang::get('You are receiving this email because we received a password reset request for your account.'))

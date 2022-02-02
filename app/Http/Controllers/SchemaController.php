@@ -154,8 +154,7 @@ class SchemaController extends Controller {
 
       DB::commit();
 //      $schedule = Schedule::find($scheduleId);
-      return redirect(route('schedule.showAddRemoveDates',
-                      ['scheduleId' => $scheduleId, 'admin' => $this->isAdmin($scheduleId)]));
+      return redirect(route('schedule.showAddRemoveDates', ['scheduleId' => $scheduleId]));
    }
 
 // Remove dates from a schedule
@@ -265,7 +264,7 @@ class SchemaController extends Controller {
       ]);
    }
 
-   public function showViewAddRemoveDates($scheduleId) {
+   public function showAddRemoveDates($scheduleId) {
 
       $schedule = Schedule::find($scheduleId);
       $lastScheduleDate = $this->getLastScheduleDate($schedule);

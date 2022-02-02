@@ -9,7 +9,7 @@
 <body>
    <div id="app">
       <nav class="navbar navbar-expand-sm navbar-light bg-light">
-         <a  href="{{ route('home',[]) }}" style="color:white;">{{__('Home')}} {{$application}}</a>
+         <a  href="{{ route('home',[]) }}" style="color:white;">{{$application}}</a>
          <x-flags-div />
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
              <span class="navbar-toggler-icon"></span>

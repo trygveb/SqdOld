@@ -22,6 +22,7 @@ class EnsureUserIsAdmin {
          $adminForSchedule = 0;
          $url = url()->full();
          if (str_contains($url, '/admin/')) {
+//            dd($url);
             $atoms = explode('/', $url);
             $scheduleId = $atoms[count($atoms) - 1];
             if (!is_numeric($scheduleId)) {

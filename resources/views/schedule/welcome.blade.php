@@ -10,18 +10,13 @@
 
    @guest
       <br>
-      <a class="nav-link" href="{{ route('showLoginForm',
-         ['application' => $application, 'routeRoot' => $routeRoot]) }}">
-          {{ __('Login') }}
-      </a>
+      <a class="nav-link" href="{{route('showLoginForm')}}">{{ __('Login') }}</a>
       {{ __('or') }}
-      <a class="nav-link" href="{{ route('showRegisterForm')}}">
-         {{ __('Register') }}
-      </a>       
+      <a class="nav-link" href="{{route('showRegisterForm')}}">{{ __('Register') }}</a>       
    @endguest
    @auth
       @if (! Auth::user()->hasVerifiedEmail())
-         <a href="{{route('verification.notice',['application' =>  $application])}}">{{__('Please confirm your email')}}!</a>
+         <a href="{{route('verification.notice')}}">{{__('Please confirm your email')}}!</a>
       @else
          @if ($mySchedulesCount > 0)
          {{__('Select schedule')}}<br>

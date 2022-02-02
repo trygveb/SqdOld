@@ -43,7 +43,7 @@
 
          @if ($emailVerified == 'NO')
             <div class="card-body">
-                {{__('Thanks for signing up to  :application! You are now logged in.', ['application' => $application])}}
+                {{__('Thanks for signing up to  :application! You are now logged in.', ['application' => $names['application']])}}
                <p>
                   <span style="font-size:larger;">
                      <b>{{__('Before proceeding, however, you will need to verify your email address')}}</b>
@@ -68,7 +68,7 @@
                <a style="margin-left:5px;" onclick="closeWindow()" href="" class="btn btn-secondary"> {{ __('Close window')}}</a>
          @else
                <br>
-               <a class="btn btn-primary" href="{{ route($application.'.home',[]) }}">{{__('Continue')}}</a>
+               <a class="btn btn-primary" href="{{ route($names['routeRoot'].'.home',[]) }}">{{__('Continue')}}</a>
          @endif
              </div>
             </form>

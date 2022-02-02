@@ -3,18 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/MenuController.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/HomeController.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/tests/Feature/Auth/Login/LoginTest.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/resources/lang/sv.json</file>
-            <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/SchemaController.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/app/Classes/Utility.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/BaseController.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/menu/about.blade.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/routes/web.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/registration.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/phpunit.xml</file>
             <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/CustomAuthController.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/login.blade.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/schedule/welcome.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/.env</file>
+            <file>file:/D:/Development/VagrantCode/sqd/tests/Feature/Auth/Register/RegisterTest.php</file>
         </group>
     </open-files>
 </project-private>

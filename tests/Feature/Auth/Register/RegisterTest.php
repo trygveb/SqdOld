@@ -49,11 +49,11 @@ class RegisterTest extends TestCase {
     */
 
    protected function successfulRegistrationRoute() {
-      return route('verification.notice', ['application' => 'schedule']);
+      return route('verification.notice');
    }
 
    protected function registerGetRoute() {
-      return route('showRegisterForm', ['application' => 'schedule']);
+      return route('showRegisterForm');
    }
 
    protected function registerPostRoute() {
@@ -66,7 +66,9 @@ class RegisterTest extends TestCase {
    }
 
    public function testUserCanViewARegistrationForm() {
-      $response = $this->get($this->registerGetRoute());
+      $route=$this->registerGetRoute();
+      printf("registerGetRoute=%s\n", $route);
+      $response = $this->get($route);
       $response->assertSuccessful();
       $response->assertViewIs('auth.registration');
    }
@@ -93,7 +95,7 @@ class RegisterTest extends TestCase {
           'email' => $this->testUserEmail,
           'password' => $this->testUserCorrectpassword,
           'password_confirmation' => $this->testUserCorrectpassword,
-          'application' => $this->testApplication,
+//          'application' => $this->testApplication,
       ]);
 
       $this->assertCount($this->SEEDED_USERS + 1, $users = User::all());

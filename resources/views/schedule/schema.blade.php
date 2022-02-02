@@ -26,15 +26,15 @@
          
           <table class="table table-bordered">
         
-            <thead style="height:100px; font-size:smaller;">
-              <th style="height:100px;padding-top:70px !important;vertical-align:middle;" class="fix text-nowrap text-center">{{__('Date')}}</th>
-              <th style="height:100px;" class="text-nowrap text-center">{{__('Comment')}}</th>
+            <thead style="font-size:smaller;">
+              <th class="fix text-nowrap text-center">{{__('Date')}}</th>
+              <th class="text-nowrap text-center">{{__('Comment')}}</th>
              
              
-              <th class='vertical'>{{__('Yes')}}</th>
-              <th class='vertical'>{{__('No')}}</th>
-              <th class='vertical' style="width:30px;">{{__('Maybe')}}</th>
-              <th class='vertical' style="width:30px;">-</th>
+              <th class="text-center w30">{{__('Y')}}</th>
+              <th class="text-center w30" >{{__('N')}}</th>
+              <th class="text-center" style="width:30px;">{{__('?')}}</th>
+              <th class="text-center" style="width:30px;">-</th>
             
         @foreach ($names as $userId => $name)
                 <th class="text-nowrap text-center" style="font-size:smaller">{{$name}}</th>
@@ -71,7 +71,7 @@
                               break;
                       case 3: $statusName='Nej';
                               break;
-                      case 4: $statusName='Kanske';
+                      case 4: $statusName='?';
                               break;
                      }
                      $radioGroupName='status_'.$userId.'_'.$scheduleDate->id;

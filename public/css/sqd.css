@@ -39,8 +39,7 @@ th.vertical {
   writing-mode: vertical-lr;
   text-orientation: upright;
   text-align:center !important;
-  /*min-width:15px;*/
-}
+ }
 td, th {
   border-top: 1px solid #ccc;
   padding: 5px !important;
@@ -134,3 +133,7 @@ code {
 }
 
 caption { caption-side:top; }
+
+.w30 {
+    width:30px;
+}

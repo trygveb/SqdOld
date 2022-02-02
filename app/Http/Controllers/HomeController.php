@@ -80,7 +80,7 @@ class HomeController extends BaseController {
                $url= sprintf('%s/schedule/show/%d', $urlRoot,$vMemberSchedules[0]->schedule_id);
                return redirect($url);
             } else {
-               $url= sprintf('%s/schedule/welcome', $urlRoot);
+               $url= sprintf('%s/welcome', $urlRoot);
                return redirect($url);
             }
          } else {
@@ -89,12 +89,10 @@ class HomeController extends BaseController {
                ->with('application', $this->names()['application']);
          }
       }
-         return view('schedule.welcome')
-                 ->with('mySchedulesCount' , 0)
-                 ->with('application', $this->names()['application'])
-                 ->with('routeRoot', $this->names()['routeRoot'])
-                 ;
-;
+      return view('schedule.welcome')
+              ->with('mySchedulesCount' , 0)
+              ->with('names', $this->names());
+
 //      abort(403, 'Unauthorized action.');
    }
 

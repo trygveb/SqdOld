@@ -1,10 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@php
-   $application='SdSchema';
-   $applicationRouteRoot='schedule';
-@endphp
+
 
 <div class="container">
     <div class="row justify-content-center">
@@ -20,12 +17,12 @@
          </div>
       @endif
             <div class="card">
-                <div class="card-header">{{ __('Login to') }} {{$application}}</div>
+                <div class="card-header">{{ __('Login to') }} {{$names['application']}}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login.custom') }}">
                         @csrf
-                        <input type="hidden" name="application" value="{{$application}}">
+                        <input type="hidden" name="application" value="{{$names['application']}}">
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
@@ -80,7 +77,7 @@
                               <a class="nav-link" href="{{ route('showRegisterForm') }}">{{ __('Register') }}</a>       
                            </div>
                            <div class="col-sm">
-                              <a class="btn btn-link" href="{{ route('showForgotPasswordForm',['application' => $application]) }}">
+                              <a class="btn btn-link" href="{{ route('showForgotPasswordForm') }}">
                                     {{ __('Forgot Your Password?') }}
                               </a>
                            </div>
