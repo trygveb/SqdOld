@@ -24,6 +24,12 @@ class MenuController extends BaseController {
             'title'=>'About']);
     }
 
+    public function cookiePolicy() {
+        return view('menu.cookiePolicy', [
+            'names' => $this->names(),
+            'title'=>'Cookie Policy']);
+    }
+
 
     public function privacy() {
         return view('about.privacy',[

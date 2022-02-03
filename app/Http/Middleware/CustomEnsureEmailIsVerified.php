@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -19,12 +19,13 @@ class CustomEnsureEmailIsVerified {
     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
     */
    public function handle($request, Closure $next, $redirectToRoute = null) {
-      $atoms = explode('/', $request->getRequestUri());
-      $application = $atoms[2];
+      
+      
       if (!$request->user() ||
               ($request->user() instanceof MustVerifyEmail &&
               !$request->user()->hasVerifiedEmail())) {
-         return $request->expectsJson() ? abort(403, 'Your email address is not verified.') : Redirect::guest(URL::route($redirectToRoute ?: 'verification.notice', ['application' => $application]));
+         return $request->expectsJson() ? abort(403, 'Your email address is not verified.') :
+            Redirect::guest(URL::route($redirectToRoute ?: 'verification.notice'));
       }
 
       return $next($request);

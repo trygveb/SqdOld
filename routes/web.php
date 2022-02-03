@@ -17,9 +17,9 @@ use App\Http\Controllers\UnixController;
   | contains the "web" middleware group. Now create something great!
   |
  */
-//Route::group(// Comment out this when running tests
-//        ['prefix' => LaravelLocalization::setLocale(),
-//            'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
+Route::group(// Comment out this when running tests
+        ['prefix' => LaravelLocalization::setLocale(),
+            'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
 
 // Registration routes//////////////////////////////////////////////////////////
            // Show the registration form
@@ -68,6 +68,7 @@ use App\Http\Controllers\UnixController;
            Route::name('home')->get('/', [HomeController::class, 'home']);
            Route::name('about')->get('/about', [MenuController::class, 'about']);
            Route::name('contact.sendMail')->post('/contacts', [MenuController::class, 'sendMail']);
+           Route::name('cookiePolicy')->get('/cookiePolicy', [MenuController::class, 'cookiePolicy']);
 
 
 // Calls routes ///////////////////////////////////////////////////////////////
@@ -125,7 +126,7 @@ use App\Http\Controllers\UnixController;
                  });
               });
            });
-//        });   // Comment out this when running tests
+        });   // Comment out this when running tests
 // Routes not needing localization /////////////////////////////////////////////
 Route::get('/switchLocale', [HomeController::class, 'switchLocale'])->name('switchLocale');
 
