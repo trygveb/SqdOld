@@ -7,9 +7,12 @@
          <div class="card-body">
             @include('menu.cookiePolicyText')
          </div>
-         </div>
-      </div>       
-   </div>
+      
+            <a  href="{{ url()->previous() }}" class="btn btn-secondary"> {{__('Back')}}</a>
+       
+      </div>
+   </div>       
+</div>
 <!--</div>-->
 
 @endsection

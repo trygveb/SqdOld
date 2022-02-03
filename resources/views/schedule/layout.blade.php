@@ -1,15 +1,10 @@
-@php
-   $application='SdSchema';
-   $applicationRouteRoot='schedule';
-@endphp
-
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <x-html-head title="sdSchema" />
 <body>
    <div id="app">
       <nav class="navbar navbar-expand-sm navbar-light bg-light">
-         <a  href="{{ route('home',[]) }}" style="color:white;">{{$application}}</a>
+         <a  href="{{ route('home',[]) }}" style="color:white;">{{$names['application']}}</a>
          <x-flags-div />
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
              <span class="navbar-toggler-icon"></span>
@@ -40,7 +35,7 @@
        @yield('content')
    </main>
    </div>
-   <x-footer subApp="sdSchema" />
+   <x-footer subApp="{{$names['application']}" />
 
    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

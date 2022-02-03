@@ -5,7 +5,7 @@
     <div id="app">
         
         <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
-            <a  href="{{ route('home',[]) }}" style="color:white;">{{$names['application']}}</a>
+            <a  href="{{ route('home') }}" style="color:white;">{{$names['application']}}</a>
             <x-flags-div />
             
             <div class="container">
@@ -28,7 +28,7 @@
             @yield('content')
         </main>
     </div>
-    <x-footer subApp="sqd.se" />
+   <x-footer subApp="{{$names['application']}}" />
     @yield('scripts')
     <!-- Scripts -->
 <script>

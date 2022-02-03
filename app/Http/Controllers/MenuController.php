@@ -18,9 +18,8 @@ class MenuController extends BaseController {
     }
     
     public function about() {
-       $app=$this->names()['application'];
         return view('menu.about', [
-            'application' => $app,
+            'names' => $this->names(),
             'title'=>'About']);
     }
 
@@ -32,8 +31,8 @@ class MenuController extends BaseController {
 
 
     public function privacy() {
-        return view('about.privacy',[
-            'currentUser' => $this->currentUser,
+        return view('menu.privacy',[
+            'names' => $this->names(),
             'title'=>'Policy']);
     }
 

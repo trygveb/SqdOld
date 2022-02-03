@@ -3,10 +3,10 @@
 <div class="container">
    <div class="row justify-content-center">
       <div class="card">
-         <div class="card-header">{{__('About')}} {{$application}}</div>
+         <div class="card-header">{{__('About')}} {{$names['application']}}</div>
          <div class="card-body">
             
-            {{$application}} {{__('is owned by Trygve Botnen')}}. {{__('Use the contact form')}} {{__('below')}} {{__('if you want to contact me')}}!
+            {{$names['application']}} {{__('is owned by Trygve Botnen')}}. {{__('Use the contact form')}} {{__('below')}} {{__('if you want to contact me')}}!
             <br><br>
             {{__('The source code is open and available at')}} <a href="https://github.com/trygveb/Sqd">Github</a>.
          </div>
@@ -30,7 +30,7 @@
          <!--<div class="card-body">-->
             <form method="POST" id="contactForm" action="{{ route('contact.sendMail') }}">
                @csrf
-               <input type="hidden" name="application" value="{{$application}}" />
+               <input type="hidden" name="application" value="{{$names['application']}}" />
                <div class="form-group">
                   <label for="name" >{{ __('Name') }}</label>
                   <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
