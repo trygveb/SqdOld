@@ -68,7 +68,6 @@ Route::group(// Comment out this when running tests
            Route::name('home')->get('/', [HomeController::class, 'home']);
            Route::name('about')->get('/about', [MenuController::class, 'about']);
            Route::name('contact.sendMail')->post('/contacts', [MenuController::class, 'sendMail']);
-           Route::name('cookiePolicy')->get('/cookiePolicy', [MenuController::class, 'cookiePolicy']);
            Route::name('privacy')->get('/privacy', [MenuController::class, 'privacy']);
 
 

@@ -45,7 +45,9 @@ class CustomAuthController extends BaseController {
                             ->route('verification.notice')
                             ->with('danger', __('Please confirm your email before logging in.'));
          }
-         return redirect()->intended('/home')->withSuccess('Signed in');
+         
+         //return redirect()->intended('/home')->withSuccess('Signed in');
+         return redirect(route($this->names()['routeRoot'].'.home'));
       }
 
      return redirect(route('showLoginForm'))->withErrors(['email' => [__('Sorry, login details are not valid')]]);

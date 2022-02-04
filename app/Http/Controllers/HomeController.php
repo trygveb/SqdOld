@@ -73,7 +73,7 @@ class HomeController extends BaseController {
       if (Auth::check()) {
          if (Auth::user()->hasVerifiedEmail()) {
 
-            //dd('schemaGuest, auth');
+            //dd('schemaGuest, verified');
             $vMemberSchedules = V_MemberSchedule::where('user_id', Auth::user()->id)->get();
             $count = $vMemberSchedules->count();
             if ($count == 1) {
@@ -84,9 +84,10 @@ class HomeController extends BaseController {
                return redirect($url);
             }
          } else {
+//               dd('email Not Verified');
             return view('auth.verify-email-notice')
                ->with('emailVerified','NO')
-               ->with('application', $this->names()['application']);
+               ->with('names', $this->names());
          }
       }
       return view('schedule.welcome')

@@ -4,40 +4,32 @@
 <div class="container">
 
     <h1>@lang('Privacy policy')</h1>
-    <strong>1. Insamling av information<br/>
-    </strong>Vi samlar in information från dig när du registrerar dig på vår webbplats och när du skickar in kontaktformuläret.
-    Den insamlade informationen inkluderar det namn du uppger och din e-postadress, samt ditt krypterade lösenord.
-    Medelande i kontaktformuläret sparas enbart i ägarens mailbox.
-    <p>Dessutom tar vi automatiskt emot och sparar viss information från din dator och webbläsare, inklusive din IP-adress,
-        uppgifter om programvara och hårdvara och den begärda sidan.
-        Denna information kopplas dock inte till dina registreringsuppgifter-</p>
+    <strong>1. @lang('Information collection')<br/>
+    </strong>@lang('We collect information from you when you register on our website and when you submit the contact form. The information collected includes the name you provide and your email address, as well as your encrypted password.')
+    <p>@lang('In addition, we automatically receive and save certain information from your computer and browser, including your IP address, software and hardware information and the requested page. However, this information is not linked to your registration details, and it is erased periodically.')</p>
     <h3></h3>
-    <strong>2. Användning av information<br/></strong>
-    Den information vi samlar in från dig används enbart för att kontakta dig via e-post vid behov. 
-    Vi säljer, handlar, eller på annat sätt överför, inte personligt identifierbar information till utomstående parter.
+    <strong>2. @lang('Use of information')<br/></strong>
+    @lang('The information we collect from you is only used to contact you by e-mail when needed. We do not sell, trade, or otherwise transfer personally identifiable information to third parties.')
     <h3></h3>
-    <strong>3. Scheman<br/></strong>
+    <strong>3. @lang('Schedules')<br/></strong>
     <ul>
-    <li>Vem som helst kan anmäla sig till ett schema.
-    <li>Den som lägger upp et schema kan dock bestämma om schemat ska vara lösenordsskyddat.
-    I så fall måste man ange lösenordet vid anmälan till schemat.
-    <li>För lösenordsskyddade scheman visas inte namn på ansvarig(a) person(er).
-    <li>Medlemmar har endast tillgång till de schemor som de har anmält sig till.
+        <li>@lang('Anyone can sign up for a schedule.')
+    <li>@lang('The administrator who creates a schedule can decide whether the schedule should be password protected. In that case, you must enter the password when registering for the schedule.')
+    <li>@lang('For password-protected schedules, the name(s) of the administrator(s) is not displayed.')
+    <li>@lang('Members only have access to the schedules they have signed up for. Non-members have not access to any schedule.')
     </ul>
     <h3></h3>
-    <strong>4. Schemasdministratörer<br/></strong>
-    Den eller de personer som är administratörer för ett schema har tillgång till alla deltagares email-adresser.
-    En administratör kan ge administratörsbefogenhet till medlemmar som är registrerade på schemat.
+    <strong>4. @lang('Schedule administrators')<br/></strong>
+    @lang('The person or persons who are administrators of a schedule have access to all participants email addresses. An administrator can grant administrator authority to any member who is registered on the schedule.')
     <h3></h3>
-    <strong>5. Informationsskydd<br/></strong>
-    Vi använder oss av avancerade krypteringsmetoder för att skydda känsliga uppgifter som överförs över internet.
+    <strong>5. @lang('Information protection')<br/></strong>
+    @lang('We use advanced encryption methods to protect sensitive data transmitted over the Internet.')
     <h3></h3>
-    <strong>6. Cookies/Kakor<br/></strong>
-    Vi använder oss av cookies för att förbättrar tillgången till vår webbplats och identifierar återkommande besökare.
-    Användningen kopplas inte till personligt identifierbar information på vår webbplats.<br/>
+    <strong>6. @lang('Cookies')<br/></strong>
+     @include('menu.cookiePolicyText')
     <h3></h3>
-    <strong>7. Samtycke<br/></strong>
-    Genom att använda vår webbplats godkänner du vår integritetspolicy.
+    <strong>7. @lang('Consent')<br/></strong>
+    @lang('By continuing to use this website, you agree to our') @lang('Privacy policy')
 
 
 </div>

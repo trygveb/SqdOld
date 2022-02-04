@@ -1,5 +1,7 @@
 {   "About": "Om",
     "Accept for" : "Acceptera i",
+    "According to the EU General Data Protection Regulation (GDPR), we must inform that we use cookies on this website. We use cookies only to keep track of your login so that we show correct data for you, and to know when we must ask you to accept cookies next time (which we must do regularly).":
+        "Enligt dataskyddsförordningen (GDPR) måste vi informera om att vi använder cookies  (kakor) på denna webplats. Vi använder cookies enbart för att hålla reda på din inloggning så att vi visar korrekta data för dig, och för att veta när vi ska be dig acceptera cookies nästa gång (vilket vi måste göra regelbundet).",
     "administrator on" : "administratör på",
     "Add" : "Lägg till",
     "Add checked" : "Lägg till markerade",
@@ -9,6 +11,7 @@
     "After submitting the form for password reset in the pop-up window, you can close that and return to this window and press the \"Back to login\" button below" :
          "Efter att ha skickat in formuläret för lösenordsåterställning i popup-fönstret kan du stänga det och återgå till det här fönstret och trycka på knappen \"Tillbaka till inloggning\" nedan",
     "All registered users are already connected to" : "Alla registrerade användare är redan anslutna till",
+    "Anyone can sign up for a schedule." : "Vem som helst kan anmäla sig till ett schema.",
     "Are you sure? You have selected" : "Är du säker? Du har markerat ",
     "Back" : "Tillbaka",
     "Back to login" : "Tillbaka till inloggning",
@@ -24,6 +27,7 @@
     "Close window" : "Stäng fönstret",
     "Comment" : "Kommentar",
     "Confirm Password" : "Bekräfta Lösenord",
+    "Consent" : "Samtycke",
     "Contact Form": "Kontaktformulär",
     "Continue" : "Fortsätt",
     "Date" : "Datum",
@@ -41,6 +45,7 @@
     "English uppercase characters (A – Z)" : "Engelska versaler (A–Z)",
     "Enter a date to be added" : "Ange datum som skall läggas till",
     "Existing dates are" : "Befintliga datum är",
+    "For password-protected schedules, the name(s) of the administrator(s) is not displayed." : "För lösenordsskyddade scheman visas inte namnet/namnen på administratören/administratörerna.",
     "Forgot Your Password?" : "Glömt Lösenord?",
     "Fridays" : "Fredagar",
     "from" : "från och med",
@@ -54,6 +59,10 @@
     "If you did not request a password reset, no further action is required.":"Om du inte har begärt lösenordsåterställning behöver du inte göra någonting.",
     "if you want to contact me" : "om du vill kontakta mig",
     "If the password is correct, you will be added to the schedule when you press the" : "Om lösenordet är korrekt kommer du att läggas till i schemat när du klickar på",
+    "In addition, we automatically receive and save certain information from your computer and browser, including your IP address, software and hardware information and the requested page. However, this information is not linked to your registration details, and it is erased periodically." :
+        "Dessutom tar vi automatiskt emot och sparar viss information från din dator och webbläsare, inklusive din IP-adress, mjukvara och hårdvaruinformation och den begärda sidan. Denna information är dock inte kopplad till dina registreringsuppgifter, och den raderas med jämna mellanrum",
+    "Information collection" : "Insamling av information",
+    "Information protection" : "Informationsskydd",
     "is owned by Trygve Botnen" : "ägs av Trygve Botnen",
     "Latest date is" : "enaste datum är",
     "Login" : "Logga in",
@@ -67,6 +76,8 @@
     "Members" : "Medlemmar",
     "members for removal" : "medlemmar för borttag",
     "Members in schema" : "Medlemmar i schema",
+    "Members only have access to the schedules they have signed up for. Non-members have not access to any schedule." :
+         "Medlemmar har endast tillgång till de scheman de har anmält sig till. Icke-medlemmar har inte tillgång till något schema.",
     "Menu" : "Meny",
     "Message" : "Meddelande",
     "Mondays" : "Måndagar",
@@ -86,6 +97,7 @@
     "Please confirm your email before logging in." : "Vänligen bekräfta din e-postadress innan du loggar in.",
     "Please enter the Password" : "Var vänlig och skriv in lösenordet",
     "Please select application" : "Vänligen välj applikation",
+    "Privacy policy" : "Integritetspolicy",
     "Regards" : "Hälsningar",
     "Register" : "Registrera dig",
     "Register for" : "Registrera dig för",
@@ -101,6 +113,7 @@
     "Saturdays" : "Lördagar",
     "Save" : "Spara",
     "Save changes" : "Spara ändringar",
+    "Schedule administrators" : "Schemasdministratörer",
     "Schedule for" : "Schema för",
     "Schedules" : "Scheman",
     "Select schedule" : "Välj schema",
@@ -112,12 +125,19 @@
     "Sorry, you have made too many reuests in one minute. Please wait a while before retrying" :"Tyvärr, du har gjort för många försök på en minut. Vänta ett tag innan du försöker igen",
     "Sundays" : "Söndagar",
     "Thanks for signing up to  :application! You are now logged in." : "Tack för att du registrerat dig till :application! Du är nu inloggad.",
+    "The administrator who creates a schedule can decide whether the schedule should be password protected. In that case, you must enter the password when registering for the schedule." :
+            "Administratören som skapar ett schema kan bestämma om schemat ska vara lösenordsskyddat. I så fall måste du ange lösenordet vid anmälan till schemat.",
     "The application code is  written in PHP using the Laravel Framework version" : "Applikationskoden är skriven i PHP med Laravel Framework version",
+    "The cookie accept interval on this website is set to" : "Acceptansintervallet för cookies på denna webbplats är inställt på",
     "The email has the sender \":mailFromAdress\" and the title \":title\" and is signed with \":signed\"" : 
         "E-postmeddelandet har avsändare \":mailFromAdress\" och titeln \":title\" och är undertecknat med \":signed\"",
         "administrator at" : "administratör på",
+    "The information we collect from you is only used to contact you by e-mail when needed. We do not sell, trade, or otherwise transfer personally identifiable information to third parties." :
+        "Den information vi samlar in från dig används enbart för att kontakta dig via e-post vid behov. Vi säljer, handlar, eller på annat sätt överför, inte personligt identifierbar information till utomstående parter.",
     "The password must be at least seven characters, and contain characters from each of the following three categories:" :
         "Lösenordet måste vara minst sju tecken långt, och innehålla tecken från var och en av de tre följande kategorierna:",
+    "The person or persons who are administrators of a schedule have access to all participants email addresses. An administrator can grant administrator authority to any member who is registered on the schedule." :
+            "Den eller de som är administratörer av ett schema har tillgång till alla deltagares e-postadresser. En administratör kan ge administratörsbehörighet till alla medlemmar som är registrerade på schemat.",
     "The source code is open and available at" : "Källkoden är öppen och tillgänglig på",
     "This can not be undone. If the member wants to join again later, he/she must register again" :
         "Detta kan inte göras ogjort. Om medlemmen vill vara med igen senare, måste denne anmäla sig igen",
@@ -125,12 +145,16 @@
     "Tuesdays" : "Tisdagar",
     "Update" : "Uppdatera",
     "Update attendance" : "Uppdatera närvaro",
+    "Use of information" : "Användning av information",
     "Use the contact form": "Använd kontaktformuläret",
     "Verification link sent!" : "Verifieringslänk har skickats!",
     "Verify email address" : "Verifiera e-postadressen",
     "Verify Email Notice" : "Verifiera e-postadress påminnelse",
     "We can't find a user with that email address." : "Vi kan inte hitta en användare med den e-postadressen.",
+    "We collect information from you when you register on our website and when you submit the contact form. The information collected includes the name you provide and your email address, as well as your encrypted password." :
+        "Vi samlar in information från dig när du registrerar dig på vår webbplats och när du skickar in kontaktformuläret. Den insamlade informationen inkluderar det namn du uppger och din e-postadress, samt ditt krypterade lösenord.",
     "We have emailed your password reset link" : "Vi har mailat en länk till dig för återställning av ditt lösenord",
+    "We use advanced encryption methods to protect sensitive data transmitted over the Internet." : "Vi använder oss av avancerade krypteringsmetoder för att skydda känsliga uppgifter som överförs över internet.",
     "We use functional cookies to improve user experience" : "Vi använder funktionella cookies för att förbättra användarupplevelsen",
     "Wednesdays" : "Onsdagar",
     "Welcome to" : "Välkommen till",

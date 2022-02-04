@@ -8,8 +8,7 @@
          </a>
          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{route('about')}}" >{{ __('About') }}</a>
-            <a class="dropdown-item" href="{{route('cookiePolicy')}}" >{{ __('Cookie Policy') }}</a>
-            <a class="dropdown-item" href="{{route('privacy')}}" " >{{ __('Privacy') }}</a>
+            <a class="dropdown-item" href="{{route('privacy')}}" " >{{ __('Privacy policy')}}</a>
             <a class="dropdown-item" href="{{route('showLoginForm')}}">{{ __('Login') }}</a>
             <a class="dropdown-item" href="{{route('showRegisterForm')}}">{{ __('Register') }}</a>                 
          </div>

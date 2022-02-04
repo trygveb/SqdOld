@@ -36,7 +36,7 @@
               <th class="text-center" style="width:30px;">{{__('?')}}</th>
               <th class="text-center" style="width:30px;">-</th>
             
-        @foreach ($names as $userId => $name)
+        @foreach ($memberNames as $userId => $name)
                 <th class="text-nowrap text-center" style="font-size:smaller">{{$name}}</th>
         @endforeach
              </thead>
@@ -55,7 +55,7 @@
                <td class="text-center">{{$statusSums[$i]['N']}}</td>
                <td class="text-center">{{$statusSums[$i]['M']}}</td>
                <td class="text-center">{{$statusSums[$i++]['NA']}}</td>
-            @foreach ( $names as $userId => $name )
+            @foreach ( $memberNames as $userId => $name )
                 @php
                     $status= $statuses[$userId][$scheduleDate->id];
                     $group= $groups[$userId];

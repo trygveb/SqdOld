@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Classes\CreateEmailList;
+use App\Http\Controllers\BaseController;
 use App\Models\Schedule\V_MemberSchedule;
 use App\Models\Schedule\V_MemberScheduleDate;
 use App\Models\Schedule\MemberSchedule;
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Hash;
  *
  * @author Trygve Botnen, 2021
  */
-class SchemaController extends Controller {
+class SchemaController extends BaseController {
 
    public function __construct() {
       $this->middleware('auth');
@@ -41,8 +42,9 @@ class SchemaController extends Controller {
       if ($memberSchedules->where('user_id', Auth::id())->count() ==0) {
          $vMemberSchedules= V_MemberSchedule::where('user_id', Auth::id())->get();
             return view('schedule.welcome', [
-                   'mySchedulesCount' => $vMemberSchedules->count(),
-                   'vMemberSchedules' => $vMemberSchedules
+                  'mySchedulesCount' => $vMemberSchedules->count(),
+                  'vMemberSchedules' => $vMemberSchedules,
+                  'names' => $this->names()
                ]);         
       }
       
@@ -55,12 +57,12 @@ class SchemaController extends Controller {
 // Initialize the arrays to use in the view
       $statusSums = array();
       $statuses = array();
-      $names = array();
+      $memberNames = array();
       $groups = array();
 
 // Create the arrays
       $this->calaculateStatusSums($scheduleDates, $vMemberScheduleDates, $statuses, $statusSums);
-      $this->createNamesAndGroupsArrays($memberSchedules, $names, $groups);
+      $this->createNamesAndGroupsArrays($memberSchedules, $memberNames, $groups);
 
       return view('schedule.schema', [
           'schedule' => $schedule,
@@ -68,10 +70,11 @@ class SchemaController extends Controller {
           'currentUser' => Auth::user(),
           'scheduleDates' => $scheduleDates,
           'statuses' => $statuses,
-          'names' => $names,
+          'memberNames' => $memberNames,
           'groups' => $groups,
           'statusSums' => $statusSums,
-          'admin' => $this->isAdmin($scheduleId)
+          'admin' => $this->isAdmin($scheduleId),
+          'names' => $this->names()
       ]);
    }
 
@@ -189,7 +192,7 @@ class SchemaController extends Controller {
 // Adds members to a schedule 
 // Returns Members view
    public function addMember(Request $request) {
-      dd('jomenvisst');
+//      dd('jomenvisst');
       $data = request()->all();
       $scheduleId = $data["scheduleId"];
       $schedule = Schedule::find($scheduleId);

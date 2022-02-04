@@ -6,7 +6,7 @@
 <div class="container">
    <div class="col-md-12 text-center">
 
-      <h1 class="text-center"> {{ __('Welcome to')}} SdSchema</h1>
+      <h1 class="text-center"> {{ __('Welcome to')}} {{$names['application']}}</h1>
 
    @guest
       <br>

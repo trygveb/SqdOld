@@ -1,3 +1,2 @@
-Enligt dataskyddsförordningen (GDPR) måste vi informera om att vi använder cookies  (kakor) på denna webplats.  Vi använder cookies enbart för att
-hålla reda på din inloggning så att vi visar korrekta data för dig,
-och för att veta när vi ska be dig acceptera cookies nästa gång.
+@lang('According to the EU General Data Protection Regulation (GDPR), we must inform that we use cookies on this website. We use cookies only to keep track of your login so that we show correct data for you, and to know when we must ask you to accept cookies next time (which we must do regularly).')
+<br>@lang('The cookie accept interval on this website is set to') {!! config('app.cookieLifetime') !!}  {{__('days')}}.
