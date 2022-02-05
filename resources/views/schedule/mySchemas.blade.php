@@ -40,8 +40,8 @@
                   <td class="text-nowrap">
                       {{strlen($myVMemberSchedule->password)===0 ? $myVMemberSchedule->admins : ''}}
                   </td>
-                  <td class="text-nowrap" id="{{$columnId}}">
-                      {{strlen($myVMemberSchedule->password)===0?'No':'Yes'}}
+                  <td class="text-nowrap text-center" id="{{$columnId}}">
+                      {{strlen($myVMemberSchedule->password)===0?__('No'):__('Yes')}}
                   </td>
                   <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
                       <input type="hidden" name="{{$cbName}}" value="0" />
@@ -60,7 +60,7 @@
               <th class="text-nowrap text-center" >{{__('Description')}}</th>
               <th class="text-nowrap text-center" >{{__('Admin(s)')}}</th>
               <th class="text-nowrap text-center" >{{__('Restricted')}}</th>
-              <th class="text-nowrap text-center" >{{__('Member')}}</th>
+              <th class="text-nowrap text-center" >{{__('Add me')}}</th>
               <th class="text-nowrap text-center" >{{__('Number')}}</th>
             </tr>
             
@@ -83,8 +83,8 @@
                       {{strlen($otherSchedule->password)===0 ? $otherSchedule->admins : ''}}   
                       <input type="hidden" name="{{$pwInputName}}" id="{{$pwInputName}}">
                   </td>
-                  <td class="text-nowrap" id="{{$columnId}}">
-                      {{strlen($otherSchedule->password)===0?'No':'Yes'}}
+                  <td class="text-nowrap text-center" id="{{$columnId}}">
+                      {{strlen($otherSchedule->password)===0?__('No'):__('Yes')}}
                   </td>
                   <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
                       <input type="hidden" name="{{$cbName}}" value="0" />
@@ -110,7 +110,7 @@
       cb= document.getElementById(name);
       scheduleId=name.substr(14);
       restricted= document.getElementById('otherCol_'+scheduleId).innerHTML.trim();
-      if (cb.checked && restricted==='Yes') {
+      if (cb.checked && restricted==="{{__('Yes')}}") {
          let password= prompt("{{__('Please enter the Password')}}."+
                  " {{__('If the password is correct, you will be added to the schedule when you press the')}}"+
                  " {{__('Save changes')}}"+

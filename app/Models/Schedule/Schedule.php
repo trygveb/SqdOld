@@ -18,6 +18,7 @@ class Schedule extends Model {
    }
 
    public function addMember($userId, $groupSize) {
+      
       DB::beginTransaction();
       try {
          $memberSchedule = new MemberSchedule();
@@ -31,7 +32,7 @@ class Schedule extends Model {
             $memberScheduleDate->schedule_date_id = $scheduleDate->id;
             $memberScheduleDate->save();
          }
-      } catch (Exception $ex) {
+      } catch (\Illuminate\Database\QueryException $ex) {
          DB::rollback();
       }
       DB::commit();

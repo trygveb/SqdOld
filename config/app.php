@@ -130,6 +130,7 @@ return [
     |--------------------------------------------------------------------------
      */
         
+    'siteOwner' => env('SITE_OWNER','Nobody'),
     'mailFromName' => env('MAIL_FROM_NAME'),
     'mailFromAdress' => env('MAIL_FROM_ADDRESS'),
     'passwordRegex' => env('PASSWORD_REGEX'),

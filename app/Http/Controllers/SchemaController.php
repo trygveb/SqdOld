@@ -139,7 +139,6 @@ class SchemaController extends BaseController {
             $startDate = $value;
          }
       }
-// dd('numberOfDays='.$numberOfDays.' startDate='.$startDate);
       $date0 = Carbon::createFromFormat('Y-m-d', $startDate);
       DB::beginTransaction();
       try {
@@ -189,34 +188,9 @@ class SchemaController extends BaseController {
       }
    }
 
-// Adds members to a schedule 
-// Returns Members view
-   public function addMember(Request $request) {
-//      dd('jomenvisst');
-      $data = request()->all();
-      $scheduleId = $data["scheduleId"];
-      $schedule = Schedule::find($scheduleId);
-      $scheduleDates = ScheduleDate::where('schedule_id', $scheduleId)->get();
-      DB::beginTransaction();
-      try {
-         foreach ($data as $key => $value) {
-            if (substr($key, 0, 4) === 'add_') {
-               $atoms = explode('_', $key);
-               $userId = $atoms[1];
-               $memberSchedule = MemberSchedule::firstOrCreate(['user_id' => $userId, 'schedule_id' => $scheduleId]);
-               foreach ($scheduleDates as $scheduleDate) {
-                  $memberScheduleDate = MemberScheduleDate::firstOrCreate(['user_id' => $userId, 'schedule_date_id' => $scheduleDate->id]);
-               }
-            }
-         }
-      } catch (\Exception $e) {
-         DB::rollBack();
-      }
-      DB::commit();
-      return $this->ShowViewMembers($scheduleId);
-   }
 
-// Update the admin flags or remove members from a schedule 
+// Update the admin flags or remove members from a schedule
+// Called from the adminMembers view
 // Returns Members view
    public function updateMember(Request $request) {
       $data = request()->all();
@@ -264,6 +238,7 @@ class SchemaController extends BaseController {
    public function showRegisterUser($scheduleId) {
       return view('RegisterUser', [
           'scheduleId' => $scheduleId,
+          'names' => $this->names(),
       ]);
    }
 
@@ -302,6 +277,7 @@ class SchemaController extends BaseController {
           'lastScheduleDate' => $lastScheduleDate,
           'danceTime' => $danceTime,
           'nextDate' => $nextDate,
+          'names' => $this->names(),
           'admin' => $this->isAdmin($scheduleId)
       ]);
    }
@@ -321,12 +297,11 @@ class SchemaController extends BaseController {
    }
 
    /**
-    * 
+    * Register or unregister from a schedule. Called from view mySchemas.
     * @param Request $request
     * @return type
     */
    public function registerForSchemas(Request $request) {
-
       $dataFields = request()->all();
       $userId = request()->userId;
       foreach ($dataFields as $key => $value) {
@@ -338,7 +313,6 @@ class SchemaController extends BaseController {
             if (!is_null($memberSchedule)) {      
                     $memberSchedule->delete();
             }
-            //dd('userId='.$userId.', scheduleId='.$scheduleId.' value='.$value);
          } else if (str_starts_with($key, 'otherSchedule_') && $value == 1) {
             // User wants register
             $scheduleId = substr($key, 14);
@@ -369,7 +343,7 @@ class SchemaController extends BaseController {
               ->pluck('admin')
               ->first();
       if ($admin === 0 && Auth::user()->authority === 0) {
-         return view('errors.403');
+         return view('errors.403')->with('names', $this->names());
       }
       $createEmailListAction = new CreateEmailList();
       $emailArray = $createEmailListAction->execute($schedule->id);
@@ -378,7 +352,6 @@ class SchemaController extends BaseController {
          $emails .= $email . ', ';
       }
       $emails = substr($emails, 0, -2);
-//      dd($emails);
       $vMemberSchedules = V_MemberSchedule::where('schedule_id', $schedule->id)->get();
       $memberUserIds = [];
       foreach ($vMemberSchedules as $member) {
@@ -407,6 +380,7 @@ class SchemaController extends BaseController {
           'nonMembers' => $nonMembers,
           'currentUser' => Auth::user(),
           'emails' => $emails,
+          'names' => $this->names(),
           'admin' => $this->isAdmin($scheduleId)
       ]);
    }
@@ -431,6 +405,7 @@ class SchemaController extends BaseController {
           'myVMemberSchedules' => $myVMemberSchedules,
           'otherSchedules' => $otherSchedules,
           'admin' => Auth::user()->authority,
+          'names' => $this->names()
       ]);
    }
 
@@ -462,6 +437,7 @@ class SchemaController extends BaseController {
           'schedule' => $schedule,
           'currentUser' => Auth::user(),
           'scheduleDates' => $scheduleDates,
+          'names' => $this->names(),
           'admin' => $this->isAdmin($scheduleId)
       ]);
    }
@@ -495,6 +471,7 @@ class SchemaController extends BaseController {
           'currentUser' => Auth::user(),
           'scheduleDates' => $scheduleDates,
           'groupSize' => $groupSize,
+          'names' => $this->names(),
           'statuses' => $statuses, // TODO: Only the statuses of the current user is needed
       ]);
    }
@@ -555,6 +532,7 @@ class SchemaController extends BaseController {
 
       return view('schedule.welcome', [
           'mySchedulesCount' => $count,
+          'names' => $this->names(),
           'vMemberSchedules' => $vMemberSchedules
       ]);
       

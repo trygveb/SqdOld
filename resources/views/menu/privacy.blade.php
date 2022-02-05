@@ -29,8 +29,9 @@
      @include('menu.cookiePolicyText')
     <h3></h3>
     <strong>7. @lang('Consent')<br/></strong>
-    @lang('By continuing to use this website, you agree to our') @lang('Privacy policy')
-
+    @lang('By continuing to use this website, you agree to this') @lang('Privacy policy')
+    <br><br>
+   <a style="margin-left:5px;" href="javascript:history.back()" class="btn btn-secondary"> {{ __('Back')}}</a>
 
 </div>
 

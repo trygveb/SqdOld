@@ -73,8 +73,8 @@ input {
 }
 form fieldset {
     width:auto;
-    max-width:600px;
-    display:inline;
+    max-width:650px;
+    /*display:inline;*/
     border-width: 1px;
     border-style: groove;
     border-color: #AAAAAA;
