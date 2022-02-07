@@ -19,21 +19,19 @@ class CreateViewMemberScheduleDate extends Migration
          $laravelDatabase='laravelTest';
       }
       DB::connection('schedule')->statement('CREATE OR REPLACE VIEW `v_member_schedule_date` AS select
-         `msd`.`user_id` AS `user_id`,
-         `msd`.`schedule_date_id` AS `schedule_date_id`,
-         `msd`.`status` AS `status`,
-         `vms`.`user_name` AS `user_name`,
-         `vms`.`schedule_id` AS `schedule_id`,
-         `vms`.`group_size` AS `group_size`,
-         `sd`.`schedule_date` AS `schedule_date`
-     from
-         (((`member_schedule_date` `msd`
-     left join `v_member_schedule` `vms` on
-         ((`vms`.`user_id` = `msd`.`user_id`)))
-     left join `schedule_date` `sd` on
-         ((`sd`.`id` = `msd`.`schedule_date_id`)))
-     left join `'.$laravelDatabase.'`.`users` `u` on
-         ((`u`.`id` = `msd`.`user_id`)))
+            msd.user_id AS user_id,
+            msd.schedule_date_id AS schedule_date_id,
+            msd.status AS status,
+            vms.user_name AS user_name,
+            vms.schedule_id AS schedule_id,
+            vms.group_size AS group_size,
+            sd.schedule_date AS schedule_date
+        from
+           schedule.member_schedule_date msd,schedule.v_member_schedule vms,schedule.schedule_date sd, laravel.users u 
+        WHERE vms.user_id = msd.user_id
+        AND sd.id = msd.schedule_date_id
+        AND sd.schedule_id= vms.schedule_id
+        AND u.id = msd.user_id;
      ');
     }
 

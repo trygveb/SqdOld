@@ -20,7 +20,7 @@
     "below" : "nedan",
     "button" : "knappen",
     "by clicking on the the button with text \":text\" in the email* which you should have just received" : "genom att klicka på knappen med texten \":text\" i e-postmeddelandet* som du ska ha fått nyss.",
-    "By continuing to use this website, you agree to this" : "Genom att fortsätta användningen av denna webbplats samtycker du till denna",
+    "By continuing to use this website, you agree to our" : "Genom att fortsätta användningen av denna webbplats samtycker du till vår",
     "Cancel" : "Avbryt",
     "Change comments" : "Ändra kommentarer",
     "Change my attendance" : "Ändra min närvaro",
@@ -152,6 +152,8 @@
     "Verification link sent!" : "Verifieringslänk har skickats!",
     "Verify email address" : "Verifiera e-postadressen",
     "Verify Email Notice" : "Verifiera e-postadress påminnelse",
+    "We also save your schedule status values. These are automatically erased after 12 months, or when you opt to leave the schedule." : 
+        "Vi sparar även dina statusvärden i schemat. Dessa raderas automatiskt efter 12 månader, eller när du väljer att lämna schemat.",
     "We can't find a user with that email address." : "Vi kan inte hitta en användare med den e-postadressen.",
     "We collect information from you when you register on our website and when you submit the contact form. The information collected includes the name you provide and your email address, as well as your encrypted password." :
         "Vi samlar in information från dig när du registrerar dig på vår webbplats och när du skickar in kontaktformuläret. Den insamlade informationen inkluderar det namn du uppger och din e-postadress, samt ditt krypterade lösenord.",

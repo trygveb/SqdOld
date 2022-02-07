@@ -488,6 +488,7 @@ class SchemaController extends BaseController {
 //Updating the member's attendance status
    public function updateAttendance(Request $request) {
       $data = request()->all();
+//      dd($data);
       $scheduleId = 0;
       foreach ($data as $key => $value) {
          if (substr($key, 0, 6) === 'status') {

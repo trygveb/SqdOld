@@ -20,6 +20,7 @@ class CreateMemberScheduleDateTable extends Migration {
          $table->unsignedBigInteger('schedule_date_id');
          $table->unsignedTinyInteger('status')->default(0);
          $table->timestamps();
+         $table->unique(['user_id', 'schedule_date_id'],'member_schedule_date_UN_1');
          if ($env === 'test') {
             $table->foreign('user_id', 'member_schedule_date_FK_1')->references('id')->on('laravelTest.users')->onDelete('cascade')->onUpdate('cascade');
          } else {

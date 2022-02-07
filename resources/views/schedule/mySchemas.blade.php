@@ -19,7 +19,7 @@
               <th style="vertical-align:middle;" class="text-nowrap text-center">{{__('Name')}}</th>
               <th class="text-nowrap text-center" >{{__('Description')}}</th>
               <th class="text-nowrap text-center" >{{__('Admin(s)')}}</th>
-              <th class="text-nowrap text-center" >{{__('Restricted')}}</th>
+              <th class="text-nowrap text-center" >{{__('Password')}}</th>
               <th class="text-nowrap text-center" >{{__('Member')}}</th>
               <th class="text-nowrap text-center" >{{__('Number')}}</th>
             </tr>
@@ -38,7 +38,7 @@
                       {{$myVMemberSchedule->schedule_description}}
                   </td>
                   <td class="text-nowrap">
-                      {{strlen($myVMemberSchedule->password)===0 ? $myVMemberSchedule->admins : ''}}
+                      {{$myVMemberSchedule->admins}}
                   </td>
                   <td class="text-nowrap text-center" id="{{$columnId}}">
                       {{strlen($myVMemberSchedule->password)===0?__('No'):__('Yes')}}
@@ -59,7 +59,7 @@
               <th style="vertical-align:middle;" class="text-nowrap text-center">{{__('Name')}}</th>
               <th class="text-nowrap text-center" >{{__('Description')}}</th>
               <th class="text-nowrap text-center" >{{__('Admin(s)')}}</th>
-              <th class="text-nowrap text-center" >{{__('Restricted')}}</th>
+              <th class="text-nowrap text-center" >{{__('Password')}}</th>
               <th class="text-nowrap text-center" >{{__('Add me')}}</th>
               <th class="text-nowrap text-center" >{{__('Number')}}</th>
             </tr>

@@ -6,6 +6,7 @@
     <h1>@lang('Privacy policy')</h1>
     <strong>1. @lang('Information collection')<br/>
     </strong>@lang('We collect information from you when you register on our website and when you submit the contact form. The information collected includes the name you provide and your email address, as well as your encrypted password.')
+    <p>@lang('We also save your schedule status values. These are automatically erased after 12 months, or when you opt to leave the schedule.')</p>
     <p>@lang('In addition, we automatically receive and save certain information from your computer and browser, including your IP address, software and hardware information and the requested page. However, this information is not linked to your registration details, and it is erased periodically.')</p>
     <h3></h3>
     <strong>2. @lang('Use of information')<br/></strong>
@@ -15,7 +16,6 @@
     <ul>
         <li>@lang('Anyone can sign up for a schedule.')
     <li>@lang('The administrator who creates a schedule can decide whether the schedule should be password protected. In that case, you must enter the password when registering for the schedule.')
-    <li>@lang('For password-protected schedules, the name(s) of the administrator(s) is not displayed.')
     <li>@lang('Members only have access to the schedules they have signed up for. Non-members have not access to any schedule.')
     </ul>
     <h3></h3>
