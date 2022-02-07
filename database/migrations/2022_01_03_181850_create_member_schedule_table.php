@@ -14,7 +14,7 @@ class CreateMemberScheduleTable extends Migration {
     */
    public function up() {
       Schema::connection('schedule')->create('member_schedule', function (Blueprint $table) {
-         $env = env('APP_ENV', 'test');
+         $env = config('app.env');
          $table->id();
          $table->unsignedBigInteger('user_id');
          $table->unsignedBigInteger('schedule_id');
@@ -23,6 +23,7 @@ class CreateMemberScheduleTable extends Migration {
          $table->timestamps();
          $table->unique(['user_id', 'schedule_id'],'member_schedule_UN_1');
          printf("env=%s\n", $env);
+
          if ($env === 'test') {
             $table->foreign('user_id', 'member_schedule_FK_1')->references('id')->on('laravelTest.users')->onDelete('cascade')->onUpdate('cascade');
          } else {
