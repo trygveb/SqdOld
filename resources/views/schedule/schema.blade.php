@@ -62,14 +62,14 @@
                     $statusName='-';
                     switch ($status) {
                       case 1: if ($group==1) {
-                                 $statusName='Ja';
+                                 $statusName=__('Yes');
                               } else {
                                  $statusName='1';
                               }
                               break;
                       case 2: $statusName='2';
                               break;
-                      case 3: $statusName='Nej';
+                      case 3: $statusName=__('No');
                               break;
                       case 4: $statusName='?';
                               break;
