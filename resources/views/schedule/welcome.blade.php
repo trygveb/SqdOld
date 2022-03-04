@@ -20,7 +20,7 @@
       @else
          @if ($mySchedulesCount > 0)
          {{__('Select schedule')}}<br>
-            <ul>
+            <ul style="list-style-type:none;">
          @foreach ($vMemberSchedules as $vMemberSchedule)
                <li><a href="{{route('schedule.index',$vMemberSchedule->schedule_id)}}">{{$vMemberSchedule->schedule_name}}</a></li>
          @endforeach
