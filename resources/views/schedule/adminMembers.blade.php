@@ -52,7 +52,7 @@
             <br>
             <x-submit-button submitText="{{__('Update')}}"
                              cancelText="{{ __('Cancel')}}"
-                             cancelUrl="{{route('schedule.index')}}"
+                             cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
                              myId="removeButton"
                              onclickFunction="return checkDeletes()" />
 

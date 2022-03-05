@@ -38,7 +38,7 @@
              <input type="date" id="startDate" name="startDate", oninput="dateIsChanged()" value="{{$nextDate}}">
         </div>
           <br>
-         <x-submit-button submitText="{{__('Add')}} {{__('date')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('schedule.index')}}" />
+         <x-submit-button submitText="{{__('Add')}} {{__('date')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}" />
          </fieldset>
 
       </form>
@@ -71,7 +71,7 @@
             </table>
             <br>
             
-            <x-submit-button submitText="{{ __('Remove date(s)')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('schedule.index')}}"
+            <x-submit-button submitText="{{ __('Remove date(s)')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
                              my-id="removeButton" onclick-function="return checkDeletes()" />
 
            
