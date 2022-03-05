@@ -22,6 +22,7 @@
                   <ul>
                       <li>{{__('There is a new menu at the top right with, among other things, privacy policy')}}.</li>
                       <li>{{__('Attendance status Maybe has been replaced by a question mark')}}.</li>
+                      <li>{{__('Historical (from 2021-08-30) attendance status can be displayed (but not changed)')}}.</li>
                       <li>{{__('There is now a possibility for users to unregister')}}.</li>
                   </ul>
                 </td>
