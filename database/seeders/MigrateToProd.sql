@@ -26,4 +26,5 @@ INSERT INTO `schedule`.`member_schedule`(`id`, `user_id`, `schedule_id`, `group_
 UPDATE `schedule`.`member_schedule` SET admin=1 WHERE user_id=9;
 
 INSERT INTO `schedule`.`member_schedule_date`(`id`, `user_id`, `schedule_date_id`, `status`, `created_at`, `updated_at`)
-SELECT `id`, `user_id`, `training_date_id`, `status`, `created_at`, `updated_at` FROM `sqdPrd`.`member_training_date`;
+SELECT `id`, `user_id`, `training_date_id`, `status`, `created_at`, `updated_at` FROM `sqdPrd`.`member_training_date`
+WHERE  training_date_id > 21;

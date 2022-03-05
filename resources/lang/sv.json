@@ -14,6 +14,7 @@
     "All registered users are already connected to" : "Alla registrerade användare är redan anslutna till",
     "Anyone can sign up for a schedule." : "Vem som helst kan anmäla sig till ett schema.",
     "Are you sure? You have selected" : "Är du säker? Du har markerat ",
+    "Attendance status Maybe has been replaced by a question mark" : "Närvarostatus Kanske har bytts ut mot frågetecken",
     "Back" : "Tillbaka",
     "Back to login" : "Tillbaka till inloggning",
     "Before proceeding, however, you will need to verify your email address" : "Innan du fortsätter måste du dock verifiera din e-post-adress",
@@ -30,6 +31,7 @@
     "Confirm Password" : "Bekräfta Lösenord",
     "Consent" : "Samtycke",
     "Contact Form": "Kontaktformulär",
+    "contact form": "kontaktformuläret",
     "Continue" : "Fortsätt",
     "Date" : "Datum",
     "date" : "datum",
@@ -46,6 +48,7 @@
     "English uppercase characters (A – Z)" : "Engelska versaler (A–Z)",
     "Enter a date to be added" : "Ange datum som skall läggas till",
     "Existing dates are" : "Befintliga datum är",
+    "Feel free to report any problems via the new" :"Rapportera gärna eventuella problem via det nya",
     "For password-protected schedules, the name(s) of the administrator(s) is not displayed." : "För lösenordsskyddade scheman visas inte namnet/namnen på administratören/administratörerna.",
     "Forgot Your Password?" : "Glömt Lösenord?",
     "Fridays" : "Fredagar",
@@ -61,6 +64,7 @@
     "If you did not request a password reset, no further action is required.":"Om du inte har begärt lösenordsåterställning behöver du inte göra någonting.",
     "if you want to contact me" : "om du vill kontakta mig",
     "If the password is correct, you will be added to the schedule when you press the" : "Om lösenordet är korrekt kommer du att läggas till i schemat när du klickar på",
+    "In addition, the following small changes for regular users" : "Dessutom följande små ändringar för vanliga användare",
     "In addition, we automatically receive and save certain information from your computer and browser, including your IP address, software and hardware information and the requested page. However, this information is not linked to your registration details, and it is erased periodically." :
         "Dessutom tar vi automatiskt emot och sparar viss information från din dator och webbläsare, inklusive din IP-adress, mjukvara och hårdvaruinformation och den begärda sidan. Denna information är dock inte kopplad till dina registreringsuppgifter, och den raderas med jämna mellanrum",
     "Information collection" : "Insamling av information",
@@ -85,6 +89,7 @@
     "My schedules" : "Mina scheman",
     "Name" : "Namn",
     "N" : "N",
+    "News" : "Nyheter",
     "No" : "Nej",
     "Number" : "Antal",
     "OK. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one." :
@@ -93,6 +98,7 @@
     "Other schedules" : "Andra scheman",
     "or" : "eller",
     "Password" : "Lösenord",
+    "Please change any bookmarks. However, the old address will work for another month or two" : "Ändra eventuella bokmärken. Den gamla adressen kommer dock att fungera i ytterligare en månad eller två",
     "Please click the button below to verify your email address." : "Klicka på knappen nedan för att verifiera din e-postadress.",
     "Please confirm your email" : "Vänligen bekräfta din e-postadress",
     "Please confirm your email before logging in." : "Vänligen bekräfta din e-postadress innan du loggar in.",
@@ -117,6 +123,7 @@
     "Schedule administrators" : "Schemasdministratörer",
     "Schedule for" : "Schema för",
     "Schedules" : "Scheman",
+    "SdSchema has changed domain, from sqd.trygveb.se to schema.sqd.se": "SdSchema har bytt domän, från sqd.trygveb.se till schema.sqd.se",
     "Select schedule" : "Välj schema",
     "Send Password Reset Link" : "Skicka länk för att återställa lösenord",
     "Send e-mail" : "Skicka e-post",
@@ -129,6 +136,7 @@
     "The administrator who creates a schedule can decide whether the schedule should be password protected. In that case, you must enter the password when registering for the schedule." :
             "Administratören som skapar ett schema kan bestämma om schemat ska vara lösenordsskyddat. I så fall måste du ange lösenordet vid anmälan till schemat.",
     "The application code is  written in PHP using the Laravel Framework version" : "Applikationskoden är skriven i PHP med Laravel Framework version",
+    "The application is now bilingual and GDPR compliant. The latter means, among other things, that you must approve cookies every 90 days" : "Applikationen är nu tvåspråkig och GDPR-kompatibel. Det senare innebär bland annat att man måste godkänna cookies var 90:e dag",
     "The cookie accept interval on this website is set to" : "Acceptansintervallet för cookies på denna webbplats är inställt på",
     "The email has the sender \":mailFromAdress\" and the title \":title\" and is signed with \":signed\"" : 
         "E-postmeddelandet har avsändare \":mailFromAdress\" och titeln \":title\" och är undertecknat med \":signed\"",
@@ -140,6 +148,8 @@
     "The person or persons who are administrators of a schedule have access to all participants email addresses. An administrator can grant administrator authority to any member who is registered on the schedule." :
             "Den eller de som är administratörer av ett schema har tillgång till alla deltagares e-postadresser. En administratör kan ge administratörsbehörighet till alla medlemmar som är registrerade på schemat.",
     "The source code is open and available at" : "Källkoden är öppen och tillgänglig på",
+    "There is a new menu at the top right with, among other things, privacy policy" : "Det har kommit en ny meny uppe till höger med bland annat integritetspolicy",
+    "There is now a possibility for users to unregister" : "Det finns nu en möjlighet för användare att avregistrera sig",
     "This can not be undone. If the member wants to join again later, he/she must register again" :
         "Detta kan inte göras ogjort. Om medlemmen vill vara med igen senare, måste denne anmäla sig igen",
     "This website is owned by" : "Denna webbsida ägs av",
