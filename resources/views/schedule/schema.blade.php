@@ -22,7 +22,12 @@
       <div class="table-responsive" style="overflow-x:auto; overflow-y:hidden;">
           
       <div class="outer">
-        <div class="inner">
+          @if ($showHistory==0) 
+         <input type="checkbox" id="show_history" name="show_history" > <label for="show_history">{{__('Show historical dates')}}</label>
+         @else
+         <input type="checkbox" id="show_history" name="show_history" checked> <label for="show_history">{{__('Show historical dates')}}</label>
+         @endif
+         <div class="inner">
          
           <table class="table table-bordered">
         
@@ -92,5 +97,14 @@
 window.onload = function() {
   document.getElementsByTagName("title")[0].innerHTML="SdSchema {{$schedule->name}}";
 };
+const historyCheckbox = document.getElementById('show_history')
+
+historyCheckbox.addEventListener('change', (event) => {
+  if (event.currentTarget.checked) {
+      location.href = "{{route('schedule.index',['scheduleId' => $schedule->id, 'showHistory' => 1])}}";
+  } else {
+      location.href = "{{route('schedule.index',['scheduleId' => $schedule->id, 'showHistory' => 0])}}";
+  }
+})
 </script>
 @endsection

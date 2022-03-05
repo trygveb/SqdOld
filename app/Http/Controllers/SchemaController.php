@@ -30,7 +30,7 @@ class SchemaController extends BaseController {
    }
 
 //Show a schedule
-   public function index($scheduleId = 1) {
+   public function index($scheduleId, $showHistory=0) {
       $mytime = Carbon::now();
       $today = $mytime->toDateString();
 
@@ -47,13 +47,19 @@ class SchemaController extends BaseController {
                   'names' => $this->names()
                ]);         
       }
-      
-      $vMemberScheduleDates = V_MemberScheduleDate::where('schedule_date', '>=', $today)
+      if ($showHistory==0) {
+         $vMemberScheduleDates = V_MemberScheduleDate::where('schedule_date', '>=', $today)
               ->where('schedule_id', $scheduleId)
               ->get();
-      $scheduleDates = ScheduleDate::where('schedule_id', $scheduleId)
+         $scheduleDates = ScheduleDate::where('schedule_id', $scheduleId)
               ->where('schedule_date', '>=', $today)
               ->get();
+      } else {
+         $vMemberScheduleDates = V_MemberScheduleDate::where('schedule_id', $scheduleId)
+              ->get();
+         $scheduleDates = ScheduleDate::where('schedule_id', $scheduleId)
+              ->get();
+      }
 // Initialize the arrays to use in the view
       $statusSums = array();
       $statuses = array();
@@ -74,7 +80,8 @@ class SchemaController extends BaseController {
           'groups' => $groups,
           'statusSums' => $statusSums,
           'admin' => $this->isAdmin($scheduleId),
-          'names' => $this->names()
+          'names' => $this->names(),
+          'showHistory' => $showHistory
       ]);
    }
 
