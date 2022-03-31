@@ -5,11 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\BaseController;
 
-class UnixController extends Controller {
+class UnixController extends BaseController {
 
+   /**
+    * Show unix form. Note that user must be logged in!
+    * @return type
+    */
    public function index() {
       return view('unix.createApacheConfFiles', [
+          'names' => $this->names(),
           'fileName1' => '',
           'fileNameSSL' => '',
           'subDomain' => ''
@@ -21,6 +27,7 @@ class UnixController extends Controller {
       $subDomain = $request->subDomain;
       $fileName1 = $this->createOneConfigFile($rootPath, $subDomain);
       return view('unix.createApacheConfFiles', [
+          'names' => $this->names(),
           'fileName1' => $fileName1,
           'subDomain' => $subDomain
       ]);
@@ -39,6 +46,7 @@ class UnixController extends Controller {
          $this->createOneConfigFile($rootPath, $subDomain);
       }
       return view('unix.createApacheConfFiles', [
+          'names' => $this->names(),
           'fileName1' => 'All',
           'subDomain' => 'sqd.se'
       ]);
@@ -48,6 +56,7 @@ class UnixController extends Controller {
       $fileName1 = sprintf('%s.conf', $subDomain);
       $generated = Carbon::now();
       $confText1 = view('unix.apacheConf', [
+          'names' => $this->names(),
           'rootPath' => $rootPath,
           'subDomain' => $subDomain,
           'generated' => $generated
