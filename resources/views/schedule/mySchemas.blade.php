@@ -97,7 +97,7 @@
         @endforeach
             <!--</tbody>-->
          </table>
-            <x-submit-button submitText="{{ __('Save changes')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('schedule.index')}}"/>
+            <x-submit-button submitText="{{ __('Save changes')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('home')}}"/>
               </fieldset>
 
         </form>
