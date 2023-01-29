@@ -50,7 +50,7 @@
                </tbody>
             </table>
             <br>
-            <p style="float:right;">
+            <p style="float:left;">
                <button type="submit" class="btn btn-primary" id="" onclick=""> 
                  Lägg till ny medlem
                </button>
