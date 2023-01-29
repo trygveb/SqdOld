@@ -52,7 +52,7 @@
             <br>
             <p style="float:left;">
                <button type="submit" class="btn btn-primary" id="" onclick=""> 
-                 Lägg till ny medlem
+               {{__("Add new member")}}
                </button>
             </p>
 
