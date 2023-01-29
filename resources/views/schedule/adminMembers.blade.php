@@ -11,7 +11,7 @@
 @endif
 @endsection
 @section('content')
-<h1>{{__('Members')}}</h1>
+<h1>{{__('Members')}} test</h1>
  <div class="container">
       <label for="emailAdresses">{{__('E-mail addresses: (select all and copy)')}}</label><br>
       <textarea style="background-color:#ccc" id="emailAdresses"  cols="80">{{$emails}}</textarea>
