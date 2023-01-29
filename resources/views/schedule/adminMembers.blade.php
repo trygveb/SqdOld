@@ -11,7 +11,7 @@
 @endif
 @endsection
 @section('content')
-<h1>{{__('Members')}} test</h1>
+<h1>{{__('Members')}}</h1>
  <div class="container">
       <label for="emailAdresses">{{__('E-mail addresses: (select all and copy)')}}</label><br>
       <textarea style="background-color:#ccc" id="emailAdresses"  cols="80">{{$emails}}</textarea>
@@ -50,6 +50,12 @@
                </tbody>
             </table>
             <br>
+            <p style="float:right;">
+               <button type="submit" class="btn btn-primary" id="" onclick=""> 
+                 Lägg till ny medlem
+               </button>
+            </p>
+
             <x-submit-button submitText="{{__('Update')}}"
                              cancelText="{{ __('Cancel')}}"
                              cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
