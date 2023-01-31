@@ -51,9 +51,11 @@
             </table>
             <br>
             <p style="float:left;">
-               <button type="submit" class="btn btn-primary" id="" onclick=""> 
+               <form action="{{ route('schedule.showAddNewMember')}}" id="addForm" method="GET">
+               <button type="submit" class="btn btn-primary" id="" > 
                {{__("Add new member")}}
                </button>
+               </form>
             </p>
 
             <x-submit-button submitText="{{__('Update')}}"

@@ -342,6 +342,22 @@ class SchemaController extends BaseController {
       }
       return $this->showMySchemas();
    }
+   
+   public function ShowViewAddNewMember($scheduleId) {
+
+      $schedule = Schedule::find($scheduleId);
+      $admin = V_MemberSchedule::where('schedule_id', $scheduleId)
+              ->where('user_id', Auth::user()->id)
+              ->pluck('admin')
+              ->first();
+      if ($admin === 0 && Auth::user()->authority === 0) {
+         return view('errors.403')->with('names', $this->names());
+      }
+ 
+      return view('auth.addNewMember', [
+          'schedule' => $schedule,
+      ]);
+   }
 
 // SHow the Members view
    public function ShowViewMembers($scheduleId) {
@@ -497,7 +513,6 @@ class SchemaController extends BaseController {
 //Updating the member's attendance status
    public function updateAttendance(Request $request) {
       $data = request()->all();
-//      dd($data);
       $scheduleId = 0;
       foreach ($data as $key => $value) {
          if (substr($key, 0, 6) === 'status') {
