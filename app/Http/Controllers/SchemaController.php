@@ -151,7 +151,9 @@ class SchemaController extends BaseController {
       try {
          for ($d1 = 0; $d1 < $numberOfDays; $d1++) {
             $scheduleDate = new ScheduleDate();
-            $scheduleDate->schedule_date = $date0->addDays(7 * $d1)->toDateString();
+            // As date0 is modified by addDays, we must only add 7 days each loop
+            // (but zero days on the first loop)
+            $scheduleDate->schedule_date = $date0->addDays(7 * min(1,$d1))->toDateString();
             $scheduleDate->schedule_id = $scheduleId;
             $scheduleDate->save();
             $this->addMembersToScheduleDate($scheduleId, $scheduleDate->id);
