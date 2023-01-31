@@ -1,15 +1,15 @@
 #!/bin/bash
 
-if [ "$#" -ne 2 ]; then
-    echo 'Illegal number of parameters. Usage: gitCommit "commitComment"  branch (dev, demo or master)'
+if [ "$#" -ne 3 ]; then
+    echo 'Illegal number of parameters. Usage: gitCommit "commitComment"  branch (dev, demo or master) all|none|sdCalls|schedule'
 else
-  VFILE="resources/views/version.blade.php"
-  TFILE="resources/views/versionTime.blade.php"
-  MAJOR="3"
-  MINOR="0"
-  PATCH="0"
-  echo $MAJOR.$MINOR.$PATCH  >  $VFILE
-  echo $(date "+%Y-%m-%d %H:%M")>  $TFILE
+    if [ $3 = all ]; then
+        echo $(date "+%Y-%m-%d %H:%M")>  resources/views/versionTime.blade.php
+        echo $(date "+%Y-%m-%d %H:%M")>  resources/views/sdCalls/versionTime.blade.php
+        echo $(date "+%Y-%m-%d %H:%M")>  resources/views/schedule/versionTime.blade.php
+    elif [ $3 != none ]; then
+            echo $(date "+%Y-%m-%d %H:%M")>  resources/views/$3/versionTime.blade.php
+    fi
   git status
   git add  -A
   git commit -m "$1"
