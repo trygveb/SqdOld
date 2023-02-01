@@ -244,10 +244,12 @@ class SchemaController extends BaseController {
    }
 
 // Show the Register New User Form
-   public function showRegisterUser($scheduleId) {
-      return view('RegisterUser', [
-          'scheduleId' => $scheduleId,
-          'names' => $this->names(),
+   public function showRegisterUser($scheduleId, $isAdmin) {
+      
+      return view('auth.registration', [
+         'scheduleId' => $scheduleId,
+         'isAdmin' => $isAdmin,
+         'names' => $this->names(),
       ]);
    }
 
@@ -342,7 +344,7 @@ class SchemaController extends BaseController {
       }
       return $this->showMySchemas();
    }
-   
+
    public function ShowViewAddNewMember($scheduleId) {
 
       $schedule = Schedule::find($scheduleId);

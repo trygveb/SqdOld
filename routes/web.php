@@ -99,8 +99,7 @@ Route::group(// Comment out this when running tests
                      // Register or unregister for schemas
                     Route::name('register')->post('/schedule/register', 'registerForSchemas');
 
-                    Route::name('showAddNewMember')->get('/schedule/addNewMember', 'ShowViewAddNewMember');
-
+ 
                     
                     // Update attendance (for one user)
                     Route::name('updateAttendance')->post('/schedule/updateAttendance', 'updateAttendance');
@@ -114,7 +113,7 @@ Route::group(// Comment out this when running tests
                        // Update admin status or remove member from a schedule
                        Route::name('updateMember')->post('/admin/updateMember', 'updateMember');
                        // Show register new user form
-                       Route::name('showRegisterUser')->get('/admin/showRegisterUser/{scheduleId}', 'showRegisterUser');
+                       Route::name('showRegisterUser')->get('/admin/showRegisterUser/{scheduleId}/{isAdmin}', 'showRegisterUser');
 
                        // Update comments
                        Route::name('updateComments')->post('/admin/updateComments', 'updateComments');

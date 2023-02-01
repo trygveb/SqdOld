@@ -16,6 +16,8 @@
                     <form method="POST" id="theForm" action="{{ route('handleRegistration') }}">
                         @csrf
                         <input type="hidden" name="application" value="{{$names['application']}}" />
+                        <!-- isAdmin is true if an administrator adds the member -->
+                        <input type="hidden" name="isAdmin" value="{{$isAdmin}}" />
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
@@ -65,6 +67,7 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
+                        @empty($isAdmin)
                         <div class="form-group row">
                             <label for="privacy_confirm" class="col-md-4 col-form-label text-md-right"></label>
 
@@ -73,11 +76,15 @@
                                {{ __('I have read the')}}  <a href="{{route('privacy')}}" " >{{ __('Privacy policy')}}</a>
                             </div>
                         </div>
-
+                        @endempty
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                  <p style="float:right;">
+                                 @empty($isAdmin)
                                  <button type="submit" disabled="disabled" class="btn btn-primary" id="submit-button" >{{ __('Register')}}</button>
+                                 @else
+                                 <button type="submit" disabled="enabled" class="btn btn-primary" id="submit-button" >{{ __('AdminRegister')}}</button>
+                                 @endempty
                                  <a style="margin-left:5px;" href="{{route($names['routeRoot'].'.home')}}" class="btn btn-secondary"> {{ __('Cancel')}}</a>
                                  </p>
                                 
@@ -115,11 +122,19 @@
             showButton= false;    
          }
       }
+      @empty($isAdmin)
       if (showButton && document.getElementById('privacy_confirm').checked) {
          document.getElementById('submit-button').disabled = "";
       } else {
          document.getElementById('submit-button').disabled = "disabled";
       }
+      @else
+      if (showButton) {
+         document.getElementById('submit-button').disabled = "";
+      } else {
+         document.getElementById('submit-button').disabled = "disabled";
+      }
+      @endempty
    }
 </script>
 @endsection

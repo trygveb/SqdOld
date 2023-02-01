@@ -72,12 +72,16 @@ class CustomAuthController extends BaseController {
       ]);
 
       $data = $request->all();
+
       $user = $this->create($data);
       App::setLocale(LaravelLocalization::getCurrentLocale());
-      event(new Registered($user));
-      Auth::login($user);
-      //return redirect(route("welcome"))->withSuccess( __('You have signed-in') );
-      return redirect(route('verification.notice'));
+      if (empty($data['isAdmin'])) {
+         event(new Registered($user));
+         Auth::login($user);
+         return redirect(route('verification.notice'));
+      } else {
+         return back();
+      }
    }
 
    public function handleEmailVerification(EmailVerificationRequest $request) {
@@ -116,7 +120,13 @@ class CustomAuthController extends BaseController {
 
    public function showRegisterForm() {
       
-      return view('auth.registration')->with('names', $this->names());
+    //  return view('auth.registration')->with('names', $this->names());
+
+      return view('auth.registration', [
+         'isAdmin' =>0,
+         'names' => $this->names(),
+      ]);
+
    }
 
    // User has asked for a new e-mail verification mail.
