@@ -55,6 +55,9 @@ class CustomAuthController extends BaseController {
 
    /**
     * Handle the registration request
+    * Registration is normally done by the user, and will trigger a confirmation email to the user
+    * If the parameter "isAdmin" in the request array is =1, this email will not be sent, and 
+    * the user's email adress (in the request array) is supposed to be correct (and verified)
     * @param Request $request
     * @return type
     */
@@ -74,12 +77,15 @@ class CustomAuthController extends BaseController {
       $data = $request->all();
 
       $user = $this->create($data);
+
       App::setLocale(LaravelLocalization::getCurrentLocale());
       if (empty($data['isAdmin'])) {
          event(new Registered($user));
          Auth::login($user);
          return redirect(route('verification.notice'));
       } else {
+         $user->email_verified_at= now();
+         $user->save();
          return back();
       }
    }

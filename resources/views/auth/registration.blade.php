@@ -5,7 +5,12 @@
        <div class="row justify-content-center">
            <div class="col-md-8">
                <div class="card">
+                @empty($isAdmin)
                    <div class="card-header">{{ __('Register for') }} {{$names['application']}}</div>
+                @else
+                <div class="card-header">{{ __('Register member for') }}  Schema:{{$scheduleId}}</div>
+                @endempty
+
          @if(session()->has('success'))
             <div class="alert alert-success">
                {{ session()->get('success') }}
@@ -70,12 +75,19 @@
                         @empty($isAdmin)
                         <div class="form-group row">
                             <label for="privacy_confirm" class="col-md-4 col-form-label text-md-right"></label>
-
                             <div class="col-md-6">
                                <input id="privacy_confirm" type="checkbox" onclick="checkForm();"  name="privacy_confirmation" >
                                {{ __('I have read the')}}  <a href="{{route('privacy')}}" " >{{ __('Privacy policy')}}</a>
                             </div>
                         </div>
+                        @else
+                        <div class="form-group row">
+                            <label for="group_size" class="col-md-4 col-form-label text-md-right">{{ __('Group-size') }}</label>
+                            <div class="col-md-6">
+                               <input id="group_size" type="number" size="3" min="1" max="2" name="group_size" >
+                            </div>
+                        </div>
+
                         @endempty
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
