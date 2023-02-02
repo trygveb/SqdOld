@@ -22,7 +22,8 @@ class CreateViewMemberSchedule1 extends Migration
         DB::connection('schedule')->statement('CREATE OR REPLACE VIEW v_member_schedule AS
             select
             `u`.`id` AS `user_id`,
-            `mt`.`name_in_schema` AS `user_name`,
+            `u`.`name` AS `user_name`,
+            `mt`.`name_in_schema` AS `name_in_schema`,
             `u`.`email` AS `email`,
             `t`.`id` AS `schedule_id`,
             `t`.`name` AS `schedule_name`,

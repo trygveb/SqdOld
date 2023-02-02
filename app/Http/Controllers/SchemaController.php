@@ -90,8 +90,8 @@ class SchemaController extends BaseController {
    private function createNamesAndGroupsArrays($memberSchedules, &$names, &$groups) {
       foreach ($memberSchedules as $memberSchedule) {
          $userId = $memberSchedule->user_id;
-         $user = User::find($userId);
-         $names[$userId] = $user->name;
+        // $user = User::find($userId);
+         $names[$userId] =$memberSchedule->name_in_schema;
          $groups[$userId] = $memberSchedule->group_size;
       }
    }
@@ -220,7 +220,10 @@ class SchemaController extends BaseController {
          } else {
             $memberSchedule->admin = 0;
          }
+         $nameInSchemaName='nameInSchema_'.$userId;
+         $memberSchedule->name_in_schema= $request[$nameInSchemaName];
          $memberSchedule->save();
+
       }
       // Remove member(s) from all scheduledates in the schedule
       $scheduleDates=ScheduleDate::where('schedule_id', $scheduleId)->get();
