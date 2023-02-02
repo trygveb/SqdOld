@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Schedule\V_MemberSchedule;
+use App\Classes\Utility;
 
 class EnsureUserIsAdmin {
 
@@ -29,10 +30,11 @@ class EnsureUserIsAdmin {
                $data = request()->all();
                $scheduleId = $data["scheduleId"];               
             }
-               $adminForSchedule = V_MemberSchedule::where('schedule_id', $scheduleId)
-                    ->where('user_id', Auth::user()->id)
-                    ->pluck('admin')
-                    ->first();
+            $adminForSchedule= Utility::getAdminForSchedule($scheduleId);
+               // $adminForSchedule = V_MemberSchedule::where('schedule_id', $scheduleId)
+               //      ->where('user_id', Auth::user()->id)
+               //      ->pluck('admin')
+               //      ->first();
          }
          if ($user->authority > 0 || $adminForSchedule > 0) {
             return $next($request);

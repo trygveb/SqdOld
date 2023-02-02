@@ -8,7 +8,7 @@
                 @empty($isAdmin)
                    <div class="card-header">{{ __('Register for') }} {{$names['application']}}</div>
                 @else
-                <div class="card-header">{{ __('Register member for') }}  Schema:{{$scheduleId}}</div>
+                <div class="card-header">{{ __('Register new member and connect to schema') }}: {{$scheduleName}}</div>
                 @endempty
 
          @if(session()->has('success'))

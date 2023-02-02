@@ -9,7 +9,6 @@
    <a class="dropdown-item" href="{{route('schedule.showComments',['scheduleId' => $schedule->id])}}">{{__('Manage comments')}}</a>
    <a class="dropdown-item" href="{{route('schedule.showAddRemoveDates',['scheduleId' => $schedule->id])}}">{{__('Manage dates')}}</a>
    <a class="dropdown-item" href="{{route('schedule.showMembers',['scheduleId' => $schedule->id])}}">{{__('Manage members')}}</a>
-   <a class="dropdown-item" href="{{ route('schedule.showRegisterUser',['scheduleId' => $schedule->id, 'isAdmin' =>1])}}">{{__('Add member')}}</a>
    </div>
 @endif
 @endsection

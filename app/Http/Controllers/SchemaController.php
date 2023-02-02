@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Classes\Utility;
 
 /**
  * class SchemaController 
@@ -244,10 +245,12 @@ class SchemaController extends BaseController {
    }
 
 // Show the Register New User Form
-   public function showRegisterUser($scheduleId, $isAdmin) {
-      
+   public function showRegisterUser($scheduleId) {
+      $schedule = Schedule::find($scheduleId);
+      $isAdmin= Utility::getAdminForSchedule($scheduleId);
       return view('auth.registration', [
          'scheduleId' => $scheduleId,
+         'scheduleName' => $schedule->name,
          'isAdmin' => $isAdmin,
          'names' => $this->names(),
       ]);

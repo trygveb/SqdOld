@@ -113,7 +113,7 @@ Route::group(// Comment out this when running tests
                        // Update admin status or remove member from a schedule
                        Route::name('updateMember')->post('/admin/updateMember', 'updateMember');
                        // Show register new user form
-                       Route::name('showRegisterUser')->get('/admin/showRegisterUser/{scheduleId}/{isAdmin}', 'showRegisterUser');
+                       Route::name('showRegisterUser')->get('/admin/showRegisterUser/{scheduleId}', 'showRegisterUser');
 
                        // Update comments
                        Route::name('updateComments')->post('/admin/updateComments', 'updateComments');
