@@ -61,17 +61,16 @@
                              onclickFunction="return checkDeletes()" />
          </fieldset>
 
-         <a  href="{{ route('schedule.showRegisterUser',['scheduleId' => $schedule->id])}}">{{__('Register new member and connect to schema')}}</a>
+         <a  href="{{ route('schedule.showRegisterUser',['scheduleId' => $schedule->id])}}">{{__('Register new member and connect to this schema')}}</a>
 
          {{-- Table with not connected members --}}
 
          <fieldset>
-         <legend>{{__('Registered members not connected to schema')}} <span style="white-space: nowrap;">{{$schedule->name}}</span></legend>
+         <legend>{{__('Registered members not connected to this schema')}}</span></legend>
          <table class="table table-bordered table-sm" style="max-width:250px;">
             <thead style="font-weight:bold; text-decoration-line: underline;">
             <th class="text-nowrap">{{__('Name')}}</th>
-            <th class="text-nowrap">Admin</th>
-            <th class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">{{__('Add')}}</th>
+            <th class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">{{__('Connect')}}</th>
             </thead>
             <tbody>
          @foreach ($nonMembers as $member)
@@ -81,9 +80,6 @@
          @endphp
                <tr class='status'>
                   <td class="text-nowrap" >{{$member->user_name}}</td>
-                  <td style="padding:2px 5px 2px 5px;" class="text-center">
-                  <input type="checkbox"  class="cbAdmin"  name="{{$adminName}}" onclick="adminClicked(event)">
-                  </td>
                   <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
                         <input type="checkbox"  class="cbAdd"  name="{{$addName}}">
                   </td>
