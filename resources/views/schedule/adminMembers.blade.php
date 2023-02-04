@@ -11,115 +11,82 @@
 @endif
 @endsection
 @section('content')
-<h1>{{__('Members')}}</h1>
+<h1>{{__('Members in schema')}}: {{$schedule->name}}</h1>
  <div class="container">
-      <label for="emailAdresses">{{__('E-mail addresses: (select all and copy)')}}</label><br>
-      <textarea style="background-color:#ccc" id="emailAdresses"  cols="80">{{$emails}}</textarea>
-     <br>
-      <form action="{{ route('schedule.updateMember')}}" method="POST">
-          {{ csrf_field() }}
-          <input type="hidden" name="scheduleId" value="{{$schedule->id}}">
-
-          {{-- Table with connected members --}}
-
-          <fieldset>
-            <legend>{{__('Members in schema')}} <span style="white-space: nowrap;">{{$schedule->name}}</span></legend>
-           <table class="table table-bordered table-sm" style="max-width:250px;">
-               <thead style="font-weight:bold; text-decoration-line: underline;">
-               <th class="text-nowrap">{{__('Name')}}</th>
-               <th class="text-nowrap">{{__('Schema name')}}</th>
-               <th class="text-nowrap">{{__('Number')}}</th>
-               <th class="text-nowrap">Admin</th>
-               <th class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">{{__('Remove')}}</th>
-               </thead>
-               <tbody>
-         @foreach ($vMemberSchedules as $member)
-            @php
-               $deleteName='delete_'.$member->user_id;
-               $numberName='number_'.$member->user_id;
-               $adminName='admin_'.$member->user_id;
-               $nameInSchemaName='nameInSchema_'.$member->user_id;
-            @endphp
-                  <tr class='status'>
-                     <td class="text-nowrap" >{{$member->user_name}}</td>
-                     <td class="text-nowrap" >
-                        <input type="text" maxlength=12 size=12 name="{{$nameInSchemaName}}" required value="{{$member->name_in_schema}}">
-                     </td>
-                     <td class="text-nowrap" >
-                        <input type="number" size="3" min="1" max="2" value="{{$member->group_size}}"  name={{"$numberName"}} >
-                     </td>
-                     <td style="padding:2px 5px 2px 5px;" class="text-center">
-                     @if ($member->admin == 1)
-                        <input type="checkbox"  class="cbAdmin"  name="{{$adminName}}" onclick="adminClicked(event)" checked>
-                     @else
-                        <input type="checkbox"  class="cbAdmin"  name="{{$adminName}}" onclick="adminClicked(event)">
-                     @endif
-                     </td>
-                     <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
-                         <input type="checkbox"  class="cbRemove"  name="{{$deleteName}}">
-                     </td>
-                  </tr>
-         @endforeach
-               </tbody>
-            </table>
-            <br>
-
-            <x-submit-button submitText="{{__('Update')}}"
-                             cancelText="{{ __('Cancel')}}"
-                             cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
-                             myId="removeButton"
-                             onclickFunction="return checkDeletes()" />
-         </fieldset>
-
-         <a  href="{{ route('schedule.showRegisterUser',['scheduleId' => $schedule->id])}}">{{__('Register new member and connect to this schema')}}</a>
-
-         {{-- Table with not connected members --}}
-
-         <fieldset>
-         <legend>{{__('Registered members not connected to this schema')}}</span></legend>
-         <table class="table table-bordered table-sm" style="max-width:250px;">
-            <thead style="font-weight:bold; text-decoration-line: underline;">
-            <th class="text-nowrap">{{__('Name')}}</th>
-            <th class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">{{__('Connect')}}</th>
-            </thead>
-            <tbody>
-         @foreach ($nonMembers as $member)
-         @php
-            $addName='add_'.$member->user_id;
-            $adminName='admin_'.$member->user_id;
-         @endphp
-               <tr class='status'>
-                  <td class="text-nowrap" >{{$member->user_name}}</td>
-                  <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
-                        <input type="checkbox"  class="cbAdd"  name="{{$addName}}">
-                  </td>
-               </tr>
-         @endforeach
-            </tbody>
-         </table>
+   {{__('Show')}}: 
+   <input type="radio" id="connected" name="show" value="connected" checked onclick="showClicked(event)">
+   <label for="connected">{{__('Connected members')}}</label>
+   <input type="radio" id="not_connected" name="show" value="not_connected" onclick="showClicked(event)">
+   <label for="not_connected">{{__('Not connected members')}}</label>
+   <input type="radio" id="new_member" name="show" value="new_member" onclick="showClicked(event)">
+   <label for="new_member">{{__('Register and connect new member')}}</label>     
+   <form action="{{ route('schedule.updateMember')}}" method="POST" id="updateMemberForm">
+      <fieldset>
+         <label for="emailAdresses">{{__('E-mail addresses: (select all and copy)')}}</label>
          <br>
-          <x-submit-button submitText="{{__('Update')}}"
-                             cancelText="{{ __('Cancel')}}"
-                             cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
-                             myId="removeButton"
-                             onclickFunction="return checkDeletes()" />
-         </fieldset>
+         <textarea style="background-color:#ccc" id="emailAdresses"  cols="70">{{$emails}}</textarea>
+         <br>
+         {{-- Table with connected members --}}
+         <x-member-table legendTitle="{{__('Connected members')}}"
+                         :schedule="$schedule"
+                         addRemoveTitle="{{__('Remove')}}"
+                         :vMemberSchedules="$vMemberSchedules"   />
+         <x-submit-button submitText="{{__('Update')}}"
+                   cancelText="{{ __('Cancel')}}"
+                   cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
+                   myId="removeButton"
+                   onclickFunction="return checkDeletes()" />
+      </fieldset>
+      </form> 
+   
+      <form action="{{ route('schedule.updateMember')}}" method="POST" id="newMemberForm" style="display:none;">
 
-
-
-     </form>
+      <a  href="{{ route('schedule.showRegisterUser',['scheduleId' => $schedule->id])}}">{{__('Register new member and connect to this schema')}}</a>
+      </form>
+   
+         {{-- Table with not connected members --}}
+      <form action="{{ route('schedule.updateMember')}}" method="POST" id="addMemberForm" style="display:none;">
+         <fieldset>
+         
+         <x-member-table legendTitle="{{__('Not connected members')}}"
+                         :schedule="$schedule"
+                         addRemoveTitle="{{__('Connect')}}"
+                         :vMemberSchedules="$nonMembers"   />
+         <x-submit-button submitText="{{__('Update')}}"
+                   cancelText="{{ __('Cancel')}}"
+                   cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
+                   myId="removeButton"
+                   onclickFunction="return checkDeletes()" />
+     </fieldset>
+     </form> 
+         
+ 
  </div>
 @section('scripts')
 <script>
 window.onload = function() {
-//   hideOrShowRemoveButton();
-//   hideOrShowAddButton();
+      document.getElementById("connected").checked= true;
 };
 function adminClicked(e) {
    var n=countAdmins();
    if (n===0) {
       e.target.checked= true;
       alert("{{__('You must have at least one admin in each schedule')}}");
+   }
+}
+function showClicked(e) {
+   if (e.target.id=="connected") {
+      document.getElementById("addMemberForm").style.display = "none";
+      document.getElementById("updateMemberForm").style.display = "block";
+      document.getElementById("newMemberForm").style.display = "none";
+   } else if (e.target.id=="not_connected") {
+      document.getElementById("addMemberForm").style.display = "block";
+      document.getElementById("updateMemberForm").style.display = "none";
+      document.getElementById("newMemberForm").style.display = "none";
+   } else if (e.target.id=="new_member") {
+      document.getElementById("addMemberForm").style.display = "none";
+      document.getElementById("updateMemberForm").style.display = "none";
+      document.getElementById("newMemberForm").style.display = "block";
    }
 }
 //Disable Remove button if no member is marked for removal

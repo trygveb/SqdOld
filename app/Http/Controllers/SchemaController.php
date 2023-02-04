@@ -400,6 +400,7 @@ class SchemaController extends BaseController {
             $nonMember->user_id = $user->id;
             $nonMember->user_name = $user->name;
             $nonMember->schedule_name = $schedule->name;
+            $nonMember->name_in_schema = 'NN';
             $nonMember->email = $user->email;
             $nonMember->admin = 0;
             $nonMember->group = 1;          // TOD: FIX
