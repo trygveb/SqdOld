@@ -13,7 +13,7 @@
      <tbody>
 @foreach ($vMemberSchedules as $member)
   @php
-     $addRemoveName='delete_'.$member->user_id;
+     $actionName='action_'.$member->user_id;
      $numberName='number_'.$member->user_id;
      $adminName='admin_'.$member->user_id;
      $nameInSchemaName='nameInSchema_'.$member->user_id;
@@ -34,7 +34,7 @@
            @endif
            </td>
            <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
-               <input type="checkbox"  class="cbRemove"  name="{{$addRemoveName}}">
+               <input type="checkbox"  class="cbAction"  name="{{$actionName}}">
            </td>
         </tr>
 @endforeach

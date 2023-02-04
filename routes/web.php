@@ -111,6 +111,8 @@ Route::group(// Comment out this when running tests
                        // Show add/remove members view
                        Route::name('showMembers')->get('/admin/members/{scheduleId}', 'showViewMembers');
                        // Update admin status or remove member from a schedule
+                       Route::name('connectMember')->post('/admin/connectMember', 'connectMember');
+                       // Update admin status or remove member from a schedule
                        Route::name('updateMember')->post('/admin/updateMember', 'updateMember');
                        // Show register new user form
                        Route::name('showRegisterUser')->get('/admin/showRegisterUser/{scheduleId}', 'showRegisterUser');

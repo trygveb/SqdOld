@@ -198,6 +198,27 @@ class SchemaController extends BaseController {
       }
    }
 
+   // Add registered member(s) to a schedule
+// Called from the adminMembers view
+// Returns Members view
+   public function connectMember(Request $request) {
+      $data = request()->all();
+      $scheduleId = $data["scheduleId"];
+      $schedule = Schedule::find($scheduleId);
+      //dd('connectMember '.$scheduleId);
+      foreach ($data as $key => $value) {
+         if (substr($key, 0, 6) === 'action') {
+            $atoms = explode('_', $key);
+            $userId = $atoms[1];
+            $name= $data['nameInSchema_'.$userId];
+            $groupSize= $data['number_'.$userId];
+            $nameInSchema= $data['nameInSchema_'.$userId];
+            $schedule->addMember($userId,$groupSize, $nameInSchema);
+         }
+      }     
+      return $this->ShowViewMembers($scheduleId);
+   }
+
 
 // Update the admin flags or remove members from a schedule
 // Called from the adminMembers view
@@ -205,10 +226,8 @@ class SchemaController extends BaseController {
    public function updateMember(Request $request) {
       $data = request()->all();
       $scheduleId = $data["scheduleId"];
-//      $schedule = Schedule::find($scheduleId);
 
-
-// Update admin flags. Loop over all users in the schedule
+// Update admin flags and name_in_schema. Loop over all users in the schedule
       $userIds = MemberSchedule::where('schedule_id', $scheduleId)->get()->pluck('user_id');
       foreach ($userIds as $userId) {
          $adminName = 'admin_' . $userId;
@@ -225,26 +244,40 @@ class SchemaController extends BaseController {
          $memberSchedule->save();
 
       }
+
       // Remove member(s) from all scheduledates in the schedule
       $scheduleDates=ScheduleDate::where('schedule_id', $scheduleId)->get();
       foreach ($data as $key => $value) {
-         if (substr($key, 0, 6) === 'delete') {
+         if (substr($key, 0, 6) === 'action') {
             $atoms = explode('_', $key);
             $userId = $atoms[1];
-            foreach($scheduleDates as $scheduleDate) {
-                $memberScheduleDate= MemberScheduleDate::where('user_id',$userId)->where('schedule_date_id',$scheduleDate->id)->first();
-                $memberScheduleDate->delete();
-            }
-            $memberSchedule = MemberSchedule::where('user_id', $userId)
-                    ->where('schedule_id', $scheduleId)
-                    ->first();
-            $memberSchedule->delete();
-            
-            
+            //removeMemberFromSchema($userId, $scheduleId, $scheduleDates);
+//            foreach($scheduleDates as $scheduleDate) {
+//                $memberScheduleDate= MemberScheduleDate::where('user_id',$userId)->where('schedule_date_id',$scheduleDate->id)->first();
+//                $memberScheduleDate->delete();
+//            }
+//            $memberSchedule = MemberSchedule::where('user_id', $userId)
+//                    ->where('schedule_id', $scheduleId)
+//                    ->first();
+//            $memberSchedule->delete();
+
+
          }
       }
-
+      
       return $this->ShowViewMembers($scheduleId);
+   }
+
+   // Remove a member from aschedula and all scheduledates in the schedule
+   private function removeMemberFromSchema($userId, $scheduleId, $scheduleDates) {
+      foreach($scheduleDates as $scheduleDate) {
+            $memberScheduleDate= MemberScheduleDate::where('user_id',$userId)->where('schedule_date_id',$scheduleDate->id)->first();
+            $memberScheduleDate->delete();
+        }
+        $memberSchedule = MemberSchedule::where('user_id', $userId)
+                ->where('schedule_id', $scheduleId)
+                ->first();
+        $memberSchedule->delete();
    }
 
 // Show the Register New User Form
@@ -369,8 +402,11 @@ class SchemaController extends BaseController {
 
 // SHow the Members view
    public function ShowViewMembers($scheduleId) {
-
+      
       $schedule = Schedule::find($scheduleId);
+      if (is_null($schedule) ) {
+         dd("ShowViewMembers ".$scheduleId);
+      }
       $admin = V_MemberSchedule::where('schedule_id', $scheduleId)
               ->where('user_id', Auth::user()->id)
               ->pluck('admin')

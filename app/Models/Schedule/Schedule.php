@@ -17,7 +17,7 @@ class Schedule extends Model {
       return $this->hasMany(ScheduleDate::class);
    }
 
-   public function addMember($userId, $groupSize) {
+   public function addMember($userId, $groupSize, $nameInSchema) {
       
       DB::beginTransaction();
       try {
@@ -25,6 +25,7 @@ class Schedule extends Model {
          $memberSchedule->user_id = $userId;
          $memberSchedule->group_size = $groupSize;
          $memberSchedule->schedule_id = $this->id;
+          $memberSchedule->name_in_schema= $nameInSchema;
          $memberSchedule->save();
          foreach ($this->scheduleDates as $scheduleDate) {
             $memberScheduleDate = new MemberScheduleDate();
@@ -34,6 +35,7 @@ class Schedule extends Model {
          }
       } catch (\Illuminate\Database\QueryException $ex) {
          DB::rollback();
+//         dd($ex->getMessage());
       }
       DB::commit();
    }

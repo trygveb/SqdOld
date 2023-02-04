@@ -19,14 +19,16 @@
    <input type="radio" id="not_connected" name="show" value="not_connected" onclick="showClicked(event)">
    <label for="not_connected">{{__('Not connected members')}}</label>
    <input type="radio" id="new_member" name="show" value="new_member" onclick="showClicked(event)">
-   <label for="new_member">{{__('Register and connect new member')}}</label>     
+   <label for="new_member">{{__('Register and connect new member')}}</label>  
+   
+   {{-- Table with connected members --}}
    <form action="{{ route('schedule.updateMember')}}" method="POST" id="updateMemberForm">
       <fieldset>
          <label for="emailAdresses">{{__('E-mail addresses: (select all and copy)')}}</label>
          <br>
          <textarea style="background-color:#ccc" id="emailAdresses"  cols="70">{{$emails}}</textarea>
          <br>
-         {{-- Table with connected members --}}
+         
          <x-member-table legendTitle="{{__('Connected members')}}"
                          :schedule="$schedule"
                          addRemoveTitle="{{__('Remove')}}"
@@ -44,8 +46,8 @@
       <a  href="{{ route('schedule.showRegisterUser',['scheduleId' => $schedule->id])}}">{{__('Register new member and connect to this schema')}}</a>
       </form>
    
-         {{-- Table with not connected members --}}
-      <form action="{{ route('schedule.updateMember')}}" method="POST" id="addMemberForm" style="display:none;">
+      {{-- Table with not connected members --}}
+      <form action="{{ route('schedule.connectMember')}}" method="POST" id="addMemberForm" style="display:none;">
          <fieldset>
          
          <x-member-table legendTitle="{{__('Not connected members')}}"
@@ -56,7 +58,7 @@
                    cancelText="{{ __('Cancel')}}"
                    cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
                    myId="removeButton"
-                   onclickFunction="return checkDeletes()" />
+                   onclickFunction="return true" />
      </fieldset>
      </form> 
          
@@ -115,7 +117,7 @@ function hideOrShowRemoveButton() {
       return n;
    };
    function countDeletes() {
-      var checkBoxes=  document.querySelectorAll('.cbRemove');
+      var checkBoxes=  document.querySelectorAll('.cbAction');
       let n=0;
       for (let i = 0; i < checkBoxes.length; i++) {
          if (checkBoxes[i].checked) {
