@@ -15,10 +15,12 @@ class MemberTable extends Component
    public $schedule;
    public $addRemoveTitle;
    public $vMemberSchedules;
+   public $connected;   //boolean
    
-    public function __construct($legendTitle, $schedule, $addRemoveTitle, $vMemberSchedules)
+    public function __construct($legendTitle, $connected, $schedule, $addRemoveTitle, $vMemberSchedules)
     {
          $this->legendTitle = $legendTitle;
+         $this->connected = $connected;
          $this->schedule = $schedule;
          $this->addRemoveTitle = $addRemoveTitle;
          $this->vMemberSchedules = $vMemberSchedules;

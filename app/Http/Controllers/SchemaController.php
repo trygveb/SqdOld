@@ -230,7 +230,7 @@ class SchemaController extends BaseController {
 // Update admin flags and name_in_schema. Loop over all users in the schedule
       $userIds = MemberSchedule::where('schedule_id', $scheduleId)->get()->pluck('user_id');
       foreach ($userIds as $userId) {
-         $adminName = 'admin_' . $userId;
+         $adminName = 'admin_' . $userId;  //name of html element
          $memberSchedule = MemberSchedule::where('user_id', $userId)
                  ->where('schedule_id', $scheduleId)
                  ->first();
@@ -239,8 +239,13 @@ class SchemaController extends BaseController {
          } else {
             $memberSchedule->admin = 0;
          }
-         $nameInSchemaName='nameInSchema_'.$userId;
+         $nameInSchemaName='nameInSchema_'.$userId; //name of html element
          $memberSchedule->name_in_schema= $request[$nameInSchemaName];
+//         $request->validate([
+//             'name_in_schema' => 'required|unique:schedule.member_schedule'
+//         ]);
+         $numberName='number_'.$userId;   //name of html element
+         $memberSchedule->group_size= $request[$numberName];
          $memberSchedule->save();
 
       }
@@ -251,7 +256,7 @@ class SchemaController extends BaseController {
          if (substr($key, 0, 6) === 'action') {
             $atoms = explode('_', $key);
             $userId = $atoms[1];
-            //removeMemberFromSchema($userId, $scheduleId, $scheduleDates);
+            $this->removeMemberFromSchema($userId, $scheduleId, $scheduleDates);
 //            foreach($scheduleDates as $scheduleDate) {
 //                $memberScheduleDate= MemberScheduleDate::where('user_id',$userId)->where('schedule_date_id',$scheduleDate->id)->first();
 //                $memberScheduleDate->delete();
@@ -436,10 +441,10 @@ class SchemaController extends BaseController {
             $nonMember->user_id = $user->id;
             $nonMember->user_name = $user->name;
             $nonMember->schedule_name = $schedule->name;
-            $nonMember->name_in_schema = 'NN';
+            $nonMember->name_in_schema = explode(" ", $user->name)[0];
             $nonMember->email = $user->email;
             $nonMember->admin = 0;
-            $nonMember->group = 1;          // TOD: FIX
+            $nonMember->group_size = 1;          // TOD: FIX
             $nonMembers->push($nonMember);
          }
       }

@@ -62,7 +62,7 @@ class CustomAuthController extends BaseController {
     * @return type
     */
    public function handleRegistration(Request $request) {
-         $data = $request->all();
+      $data = $request->all();
       $request->validate([
           'name' => 'required|unique:users',
           'email' => 'required|email|unique:users',

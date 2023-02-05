@@ -1,5 +1,15 @@
 @extends('schedule.layout')
 @section('menu1')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 @if ($admin > 0)
    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
    Administration
@@ -30,6 +40,7 @@
          <br>
          
          <x-member-table legendTitle="{{__('Connected members')}}"
+                         connected="yes"
                          :schedule="$schedule"
                          addRemoveTitle="{{__('Remove')}}"
                          :vMemberSchedules="$vMemberSchedules"   />
@@ -51,6 +62,7 @@
          <fieldset>
          
          <x-member-table legendTitle="{{__('Not connected members')}}"
+                         connected="no"
                          :schedule="$schedule"
                          addRemoveTitle="{{__('Connect')}}"
                          :vMemberSchedules="$nonMembers"   />
