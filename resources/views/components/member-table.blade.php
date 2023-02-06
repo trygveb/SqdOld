@@ -5,7 +5,7 @@
 <table class="table table-bordered table-sm" style="max-width:250px;">
    <thead style="font-weight:bold; text-decoration-line: underline;">
    <th class="text-nowrap">{{__('Name')}}</th>
-   <th class="text-nowrap">{{__('Schema name')}}</th>
+   <th class="text-nowrap">{{__('Name in schema')}}</th>
    <th class="text-nowrap">{{__('Number')}}</th>
    @if ($connected=="yes")
       <th class="text-nowrap">Admin</th>

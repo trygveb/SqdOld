@@ -18,14 +18,14 @@ class Schedule extends Model {
    }
 
    public function addMember($userId, $groupSize, $nameInSchema) {
-      
+
       DB::beginTransaction();
       try {
          $memberSchedule = new MemberSchedule();
          $memberSchedule->user_id = $userId;
          $memberSchedule->group_size = $groupSize;
          $memberSchedule->schedule_id = $this->id;
-          $memberSchedule->name_in_schema= $nameInSchema;
+         $memberSchedule->name_in_schema= $nameInSchema;
          $memberSchedule->save();
          foreach ($this->scheduleDates as $scheduleDate) {
             $memberScheduleDate = new MemberScheduleDate();
@@ -35,9 +35,15 @@ class Schedule extends Model {
          }
       } catch (\Illuminate\Database\QueryException $ex) {
          DB::rollback();
-//         dd($ex->getMessage());
+         $pos=strpos($ex->getMessage(),'member_schedule_UX_2');
+         if ($pos === false) {
+            return 'Failed';  // function failed due to unknown error
+         } else {
+            return __('Name in schedule').' '.__('must be inique in the schedule'); // function failed due to unique index violation
+         }
       }
       DB::commit();
+      return 'OK';
    }
 
 }

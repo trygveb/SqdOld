@@ -1,5 +1,10 @@
 @extends('schedule.layout')
 @section('menu1')
+@if ($status != "")
+    <div class="alert alert-danger">
+     {{ $status }}
+    </div>
+@endif
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -21,7 +26,7 @@
 @endif
 @endsection
 @section('content')
-<h1>{{__('Members in schema')}}: {{$schedule->name}}</h1>
+<h1>{{__('Members in schedule')}}: {{$schedule->name}}</h1>
  <div class="container">
    {{__('Show')}}: 
    <input type="radio" id="connected" name="show" value="connected" checked onclick="showClicked(event)">

@@ -14,6 +14,9 @@ use App\Models\User;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+//use Illuminate\Support\Facades\Validator;
+//use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -205,15 +208,23 @@ class SchemaController extends BaseController {
       $data = request()->all();
       $scheduleId = $data["scheduleId"];
       $schedule = Schedule::find($scheduleId);
-      //dd('connectMember '.$scheduleId);
       foreach ($data as $key => $value) {
          if (substr($key, 0, 6) === 'action') {
+            // checkbox action is checked. Connect the user to the schema
             $atoms = explode('_', $key);
             $userId = $atoms[1];
             $name= $data['nameInSchema_'.$userId];
             $groupSize= $data['number_'.$userId];
             $nameInSchema= $data['nameInSchema_'.$userId];
-            $schedule->addMember($userId,$groupSize, $nameInSchema);
+      
+
+            $status=$schedule->addMember($userId,$groupSize, $nameInSchema);
+            if ($status != 'OK') {
+                //return Redirect::back()->withErrors($status);
+                return $this->ShowViewMembers($scheduleId, $status);
+               //throw ValidationException::withMessages(['name in schema not unique']);
+               
+            }
          }
       }     
       return $this->ShowViewMembers($scheduleId);
@@ -406,7 +417,7 @@ class SchemaController extends BaseController {
    }
 
 // SHow the Members view
-   public function ShowViewMembers($scheduleId) {
+   public function ShowViewMembers($scheduleId, $status="") {
       
       $schedule = Schedule::find($scheduleId);
       if (is_null($schedule) ) {
@@ -456,7 +467,8 @@ class SchemaController extends BaseController {
           'currentUser' => Auth::user(),
           'emails' => $emails,
           'names' => $this->names(),
-          'admin' => $this->isAdmin($scheduleId)
+          'admin' => $this->isAdmin($scheduleId),
+          'status'=> $status
       ]);
    }
 
