@@ -71,7 +71,7 @@
                          :schedule="$schedule"
                          addRemoveTitle="{{__('Connect')}}"
                          :vMemberSchedules="$nonMembers"   />
-         <x-submit-button submitText="{{__('Update')}}"
+         <x-submit-button submitText="{{__('(Update and) connect checked mebers')}}"
                    cancelText="{{ __('Cancel')}}"
                    cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
                    myId="removeButton"
@@ -84,7 +84,31 @@
 @section('scripts')
 <script>
 window.onload = function() {
+   @if ($status != "")
+      document.getElementById("not_connected").checked= true;
+      notConnectedEventHandler();
+   @else
       document.getElementById("connected").checked= true;
+   @endif
+   document.getElementsByName('action').forEach(function(chk){
+      chk.addEventListener('click', function() {
+         var x=$(chk).is(":checked");
+         //console.log(chk.id+x);
+         user_id=chk.id;
+         name_in_schema_name='nameInSchema_'+user_id;
+         number_target_name='number_'+user_id;
+         name_in_schema_target=document.getElementsByName(name_in_schema_name)[0];
+         number_target=document.getElementsByName(number_target_name)[0];
+         if (x) {
+            name_in_schema_target.disabled= false;
+            number_target.disabled= false;
+         } else {
+            name_in_schema_target.disabled= true;
+            number_target.disabled= true;
+         }
+      });
+   });
+      
 };
 function adminClicked(e) {
    var n=countAdmins();
@@ -99,13 +123,28 @@ function showClicked(e) {
       document.getElementById("updateMemberForm").style.display = "block";
       document.getElementById("newMemberForm").style.display = "none";
    } else if (e.target.id=="not_connected") {
-      document.getElementById("addMemberForm").style.display = "block";
-      document.getElementById("updateMemberForm").style.display = "none";
-      document.getElementById("newMemberForm").style.display = "none";
+      notConnectedEventHandler();
    } else if (e.target.id=="new_member") {
       document.getElementById("addMemberForm").style.display = "none";
       document.getElementById("updateMemberForm").style.display = "none";
       document.getElementById("newMemberForm").style.display = "block";
+   }
+}
+function notConnectedEventHandler() {
+   document.getElementById("addMemberForm").style.display = "block";
+   document.getElementById("updateMemberForm").style.display = "none";
+   document.getElementById("newMemberForm").style.display = "none";  
+}
+function actionClicked(e){
+   checkedValue = e.target.value;
+//   alert("Checked value="+checkedValue);
+   user_id=e.target.id;
+   name_in_schema_target='nameInSchema_'+user_id;
+   targetElement=document.getElementsByName(name_in_schema_target)[0];
+   if (checkedValue) {
+      targetElement.disabled= false;
+   } else {
+      targetElement.disabled= true;
    }
 }
 //Disable Remove button if no member is marked for removal

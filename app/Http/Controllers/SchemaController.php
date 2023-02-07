@@ -206,6 +206,7 @@ class SchemaController extends BaseController {
 // Returns Members view
    public function connectMember(Request $request) {
       $data = request()->all();
+      dd(print_r($data, true));
       $scheduleId = $data["scheduleId"];
       $schedule = Schedule::find($scheduleId);
       foreach ($data as $key => $value) {
@@ -213,7 +214,7 @@ class SchemaController extends BaseController {
             // checkbox action is checked. Connect the user to the schema
             $atoms = explode('_', $key);
             $userId = $atoms[1];
-            $name= $data['nameInSchema_'.$userId];
+            //$name= $data['nameInSchema_'.$userId];
             $groupSize= $data['number_'.$userId];
             $nameInSchema= $data['nameInSchema_'.$userId];
       
