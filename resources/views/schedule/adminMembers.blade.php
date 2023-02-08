@@ -75,7 +75,7 @@
             cancelText="{{ __('Cancel')}}"
             cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
             myId="connectButton"
-            submitDisabled="disabled"
+            submit-disabled="disabled"
             onclickFunction="return true" />
      </fieldset>
      </form> 
@@ -91,6 +91,7 @@ window.onload = function() {
    @else
       document.getElementById("connected").checked= true;
    @endif
+   document.getElementById("connectButton").disabled= true;
 };
 
 
