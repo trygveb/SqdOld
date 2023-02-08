@@ -206,11 +206,11 @@ class SchemaController extends BaseController {
 // Returns Members view
    public function connectMember(Request $request) {
       $data = request()->all();
-      dd(print_r($data, true));
+      //dd(print_r($data, true));
       $scheduleId = $data["scheduleId"];
       $schedule = Schedule::find($scheduleId);
       foreach ($data as $key => $value) {
-         if (substr($key, 0, 6) === 'action') {
+         if (substr($key, 0, 7) === 'connect') {
             // checkbox action is checked. Connect the user to the schema
             $atoms = explode('_', $key);
             $userId = $atoms[1];
@@ -218,7 +218,6 @@ class SchemaController extends BaseController {
             $groupSize= $data['number_'.$userId];
             $nameInSchema= $data['nameInSchema_'.$userId];
       
-
             $status=$schedule->addMember($userId,$groupSize, $nameInSchema);
             if ($status != 'OK') {
                 //return Redirect::back()->withErrors($status);
@@ -265,7 +264,7 @@ class SchemaController extends BaseController {
       // Remove member(s) from all scheduledates in the schedule
       $scheduleDates=ScheduleDate::where('schedule_id', $scheduleId)->get();
       foreach ($data as $key => $value) {
-         if (substr($key, 0, 6) === 'action') {
+         if (substr($key, 0, 6) === 'remove') {
             $atoms = explode('_', $key);
             $userId = $atoms[1];
             $this->removeMemberFromSchema($userId, $scheduleId, $scheduleDates);
@@ -438,7 +437,9 @@ class SchemaController extends BaseController {
          $emails .= $email . ', ';
       }
       $emails = substr($emails, 0, -2);
-      $vMemberSchedules = V_MemberSchedule::where('schedule_id', $schedule->id)->get();
+      $vMemberSchedules = V_MemberSchedule::where('schedule_id', $schedule->id)
+              ->orderBy('user_name', 'asc')
+              ->get();
       $memberUserIds = [];
       foreach ($vMemberSchedules as $member) {
          array_push($memberUserIds, $member->user_id);
@@ -460,11 +461,12 @@ class SchemaController extends BaseController {
             $nonMembers->push($nonMember);
          }
       }
-
+      $sortedNonMembers= $nonMembers->sortBy('user_name');
+      $sortedNonMembers->values()->all();
       return view('schedule.adminMembers', [
           'schedule' => $schedule,
           'vMemberSchedules' => $vMemberSchedules,
-          'nonMembers' => $nonMembers,
+          'nonMembers' => $sortedNonMembers,
           'currentUser' => Auth::user(),
           'emails' => $emails,
           'names' => $this->names(),
