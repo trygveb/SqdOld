@@ -56,11 +56,13 @@
                    onclickFunction="return checkDeletes()" />
       </fieldset>
       </form> 
-   
-      <form action="{{ route('schedule.updateMember')}}" method="POST" id="newMemberForm" style="display:none;">
-
-      <a  href="{{ route('schedule.showRegisterUser',['scheduleId' => $schedule->id])}}">{{__('Register new member and connect to this schema')}}</a>
-      </form>
+ 
+      <div id="newMemberForm" style="display:none;">
+      <x-registration-form
+          :names="$names"
+          :scheduleName="$schedule->name"
+          isAdmin="1" />
+      </div>
    
       {{-- Table with not connected members --}}
       <form action="{{ route('schedule.connectMember')}}" method="POST" id="addMemberForm" style="display:none;">
