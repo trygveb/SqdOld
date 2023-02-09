@@ -137,3 +137,6 @@ caption { caption-side:top; }
 .w30 {
     width:30px;
 }
+.name_input {
+    max-width:200px;
+}
