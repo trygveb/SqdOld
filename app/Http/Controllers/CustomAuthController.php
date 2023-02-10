@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Hash;
 use Session;
+use App\Models\Schedule\Schedule;
 use App\Models\User;
 use App\Http\Controllers\BaseController;
 use Illuminate\Support\Facades\Auth;
@@ -82,7 +83,7 @@ class CustomAuthController extends BaseController {
       $user = $this->create($data);
       App::setLocale(LaravelLocalization::getCurrentLocale());
       if (empty($data['isAdmin'])) {
-         dd(print_r($data, true));
+//         dd(print_r($data, true));
          event(new Registered($user));
          Auth::login($user);
          return redirect(route('verification.notice'));

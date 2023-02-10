@@ -28,23 +28,20 @@
 @section('content')
  <div class="container" style="max-width:800px;">
    <h1>{{__('Members in schedule')}}: {{$schedule->name}}</h1>
-   {{__('Show')}}: 
-   <div id="connected_div" style="display:none;">
-      <input type="radio" id="connected_rb" name="show" value="connected" checked onclick="showClicked(event)">
-      <label for="connected">{{__('Connected members')}}</label>
+   <span class="link_text">{{__('Show')}}:</span>
+   <div id="connected_div" style="display:inline;">
+      <a class="btn btn-link" id="connected_rb"  onclick="showClicked(event)">{{__('Connected members')}}</a>
    </div>
-   <div id="not_connected_div" style="display:inline;">
-      <input type="radio" id="not_connected_rb" name="show" value="not_connected" onclick="showClicked(event)">
-      <label for="not_connected">{{__('Not connected members')}}</label>
+   <div id="not_connected_div" style="display:none;">
+      <a class="btn btn-link" id="not_connected_rb"  onclick="showClicked(event)">{{__('Not connected members')}}</a>
    </div>
    <div id="new_member_div" style="display:inline;">
-      <input type="radio" id="new_member_rb" name="show" value="new_member" onclick="showClicked(event)">
-      <label for="new_member">{{__('Register and connect new member')}}</label>  
+      <a class="btn btn-link" id="new_member_rb"  onclick="showClicked(event)">{{__('Register new member')}}</a>
    </div>
    <br>
    
-   {{-- Show form with email adresses and for updating or removing connected members --}}
-   <form action="{{ route('schedule.updateMember')}}" method="POST" id="updateMemberForm">
+   {{-- Show form with email adresses for updating or removing connected members --}}
+   <form action="{{ route('schedule.updateMember')}}" method="POST" id="updateMemberForm" style="display:none;">
       <fieldset>
          <label for="emailAdresses">{{__('E-mail addresses: (select all and copy)')}}</label>
          <br>
@@ -64,16 +61,16 @@
       </fieldset>
       </form> 
    
-      {{-- Show Register new member form --}}
+   {{-- Show Register new member form --}}
       <div id="newMemberForm" style="display:none;">
       <x-registration-form
           :names="$names"
-          :scheduleName="$schedule->name"
+          :scheduleId="$schedule->id"
           isAdmin="1" />
       </div>
    
       {{-- Show Form with table with not connected members --}}
-      <form action="{{ route('schedule.connectMember')}}" method="POST" id="addMemberForm" style="display:none;">
+      <form action="{{ route('schedule.connectMember')}}" method="POST" id="addMemberForm" >
          <fieldset>
          
          <x-member-table 

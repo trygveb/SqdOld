@@ -141,5 +141,10 @@ caption { caption-side:top; }
     max-width:300px;
 }
 .label_name_input {
-    max-width:130px;
+    max-width:170px;
+}
+.link_text {
+    font-weight: 400;
+    color: #00bc8c;
+    text-decoration: none;
 }

@@ -89,13 +89,6 @@
                     {{ __('I have read the')}}  <a href="{{route('privacy')}}" " >{{ __('Privacy policy')}}</a>
                  </div>
              </div>
-             @else
-             <div class="form-group row">
-                 <label for="group_size" class="label_name_input col-md-4 col-form-label text-md-right">{{ __('Group-size') }} *</label>
-                 <div class="col-md-6">
-                    <input id="group_size" type="number" size="3" min="1" max="2" value="1" name="group_size" >
-                 </div>
-             </div>
              @endempty
              * {{__('Required fields')}}
              <div class="form-group row mb-0">
@@ -110,6 +103,10 @@
                       </p>
                  </div>
              </div>
+         @empty($isAdmin)
+         @else
+För att ansluta medlemmen till ett schema bla bla
+         @endempty
                  <br>
     {{__(config('app.passwordFormat1'))}}<br>
     <ol>
