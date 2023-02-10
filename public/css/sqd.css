@@ -138,5 +138,8 @@ caption { caption-side:top; }
     width:30px;
 }
 .name_input {
-    max-width:200px;
+    max-width:300px;
+}
+.label_name_input {
+    max-width:130px;
 }

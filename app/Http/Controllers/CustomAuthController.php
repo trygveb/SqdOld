@@ -20,7 +20,9 @@ class CustomAuthController extends BaseController {
 
    public function create(array $data) {
       return User::create([
-                  'name' => $data['name'],
+                  'first_name' => $data['first_name'],
+                  'middle_name' => $data['middle_name'],
+                  'family_name' => $data['family_name'],
                   'email' => $data['email'],
                   'password' => Hash::make($data['password'])
       ]);
@@ -62,9 +64,12 @@ class CustomAuthController extends BaseController {
     * @return type
     */
    public function handleRegistration(Request $request) {
+      
       $data = $request->all();
       $request->validate([
           'name' => 'required|unique:users',
+          'family_name' => 'required',
+          'first_name' => 'required',
           'email' => 'required|email|unique:users',
           'password' => ['required',
               config('app.passwordMinLength'),
