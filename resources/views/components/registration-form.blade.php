@@ -24,7 +24,7 @@
                  <label for="middle_name" class="label_name_input col-md-4 col-form-label text-md-right">{{ __('Middle name') }}</label>
                  <div class="col-md-6">
                      <input id="middle_name" type="text" class="name_input form-control @error('name') is-invalid @enderror" name="middle_name"
-                             value="{{ old('middle_name') }}" maxlength="24" autofocus>
+                             value="{{ old('middle_name') }}" maxlength="24">
                      @error('name')
                          <span class="invalid-feedback" role="alert">
                              <strong>{{ $message }}</strong>
@@ -37,7 +37,7 @@
                  <label for="family_name" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Family name') }} *</label>
                  <div class="col-md-6">
                      <input id="family_name" type="text" class="name_input form-control @error('family_name') is-invalid @enderror" name="family_name"
-                             value="{{ old('family_name') }}" maxlength="24" required  autofocus>
+                             value="{{ old('family_name') }}" maxlength="24" required >
                      @error('name')
                          <span class="invalid-feedback" role="alert">
                              <strong>{{ $message }}</strong>
@@ -85,7 +85,7 @@
              <div class="form-group row">
                  <label for="privacy_confirm" class="label_name_input col-md-4 col-form-label text-md-right"></label>
                  <div class="col-md-6">
-                    <input id="privacy_confirm" type="checkbox" onclick="checkForm();"  name="privacy_confirmation" >
+                    <input id="privacy_confirm" type="checkbox"  name="privacy_confirmation" >
                     {{ __('I have read the')}}  <a href="{{route('privacy')}}" " >{{ __('Privacy policy')}}</a>
                  </div>
              </div>
@@ -102,9 +102,9 @@
                  <div class="col-md-6 offset-md-4">
                       <p style="float:right;">
                       @empty($isAdmin)
-                      <button type="submit"  onclick="checkForm() class="btn btn-primary" id="submit-button" >{{ __('Register')}}</button>
+                      <button type="submit"  onclick="checkForm()" class="btn btn-primary" id="submit-button" >{{ __('Register')}}</button>
                       @else
-                      <button type="submit"  class="btn btn-primary" id="submit-button" >{{ __('AdminRegister')}}</button>
+                      <button type="submit" onclick="checkForm()" class="btn btn-primary" id="submit-button" >{{ __('AdminRegister')}}</button>
                       @endempty
                       <a style="margin-left:5px;" href="{{route($names['routeRoot'].'.home')}}" class="btn btn-secondary"> {{ __('Cancel')}}</a>
                       </p>

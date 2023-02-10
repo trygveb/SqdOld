@@ -64,7 +64,6 @@ class CustomAuthController extends BaseController {
     * @return type
     */
    public function handleRegistration(Request $request) {
-      
       $data = $request->all();
       $request->validate([
           'name' => 'required|unique:users',
@@ -79,12 +78,11 @@ class CustomAuthController extends BaseController {
          'password_confirmation' => 'required',
       ]);
 
-      $data = $request->all();
 
       $user = $this->create($data);
-
       App::setLocale(LaravelLocalization::getCurrentLocale());
       if (empty($data['isAdmin'])) {
+         dd(print_r($data, true));
          event(new Registered($user));
          Auth::login($user);
          return redirect(route('verification.notice'));

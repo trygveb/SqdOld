@@ -26,7 +26,9 @@ class User extends Authenticatable implements MustVerifyEmailContract, CanResetP
     * @var array<int, string>
     */
    protected $fillable = [
-       'name',
+       'first_name',
+       'middle_name',
+       'family_name',
        'email',
        'password',
        'email_verified_at',

@@ -105,7 +105,7 @@ window.onload = function() {
 };
 
 function checkForm() {
-      document.getElementById("name").value=document.getElementById("first_name").value + ' ' +
+   document.getElementById("name").value=document.getElementById("first_name").value + ' ' +
               document.getElementById("middle_name").value +' ' + document.getElementById("family_name").value   
 }
 function adminClicked(e) {
