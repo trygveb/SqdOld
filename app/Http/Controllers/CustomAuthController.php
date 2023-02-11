@@ -66,6 +66,7 @@ class CustomAuthController extends BaseController {
     */
    public function handleRegistration(Request $request) {
       $data = $request->all();
+//      dd(print_r($data, true));
       $request->validate([
           'name' => 'required|unique:users',
           'family_name' => 'required',

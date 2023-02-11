@@ -40,7 +40,25 @@
    </div>
    <br>
    
-   {{-- Show form with email adresses for updating or removing connected members --}}
+   {{-- Show Form with table with not connected members (default) --}}
+      <form action="{{ route('schedule.connectMember')}}" method="POST" id="addMemberForm" >
+         <fieldset>
+         
+         <x-member-table 
+            legendTitle="{{__('Not connected members')}}"
+            connected="no"
+            :schedule="$schedule"
+            :vMemberSchedules="$nonMembers"   />
+         <x-submit-button submitText="{{__('(Update and) connect checked mebers')}}"
+            cancelText="{{ __('Cancel')}}"
+            cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
+            myId="connectButton"
+            submit-disabled="disabled"
+            onclickFunction="return true" />
+     </fieldset>
+     </form> 
+   
+   {{-- Show form with connected members, email adresses for updating or removing  --}}
    <form action="{{ route('schedule.updateMember')}}" method="POST" id="updateMemberForm" style="display:none;">
       <fieldset>
          <label for="emailAdresses">{{__('E-mail addresses: (select all and copy)')}}</label>
@@ -65,27 +83,9 @@
       <div id="newMemberForm" style="display:none;">
       <x-registration-form
           :names="$names"
-          :scheduleId="$schedule->id"
           isAdmin="1" />
       </div>
    
-      {{-- Show Form with table with not connected members --}}
-      <form action="{{ route('schedule.connectMember')}}" method="POST" id="addMemberForm" >
-         <fieldset>
-         
-         <x-member-table 
-            legendTitle="{{__('Not connected members')}}"
-            connected="no"
-            :schedule="$schedule"
-            :vMemberSchedules="$nonMembers"   />
-         <x-submit-button submitText="{{__('(Update and) connect checked mebers')}}"
-            cancelText="{{ __('Cancel')}}"
-            cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
-            myId="connectButton"
-            submit-disabled="disabled"
-            onclickFunction="return true" />
-     </fieldset>
-     </form> 
          
  
  </div>

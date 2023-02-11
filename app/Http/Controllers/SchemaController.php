@@ -236,6 +236,7 @@ class SchemaController extends BaseController {
 // Returns Members view
    public function updateMember(Request $request) {
       $data = request()->all();
+
       $scheduleId = $data["scheduleId"];
 
 // Update admin flags and name_in_schema. Loop over all users in the schedule
@@ -251,6 +252,9 @@ class SchemaController extends BaseController {
             $memberSchedule->admin = 0;
          }
          $nameInSchemaName='nameInSchema_'.$userId; //name of html element
+//         $request->validate([
+//             'name_in_schema' => 'required|unique:schedule.member_schedule',
+//         ]);
          $memberSchedule->name_in_schema= $request[$nameInSchemaName];
 //         $request->validate([
 //             'name_in_schema' => 'required|unique:schedule.member_schedule'

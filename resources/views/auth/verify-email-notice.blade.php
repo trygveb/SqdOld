@@ -42,7 +42,7 @@
                @csrf
 
          @if ($emailVerified == 'NO')
-            <div class="card-body">
+            <div class="card-body" style="line-height:1.65;">
                 {{__('Thanks for signing up to  :application! You are now logged in.', ['application' => $names['application']])}}
                <p>
                   <span style="font-size:larger;">
@@ -52,12 +52,14 @@
                               ['text' => __('Verify email address')])}}.
                </p>
                {{__('When you have done that, you can press the :BTN-button below', ['BTN' => __('Continue')])}}.
+               <br>
+               {{__('Then you have to wait for the administrator to connect you to a schedule')}}.
                <br><br>
                {{__('If you did not receive the email, we will')}}
                   <button style="padding:0;vertical-align:inherit" class="btn btn-link" role="link" type="submit" onclick="sendNewClicked()">
                {{__('gladly send you another')}}.</button>
                <br><br>
-                  *){{__('The email has the sender ":mailFromAdress" and the title ":title" and is signed with ":signed"',
+                  *) {{__('The email has the sender ":mailFromAdress" and the title ":title" and is signed with ":signed"',
                      ['mailFromAdress' => config('app.mailFromAdress'),
                       'title' => __('Verify email address').', '. config('app.name'),
                       'signed' => config('app.mailFromName').', '.__('administrator on').' '.config('app.name')])}}

@@ -19,7 +19,6 @@
               <th style="vertical-align:middle;" class="text-nowrap text-center">{{__('Name')}}</th>
               <th class="text-nowrap text-center" >{{__('Description')}}</th>
               <th class="text-nowrap text-center" >{{__('Admin(s)')}}</th>
-              <th class="text-nowrap text-center" >{{__('Password')}}</th>
               <th class="text-nowrap text-center" >{{__('Member')}}</th>
               <th class="text-nowrap text-center" >{{__('Number')}}</th>
             </tr>
@@ -40,9 +39,6 @@
                   <td class="text-nowrap">
                       {{$myVMemberSchedule->admins}}
                   </td>
-                  <td class="text-nowrap text-center" id="{{$columnId}}">
-                      {{strlen($myVMemberSchedule->password)===0?__('No'):__('Yes')}}
-                  </td>
                   <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
                       <input type="hidden" name="{{$cbName}}" value="0" />
                         <input type="checkbox" checked name="{{$cbName}}" id="{{$cbName}}" onclick='myScheduleClicked(this.name)' value="1">
@@ -52,50 +48,6 @@
                   </td>
                </tr>
          @endforeach
-         </table>
-         <table class="table table-bordered">
-            <caption>{{__('Other schedules')}}</caption>
-            <tr>
-              <th style="vertical-align:middle;" class="text-nowrap text-center">{{__('Name')}}</th>
-              <th class="text-nowrap text-center" >{{__('Description')}}</th>
-              <th class="text-nowrap text-center" >{{__('Admin(s)')}}</th>
-              <th class="text-nowrap text-center" >{{__('Password')}}</th>
-              <th class="text-nowrap text-center" >{{__('Add me')}}</th>
-              <th class="text-nowrap text-center" >{{__('Number')}}</th>
-            </tr>
-            
-
-         @foreach ($otherSchedules as $otherSchedule)
-            @php
-               $cbName='otherSchedule_'.$otherSchedule->id;
-               $columnId='otherCol_'.$otherSchedule->id;
-               $pwInputName='pwInput_'.$otherSchedule->id;
-               $numberInputName='numberInput_'.$otherSchedule->id;
-            @endphp
-               <tr class='status'>
-                  <td class="text-nowrap" >
-                      {{$otherSchedule->name}}
-                  </td>
-                  <td class="text-nowrap">
-                      {{$otherSchedule->description}}
-                  </td>
-                  <td class="text-nowrap">
-                      {{strlen($otherSchedule->password)===0 ? $otherSchedule->admins : ''}}   
-                      <input type="hidden" name="{{$pwInputName}}" id="{{$pwInputName}}">
-                  </td>
-                  <td class="text-nowrap text-center" id="{{$columnId}}">
-                      {{strlen($otherSchedule->password)===0?__('No'):__('Yes')}}
-                  </td>
-                  <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
-                      <input type="hidden" name="{{$cbName}}" value="0" />
-                        <input type="checkbox" name="{{$cbName}}" id="{{$cbName}}" onclick='otherScheduleClicked(this.name)' value="1">
-                  </td>
-                  <td class="text-nowrap">
-                      <input type="number" name="{{$numberInputName}}" value="2" min="1" max="2" size="3">
-                  </td>
-               </tr>
-        @endforeach
-            <!--</tbody>-->
          </table>
             <x-submit-button submitText="{{ __('Save changes')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('home')}}"/>
               </fieldset>

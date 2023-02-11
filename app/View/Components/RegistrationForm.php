@@ -8,16 +8,14 @@ class RegistrationForm extends Component
 {
    public $isAdmin;
    public $names;
-   public $scheduleId;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($names, $scheduleId, $isAdmin)
+    public function __construct($names, $isAdmin)
     {
         $this->names= $names;
-        $this->scheduleId= $scheduleId;
         $this->isAdmin= $isAdmin;
     }
 
