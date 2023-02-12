@@ -424,7 +424,28 @@ class SchemaController extends BaseController {
           'schedule' => $schedule,
       ]);
    }
+   public function ShowViewAdminRegisterMember($scheduleId, $status=[]) {
+      $schedule = Schedule::find($scheduleId);
+      if (is_null($schedule) ) {
+         dd("ShowNotViewMembers ".$scheduleId);
+      }
+      $admin = V_MemberSchedule::where('schedule_id', $scheduleId)
+              ->where('user_id', Auth::user()->id)
+              ->pluck('admin')
+              ->first();
+      if ($admin === 0 && Auth::user()->authority === 0) {
+         return view('errors.403')->with('names', $this->names());
+      }
+      return view('schedule.adminRegisterMember', [
+          'schedule' => $schedule,
+          'currentUser' => Auth::user(),
+          'names' => $this->names(),
+          'admin' => $this->isAdmin($scheduleId),
+          'status'=> $status
+      ]);
+   }
 
+   
 // SHow the Members view
    public function ShowViewMembers($scheduleId, $status=[]) {
       $schedule = Schedule::find($scheduleId);
@@ -477,6 +498,54 @@ class SchemaController extends BaseController {
           'nonMembers' => $sortedNonMembers,
           'currentUser' => Auth::user(),
           'emails' => $emails,
+          'names' => $this->names(),
+          'admin' => $this->isAdmin($scheduleId),
+          'status'=> $status
+      ]);
+   }
+
+   public function ShowViewNotConnectedMembers($scheduleId, $status=[]) {
+      $schedule = Schedule::find($scheduleId);
+      if (is_null($schedule) ) {
+         dd("ShowNotViewMembers ".$scheduleId);
+      }
+      $admin = V_MemberSchedule::where('schedule_id', $scheduleId)
+              ->where('user_id', Auth::user()->id)
+              ->pluck('admin')
+              ->first();
+      if ($admin === 0 && Auth::user()->authority === 0) {
+         return view('errors.403')->with('names', $this->names());
+      }
+      $vMemberSchedules = V_MemberSchedule::where('schedule_id', $schedule->id)
+              ->orderBy('user_name', 'asc')
+              ->get();
+      $memberUserIds = [];
+      foreach ($vMemberSchedules as $member) {
+         array_push($memberUserIds, $member->user_id);
+      }
+      $allUsers = User::all();
+
+      $nonMembers = collect();
+      foreach ($allUsers as $user) {
+         if (!in_array($user->id, $memberUserIds)) {
+            $nonMember = new V_MemberSchedule();
+            $nonMember->schedule_id = $schedule->id;
+            $nonMember->user_id = $user->id;
+            $nonMember->user_name = $user->name;
+            $nonMember->schedule_name = $schedule->name;
+            $nonMember->name_in_schema = explode(" ", $user->name)[0];
+            $nonMember->email = $user->email;
+            $nonMember->admin = 0;
+            $nonMember->group_size = 1;          // TOD: FIX
+            $nonMembers->push($nonMember);
+         }
+      }
+      $sortedNonMembers= $nonMembers->sortBy('user_name');
+      $sortedNonMembers->values()->all();
+      return view('schedule.adminNotConnectedMembers', [
+          'schedule' => $schedule,
+          'nonMembers' => $sortedNonMembers,
+          'currentUser' => Auth::user(),
           'names' => $this->names(),
           'admin' => $this->isAdmin($scheduleId),
           'status'=> $status

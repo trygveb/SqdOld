@@ -108,8 +108,13 @@ Route::group(// Comment out this when running tests
                     Route::middleware(['isAdmin'])->group(function () {
                        // Show view AdminComments
                        Route::name('showComments')->get('/admin/comments/{scheduleId}', 'showViewAdminComments');
-                       // Show add/remove members view
+
+                       // Show update/remove members view
                        Route::name('showMembers')->get('/admin/members/{scheduleId}', 'showViewMembers');
+                       // Show update/remove members view
+                       Route::name('showNotConnectedMembers')->get('/admin/notConnectedmembers/{scheduleId}', 'showViewNotConnectedMembers');
+                       Route::name('showViewAdminRegisterMember')->get('/admin/registerMember/{scheduleId}', 'showViewAdminRegisterMember');
+
                        // Update admin status or remove member from a schedule
                        Route::name('connectMember')->post('/admin/connectMember', 'connectMember');
                        // Update admin status or remove member from a schedule
