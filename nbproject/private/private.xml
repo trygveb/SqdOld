@@ -5,11 +5,12 @@
         <group>
             <file>file:/D:/Development/VagrantCode/sqd/resources/lang/sv.json</file>
             <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/SchemaController.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/public/css/sqd.css</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/components/member-table.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/routes/web.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/registration.blade.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/CustomAuthController.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/addNewMember.blade.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/components/registration-form.blade.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/resources/views/schedule/adminMembers.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/app/Models/Schedule/Schedule.php</file>
         </group>
     </open-files>
 </project-private>

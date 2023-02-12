@@ -1,18 +1,18 @@
 @extends('schedule.layout')
 @section('menu1')
-@if ($status != "")
-    <div class="alert alert-danger">
-     {{ $status }}
-    </div>
-@endif
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+
+@if (array_count_values($status) > 0)
+       @foreach ($status as $key => $value)
+          @if ($key=='target') 
+             @if ($value=='updateMember')
+             @endif
+          @endif
+             @if (str_contains($key,'error')) 
+             <div class="alert alert-danger">
+              {{ $value }}</li>
+             </div>
+             @endif
+       @endforeach
 @endif
 
 @if ($admin > 0)
@@ -91,13 +91,8 @@
  </div>
 @section('scripts')
 <script>
+
 window.onload = function() {
-   @if ($status != "")
-      document.getElementById("not_connected_rb").checked= true;
-      notConnectedEventHandler();
-   @else
-      document.getElementById("connected_rb").checked= true;
-   @endif
    document.getElementById("connectButton").disabled= true;
 };
 

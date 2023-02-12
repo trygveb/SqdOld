@@ -219,7 +219,7 @@ class SchemaController extends BaseController {
             $nameInSchema= $data['nameInSchema_'.$userId];
       
             $status=$schedule->addMember($userId,$groupSize, $nameInSchema);
-            if ($status != 'OK') {
+            if (array_count_values($status) >0) {
                 //return Redirect::back()->withErrors($status);
                 return $this->ShowViewMembers($scheduleId, $status);
                //throw ValidationException::withMessages(['name in schema not unique']);
@@ -241,24 +241,29 @@ class SchemaController extends BaseController {
 
 // Update admin flags and name_in_schema. Loop over all users in the schedule
       $userIds = MemberSchedule::where('schedule_id', $scheduleId)->get()->pluck('user_id');
+      $nameInSchemaNames=[];
       foreach ($userIds as $userId) {
-         $adminName = 'admin_' . $userId;  //name of html element
          $memberSchedule = MemberSchedule::where('user_id', $userId)
                  ->where('schedule_id', $scheduleId)
                  ->first();
-         if ($request->has($adminName)) {
+         $adminHtmlElementName = 'admin_' . $userId;  //name of html element
+         if ($request->has($adminHtmlElementName)) {
             $memberSchedule->admin = 1;
          } else {
             $memberSchedule->admin = 0;
          }
-         $nameInSchemaName='nameInSchema_'.$userId; //name of html element
-//         $request->validate([
-//             'name_in_schema' => 'required|unique:schedule.member_schedule',
-//         ]);
-         $memberSchedule->name_in_schema= $request[$nameInSchemaName];
-//         $request->validate([
-//             'name_in_schema' => 'required|unique:schedule.member_schedule'
-//         ]);
+         $nameInSchema= $request['nameInSchema_'.$userId];
+         
+         if (! in_array($nameInSchema, $nameInSchemaNames) ) {
+            array_push($nameInSchemaNames,$nameInSchema);
+         } else {
+            $errors= [
+                'target' => 'updateMember',
+                'error' => 'nameInSchema must be unique: '.$nameInSchema
+            ];
+            return $this->ShowViewMembers($scheduleId, $errors);
+         }
+         $memberSchedule->name_in_schema= $nameInSchema;
          $numberName='number_'.$userId;   //name of html element
          $memberSchedule->group_size= $request[$numberName];
          $memberSchedule->save();
@@ -421,8 +426,7 @@ class SchemaController extends BaseController {
    }
 
 // SHow the Members view
-   public function ShowViewMembers($scheduleId, $status="") {
-      
+   public function ShowViewMembers($scheduleId, $status=[]) {
       $schedule = Schedule::find($scheduleId);
       if (is_null($schedule) ) {
          dd("ShowViewMembers ".$scheduleId);
