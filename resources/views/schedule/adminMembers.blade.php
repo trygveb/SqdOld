@@ -40,7 +40,7 @@
       <a class="btn btn-link" id="new_member_rb"  href="{{route('schedule.showViewAdminRegisterMember',['scheduleId' => $schedule->id])}}">{{__('Register new member')}}</a>
    </div>
    <br>
-   
+
    {{-- Show form with connected members, email adresses for updating or removing  --}}
    <form action="{{ route('schedule.updateMember')}}" method="POST" id="updateMemberForm">
       <fieldset>
@@ -51,11 +51,16 @@
          <a class="btn-link" id="copyButton" style="float:right;" onClick="copyEmailAdresses()"> {{__('Copy to clipboard')}}</a>
           </div>    
         
-         <textarea class="form-control" style="background-color:#ccc" id="emailAdresses"  cols="70">{{$emails}}</textarea>
+         <textarea class="form-control" style="background-color:#ccc" id="emailAdresses"  readonly cols="70">{{$emails}}</textarea>
          </fieldset>
          </div>
-         
-          <br>
+          
+         <div class="form-info-text" id="help_text" style="display:none;">
+         <br>
+         Namn i schema måste vara unikt i schemat. Antal=2 för par, annars 1.
+         <br><br>
+         </div>
+      <br>
          <x-member-table
             legendTitle="{{__('Connected members')}}"
             connected="yes"
@@ -73,12 +78,27 @@
  </div>
 @section('scripts')
 <script>
-// Detect changes in input fields
+  const findDuplicates = (arr) => {
+  let sorted_arr = arr.slice().sort(); // You can define the comparing function here. 
+  // JS by default uses a crappy string compare.
+  // (we use slice to clone the array so the
+  // original array won't be modified)
+  let results = [];
+  for (let i = 0; i < sorted_arr.length - 1; i++) {
+    if (sorted_arr[i + 1] == sorted_arr[i]) {
+      results.push(sorted_arr[i]);
+    }
+  }
+  return results;
+};
+
+ //Detect changes in input fields
    $("input").on("change keyup paste", function(){
     checkForm(1);
 });
 
 window.onload = function() {
+   console.log('onload');
   const submitButton = document.getElementById("submitButton");
   submitButton.disabled = true;
   checkForm();
@@ -91,7 +111,6 @@ function copyEmailAdresses() {
 
 }
 function checkForm(status=0) {
-   checkUniqueNames();
    fixSubmitButton(status);
 }
 function adminClicked(e) {
@@ -121,12 +140,19 @@ function fixSubmitButton(status=0) {
    
 function checkUniqueNames() {
    var elements = document.getElementById("updateMemberForm").elements;
-   alert("checkUniqueNames not implemented ");
+   var textElementValues=[];
    for (var i = 0, element; element = elements[i++];) {
-       if (element.type === "text" && element.value === "")
-           console.log("it's an empty textfield")
+      if (element.type === "text") {
+//        console.log("textfield="+element.value);
+        textElementValues.push(element.value);
+     }
    }
-
+   duplicates=findDuplicates(textElementValues);
+  
+   if (duplicates.length > 0) {
+      alert("{{__('Name in schema must be unique in the schema')}}:"+duplicates);
+   }
+  
 };
 
 
@@ -153,6 +179,7 @@ function countDeletes() {
 };
 
 function checkDeletes() {
+   checkUniqueNames();
    var n= countDeletes();
    if (n> 0 ) {
    submitButton.disabled = false;
@@ -175,6 +202,10 @@ function copyEmails() {
 
   /* Alert the copied text */
   alert("Copied the text: " + copyText.value);
+}
+function showHelp() {
+   var helpText = document.getElementById("help_text");
+   helpText.style.display='inline-block';
 }
 </script>
 

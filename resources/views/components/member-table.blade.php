@@ -1,7 +1,7 @@
 {{ csrf_field() }}
 <input type="hidden" name="scheduleId" value="{{$schedule->id}}">
 
-<legend id="legend">{{$legendTitle}}</legend>
+<legend id="legend">{{$legendTitle}} <a class="btn btn-link" style="float:right;" onclick="showHelp()" >{{__('Help')}}</a></legend>
 <table class="table table-bordered table-sm" style="max-width:250px;">
    <thead style="font-weight:bold; text-decoration-line: underline;">
    <th class="text-nowrap">{{__('Name')}}</th>
