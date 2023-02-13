@@ -11,20 +11,19 @@ class SubmitButton extends Component
    public $cancelUrl;
    public $onclickFunction;
    public $myId;
-   public $submitDisabled;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($submitText, $cancelText, $cancelUrl, $myId="", $onclickFunction="", $submitDisabled="")
+    public function __construct($submitText, $cancelText, $cancelUrl, $myId="", $onclickFunction="")
     {
          $this->submitText = $submitText;
          $this->cancelText= $cancelText;
          $this->cancelUrl= $cancelUrl;
          $this->myId= $myId;
          $this->onclickFunction= $onclickFunction;
-         $this->$submitDisabled=$submitDisabled;
+
     }
 
     /**

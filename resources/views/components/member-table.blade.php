@@ -29,7 +29,7 @@
             <input type="text" maxlength=12 size=12 name="{{$nameInSchemaName}}" required value="{{$member->name_in_schema}}">
          </td>
          <td class="text-nowrap" >
-            <input type="number" size="3" min="1" max="2" value="{{$member->group_size}}" name={{"$numberName"}} >
+            <input type="number" size="3" min="1" max="2" value="{{$member->group_size}}" name={{"$numberName"}} onclick="checkForm(1)" >
          </td>
          @if ($connected=="yes")
             <td style="padding:2px 5px 2px 5px;" class="text-center">
@@ -40,11 +40,11 @@
             @endif
             </td>
             <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
-                <input type="checkbox"  class="cbRemove"   id="{{$member->user_id}}" name="{{$removeName}}" onclick="fixRemoveButton(event)">
+                <input type="checkbox"  class="cbRemove"   id="{{$member->user_id}}" name="{{$removeName}}" onclick="checkForm()">
             </td>
          @else
             <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
-                <input type="checkbox"  class="cbConnect"   id="{{$member->user_id}}" name="{{$connectName}}" onclick="fixConnectButton(event)">
+                <input type="checkbox"  class="cbConnect"   id="{{$member->user_id}}" name="{{$connectName}}" onclick="checkForm()">
             </td>
          @endif
       </tr>

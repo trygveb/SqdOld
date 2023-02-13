@@ -44,11 +44,18 @@
    {{-- Show form with connected members, email adresses for updating or removing  --}}
    <form action="{{ route('schedule.updateMember')}}" method="POST" id="updateMemberForm">
       <fieldset>
-         <label for="emailAdresses">{{__('E-mail addresses: (select all and copy)')}}</label>
-         <br>
-         <textarea style="background-color:#ccc" id="emailAdresses"  cols="70">{{$emails}}</textarea>
-         <br>
+          <div>
+          <fieldset>
+          <div style="margin-bottom:5px;">
+          {{__('E-mail addresses')}}:
+         <a class="btn-link" id="copyButton" style="float:right;" onClick="copyEmailAdresses()"> {{__('Copy to clipboard')}}</a>
+          </div>    
+        
+         <textarea class="form-control" style="background-color:#ccc" id="emailAdresses"  cols="70">{{$emails}}</textarea>
+         </fieldset>
+         </div>
          
+          <br>
          <x-member-table
             legendTitle="{{__('Connected members')}}"
             connected="yes"
@@ -57,8 +64,7 @@
          <x-submit-button submitText="{{__('Update')}}"
                    cancelText="{{ __('Cancel')}}"
                    cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
-                   myId="removeButton"
-                   submitDisabled="1"
+                   myId="submitButton"
                    onclickFunction="return checkDeletes()" />
       </fieldset>
       </form> 
@@ -67,34 +73,61 @@
  </div>
 @section('scripts')
 <script>
+// Detect changes in input fields
+   $("input").on("change keyup paste", function(){
+    checkForm(1);
+});
 
+window.onload = function() {
+  const submitButton = document.getElementById("submitButton");
+  submitButton.disabled = true;
+  checkForm();
 
-function checkForm() {
-   document.getElementById("name").value=document.getElementById("first_name").value + ' ' +
-              document.getElementById("middle_name").value +' ' + document.getElementById("family_name").value   
+};
+function copyEmailAdresses() {
+    $("#emailAdresses").select();
+    document.execCommand('copy');
+    alert("{{__('Email adresses copied to clipboard')}}");
+
+}
+function checkForm(status=0) {
+   checkUniqueNames();
+   fixSubmitButton(status);
 }
 function adminClicked(e) {
    var n=countAdmins();
    if (n===0) {
       e.target.checked= true;
       alert("{{__('You must have at least one admin in each schedule')}}");
+   } else {
+       submitButton.disabled = false;
    }
 }
 
 //Change text on submit button if members are marked for removal
-function fixRemoveButton(e) {
+function fixSubmitButton(status=0) {
+   const submitButton = document.getElementById("submitButton");
+   if (status > 0) {
+      submitButton.disabled = false;
+   }
       var n= countDeletes();
-      console.log(n + ' deletes');
-      const removeButton = document.getElementById("removeButton");
+//      console.log('status='+status + ', ' + n + ' deletes');
       if (n===0) {
-         // removeButton.style.display = "none";
-         removeButton.textContent  ="{{__('Update')}}";
+         submitButton.textContent  ="{{__('Update')}}";
       } else {
-         removeButton.textContent  ="{{__('Remove checked mebers from schedule')}}";
-          //removeButton.style.display = "inline-block";      
+         submitButton.textContent  ="{{__('(Update and) remove checked mebers from schedule')}}";
       }
    };
    
+function checkUniqueNames() {
+   var elements = document.getElementById("updateMemberForm").elements;
+   alert("checkUniqueNames not implemented ");
+   for (var i = 0, element; element = elements[i++];) {
+       if (element.type === "text" && element.value === "")
+           console.log("it's an empty textfield")
+   }
+
+};
 
 
 function countAdmins() {
@@ -122,7 +155,8 @@ function countDeletes() {
 function checkDeletes() {
    var n= countDeletes();
    if (n> 0 ) {
-      return confirm("{{__('Are you sure? You have selected')}} "+n+" {{__('members for removal')}}.\n\
+   submitButton.disabled = false;
+   return confirm("{{__('Are you sure? You have selected')}} "+n+" {{__('members for removal')}}.\n\
 {{__('This can not be undone. If the member wants to join again later, he/she must register again')}}");
    } else {
       return true;

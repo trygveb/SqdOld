@@ -240,36 +240,33 @@ class SchemaController extends BaseController {
       $scheduleId = $data["scheduleId"];
 
 // Update admin flags and name_in_schema. Loop over all users in the schedule
-      $userIds = MemberSchedule::where('schedule_id', $scheduleId)->get()->pluck('user_id');
-      $nameInSchemaNames=[];
-      foreach ($userIds as $userId) {
-         $memberSchedule = MemberSchedule::where('user_id', $userId)
-                 ->where('schedule_id', $scheduleId)
-                 ->first();
+     // $userIds = MemberSchedule::where('schedule_id', $scheduleId)->get()->pluck('user_id');
+      $memberSchedules = MemberSchedule::where('schedule_id', $scheduleId)->get();
+      $nameInSchema= $this->checkNameInSchema($memberSchedules, $request);
+      if ($nameInSchema != "") {
+         $errors= [
+             'error' => 'nameInSchema must be unique: '.$nameInSchema
+         ];
+         return $this->ShowViewMembers($scheduleId, $errors);
+         
+      }
+      //foreach ($userIds as $userId) {
+      foreach ($memberSchedules as $memberSchedule) {
+         $userId=$memberSchedule->user_id;
          $adminHtmlElementName = 'admin_' . $userId;  //name of html element
          if ($request->has($adminHtmlElementName)) {
             $memberSchedule->admin = 1;
          } else {
             $memberSchedule->admin = 0;
          }
-         $nameInSchema= $request['nameInSchema_'.$userId];
-         
-         if (! in_array($nameInSchema, $nameInSchemaNames) ) {
-            array_push($nameInSchemaNames,$nameInSchema);
-         } else {
-            $errors= [
-                'target' => 'updateMember',
-                'error' => 'nameInSchema must be unique: '.$nameInSchema
-            ];
-            return $this->ShowViewMembers($scheduleId, $errors);
-         }
-         $memberSchedule->name_in_schema= $nameInSchema;
-         $numberName='number_'.$userId;   //name of html element
-         $memberSchedule->group_size= $request[$numberName];
-         $memberSchedule->save();
+
+        $memberSchedule->name_in_schema= $request['nameInSchema_'.$userId];;
+        $numberName='number_'.$userId;   //name of html element
+        $memberSchedule->group_size= $request[$numberName];
+        $memberSchedule->save();
 
       }
-
+        // dd(print_r($nameInSchemaNames, true));
       // Remove member(s) from all scheduledates in the schedule
       $scheduleDates=ScheduleDate::where('schedule_id', $scheduleId)->get();
       foreach ($data as $key => $value) {
@@ -277,22 +274,31 @@ class SchemaController extends BaseController {
             $atoms = explode('_', $key);
             $userId = $atoms[1];
             $this->removeMemberFromSchema($userId, $scheduleId, $scheduleDates);
-//            foreach($scheduleDates as $scheduleDate) {
-//                $memberScheduleDate= MemberScheduleDate::where('user_id',$userId)->where('schedule_date_id',$scheduleDate->id)->first();
-//                $memberScheduleDate->delete();
-//            }
-//            $memberSchedule = MemberSchedule::where('user_id', $userId)
-//                    ->where('schedule_id', $scheduleId)
-//                    ->first();
-//            $memberSchedule->delete();
-
-
          }
       }
       
       return $this->ShowViewMembers($scheduleId);
    }
 
+   private function checkNameInSchema($memberSchedules, $request) {
+      $returnValue="";
+     foreach ($memberSchedules as $memberSchedule) {
+         $userId=$memberSchedule->user_id;
+         $newNameInSchema= $request['nameInSchema_'.$userId];
+         //$oldNameInSchema=$memberSchedule->name_in_schema;
+         $testMemberSchedules=$memberSchedules->where('name_in_schema',$newNameInSchema)->all();
+         foreach ($testMemberSchedules as $testMemberSchedule) {
+            if ($testMemberSchedule->user_id != $userId) {
+               $returnValue= $newNameInSchema;
+               break;
+            }
+         }
+         if ($returnValue!="") {
+            break;
+         }
+     }
+     return $returnValue;
+   }
    // Remove a member from aschedula and all scheduledates in the schedule
    private function removeMemberFromSchema($userId, $scheduleId, $scheduleDates) {
       foreach($scheduleDates as $scheduleDate) {
