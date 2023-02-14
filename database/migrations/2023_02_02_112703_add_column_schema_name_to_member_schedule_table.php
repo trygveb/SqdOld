@@ -15,7 +15,7 @@ class AddColumnSchemaNameToMemberScheduleTable extends Migration
     {
        $laravel_connection=env('DB_DATABASE', 'laravel');
        $schedule_connection=env('DB_DATABASE_SCHEDULE', 'schedule');
-        Schema::table($laravel_connection.'.member_schedule', function (Blueprint $table) {
+        Schema::table($schedule_connection.'.member_schedule', function (Blueprint $table) {
             $table->string('name_in_schema', 12)->after('schedule_id');
         });
          DB::connection($schedule_connection)->statement('UPDATE member_schedule A
