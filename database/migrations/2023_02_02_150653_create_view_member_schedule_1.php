@@ -3,9 +3,11 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Traits\Connections;
 
 class CreateViewMemberSchedule1 extends Migration
 {
+   use Connections;
     /**
      * Run the migrations.
      *
@@ -13,13 +15,13 @@ class CreateViewMemberSchedule1 extends Migration
      */
     public function up()
     {
-        $env = env('APP_ENV', 'test');
-        $laravelDatabase='laravel';
-        if ($env==='test') {
-            $laravelDatabase='laravelTest';
-        }
+//        $env = env('APP_ENV', 'test');
+//        $laravelDatabase='laravel';
+//        if ($env==='test') {
+//            $laravelDatabase='laravelTest';
+//        }
 
-        DB::connection('schedule')->statement('CREATE OR REPLACE VIEW v_member_schedule AS
+        DB::connection(connections.schedule_connection())->statement('CREATE OR REPLACE VIEW v_member_schedule AS
             select
             `u`.`id` AS `user_id`,
             `u`.`name` AS `user_name`,
@@ -35,7 +37,7 @@ class CreateViewMemberSchedule1 extends Migration
             ((`member_schedule` `mt`
         left join `schedule` `t` on
             ((`t`.`id` = `mt`.`schedule_id`)))
-        left join `'.$laravelDatabase.'`.`users` `u` on
+        left join `'.connections.laravel_connection().'`.`users` `u` on
             ((`u`.`id` = `mt`.`user_id`)))');
     }
 
