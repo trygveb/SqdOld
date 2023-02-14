@@ -24,7 +24,7 @@
    @endforeach
 @endif
  <div class="container" style="max-width:800px;">
-   <h1>{{__('Members in schedule')}}: {{$schedule->name}}</h1>
+   <h1>{{__('Manage members for schedule')}}: {{$schedule->name}}</h1>
    <span class="link_text">{{__('Show')}}:</span>
    <div id="connected_div" style="display:inline;">
       <a class="btn btn-link" id="connected_rb"  href="{{route('schedule.showMembers',['scheduleId' => $schedule->id])}}">{{__('Connected members')}}</a>
@@ -40,7 +40,16 @@
    {{-- Show Form with table with not connected members (default) --}}
       <form action="{{ route('schedule.connectMember')}}" method="POST" id="addMemberForm" >
          <fieldset>
-         
+         <div class="form-info-text" id="help_text" style="display:none;">
+         <br>
+         <ul>
+             <li>{{__('Name in schedule here is just a suggestion.')}}</li>
+            <li>{{__('Number=2 for pairs, otherwise 1.')}}</li>
+            <li>{{__('Name in schedule and Number will only apply if you check Connect.')}}</li>
+            <li>{{__('Name in schedule must be unique in the schedule, but may be different in different schedules.')}}</li>
+         </ul><br>
+         </div>
+
          <x-member-table 
             legendTitle="{{__('Not connected members')}}"
             connected="no"
@@ -49,7 +58,7 @@
          <x-submit-button submitText="{{__('(Update and) connect checked mebers')}}"
             cancelText="{{ __('Cancel')}}"
             cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
-            myId="connectButton"
+            myId="submitButton"
             submit-disabled="disabled"
             onclickFunction="return true" />
      </fieldset>
@@ -59,16 +68,22 @@
  </div>
 @section('scripts')
 <script>
-
-//Change text on submit button if members are marked for removal
-function fixConnectButton(e) {
+window.onload = function() {
+  const submitButton = document.getElementById("submitButton");
+  submitButton.disabled = true;
+};
+function checkForm(status=0) {
+   fixSubmitButton(status);
+}
+//Enable submit button if members are marked for connect
+function fixSubmitButton(status=0) {
       var n= countConnects();
       console.log(n + ' connects');
-      const connectButton = document.getElementById("connectButton");
+      const submitButton = document.getElementById("submitButton");
       if (n===0) {
-         connectButton.disabled= true;
+         submitButton.disabled= true;
       } else {
-         connectButton.disabled= false;
+         submitButton.disabled= false;
       }
    };
 
@@ -82,6 +97,14 @@ function countConnects() {
    }
    return n;
 };
+function showHelp() {
+   var helpText = document.getElementById("help_text");
+   if (helpText.style.display === 'none') {
+      helpText.style.display='inline-block';
+   } else {
+      helpText.style.display='none';
+   }
+}
 </script>
 
 

@@ -35,12 +35,7 @@ class Schedule extends Model {
          }
       } catch (\Illuminate\Database\QueryException $ex) {
          DB::rollback();
-         $pos=strpos($ex->getMessage(),'member_schedule_UX_2');
-         if ($pos === false) {
-            return ['Failed'];  // function failed due to unknown error
-         } else {
-            return [__('Name in schedule').' '.__('must be inique in the schedule')]; // function failed due to unique index violation
-         }
+         return ['Failed'];  // function failed due to unknown error
       }
       DB::commit();
       return 'OK';

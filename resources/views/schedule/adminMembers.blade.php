@@ -28,7 +28,7 @@
 @endif
 
  <div class="container" style="max-width:800px;">
-   <h1>{{__('Members in schedule')}}: {{$schedule->name}}</h1>
+   <h1>{{__('Manage members for schedule')}}: {{$schedule->name}}</h1>
    <span class="link_text">{{__('Show')}}:</span>
    <div id="connected_div" style="display:inline;">
       <a class="btn btn-link" id="connected_rb"  href="{{route('schedule.showMembers',['scheduleId' => $schedule->id])}}">{{__('Connected members')}}</a>
@@ -57,8 +57,12 @@
           
          <div class="form-info-text" id="help_text" style="display:none;">
          <br>
-         Namn i schema måste vara unikt i schemat. Antal=2 för par, annars 1.
-         <br><br>
+         <ul>
+            <li>{{__('Name in schedule must be unique in the schedule, but may be different in different schedules.')}}</li>
+            <li>{{__('Number=2 for pairs, otherwise 1.')}}</li>
+            <li>{{__('If you check Admin, that member will get the same authority as you, on this schedule.')}}</li>
+            <li>{{__('If you check Remove, that member will be removed from this schedule, but will remain registered in SdSchema.')}}</li>
+         </ul>
          </div>
       <br>
          <x-member-table
@@ -70,7 +74,7 @@
                    cancelText="{{ __('Cancel')}}"
                    cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
                    myId="submitButton"
-                   onclickFunction="return checkDeletes()" />
+                   onclickFunction="return checkSubmit()" />
       </fieldset>
       </form> 
    
@@ -78,7 +82,20 @@
  </div>
 @section('scripts')
 <script>
-  const findDuplicates = (arr) => {
+
+ //Detect changes in input fields
+$("input").on("change keyup paste", function(){
+    checkForm(1);
+});
+
+window.onload = function() {
+   console.log('onload');
+  const submitButton = document.getElementById("submitButton");
+  submitButton.disabled = true;
+  checkForm();
+};
+
+function findDuplicates(arr) {
   let sorted_arr = arr.slice().sort(); // You can define the comparing function here. 
   // JS by default uses a crappy string compare.
   // (we use slice to clone the array so the
@@ -90,20 +107,8 @@
     }
   }
   return results;
-};
+};   
 
- //Detect changes in input fields
-   $("input").on("change keyup paste", function(){
-    checkForm(1);
-});
-
-window.onload = function() {
-   console.log('onload');
-  const submitButton = document.getElementById("submitButton");
-  submitButton.disabled = true;
-  checkForm();
-
-};
 function copyEmailAdresses() {
     $("#emailAdresses").select();
     document.execCommand('copy');
@@ -151,8 +156,9 @@ function checkUniqueNames() {
   
    if (duplicates.length > 0) {
       alert("{{__('Name in schema must be unique in the schema')}}:"+duplicates);
+      return false;
    }
-  
+  return true;
 };
 
 
@@ -178,8 +184,10 @@ function countDeletes() {
    return n;
 };
 
-function checkDeletes() {
-   checkUniqueNames();
+function checkSubmit() {
+   if (!checkUniqueNames()) {
+      return false;
+   };
    var n= countDeletes();
    if (n> 0 ) {
    submitButton.disabled = false;
@@ -189,23 +197,14 @@ function checkDeletes() {
       return true;
    }
 };
-function copyEmails() {
-  /* Get the text field */
-  var copyText = document.getElementById("emailAdresses");
 
-  /* Select the text field */
-  copyText.select();
-  copyText.setSelectionRange(0, 99999); /* For mobile devices */
-
-   /* Copy the text inside the text field */
-  navigator.clipboard.writeText(copyText.value);
-
-  /* Alert the copied text */
-  alert("Copied the text: " + copyText.value);
-}
 function showHelp() {
    var helpText = document.getElementById("help_text");
-   helpText.style.display='inline-block';
+   if (helpText.style.display === 'none') {
+      helpText.style.display='inline-block';
+   } else {
+      helpText.style.display='none';
+   }
 }
 </script>
 

@@ -148,3 +148,7 @@ caption { caption-side:top; }
     color: #00bc8c;
     text-decoration: none;
 }
+.form-info-text {
+    font-weight: 400;
+    color: #fd7e14;
+}

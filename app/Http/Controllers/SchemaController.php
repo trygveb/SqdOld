@@ -219,15 +219,14 @@ class SchemaController extends BaseController {
             $nameInSchema= $data['nameInSchema_'.$userId];
       
             $status=$schedule->addMember($userId,$groupSize, $nameInSchema);
-            if (array_count_values($status) >0) {
-                //return Redirect::back()->withErrors($status);
-                return $this->ShowViewMembers($scheduleId, $status);
-               //throw ValidationException::withMessages(['name in schema not unique']);
-               
+            if ($status != 'OK') {
+                return Redirect::back()->withErrors($status);
+                //return $this->ShowViewMembers($scheduleId, $status);
             }
          }
-      }     
-      return $this->ShowViewMembers($scheduleId);
+      }
+       return Redirect::back();
+//      return $this->ShowViewMembers($scheduleId);
    }
 
 
@@ -245,7 +244,7 @@ class SchemaController extends BaseController {
       $nameInSchema= $this->checkNameInSchema($memberSchedules, $request);
       if ($nameInSchema != "") {
          $errors= [
-             'error' => 'nameInSchema must be unique: '.$nameInSchema
+             'error' =>  __('Name in schema must be unique in the schema'). ': '.$nameInSchema
          ];
          return $this->ShowViewMembers($scheduleId, $errors);
          
@@ -286,14 +285,18 @@ class SchemaController extends BaseController {
          $userId=$memberSchedule->user_id;
          $newNameInSchema= $request['nameInSchema_'.$userId];
          //$oldNameInSchema=$memberSchedule->name_in_schema;
-         $testMemberSchedules=$memberSchedules->where('name_in_schema',$newNameInSchema)->all();
-         foreach ($testMemberSchedules as $testMemberSchedule) {
-            if ($testMemberSchedule->user_id != $userId) {
-               $returnValue= $newNameInSchema;
-               break;
-            }
-         }
-         if ($returnValue!="") {
+         $testMemberSchedules=$memberSchedules
+                 ->where('name_in_schema',$newNameInSchema)
+                 ->where('user_id','<>', $userId)
+                 ->all();
+//         foreach ($testMemberSchedules as $testMemberSchedule) {
+//            if ($testMemberSchedule->user_id != $userId) {
+//               $returnValue= $newNameInSchema;
+//               break;
+//            }
+//         }
+         if (count($testMemberSchedules) >0 ) {
+            $returnValue= $newNameInSchema;
             break;
          }
      }
