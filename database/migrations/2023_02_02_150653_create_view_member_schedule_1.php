@@ -21,7 +21,7 @@ class CreateViewMemberSchedule1 extends Migration
 //            $laravelDatabase='laravelTest';
 //        }
 
-        DB::connection(connections.schedule_connection())->statement('CREATE OR REPLACE VIEW v_member_schedule AS
+        DB::connection(Connections::schedule_connection())->statement('CREATE OR REPLACE VIEW v_member_schedule AS
             select
             `u`.`id` AS `user_id`,
             `u`.`name` AS `user_name`,
@@ -37,7 +37,7 @@ class CreateViewMemberSchedule1 extends Migration
             ((`member_schedule` `mt`
         left join `schedule` `t` on
             ((`t`.`id` = `mt`.`schedule_id`)))
-        left join `'.connections.laravel_connection().'`.`users` `u` on
+        left join `'.Connections::laravel_connection().'`.`users` `u` on
             ((`u`.`id` = `mt`.`user_id`)))');
     }
 
