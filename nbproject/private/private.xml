@@ -5,9 +5,12 @@
         <group>
             <file>file:/D:/Development/VagrantCode/sqd/resources/lang/sv.json</file>
             <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/SchemaController.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/components/member-table.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/gitCommit</file>
             <file>file:/D:/Development/VagrantCode/sqd/routes/web.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/database/migrations/2023_02_02_112703_add_column_schema_name_to_member_schedule_table.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/resources/views/schedule/adminMembers.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/database/migrations/2023_02_02_150653_create_view_member_schedule_1.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/app/Models/Schedule/Schedule.php</file>
         </group>
     </open-files>
 </project-private>

@@ -13,11 +13,13 @@ class AddColumnSchemaNameToMemberScheduleTable extends Migration
      */
     public function up()
     {
-        Schema::table('schedule.member_schedule', function (Blueprint $table) {
+       $laravel_connection=env('DB_DATABASE', 'laravel');
+       $schedule_connection=env('DB_DATABASE_SCHEDULE', 'schedule');
+        Schema::table($laravel_connection.'.member_schedule', function (Blueprint $table) {
             $table->string('name_in_schema', 12)->after('schedule_id');
         });
-         DB::connection('schedule')->statement('UPDATE member_schedule A
-            INNER JOIN laravel.users B ON B.id = A.user_id
+         DB::connection($schedule_connection)->statement('UPDATE member_schedule A
+            INNER JOIN '.$laravel_connection.'.users B ON B.id = A.user_id
             SET A.name_in_schema = B.name');
 
 
