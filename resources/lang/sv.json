@@ -67,6 +67,7 @@
     "Group-size": "Gruppstorlek",
     "Hello!": "Hej!",
     "Help":"Hjälp",
+    "Hide Help" : "Dölj Hjälp",
     "Historical (from 2021-08-30) attendance status can be displayed (but not changed)": "Historisk (från 2021-08-30) närvarostatus kan visas (men inte ändras)",
     "Home": "Hem",
     "I have read the": "Jag har läst",
@@ -103,10 +104,11 @@
     "My schedules": "Mina scheman",
     "Name": "Namn",
     "Name in schedule": "Namn i schema",
-    "Name in schedule and Number will only apply if you check Connect." : "Namn i schema och nummer gäller endast om du markerar Anslut.",
-    "Name in schedule here is just a suggestion." : "Namn i schema här är bara ett förslag.",
-    "Name in schedule must be unique in the schedule, but may be different in different schedules.":
-        "Namn i schema måste vara unikt i schemat, men kan vara olika i olika scheman.",
+    "\"Name in schedule\" should be short,maximum 12 characters." : "\"Namn i schema\" bör vara kort, maxinalt 12 tecken.",
+    "\"Name in schedule\" and Number will only apply if you check Connect." : "\"Namn i schema\" och Antal gäller endast om du markerar Anslut.",
+    "\"Name in schedule\" here is just a suggestion." : "\"Namn i schema\" här är bara ett förslag.",
+    "\"Name in schedule\" must be unique in the schedule, but may be different in different schedules.":
+        "\"Namn i schema\" måste vara unikt i schemat, men kan vara olika i olika scheman.",
     "N": "N",
     "News": "Nyheter",
     "No": "Nej",

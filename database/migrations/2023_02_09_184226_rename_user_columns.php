@@ -11,12 +11,14 @@ class RenameUserColumns extends Migration
    
     public function up()
     {
-       $myConnection=Connections::laravel_connection();
-        Schema::connection($myConnection)->table('users', function (Blueprint $table) {
-            $table->dropColumn('name');
+       $myConnection = Connections::laravel_connection();
+      DB::connection($myConnection)->statement("ALTER TABLE users RENAME COLUMN name TO old_name");
+      DB::connection($myConnection)->statement("ALTER TABLE users RENAME COLUMN complete_name TO name");
+       
+       
+      Schema::connection($myConnection)->table('users', function (Blueprint $table) {
+            $table->dropColumn('old_name');
         });
-       DB::connection($myConnection)->statement("ALTER TABLE users CHANGE complete_name name varchar(72)  AS"
-                . " (CONCAT(first_name,' ', COALESCE(middle_name,''), ' ', family_name))");
     }
 
     /**

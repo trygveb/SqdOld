@@ -30,8 +30,6 @@ class UpdateUserNames extends Migration {
       DB::connection($myConnection)->statement("UPDATE users SET first_name='Tomas',family_name='Andersson'	WHERE id=30;");
       DB::connection($myConnection)->statement("UPDATE users SET first_name='Jesper',family_name='Svensson'	WHERE id=32;");
       DB::connection($myConnection)->statement("UPDATE users SET first_name='Lena',family_name='Jonsson'	WHERE id=33;");
-      DB::connection($myConnection)->statement("ALTER TABLE users CHANGE name old_name varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;");
-      DB::connection($myConnection)->statement("ALTER TABLE users CHANGE complete_name name varchar(72) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat(`first_name`,_utf8mb4\' \',coalesce(`middle_name`,_utf8mb4\'\'),_utf8mb4\' \',`family_name`)) VIRTUAL NULL;");
    }
 
    /**

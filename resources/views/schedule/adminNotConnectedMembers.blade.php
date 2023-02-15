@@ -29,7 +29,7 @@
    <div id="connected_div" style="display:inline;">
       <a class="btn btn-link" id="connected_rb"  href="{{route('schedule.showMembers',['scheduleId' => $schedule->id])}}">{{__('Connected members')}}</a>
    </div>
-   <div id="not_connected_div" style="display:inline;">
+   <div id="not_connected_div" style="display:none;">
       <a class="btn btn-link" id="not_connected_rb"  href="{{route('schedule.showNotConnectedMembers',['scheduleId' => $schedule->id])}}">{{__('Not connected members')}}</a>
    </div>
    <div id="new_member_div" style="display:inline;">
@@ -41,12 +41,12 @@
       <form action="{{ route('schedule.connectMember')}}" method="POST" id="addMemberForm" >
          <fieldset>
          <div class="form-info-text" id="help_text" style="display:none;">
-         <br>
          <ul>
-             <li>{{__('Name in schedule here is just a suggestion.')}}</li>
             <li>{{__('Number=2 for pairs, otherwise 1.')}}</li>
-            <li>{{__('Name in schedule and Number will only apply if you check Connect.')}}</li>
-            <li>{{__('Name in schedule must be unique in the schedule, but may be different in different schedules.')}}</li>
+            <li>{{__('"Name in schedule" here is just a suggestion.')}}</li>
+            <li>{{__('"Name in schedule" should be short,maximum 12 characters.')}}</li>
+            <li>{{__('"Name in schedule" and Number will only apply if you check Connect.')}}</li>
+            <li>{{__('"Name in schedule" must be unique in the schedule, but may be different in different schedules.')}}</li>
          </ul><br>
          </div>
 
@@ -99,10 +99,13 @@ function countConnects() {
 };
 function showHelp() {
    var helpText = document.getElementById("help_text");
+   var helpLink= document.getElementById("help_link");
    if (helpText.style.display === 'none') {
       helpText.style.display='inline-block';
+      helpLink.innerHTML="{{__('Hide Help')}}";
    } else {
       helpText.style.display='none';
+      helpLink.innerHTML="{{__('Help')}}";
    }
 }
 </script>

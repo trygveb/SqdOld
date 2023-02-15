@@ -30,7 +30,7 @@
  <div class="container" style="max-width:800px;">
    <h1>{{__('Manage members for schedule')}}: {{$schedule->name}}</h1>
    <span class="link_text">{{__('Show')}}:</span>
-   <div id="connected_div" style="display:inline;">
+   <div id="connected_div" style="display:none;">
       <a class="btn btn-link" id="connected_rb"  href="{{route('schedule.showMembers',['scheduleId' => $schedule->id])}}">{{__('Connected members')}}</a>
    </div>
    <div id="not_connected_div" style="display:inline;">
@@ -58,8 +58,9 @@
          <div class="form-info-text" id="help_text" style="display:none;">
          <br>
          <ul>
-            <li>{{__('Name in schedule must be unique in the schedule, but may be different in different schedules.')}}</li>
             <li>{{__('Number=2 for pairs, otherwise 1.')}}</li>
+            <li>{{__('"Name in schedule" must be unique in the schedule, but may be different in different schedules.')}}</li>
+            <li>{{__('"Name in schedule" should be short,maximum 12 characters.')}}</li>
             <li>{{__('If you check Admin, that member will get the same authority as you, on this schedule.')}}</li>
             <li>{{__('If you check Remove, that member will be removed from this schedule, but will remain registered in SdSchema.')}}</li>
          </ul>
@@ -200,10 +201,13 @@ function checkSubmit() {
 
 function showHelp() {
    var helpText = document.getElementById("help_text");
+   var helpLink= document.getElementById("help_link");
    if (helpText.style.display === 'none') {
       helpText.style.display='inline-block';
+      helpLink.innerHTML="{{__('Hide Help')}}";
    } else {
       helpText.style.display='none';
+      helpLink.innerHTML="{{__('Help')}}";
    }
 }
 </script>
