@@ -66,9 +66,9 @@ class CustomAuthController extends BaseController {
     */
    public function handleRegistration(Request $request) {
       $data = $request->all();
-//      dd(print_r($data, true));
+     // dd(print_r($data, true));
       $request->validate([
-          'name' => 'required|unique:users',
+          //'name' => 'required|unique:users',
           'family_name' => 'required',
           'first_name' => 'required',
           'email' => 'required|email|unique:users',
@@ -80,11 +80,9 @@ class CustomAuthController extends BaseController {
          'password_confirmation' => 'required',
       ]);
 
-
       $user = $this->create($data);
       App::setLocale(LaravelLocalization::getCurrentLocale());
-      if (empty($data['isAdmin'])) {
-//         dd(print_r($data, true));
+      if ($data['isAdmin']==0) {
          event(new Registered($user));
          Auth::login($user);
          return redirect(route('verification.notice'));

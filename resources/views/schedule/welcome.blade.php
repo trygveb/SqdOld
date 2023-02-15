@@ -27,7 +27,8 @@
          @endforeach
             </ul>
          @else
-         {{__('You are not registered with any schedule yet')}}.
+         {{__('You are not registered with any schedule yet')}}.<br>
+         {{__('Please ask your administrator to connect you to a schedule')}}.
          @endif
       @endif
    @endauth
