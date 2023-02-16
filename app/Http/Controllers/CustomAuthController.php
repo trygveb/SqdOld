@@ -66,9 +66,8 @@ class CustomAuthController extends BaseController {
     */
    public function handleRegistration(Request $request) {
       $data = $request->all();
-     // dd(print_r($data, true));
       $request->validate([
-          'name' => 'required|unique:users',
+          'name' => 'unique:users',
           'family_name' => 'required',
           'first_name' => 'required',
           'email' => 'required|email|unique:users',
@@ -79,6 +78,7 @@ class CustomAuthController extends BaseController {
           ],
          'password_confirmation' => 'required',
       ]);
+     // dd(print_r($data, true));
 
       $user = $this->create($data);
       App::setLocale(LaravelLocalization::getCurrentLocale());

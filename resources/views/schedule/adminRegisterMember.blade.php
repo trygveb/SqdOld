@@ -14,15 +14,20 @@
 @endsection
 
 @section('content')
-@if (array_count_values($status) > 0)
-       @foreach ($status as $key => $value)
-         @if (str_contains($key,'error')) 
-         <div class="alert alert-danger">
-          {{ $value }}</li>
-         </div>
-         @endif
-       @endforeach
-@endif
+   @if ($errors->any())
+       <div class="alert alert-danger">
+           <ul>
+               @foreach ($errors->all() as $error)
+                   <li>{{ $error }}</li>
+               @endforeach
+           </ul>
+       </div>
+   @else 
+      <div class="alert alert-success">
+          {{__('Registration succeeded')}}
+    </div>
+
+   @endif
 
  <div class="container" style="max-width:800px;">
    <h1>{{__('Members in schedule')}}: {{$schedule->name}}</h1>
@@ -55,8 +60,11 @@
 <script>
 
 function checkForm() {
+   buildName();
+}
+function buildName() {
    document.getElementById("name").value=document.getElementById("first_name").value + ' ' +
-              document.getElementById("middle_name").value +' ' + document.getElementById("family_name").value   
+              document.getElementById("middle_name").value +' ' + document.getElementById("family_name").value;
 }
 
 </script>

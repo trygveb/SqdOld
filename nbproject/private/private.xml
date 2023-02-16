@@ -4,16 +4,14 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Development/VagrantCode/sqd/resources/lang/sv.json</file>
-            <file>file:/D:/Development/VagrantCode/sqd/database/migrations/2023_02_09_184226_rename_user_columns.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/SchemaController.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/database/migrations/2023_02_09_162009_update_user_names.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/database/migrations/2023_02_09_095002_refactor_user_names.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/schedule/adminRegisterMember.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/schedule/adminNotConnectedMembers.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/components/member-table.blade.php</file>
             <file>file:/D:/Development/VagrantCode/sqd/routes/web.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/database/migrations/2023_02_02_112703_add_column_schema_name_to_member_schedule_table.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/resources/views/schedule/adminMembers.blade.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/database/migrations/2023_02_02_150653_create_view_member_schedule_1.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/app/Models/Schedule/Schedule.php</file>
-            <file>file:/D:/Development/VagrantCode/sqd/database/migrations/2023_02_09_150144_add_column_complete_name.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/app/Http/Controllers/CustomAuthController.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/registration.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/auth/addNewMember.blade.php</file>
+            <file>file:/D:/Development/VagrantCode/sqd/resources/views/components/registration-form.blade.php</file>
         </group>
     </open-files>
 </project-private>

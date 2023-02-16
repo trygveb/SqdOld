@@ -5,46 +5,47 @@
           <input type="hidden" name="application" value="{{$names['application']}}" />
           <!-- isAdmin is true if an administrator adds the member -->
           <input type="hidden" name="isAdmin" value="{{$isAdmin}}" />
-           <!-- name is created on submit click -->
-          <input type="hidden" name="name" id="name" />
+          
           <legend id="legend">{{__('Register new member')}}</legend>
           <div class="form-group row">
               <label for="first_name" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('First name') }} *</label>
               <div class="col-md-6">
-                  <input id="first_name" type="text" class="name_input form-control @error('first_name') is-invalid @enderror" name="first_name"
-                          value="{{ old('first_name') }}" maxlength="24" required  autofocus>
-                  @error('name')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                  @enderror
+                  <input id="first_name" type="text" class="name_input form-control @error('first_name') is-invalid @enderror"
+                         name="first_name" onkeyup="buildName()"  value="{{ old('first_name') }}" maxlength="24" required  autofocus>
+
               </div>
           </div>
           <div class="form-group row">
               <label for="middle_name" class="label_name_input col-md-4 col-form-label text-md-right">{{ __('Middle name') }}</label>
               <div class="col-md-6">
-                  <input id="middle_name" type="text" class="name_input form-control @error('middle_name') is-invalid @enderror" name="middle_name"
-                          value="{{ old('middle_name') }}" maxlength="24">
-                  @error('name')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                  @enderror
+                  <input id="middle_name" type="text" class="name_input form-control @error('middle_name') is-invalid @enderror"
+                         name="middle_name" onkeyup="buildName()" value="{{ old('middle_name') }}" maxlength="24">
+
               </div>
           </div>
 
           <div class="form-group row">
               <label for="family_name" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Family name') }} *</label>
               <div class="col-md-6">
-                  <input id="family_name" type="text" class="name_input form-control @error('family_name') is-invalid @enderror" name="family_name"
-                          value="{{ old('family_name') }}" maxlength="24" required >
+                  <input id="family_name" type="text" class="name_input form-control @error('family_name') is-invalid @enderror"
+                         name="family_name" onkeyup="buildName()"   value="{{ old('family_name') }}" maxlength="24" required >
+
+              </div>
+          </div>
+           <!-- name is created on submit click -->
+         <div class="form-group row">
+            <label for="name" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Complete name') }}</label>
+            <div class="col-md-6">
+                  <input id="name" type="text" readonly class="name_input form-control @error('name') is-invalid @enderror" name="name"
+                          value="{{ old('name') }}">
                   @error('name')
                       <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
                       </span>
                   @enderror
-              </div>
+            </div>
           </div>
+          
           <div class="form-group row">
               <label for="email" class="label_name_input col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }} *</label>
 

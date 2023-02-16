@@ -16,7 +16,16 @@
 
 
 @section('content')
-
+   @if ($errors->any())
+       <div class="alert alert-danger">
+           <ul>
+               @foreach ($errors->all() as $error)
+                   <li>{{ $error }}</li>
+               @endforeach
+           </ul>
+       </div>
+   @endif
+   
 @if (array_count_values($status) > 0)
       @foreach ($status as $key => $value)
          @if (str_contains($key,'error')) 
@@ -90,7 +99,6 @@ $("input").on("change keyup paste", function(){
 });
 
 window.onload = function() {
-   console.log('onload');
   const submitButton = document.getElementById("submitButton");
   submitButton.disabled = true;
   checkForm();
