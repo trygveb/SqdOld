@@ -14,21 +14,13 @@
 @endsection
 
 @section('content')
-   @if ($errors->any())
-       <div class="alert alert-danger">
-           <ul>
-               @foreach ($errors->all() as $error)
-                   <li>{{ $error }}</li>
-               @endforeach
-           </ul>
-       </div>
-   @else 
-      <div class="alert alert-success">
-          {{__('Registration succeeded')}}
-    </div>
+@if ($message = Session::get('success'))
+<div class="alert alert-success alert-block">
+	<button type="button" class="close" data-dismiss="alert">×</button>	
+        <strong>{{ $message }}</strong>
+</div>
 
-   @endif
-
+@endif
  <div class="container" style="max-width:800px;">
    <h1>{{__('Members in schedule')}}: {{$schedule->name}}</h1>
    <span class="link_text">{{__('Show')}}:</span>
@@ -58,12 +50,23 @@
  </div>
 @section('scripts')
 <script>
-
+window.onload = function () {
+   bindEvents();
+};
+// Bind the buildName function for keyup and paste events to all input elements with id ending in "_name"
+//
+function bindEvents() {
+   $("input[id$=name]").each(function(){
+      $(this).bind('keyup', buildName);
+      $(this).bind('paste', buildName);
+   });
+}
 function checkForm() {
    buildName();
 }
+// Construct the complete name
 function buildName() {
-   document.getElementById("name").value=document.getElementById("first_name").value + ' ' +
+   document.getElementById("complete_name").value=document.getElementById("first_name").value + ' ' +
               document.getElementById("middle_name").value +' ' + document.getElementById("family_name").value;
 }
 

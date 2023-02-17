@@ -13,7 +13,7 @@
       @endif
 
              <div class="card-body">
-                 <form method="POST" id="theForm" action="{{ route('handleRegistration') }}">
+                 <form method="POST" id="registrationForm" action="{{ route('handleRegistration') }}">
                      @csrf
                      <input type="hidden" name="application" value="sdSchema" />
                      <div class="form-group row">
@@ -94,13 +94,13 @@
 <script>
 window.onload = function () {
    checkForm();
-   var form = document.getElementById("theForm");
+   var form = document.getElementById("registrationForm");
    form.addEventListener("input", function () {
       checkForm();
    });      
 };
 function checkForm() {
-   var form = document.getElementById('theForm');
+   var form = document.getElementById('registrationForm');
    var showButton= true;
    for(var i=0; i < form.elements.length; i++){
       if (form.elements[i].value === '' && form.elements[i].hasAttribute('required')){

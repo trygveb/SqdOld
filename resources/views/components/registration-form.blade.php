@@ -1,5 +1,5 @@
 <div>
-   <form method="POST" id="theForm" action="{{ route('handleRegistration') }}">
+   <form method="POST" id="registrationForm" action="{{ route('handleRegistration') }}">
          <fieldset style="max-width:550px;">
           @csrf
           <input type="hidden" name="application" value="{{$names['application']}}" />
@@ -11,7 +11,7 @@
               <label for="first_name" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('First name') }} *</label>
               <div class="col-md-6">
                   <input id="first_name" type="text" class="name_input form-control @error('first_name') is-invalid @enderror"
-                         name="first_name" onkeyup="buildName()"  value="{{ old('first_name') }}" maxlength="24" required  autofocus>
+                         name="first_name"  value="{{ old('first_name') }}" maxlength="24" required  autofocus>
 
               </div>
           </div>
@@ -19,7 +19,7 @@
               <label for="middle_name" class="label_name_input col-md-4 col-form-label text-md-right">{{ __('Middle name') }}</label>
               <div class="col-md-6">
                   <input id="middle_name" type="text" class="name_input form-control @error('middle_name') is-invalid @enderror"
-                         name="middle_name" onkeyup="buildName()" value="{{ old('middle_name') }}" maxlength="24">
+                         name="middle_name"  value="{{ old('middle_name') }}" maxlength="24">
 
               </div>
           </div>
@@ -28,17 +28,17 @@
               <label for="family_name" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Family name') }} *</label>
               <div class="col-md-6">
                   <input id="family_name" type="text" class="name_input form-control @error('family_name') is-invalid @enderror"
-                         name="family_name" onkeyup="buildName()"   value="{{ old('family_name') }}" maxlength="24" required >
+                         name="family_name"    value="{{ old('family_name') }}" maxlength="24" required >
 
               </div>
           </div>
            <!-- name is created on submit click -->
          <div class="form-group row">
-            <label for="name" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Complete name') }}</label>
+            <label for="complete_name" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Full name') }}</label>
             <div class="col-md-6">
-                  <input id="name" type="text" readonly class="name_input form-control @error('name') is-invalid @enderror" name="name"
-                          value="{{ old('name') }}">
-                  @error('name')
+                  <input id="complete_name" type="text" readonly class="name_input form-control @error('complete_name') is-invalid @enderror"
+                         name="complete_name" value="{{ old('complete_name') }}">
+                  @error('complete_name')
                       <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
                       </span>

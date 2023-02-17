@@ -540,9 +540,9 @@ class SchemaController extends BaseController {
             $nonMember = new V_MemberSchedule();
             $nonMember->schedule_id = $schedule->id;
             $nonMember->user_id = $user->id;
-            $nonMember->user_name = $user->name;
+            $nonMember->user_name = $user->complete_name;
             $nonMember->schedule_name = $schedule->name;
-            $nonMember->name_in_schema = explode(" ", $user->name)[0];
+            $nonMember->name_in_schema = explode(" ", $user->complete_name)[0];
             $nonMember->email = $user->email;
             $nonMember->admin = 0;
             $nonMember->group_size = 1;          // TOD: FIX

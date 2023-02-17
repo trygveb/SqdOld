@@ -67,7 +67,7 @@ class CustomAuthController extends BaseController {
    public function handleRegistration(Request $request) {
       $data = $request->all();
       $request->validate([
-          'name' => 'unique:users',
+          'complete_name' => 'unique:users',
           'family_name' => 'required',
           'first_name' => 'required',
           'email' => 'required|email|unique:users',
@@ -89,7 +89,7 @@ class CustomAuthController extends BaseController {
       } else {
          $user->email_verified_at= now();
          $user->save();
-         return back();
+         return back()->with('success',__('Member :name has been registered!',['name' => $data['complete_name']]));
       }
    }
 

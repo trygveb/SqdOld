@@ -155,6 +155,6 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => ['complete_name' => 'Full name',],
 
 ];

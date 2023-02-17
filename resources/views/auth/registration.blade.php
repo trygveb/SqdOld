@@ -44,7 +44,7 @@
 <script>
    window.onload = function () {
       checkForm();
-      var form = document.getElementById("theForm");
+      var form = document.getElementById("registrationForm");
       form.addEventListener("input", function () {
          checkForm();
       });      
@@ -53,7 +53,7 @@
       document.getElementById("name").value=document.getElementById("first_name").value + ' ' +
          document.getElementById("middle_name").value +' ' + document.getElementById("family_name").value   
 
-      var form = document.getElementById('theForm');
+      var form = document.getElementById('registrationForm');
       var showButton= true;
       for(var i=0; i < form.elements.length; i++){
          if (form.elements[i].value === '' && form.elements[i].hasAttribute('required')){
