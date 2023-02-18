@@ -6,7 +6,14 @@
           <!-- isAdmin is true if an administrator adds the member -->
           <input type="hidden" name="isAdmin" value="{{$isAdmin}}" />
           
-          <legend id="legend">{{__('Register new member')}}</legend>
+          <legend id="legend">{{__('Register new member')}}<a class="btn btn-link" style="float:right;" id="help_link" onclick="showHelp()" >{{__('Help')}}</a></legend>
+
+         <div class="form-info-text" id="help_text" style="display:none;">
+        
+         {{__('Full name is generated automatically. No two users can have the same full name.')}}
+         <br> <br>
+         </div>
+
           <div class="form-group row">
               <label for="first_name" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('First name') }} *</label>
               <div class="col-md-6">
@@ -37,7 +44,7 @@
             <label for="complete_name" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Full name') }}</label>
             <div class="col-md-6">
                   <input id="complete_name" type="text" readonly class="name_input form-control @error('complete_name') is-invalid @enderror"
-                         name="complete_name" value="{{ old('complete_name') }}">
+                        style="background-color:#ccc" name="complete_name" value="{{ old('complete_name') }}">
                   @error('complete_name')
                       <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>

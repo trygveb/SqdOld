@@ -14,6 +14,7 @@ class MemberSchedule extends Model {
    protected $fillable = [
        'user_id',
        'schedule_id',
+       'admin'
    ];
 
 }

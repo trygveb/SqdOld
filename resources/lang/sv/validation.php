@@ -143,4 +143,9 @@ return [
     |
     */
 
-    'attributes' => ['complete_name' => 'Fullständigt namn',],];
+    'attributes' => [
+        'complete_name' => 'Fullständigt namn',
+        'password' => 'Lösenord',
+        'password confirmation' => 'Bekräfta lösenord'
+      ],
+];

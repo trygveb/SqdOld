@@ -43,16 +43,21 @@
 @section('scripts')
 <script>
    window.onload = function () {
+      bindEvents();
       checkForm();
-      var form = document.getElementById("registrationForm");
-      form.addEventListener("input", function () {
-         checkForm();
-      });      
+    
    };
+   function bindEvents() {
+      $("input[id$=name]").each(function(){
+         $(this).on('input', buildName);  // This event covers keyup an paste ans change
+      });
+   }
+// Construct the complete name
+   function buildName() {
+      document.getElementById("complete_name").value=document.getElementById("first_name").value + ' ' +
+              document.getElementById("middle_name").value +' ' + document.getElementById("family_name").value;
+}
    function checkForm() {
-      document.getElementById("name").value=document.getElementById("first_name").value + ' ' +
-         document.getElementById("middle_name").value +' ' + document.getElementById("family_name").value   
-
       var form = document.getElementById('registrationForm');
       var showButton= true;
       for(var i=0; i < form.elements.length; i++){
@@ -74,5 +79,18 @@
       }
       @endempty
    }
+   // TODO global showHelp function
+function showHelp() {
+   var helpText = document.getElementById("help_text");
+   var helpLink= document.getElementById("help_link");
+   if (helpText.style.display === 'none') {
+      helpText.style.display='inline-block';
+      helpLink.innerHTML="{{__('Hide Help')}}";
+   } else {
+      helpText.style.display='none';
+      helpLink.innerHTML="{{__('Help')}}";
+   }
+}
+
 </script>
 @endsection

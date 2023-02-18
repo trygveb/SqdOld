@@ -51,14 +51,14 @@
 @section('scripts')
 <script>
 window.onload = function () {
+   console.log('onload');
    bindEvents();
 };
 // Bind the buildName function for keyup and paste events to all input elements with id ending in "_name"
 //
 function bindEvents() {
    $("input[id$=name]").each(function(){
-      $(this).bind('keyup', buildName);
-      $(this).bind('paste', buildName);
+      $(this).on('input', buildName);  // This event covers keyup an paste ans change
    });
 }
 function checkForm() {
@@ -66,8 +66,21 @@ function checkForm() {
 }
 // Construct the complete name
 function buildName() {
+   console.log('buildName');
    document.getElementById("complete_name").value=document.getElementById("first_name").value + ' ' +
               document.getElementById("middle_name").value +' ' + document.getElementById("family_name").value;
+}
+// TODO global showHelp function
+function showHelp() {
+   var helpText = document.getElementById("help_text");
+   var helpLink= document.getElementById("help_link");
+   if (helpText.style.display === 'none') {
+      helpText.style.display='inline-block';
+      helpLink.innerHTML="{{__('Hide Help')}}";
+   } else {
+      helpText.style.display='none';
+      helpLink.innerHTML="{{__('Help')}}";
+   }
 }
 
 </script>

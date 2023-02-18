@@ -253,6 +253,7 @@ class SchemaController extends BaseController {
       foreach ($memberSchedules as $memberSchedule) {
          $userId=$memberSchedule->user_id;
          $adminHtmlElementName = 'admin_' . $userId;  //name of html element
+//         dd(print_r($data, true));
          if ($request->has($adminHtmlElementName)) {
             $memberSchedule->admin = 1;
          } else {
@@ -380,59 +381,6 @@ class SchemaController extends BaseController {
       return $lastScheduleDate;
    }
 
-   /**
-    * Register or unregister from a schedule. Called from view mySchemas.
-    * @param Request $request
-    * @return type
-    */
-   public function registerForSchemas(Request $request) {
-      $dataFields = request()->all();
-      $userId = request()->userId;
-      foreach ($dataFields as $key => $value) {
-         if (str_starts_with($key, 'mySchedule_') && $value == 0) {
-            // User wants to unregister
-            $scheduleId = substr($key, 11);
-            $memberSchedule = MemberSchedule::where('user_id', $userId)
-                            ->where('schedule_id', $scheduleId)->first();
-            if (!is_null($memberSchedule)) {      
-                    $memberSchedule->delete();
-            }
-         } else if (str_starts_with($key, 'otherSchedule_') && $value == 1) {
-            // User wants register
-            $scheduleId = substr($key, 14);
-            $pwKey = 'pwInput_' . $scheduleId;
-            $password = $dataFields[$pwKey];
-            $groupsSizeKey='numberInput_'.$scheduleId;
-            $groupSize=$dataFields[$groupsSizeKey];
-            $schedule = Schedule::find($scheduleId);
-            if (strlen($schedule->password) == 0 || Hash::check($password, $schedule->password)) {
-               $schedule->addMember($userId,$groupSize);
-            } else {
-               return $this->showMySchemas();  // Bad passord
-               
-            }
-         } else {
-            
-         }
-      }
-      return $this->showMySchemas();
-   }
-
-   public function ShowViewAddNewMember($scheduleId) {
-
-      $schedule = Schedule::find($scheduleId);
-      $admin = V_MemberSchedule::where('schedule_id', $scheduleId)
-              ->where('user_id', Auth::user()->id)
-              ->pluck('admin')
-              ->first();
-      if ($admin === 0 && Auth::user()->authority === 0) {
-         return view('errors.403')->with('names', $this->names());
-      }
- 
-      return view('auth.addNewMember', [
-          'schedule' => $schedule,
-      ]);
-   }
    public function ShowViewAdminRegisterMember($scheduleId, $status=[]) {
       $schedule = Schedule::find($scheduleId);
       if (is_null($schedule) ) {
@@ -652,15 +600,7 @@ class SchemaController extends BaseController {
       ]);
    }
 
-//   // Show the Admin Menu. TODO: Cretae a real menu instead of a set of buttons
-//   public function showAdminMenu(Schedule $schedule) {
-//
-////      $schedule = Schedule::find($scheduleId);
-//      return view('AdminMenu', [
-//          'schedule' => $schedule,
-//          'currentUser' => Auth::user(),
-//      ]);
-//   }
+
 //Updating the member's attendance status
    public function updateAttendance(Request $request) {
       $data = request()->all();
