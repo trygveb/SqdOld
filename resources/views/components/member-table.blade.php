@@ -23,7 +23,11 @@
          $adminName='admin_'.$member->user_id;
          $nameInSchemaName='nameInSchema_'.$member->user_id;
       @endphp
+      @if ($member->connected==0)
       <tr class='status'>
+      @else
+      <tr class='status' style="display:none;">
+      @endif
          <td class="text-nowrap" >{{$member->user_name}}</td>
          <td class="text-nowrap" >
             <input type="text" maxlength=12 size=12 name="{{$nameInSchemaName}}" required value="{{$member->name_in_schema}}">

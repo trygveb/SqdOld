@@ -483,6 +483,7 @@ class SchemaController extends BaseController {
       $allUsers = User::all();
 
       $nonMembers = collect();
+      $members = collect();
       foreach ($allUsers as $user) {
          if (!in_array($user->id, $memberUserIds)) {
             $nonMember = new V_MemberSchedule();
@@ -493,8 +494,14 @@ class SchemaController extends BaseController {
             $nonMember->name_in_schema = explode(" ", $user->complete_name)[0];
             $nonMember->email = $user->email;
             $nonMember->admin = 0;
-            $nonMember->group_size = 1;          // TOD: FIX
+            $nonMember->group_size = 1;
+            $nonMember->connected=0;
             $nonMembers->push($nonMember);
+         } else {
+            $member=V_MemberSchedule::where('user_id',$user->id)
+                    ->where('schedule_id',$schedule->id)->first();  //Only one is possible
+            $member->connected=1;
+            $nonMembers->push($member);
          }
       }
       $sortedNonMembers= $nonMembers->sortBy('user_name');
@@ -502,6 +509,7 @@ class SchemaController extends BaseController {
       return view('schedule.adminNotConnectedMembers', [
           'schedule' => $schedule,
           'nonMembers' => $sortedNonMembers,
+          'members' => $members,
           'currentUser' => Auth::user(),
           'names' => $this->names(),
           'admin' => $this->isAdmin($scheduleId),

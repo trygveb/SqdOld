@@ -60,7 +60,7 @@
             cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
             myId="submitButton"
             submit-disabled="disabled"
-            onclickFunction="return true" />
+            onclickFunction="return checkSubmit()" />
      </fieldset>
      </form> 
    
@@ -75,6 +75,27 @@ window.onload = function() {
 function checkForm(status=0) {
    fixSubmitButton(status);
 }
+function checkSubmit() {
+   if (!checkUniqueNames()) {
+      return false;
+   } else {
+      return true;
+   }
+};
+function findDuplicates(arr) {
+  let sorted_arr = arr.slice().sort(); // You can define the comparing function here. 
+  // JS by default uses a crappy string compare.
+  // (we use slice to clone the array so the
+  // original array won't be modified)
+  let results = [];
+  for (let i = 0; i < sorted_arr.length - 1; i++) {
+    if (sorted_arr[i + 1] == sorted_arr[i]) {
+      results.push(sorted_arr[i]);
+    }
+  }
+  return results;
+};   
+
 //Enable submit button if members are marked for connect
 function fixSubmitButton(status=0) {
       var n= countConnects();
@@ -86,6 +107,24 @@ function fixSubmitButton(status=0) {
          submitButton.disabled= false;
       }
    };
+function checkUniqueNames() {
+   var elements = document.getElementById("addMemberForm").elements;
+   console.log('checkUniqueNames: '+ elements.length)
+   var textElementValues=[];
+   for (var i = 0, element; element = elements[i++];) {
+      if (element.type === "text") {
+//        console.log("textfield="+element.value);
+        textElementValues.push(element.value);
+     }
+   }
+   duplicates=findDuplicates(textElementValues);
+  
+   if (duplicates.length > 0) {
+      alert("{{__('Name in schema is not unique')}}:"+duplicates);
+      return false;
+   }
+  return true;
+};
 
 function countConnects() {
    var checkBoxes=  document.querySelectorAll('.cbConnect');
