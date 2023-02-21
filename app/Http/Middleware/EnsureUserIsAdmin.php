@@ -20,6 +20,9 @@ class EnsureUserIsAdmin {
    public function handle(Request $request, Closure $next) {
       if (Auth::check()) {
          $user = $request->user();
+         if ($user->authority > 0) {
+            return $next($request);  // User has "super" privileges
+         }
          $adminForSchedule = 0;
          $url = url()->full();
          if (str_contains($url, '/admin/')) {
@@ -36,8 +39,8 @@ class EnsureUserIsAdmin {
                //      ->pluck('admin')
                //      ->first();
          }
-         if ($user->authority > 0 || $adminForSchedule > 0) {
-            return $next($request);
+         if ($adminForSchedule > 0) {
+            return $next($request);  // User has "schema" privileges 
          }
       }
       // No authority, just go back with no message

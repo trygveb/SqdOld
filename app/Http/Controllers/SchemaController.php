@@ -327,6 +327,18 @@ class SchemaController extends BaseController {
       ]);
    }
 
+// Show the Register New Schedule Form
+   public function showRegisterSchedule() {
+      return view('schedule.adminRegisterNewSchedule', [
+         'names' => $this->names(),
+      ]);
+   }
+   
+   public function registerNewSchedule(Request $request) {
+      $data = request()->all();
+      dd(print_r($data, true));
+   }
+
    public function showAddRemoveDates($scheduleId) {
 
       $schedule = Schedule::find($scheduleId);
