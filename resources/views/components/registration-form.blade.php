@@ -93,7 +93,7 @@
           <div class="form-group row">
               <label for="privacy_confirm" class="label_name_input col-md-4 col-form-label text-md-right"></label>
               <div class="col-md-6">
-                 <input id="privacy_confirm" type="checkbox"  name="privacy_confirmation" >
+                 <input id="privacy_confirm" type="checkbox" onclick="checkForm()" name="privacy_confirmation" >
                  {{ __('I have read the')}}  <a href="{{route('privacy')}}" " >{{ __('Privacy policy')}}</a>
               </div>
           </div>
