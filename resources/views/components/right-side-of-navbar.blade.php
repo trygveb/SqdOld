@@ -11,6 +11,7 @@
             <a class="dropdown-item" href="{{route('privacy')}}" " >{{ __('Privacy policy')}}</a>
             <a class="dropdown-item" href="{{route('showLoginForm')}}">{{ __('Login') }}</a>
             <a class="dropdown-item" href="{{route('showRegisterForm')}}">{{ __('Register') }}</a>                 
+            <a class="dropdown-item" href="{{route('schedule.showRegisterSchedule')}}">{{__('Register new schema')}}</a>
          </div>
       </li>
    @auth
