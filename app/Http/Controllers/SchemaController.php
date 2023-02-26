@@ -336,7 +336,23 @@ class SchemaController extends BaseController {
    
    public function registerNewSchedule(Request $request) {
       $data = request()->all();
-      dd(print_r($data, true));
+
+      $schedule= new Schedule();
+      $schedule->name=$data["schedule_name"];
+      $schedule->default_weekday= $data["weekday"];
+      $schedule->description= $data["schedule_description"];
+      $schedule->default_start_time= $data["schedule_time"];
+      DB::beginTransaction();
+      try {
+         $schedule->save();
+          Connect current user to the new schedule
+      } catch (\Exception $e) {
+         DB::rollBack();
+         return back()->with('error',__('Schedule :name could not be registered!',['name' => $data['schedule_name']]));
+      }
+       DB::commit();
+
+      return back()->with('success',__('Schedule :name has been registered!',['name' => $data['schedule_name']]));
    }
 
    public function showAddRemoveDates($scheduleId) {

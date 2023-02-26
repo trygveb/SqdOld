@@ -17,7 +17,7 @@
        @csrf
        <input type="hidden" name="application" value="{{$names['application']}}" />
 
-       <legend id="legend">{{__('Register new schema')}}<a class="btn btn-link" style="float:right;" id="help_link" onclick="showHelp()" >{{__('Help')}}</a></legend>
+       <legend id="legend">{{__('New schedule')}}<a class="btn btn-link" style="float:right;" id="help_link" onclick="showHelp()" >{{__('Help')}}</a></legend>
 
       <div class="form-info-text" id="help_text" style="display:none;">
 
@@ -26,10 +26,17 @@
       </div>
 
       <div class="form-group row">
-          <label for="schema_name" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Schema name') }} *</label>
+          <label for="schedule_name" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Schema name') }} *</label>
           <div class="col-md-6">
-              <input id="schema_name" type="text" class="name_input form-control @error('schema_name') is-invalid @enderror"
-                     name="schema_name"  value="{{ old('schema_name') }}" maxlength="24" required  autofocus>
+              <input id="schedule_name" type="text" class="name_input form-control @error('schedule_name') is-invalid @enderror"
+                     name="schedule_name"  value="{{ old('schedule_name') }}" maxlength="24" required  autofocus>
+          </div>
+      </div>
+      <div class="form-group row">
+          <label for="schedule_description" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Description') }}</label>
+          <div class="col-md-6">
+              <input id="schedule_description" type="text" class="name_input form-control @error('schedule_description') is-invalid @enderror"
+                     name="schedule_description"  style="width:120%;" value="{{ old('schedule_description') }}" maxlength="48"   autofocus>
           </div>
       </div>
 
@@ -37,22 +44,22 @@
           <label for="weekday-select" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Weekday') }} *</label>
          <div class="col-md-6">
             <select class="form-select" aria-label="{{ __('Weekday') }}" name="weekday" id="weekday-select" required>
-               <option value="1">{{ __('Monday')}}</option>
-               <option value="2">{{ __('Tuesday')}}</option>
-               <option value="3">{{ __('Wednesday')}}</option>
-               <option value="4">{{ __('Thursday')}}</option>
-               <option value="5">{{ __('Friday')}}</option>
-               <option value="6">{{ __('Saturday')}}</option>
-               <option value="7">{{ __('Sunday')}}</option>
+               <option value="1">{{ __('Mondays')}}</option>
+               <option value="2">{{ __('Tuesdays')}}</option>
+               <option value="3">{{ __('Wednesdays')}}</option>
+               <option value="4">{{ __('Thursdays')}}</option>
+               <option value="5">{{ __('Fridays')}}</option>
+               <option value="6">{{ __('Saturdays')}}</option>
+               <option value="7">{{ __('Sundays')}}</option>
            </select>
          </div>
       </div>
 
       <div class="form-group row">
-         <label for="schema_time" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Time of day') }} *</label>
+         <label for="schedule_time" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Starting at') }} *</label>
           <div class="col-md-6">
-              <input id="schema_time" type="time" class="name_input form-control @error('schema_name') is-invalid @enderror"
-                     name="schema_time"  value="{{ old('schema_name') }}">
+              <input id="schedule_time" type="time" class="name_input form-control @error('schedule_time') is-invalid @enderror"
+                     name="schedule_time"  required value="{{ old('schedule_time') }}">
           </div>
       </div>
 
