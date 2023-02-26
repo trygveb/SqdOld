@@ -342,10 +342,17 @@ class SchemaController extends BaseController {
       $schedule->default_weekday= $data["weekday"];
       $schedule->description= $data["schedule_description"];
       $schedule->default_start_time= $data["schedule_time"];
+      $nameInSchema= $data["name_in_schema"];
       DB::beginTransaction();
       try {
          $schedule->save();
-          Connect current user to the new schedule
+         // Connect current user to the new schedule
+         $status=$schedule->addMember(Auth::user()->id,0, $nameInSchema);
+         if ($status != 'OK') {
+            return back()->with('error',__('Schedule :name could not be registered! Status=:status',
+               ['name' => $data['schedule_name'],
+                'status' =>  $status  ]));
+         }
       } catch (\Exception $e) {
          DB::rollBack();
          return back()->with('error',__('Schedule :name could not be registered!',['name' => $data['schedule_name']]));
