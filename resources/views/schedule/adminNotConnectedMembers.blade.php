@@ -38,7 +38,7 @@
    <br>
    
    {{-- Show Form with table with not connected members (default) --}}
-      <form action="{{ route('schedule.connectMember')}}" method="POST" id="addMemberForm" >
+      <form action="{{ route('schedule.connectMember')}}" method="POST" id="addMemberForm">
          <fieldset>
          <div class="form-info-text" id="help_text" style="display:none;">
          <ul>
@@ -76,12 +76,9 @@ function checkForm(status=0) {
    fixSubmitButton(status);
 }
 function checkSubmit() {
-   if (!checkUniqueNames()) {
-      return false;
-   } else {
-      return true;
-   }
+   return checkUniqueNames();
 };
+
 function findDuplicates(arr) {
   let sorted_arr = arr.slice().sort(); // You can define the comparing function here. 
   // JS by default uses a crappy string compare.
@@ -99,7 +96,6 @@ function findDuplicates(arr) {
 //Enable submit button if members are marked for connect
 function fixSubmitButton(status=0) {
       var n= countConnects();
-      console.log(n + ' connects');
       const submitButton = document.getElementById("submitButton");
       if (n===0) {
          submitButton.disabled= true;
@@ -109,11 +105,9 @@ function fixSubmitButton(status=0) {
    };
 function checkUniqueNames() {
    var elements = document.getElementById("addMemberForm").elements;
-   console.log('checkUniqueNames: '+ elements.length)
    var textElementValues=[];
    for (var i = 0, element; element = elements[i++];) {
       if (element.type === "text") {
-//        console.log("textfield="+element.value);
         textElementValues.push(element.value);
      }
    }
@@ -147,6 +141,7 @@ function showHelp() {
       helpLink.innerHTML="{{__('Help')}}";
    }
 }
+
 </script>
 
 

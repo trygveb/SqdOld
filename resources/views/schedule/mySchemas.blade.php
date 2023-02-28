@@ -7,6 +7,8 @@
 
       <div class="table-responsive" style="overflow-x:auto; overflow-y:hidden;">
 
+         <a  href="{{route('schedule.showRegisterSchedule')}}">{{__('Create new schedule')}}</a>
+   
         <form id="myForm" action="{{ route('schedule.register')}}" method="POST">
           {{ csrf_field() }}
           <input type="hidden" name="userId" value="{{Auth::id()}}">

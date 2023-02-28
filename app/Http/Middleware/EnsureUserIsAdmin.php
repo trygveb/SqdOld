@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\Schedule\V_MemberSchedule;
 use App\Classes\Utility;
 
 class EnsureUserIsAdmin {

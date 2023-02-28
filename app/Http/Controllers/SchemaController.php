@@ -206,7 +206,6 @@ class SchemaController extends BaseController {
 // Returns Members view
    public function connectMember(Request $request) {
       $data = request()->all();
-      //dd(print_r($data, true));
       $scheduleId = $data["scheduleId"];
       $schedule = Schedule::find($scheduleId);
       foreach ($data as $key => $value) {

@@ -93,8 +93,6 @@ Route::group(// Comment out this when running tests
                     //Show edit view for one user for  attendance update
                     Route::name('showEdit')->get('/schedule/edit/{schedule}', 'showViewEdit');
 
-                    // Show user's schmas
-                    Route::name('showMySchemas')->get('/schedule/showSchedules', 'showMySchemas');
 
                      // Register or unregister for schemas
                     Route::name('register')->post('/schedule/register', 'registerForSchemas');
@@ -103,6 +101,14 @@ Route::group(// Comment out this when running tests
                     
                     // Update attendance (for one user)
                     Route::name('updateAttendance')->post('/schedule/updateAttendance', 'updateAttendance');
+
+                    // Routes requiring superadmin authority (can create new schedules) /////////////////////////
+                    Route::middleware(['isSuperAdmin'])->group(function () {
+                       Route::name('showRegisterSchedule')->get('/admin/registerNewWchedule', 'showRegisterSchedule');
+                       Route::name('registerNewSchedule')->post('/admin/registerNewSchedule', 'registerNewSchedule');
+                       Route::name('showMySchemas')->get('admin//schedule/showSchedules', 'showMySchemas');
+
+                     });
 
                     // Routes requiring admin authority on schedules /////////////////////////
                     Route::middleware(['isAdmin'])->group(function () {
@@ -114,14 +120,10 @@ Route::group(// Comment out this when running tests
                        // Show update/remove members view
                        Route::name('showNotConnectedMembers')->get('/admin/notConnectedmembers/{scheduleId}', 'showViewNotConnectedMembers');
                        Route::name('showViewAdminRegisterMember')->get('/admin/registerMember/{scheduleId}', 'showViewAdminRegisterMember');
-
-                       Route::name('showRegisterSchedule')->get('/admin/registerNewWchedule', 'showRegisterSchedule');
-                       Route::name('registerNewSchedule')->post('/admin/registerNewSchedule', 'registerNewSchedule');
                        
-                       
-                       
-                       // Update admin status or remove member from a schedule
+                        // Update "name in schema" or number and add member to a schedule
                        Route::name('connectMember')->post('/admin/connectMember', 'connectMember');
+
                        // Update admin status or remove member from a schedule
                        Route::name('updateMember')->post('/admin/updateMember', 'updateMember');
                        // Show register new user form
