@@ -10,11 +10,13 @@
             <a class="dropdown-item" href="{{route('about')}}" >{{ __('About') }}</a>
             <a class="dropdown-item" href="{{route('privacy')}}" " >{{ __('Privacy policy')}}</a>
             <a class="dropdown-item" href="{{route('showLoginForm')}}">{{ __('Login') }}</a>
-            <a class="dropdown-item" href="{{route('showRegisterForm')}}">{{ __('Register') }}</a>                 
+            <a class="dropdown-item" href="{{route('showRegisterForm')}}">{{ __('Register') }}</a>   
+   @auth
    @if (Auth::user()->authority >0)                
             <a class="dropdown-item" href="{{route('schedule.showMySchemas')}}" >{{ __('Manage schedules') }}
             </a>
-   @endif              
+   @endif        
+   @endauth
          </div>
       </li>
    @auth
