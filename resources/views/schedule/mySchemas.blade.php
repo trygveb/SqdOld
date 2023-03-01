@@ -12,41 +12,38 @@
         <form id="myForm" action="{{ route('schedule.register')}}" method="POST">
           {{ csrf_field() }}
           <input type="hidden" name="userId" value="{{Auth::id()}}">
-          <fieldset>
+          <fieldset style="min-width:850px;">
             <legend>{{__('Schedules')}}</legend>
             
         <table class="table table-bordered">
             <caption>{{__('My schedules')}}</caption>
             <tr>
+              <th style="vertical-align:middle;" class="text-nowrap text-center">{{__('Link')}}</th>
               <th style="vertical-align:middle;" class="text-nowrap text-center">{{__('Name')}}</th>
               <th class="text-nowrap text-center" >{{__('Description')}}</th>
               <th class="text-nowrap text-center" >{{__('Admin(s)')}}</th>
-              <th class="text-nowrap text-center" >{{__('Member')}}</th>
-              <th class="text-nowrap text-center" >{{__('Number')}}</th>
             </tr>
             <!--<tbody>-->
 
         @foreach ($myVMemberSchedules as $myVMemberSchedule)
          @php
-            $cbName='mySchedule_'.$myVMemberSchedule->schedule_id;
+            $schemaNameInput='name'.$myVMemberSchedule->schedule_id;
+            $schemaDescriptionInput='description'.$myVMemberSchedule->schedule_id;
             $columnId='myCol_'.$myVMemberSchedule->schedule_id;
          @endphp
                <tr class='status'>
                   <td class="text-nowrap" >
-                      <a href="{{route('schedule.index',$myVMemberSchedule->schedule_id)}}">{{$myVMemberSchedule->schedule_name}}</a>
+                      <a href="{{route('schedule.index',$myVMemberSchedule->schedule_id)}}">{{'Show'}}</a>
+                  </td>
+                  <td class="text-nowrap" >
+                       <input type="text" maxlength=30 size=24 name="{{$schemaNameInput}}"  required value="{{$myVMemberSchedule->schedule_name}}" >
                   </td>
                   <td class="text-nowrap">
-                      {{$myVMemberSchedule->schedule_description}}
+                       <input type="text" maxlength=48 size=36 name="{{$schemaDescriptionInput}}"  value="{{$myVMemberSchedule->schedule_description}}" >
+                      
                   </td>
                   <td class="text-nowrap">
                       {{$myVMemberSchedule->admins}}
-                  </td>
-                  <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
-                      <input type="hidden" name="{{$cbName}}" value="0" />
-                        <input type="checkbox" checked name="{{$cbName}}" id="{{$cbName}}" onclick='myScheduleClicked(this.name)' value="1">
-                  </td>
-                  <td class="text-nowrap">
-                      {{$myVMemberSchedule->group_size}}
                   </td>
                </tr>
          @endforeach

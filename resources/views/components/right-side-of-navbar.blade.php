@@ -11,6 +11,10 @@
             <a class="dropdown-item" href="{{route('privacy')}}" " >{{ __('Privacy policy')}}</a>
             <a class="dropdown-item" href="{{route('showLoginForm')}}">{{ __('Login') }}</a>
             <a class="dropdown-item" href="{{route('showRegisterForm')}}">{{ __('Register') }}</a>                 
+   @if (Auth::user()->authority >0)                
+            <a class="dropdown-item" href="{{route('schedule.showMySchemas')}}" >{{ __('Manage schedules') }}
+            </a>
+   @endif              
          </div>
       </li>
    @auth
@@ -19,10 +23,6 @@
             {{ Auth::user()->complete_name }}
          </a>
          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-   @if (Auth::user()->authority >0)                
-            <a class="dropdown-item" href="{{route('schedule.showMySchemas')}}" >{{ __('Manage schedules') }}
-            </a>
-   @endif              
             <a class="dropdown-item" href="{{ route('signout') }}"
                onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}
             </a>

@@ -553,7 +553,7 @@ class SchemaController extends BaseController {
 
    // Show my schemas
    public function showMySchemas() {
-      $myVMemberSchedules = V_MemberSchedule::where('user_id', Auth::id())->get();
+      $myVMemberSchedules = V_MemberSchedule::where('user_id', Auth::id())->where('admin','>',0)->get();
       $myScheduleIds = $myVMemberSchedules->pluck('schedule_id');
       foreach ($myVMemberSchedules as $myVMemberSchedule) {
          $myVMemberSchedule->admins = V_MemberSchedule::where('schedule_id', $myVMemberSchedule->schedule_id)

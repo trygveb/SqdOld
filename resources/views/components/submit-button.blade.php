@@ -1,4 +1,4 @@
-<p style="float:right;">
+<p style="float:left;">
 <button type="submit" class="btn btn-primary" id="{{$myId ?? ''}}" onclick="{{$onclickFunction ?? ''}}" > 
     {{$submitText}} 
 </button>
