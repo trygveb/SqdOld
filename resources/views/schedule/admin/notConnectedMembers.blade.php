@@ -39,7 +39,7 @@
    
    {{-- Show Form with table with not connected members (default) --}}
       <form action="{{ route('schedule.connectMember')}}" method="POST" id="addMemberForm">
-         <fieldset>
+         <fieldset style="max-width:500px;">
          <div class="form-info-text" id="help_text" style="display:none;">
          <ul>
             <li>{{__('Number=2 for pairs, otherwise 1.')}}</li>

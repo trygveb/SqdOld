@@ -43,13 +43,19 @@ class SchemaController extends BaseController {
       $memberSchedules = MemberSchedule::where('schedule_id', $scheduleId)->get();
       // Check if user is member, if not redirect back
       
-      if ($memberSchedules->where('user_id', Auth::id())->count() ==0 && Auth::user()->authority <2) {
-         $vMemberSchedules= V_MemberSchedule::where('user_id', Auth::id())->get();
+      $editAllowed= true;
+      if ($memberSchedules->where('user_id', Auth::id())->count() ==0 ) {
+         if (Auth::user()->authority <2) {
+            $vMemberSchedules= V_MemberSchedule::where('user_id', Auth::id())->get();
             return view('schedule.welcome', [
                   'mySchedulesCount' => $vMemberSchedules->count(),
                   'vMemberSchedules' => $vMemberSchedules,
                   'names' => $this->names()
-               ]);         
+               ]);
+         } else {
+            // user has superuser authority and can view the schema, but not edit
+            $editAllowed= false;
+         }
       }
       if ($showHistory==0) {
          $vMemberScheduleDates = V_MemberScheduleDate::where('schedule_date', '>=', $today)
@@ -85,7 +91,8 @@ class SchemaController extends BaseController {
           'statusSums' => $statusSums,
           'admin' => $this->isAdmin($scheduleId),
           'names' => $this->names(),
-          'showHistory' => $showHistory
+          'showHistory' => $showHistory,
+          'editAllowed' => $editAllowed
       ]);
    }
 

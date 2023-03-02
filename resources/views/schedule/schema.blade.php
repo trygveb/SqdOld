@@ -14,9 +14,11 @@
 @endsection
 @section('content')
 <h1>{{__('Schedule for')}} {{$schedule->name}}
+    @if ($editAllowed)
     <a href="{{route('schedule.showEdit',['schedule' =>$schedule])}}" class="btn btn-primary" role="button" style="margin-left:5px;en">
         {{__('Change my attendance')}}
     </a>
+    @endif
 </h1>
   <div class="container">
       <div class="table-responsive" style="overflow-x:auto; overflow-y:hidden;">
