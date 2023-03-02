@@ -43,7 +43,7 @@ class SchemaController extends BaseController {
       $memberSchedules = MemberSchedule::where('schedule_id', $scheduleId)->get();
       // Check if user is member, if not redirect back
       
-      if ($memberSchedules->where('user_id', Auth::id())->count() ==0) {
+      if ($memberSchedules->where('user_id', Auth::id())->count() ==0 && Auth::user()->authority <2) {
          $vMemberSchedules= V_MemberSchedule::where('user_id', Auth::id())->get();
             return view('schedule.welcome', [
                   'mySchedulesCount' => $vMemberSchedules->count(),
@@ -328,7 +328,7 @@ class SchemaController extends BaseController {
 
 // Show the Register New Schedule Form
    public function showRegisterSchedule() {
-      return view('schedule.adminRegisterNewSchedule', [
+      return view('schedule.admin.registerNewSchedule', [
          'names' => $this->names(),
       ]);
    }
@@ -427,7 +427,7 @@ class SchemaController extends BaseController {
       if ($admin === 0 && Auth::user()->authority === 0) {
          return view('errors.403')->with('names', $this->names());
       }
-      return view('schedule.adminRegisterMember', [
+      return view('schedule.admin.registerMember', [
           'schedule' => $schedule,
           'currentUser' => Auth::user(),
           'names' => $this->names(),
@@ -483,7 +483,7 @@ class SchemaController extends BaseController {
       }
       $sortedNonMembers= $nonMembers->sortBy('user_name');
       $sortedNonMembers->values()->all();
-      return view('schedule.adminMembers', [
+      return view('schedule.admin.members', [
           'schedule' => $schedule,
           'vMemberSchedules' => $vMemberSchedules,
           'nonMembers' => $sortedNonMembers,
@@ -540,7 +540,7 @@ class SchemaController extends BaseController {
       }
       $sortedNonMembers= $nonMembers->sortBy('user_name');
       $sortedNonMembers->values()->all();
-      return view('schedule.adminNotConnectedMembers', [
+      return view('schedule..admin.notConnectedMembers', [
           'schedule' => $schedule,
           'nonMembers' => $sortedNonMembers,
           'members' => $members,
@@ -552,24 +552,45 @@ class SchemaController extends BaseController {
    }
 
    // Show my schemas
-   public function showMySchemas() {
-      $myVMemberSchedules = V_MemberSchedule::where('user_id', Auth::id())->where('admin','>',0)->get();
-      $myScheduleIds = $myVMemberSchedules->pluck('schedule_id');
+   public function showAdminSchemas() {
+      if (Auth::user()->authority >1)  {
+         $myVMemberSchedules= collect([]);
+         $schedules=Schedule::all();
+          foreach ($schedules as $mySchedule) {
+             $mySchedule->schedule_id= $mySchedule->id;
+             $mySchedule->schedule_name= $mySchedule->name;
+             $mySchedule->schedule_description= $mySchedule->description;
+             $myVMemberSchedules->push($mySchedule);
+          }
+      } else {
+         $myVMemberSchedules = V_MemberSchedule::where('user_id', Auth::id())->where('admin','>',0)->get();
+      }
+      //$myScheduleIds = $myVMemberSchedules->pluck('schedule_id');
       foreach ($myVMemberSchedules as $myVMemberSchedule) {
          $myVMemberSchedule->admins = V_MemberSchedule::where('schedule_id', $myVMemberSchedule->schedule_id)
                          ->where('admin', 1)
                          ->get()->implode('user_name', ',');
+         $myVMemberSchedule->isAdmin = V_MemberSchedule::where('schedule_id', $myVMemberSchedule->schedule_id)
+                         ->where('admin', 1)->where('user_id', Auth::id())
+                         ->get()->count();
       }
-      $otherSchedules = Schedule::all()->except($myScheduleIds->toArray());
-      foreach ($otherSchedules as $otherSchedule) {
-         $otherSchedule->admins = V_MemberSchedule::where('schedule_id', $otherSchedule->id)
+      return view('schedule.admin.mySchemas', [
+          'myVMemberSchedules' => $myVMemberSchedules,
+          'admin' => Auth::user()->authority,
+          'names' => $this->names()
+      ]);
+   }
+ // Show my schemas
+   public function showMySchemas() {
+      $myVMemberSchedules = V_MemberSchedule::where('user_id', Auth::id())->get();
+      foreach ($myVMemberSchedules as $myVMemberSchedule) {
+         $myVMemberSchedule->admins = V_MemberSchedule::where('schedule_id', $myVMemberSchedule->schedule_id)
                          ->where('admin', 1)
                          ->get()->implode('user_name', ',');
       }
 
       return view('schedule.mySchemas', [
           'myVMemberSchedules' => $myVMemberSchedules,
-          'otherSchedules' => $otherSchedules,
           'admin' => Auth::user()->authority,
           'names' => $this->names()
       ]);
@@ -599,7 +620,7 @@ class SchemaController extends BaseController {
       $vMemberSchedules = V_MemberSchedule::where('schedule_id', $scheduleId)->get();
       $admin = $vMemberSchedules->where('user_id', Auth::user()->id)->first()->admin | Auth::user()->authority;
 
-      return view('schedule.adminComments', [
+      return view('schedule.admin.comments', [
           'schedule' => $schedule,
           'currentUser' => Auth::user(),
           'scheduleDates' => $scheduleDates,

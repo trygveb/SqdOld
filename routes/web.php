@@ -92,6 +92,8 @@ Route::group(// Comment out this when running tests
                     Route::name('welcome')->get('/welcome', 'welcome');
                     //Show edit view for one user for  attendance update
                     Route::name('showEdit')->get('/schedule/edit/{schedule}', 'showViewEdit');
+                  // Show user's schedules
+                    Route::name('showMySchemas')->get('/schedule/showSchedules', 'showMySchemas');
 
 
                      // Register or unregister for schemas
@@ -106,7 +108,7 @@ Route::group(// Comment out this when running tests
                     Route::middleware(['isSuperAdmin'])->group(function () {
                        Route::name('showRegisterSchedule')->get('/admin/registerNewWchedule', 'showRegisterSchedule');
                        Route::name('registerNewSchedule')->post('/admin/registerNewSchedule', 'registerNewSchedule');
-                       Route::name('showMySchemas')->get('admin//schedule/showSchedules', 'showMySchemas');
+                       Route::name('showAdminSchemas')->get('admin//schedule/showSchedules', 'showAdminSchemas');
 
                      });
 
