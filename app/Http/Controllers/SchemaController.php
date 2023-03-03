@@ -658,7 +658,13 @@ class SchemaController extends BaseController {
           'statuses' => $statuses, // TODO: Only the statuses of the current user is needed
       ]);
    }
-
+   
+   public function showReleaseNotes_2_2() {
+      return view('schedule.releaseNotes_2_2', [
+          'names' => $this->names(),
+      ]);
+      
+   }
 //Updating the member's attendance status
    public function updateAttendance(Request $request) {
       $data = request()->all();

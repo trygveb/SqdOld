@@ -7,6 +7,8 @@
    <div class="col-md-12 text-center">
 
       <h1 class="text-center"> {{ __('Welcome to')}} {{$names['application']}}</h1>
+      &#x2B50; {{ __('New version')}} 2023-03-02 &#x2B50; <a href="{{route('schedule.release_2_2')}}">{{ __('Release notes')}}</a>
+
       <table style="text-align:left;">
       </table>
    @guest
@@ -15,6 +17,7 @@
       {{ __('or') }}
       <a class="nav-link" href="{{route('showRegisterForm')}}">{{ __('Register') }}</a>       
    @endguest
+ 
    @auth
       @if (! Auth::user()->hasVerifiedEmail())
          <a href="{{route('verification.notice')}}">{{__('Please confirm your email')}}!</a>
