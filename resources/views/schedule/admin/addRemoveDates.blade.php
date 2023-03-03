@@ -5,7 +5,7 @@
 @endif
 @endsection
 @section('content')
-<h1>{{__('Add/Remove dates')}}</h1>
+<h1>{{__('Add/Remove dates for schedule')}} <a href="{{route('schedule.index', ['scheduleId' => $schedule->id])}}">{{$schedule->name}}</a></h1>
  <div class="container">
 
      <br>

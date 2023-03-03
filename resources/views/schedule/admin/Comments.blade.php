@@ -21,7 +21,7 @@
           {{ csrf_field() }}
           <input type="hidden" name="scheduleId" value="{{$schedule->id}}">
           <fieldset>
-            <legend>{{__('Change comments')}}</legend>
+              <legend>{{__('Change comments for schedule')}} <a href="{{route('schedule.index', ['scheduleId' => $schedule->id])}}">{{$schedule->name}}</a></legend>
             
         <table class="table table-bordered" style="max-width:{{$tableMaxWidth}}px;">
         

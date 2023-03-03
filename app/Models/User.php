@@ -63,5 +63,12 @@ class User extends Authenticatable implements MustVerifyEmailContract, CanResetP
       //dd('hasVerifiedEmail');
       return !is_null($this->email_verified_at);
    }
+   
+   public function isSuperAdmin() {
+      return ($this->authority == 1);
+   }
+   public function isRoot() {
+      return ($this->authority == 2);
+   }
 
 }

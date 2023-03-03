@@ -1,10 +1,10 @@
 @extends('schedule.layout')
 @section('content')
-<h1>{{__('Update attendance')}}</h1>
+<h1>{{__('Update attendance in schedule')}} <a href="{{route('schedule.index', ['scheduleId' => $schedule->id])}}">{{$schedule->name}}</a></h1>
 @php
     $userId=$currentUser->id;
     $tableMaxWidth=520;
-    if ($groupSize > 1) {
+    if ($memberSchedule->group_size > 1) {
         $tableMaxWidth=700;
     }
 @endphp
@@ -18,7 +18,7 @@
             <thead>
               <th style="vertical-align:middle;" class="text-nowrap text-center">{{__('Date')}}</th>
               <th class="text-nowrap text-center">{{__('Comment')}}</th>
-              <th class="text-nowrap text-center">{{$currentUser->name}}</th>
+              <th class="text-nowrap text-center" style='width:380px;'>{{$memberSchedule->name_in_schema}}</th>
       
              </thead>
              <tbody>
@@ -37,7 +37,7 @@
             @endphp
 
                      <td>
-                     @if ($groupSize===1)
+                     @if ($memberSchedule->group_size===1)
                         <table class="table-sd-schema" style='border:none;'>
                           <tr style='border:none;'>
                             <td style='border:none;width:40px;'><input type="radio" name="{{$radioGroupName}}" value="1" class="status" {{($status==1)?'checked':''}}>
@@ -45,7 +45,7 @@
                             <td style='border:none;width:50px;'><input type="radio" name="{{$radioGroupName}}" value="3" class="status" {{($status==3)?'checked':''}}>
                               <span id="statusSpan">{{__('No')}}</span></td>
                           <!--</tr><tr style='border:none;'>-->
-                            <td style='border:none;text-align:center;width:50px;'><input type="radio" name="{{$radioGroupName}}" value="4" class="status" {{($status==4)?'checked':''}}>
+                            <td style='border:none;text-align:center;width:60px;'><input type="radio" name="{{$radioGroupName}}" value="4" class="status" {{($status==4)?'checked':''}}>
                               <span id="statusSpan">{{__('Maybe')}}</span></td>
                           </tr>
                         </table>

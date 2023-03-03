@@ -19,7 +19,7 @@ class EnsureUserIsSuperAdmin
    {
       if (Auth::check()) {
          $user = $request->user();
-         if ($user->authority > 0) {
+         if ($user->isSuperAdmin() || $user->isRoot()) {
             return $next($request);  // User has "super" privileges
          }
       }  // No authority, just go back with no message

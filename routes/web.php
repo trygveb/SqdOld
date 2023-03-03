@@ -113,7 +113,7 @@ Route::group(// Comment out this when running tests
                      });
 
                     // Routes requiring admin authority on schedules /////////////////////////
-                    Route::middleware(['isAdmin'])->group(function () {
+                    Route::middleware(['isScheduleAdmin'])->group(function () {
                        // Show view AdminComments
                        Route::name('showComments')->get('/admin/comments/{scheduleId}', 'showViewAdminComments');
 

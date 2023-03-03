@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Classes\Utility;
 
-class EnsureUserIsAdmin {
+class EnsureUserIsScheduleAdmin {
 
    /**
-    * Check that user is "superuser" ($user->authority > 0 ) or has admin authority on the schedule
-    *
+    * Check that user is ScheduleAdmin (=has admin authority on the schedule) or  is SuperAdmin or root 
+    * The current scheduleId must be the last element in the current url
     * @param  \Illuminate\Http\Request  $request
     * @param  \Closure  $next
     * @return mixed
@@ -19,8 +19,8 @@ class EnsureUserIsAdmin {
    public function handle(Request $request, Closure $next) {
       if (Auth::check()) {
          $user = $request->user();
-         if ($user->authority > 0) {
-            return $next($request);  // User has "super" privileges
+         if ($user->isSuperAdmin() || $user->isRoot()) {
+            return $next($request);  
          }
          $adminForSchedule = 0;
          $url = url()->full();

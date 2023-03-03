@@ -31,7 +31,7 @@
 @endif
 
  <div class="container" style="max-width:800px;">
-   <h1>{{__('Manage members for schedule')}}: {{$schedule->name}}</h1>
+   <h1>{{__('Manage members for schedule')}}  <a href="{{route('schedule.index', ['scheduleId' => $schedule->id])}}">{{$schedule->name}}</a></h1>
    <span class="link_text">{{__('Show')}}:</span>
    <div id="connected_div" style="display:none;">
       <a class="btn btn-link" id="connected_rb"  href="{{route('schedule.showMembers',['scheduleId' => $schedule->id])}}">{{__('Connected members')}}</a>

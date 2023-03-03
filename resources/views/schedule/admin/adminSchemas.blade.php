@@ -55,8 +55,8 @@
                   </td>
                </tr>
          @endforeach
-         @if ($admin>1)
-         @endif
+         
+ 
          </table>
             <x-submit-button submitText="{{ __('Save changes')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('home')}}"/>
               </fieldset>
