@@ -98,7 +98,12 @@ class SchemaController extends BaseController {
           'editAllowed' => $editAllowed
       ]);
    }
-
+   
+   public function showReleaseNotes_2_2() {
+      return view('schedule.releaseNotes_2_2', [
+          'names' => $this->names(),
+      ]);
+   }
 //Called from the index function
    private function createNamesAndGroupsArrays($memberSchedules, &$names, &$groups) {
       foreach ($memberSchedules as $memberSchedule) {
@@ -659,12 +664,7 @@ class SchemaController extends BaseController {
       ]);
    }
    
-   public function showReleaseNotes_2_2() {
-      return view('schedule.releaseNotes_2_2', [
-          'names' => $this->names(),
-      ]);
-      
-   }
+
 //Updating the member's attendance status
    public function updateAttendance(Request $request) {
       $data = request()->all();

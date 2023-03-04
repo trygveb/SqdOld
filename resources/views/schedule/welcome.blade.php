@@ -7,7 +7,6 @@
    <div class="col-md-12 text-center">
 
       <h1 class="text-center"> {{ __('Welcome to')}} {{$names['application']}}</h1>
-      &#x2B50; {{ __('New version')}} 2023-03-02 &#x2B50; <a href="{{route('schedule.release_2_2')}}">{{ __('Release notes')}}</a>
 
       <table style="text-align:left;">
       </table>
@@ -19,12 +18,14 @@
    @endguest
  
    @auth
+      &#x2B50; {{ __('New release')}} 2023-03-02 &#x2B50; <a href="{{route('schedule.release_2_2')}}">{{ __('Release notes')}}</a>
+      <br><br>
       @if (! Auth::user()->hasVerifiedEmail())
          <a href="{{route('verification.notice')}}">{{__('Please confirm your email')}}!</a>
       @else
          @if ($mySchedulesCount > 0)
-         {{__('Select schedule')}}<br>
             <ul style="list-style-type:none;">
+         {{__('Select schedule')}}<br>
          @foreach ($vMemberSchedules as $vMemberSchedule)
                <li><a href="{{route('schedule.index',$vMemberSchedule->schedule_id)}}">{{$vMemberSchedule->schedule_name}}</a></li>
          @endforeach

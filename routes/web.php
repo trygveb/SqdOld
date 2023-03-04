@@ -87,21 +87,20 @@ Route::group(// Comment out this when running tests
             Route::middleware(['verified'])->group(function () {
               Route::controller(SchemaController::class)->group(function () {
                     // Show one schema
-                    Route::name('index')->get('/schedule/show/{scheduleId}/{showHistory?}', 'index');
-                    // Show welcome for users with multiple schemas
-                    Route::name('welcome')->get('/welcome', 'welcome');
-                    //Show edit view for one user for  attendance update
-                    Route::name('showEdit')->get('/schedule/edit/{schedule}', 'showViewEdit');
+                  Route::name('index')->get('/schedule/show/{scheduleId}/{showHistory?}', 'index');
+                  // Show welcome for users with multiple schemas
+                  Route::name('welcome')->get('/welcome', 'welcome');
+                  //Show edit view for one user for  attendance update
+                  Route::name('showEdit')->get('/schedule/edit/{schedule}', 'showViewEdit');
                   // Show user's schedules
-                    Route::name('showMySchemas')->get('/schedule/showSchedules', 'showMySchemas');
-                   // Show release notes version 2.2
-                    Route::name('release_2_2')->get('/schedule/release_2_2', 'showReleaseNotes_2_2');
+                  Route::name('showMySchemas')->get('/schedule/showSchedules', 'showMySchemas');
 
 
-                     // Register or unregister for schemas
-                    Route::name('register')->post('/schedule/register', 'registerForSchemas');
+                   // Register or unregister for schemas
+                  Route::name('register')->post('/schedule/register', 'registerForSchemas');
 
- 
+                  Route::name('release_2_2')->get('/schedule/release_2_2', 'showReleaseNotes_2_2');
+
                     
                     // Update attendance (for one user)
                     Route::name('updateAttendance')->post('/schedule/updateAttendance', 'updateAttendance');
