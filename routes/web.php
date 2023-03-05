@@ -67,8 +67,10 @@ Route::group(// Comment out this when running tests
 // Home and menu routes //////////////////////////////////////////////////////
            Route::name('home')->get('/', [HomeController::class, 'home']);
            Route::name('about')->get('/about', [MenuController::class, 'about']);
+           Route::name('contact')->get('/contact', [MenuController::class, 'contact']);
            Route::name('contact.sendMail')->post('/contacts', [MenuController::class, 'sendMail']);
            Route::name('privacy')->get('/privacy', [MenuController::class, 'privacy']);
+           Route::name('schedule.info')->get('/schedule/info', [HomeController::class, 'showInfo']);
 
 
 // Calls routes ///////////////////////////////////////////////////////////////

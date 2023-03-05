@@ -99,6 +99,7 @@ class SchemaController extends BaseController {
       ]);
    }
    
+
    public function showReleaseNotes_2_2() {
       return view('schedule.releaseNotes_2_2', [
           'names' => $this->names(),

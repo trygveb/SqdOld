@@ -22,6 +22,11 @@ class MenuController extends BaseController {
             'names' => $this->names(),
             'title'=>'About']);
     }
+    public function contact() {
+        return view('menu.contact', [
+            'names' => $this->names(),
+            'title'=>'Contact']);
+    }
 
     public function cookiePolicy() {
         return view('menu.cookiePolicy', [
@@ -36,30 +41,6 @@ class MenuController extends BaseController {
             'title'=>'Policy']);
     }
 
-   /**
-     * Show the form for creating a new contact.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function contact()
-    {
-        return view ('about.contact', [
-            'currentUser' => $this->currentUser,
-            'title'=>'Kontakt']);
-    }
-
-//    /**
-//     * Send contact email
-//     *
-//     * @param  ContactRequest $request
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function contactSendMail(ContactRequest $request)
-//    {
-//        Mail::to('trygve.botnen@gmail.com')->send(new mailme);
-// 
-//        return view('emails.mailme');
-//    }
 
     /**
      * Show the hep page.

@@ -1,44 +1,6 @@
-<html>
+@extends('schedule.layout')
 
-<head>
-<meta http-equiv=Content-Type content="text/html; charset=UTF-8">
-<meta name=Generator content="Microsoft Word 15 (filtered)">
-<style>
-body {
-    background-color:black;
-        text-align: left;
-        color: white;
-        margin-left:20px;
-        max-width:600px;
-    } 
-h1 {
-    
-    font-size:1.7em;
-    font-family:"Calibri Light",sans-serif;
-    color:white;
-    font-weight:normal;
-    margin-bottom:0px;
-}
-h2 {
-    font-size:1.2em;
-    font-family:"Calibri Light",sans-serif;
-    color:white;
-    font-weight:normal;
-}
-p.MsoNormal {
-    margin-top:0px;
-    color:white;
-}
-.WordSection1 {
-    margin-left:30px;
-
-}
-
-</style>
-
-</head>
-
-<body lang=SV>
+@section('content')
 
 <div class=WordSection1>
 
@@ -89,6 +51,4 @@ Nej eller Kanske, övriga kan ange Ja, Nej eller Kanske.</p>
 
 </div>
 
-</body>
-
-</html>
+@endsection
