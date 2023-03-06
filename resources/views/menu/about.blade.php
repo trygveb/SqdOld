@@ -3,15 +3,31 @@
 <div class="container">
 <div class=WordSection1>
 
-<h1>Inledning</h1>
+<h1>{{__('About SdSchema')}}</h1>
 
-<p class=MsoNormal>SdSchema är en webbapplikation som är till för att medlemmar
-i förväg ska kunna registrera närvaro på kurser eller liknande aktiviteter som
-hålls regelbundet, oftast en gång per vecka. Behovet finns för aktiviteter om
-kräver ett minimiantal personer närvarande för att aktiviteten ska kunna
-genomföras, till exempel squaredans där man måste vara minst åtta personer.
-{{__('The source code is open and available at')}} <a href="https://github.com/trygveb/Sqd">Github</a>.</p>
-
+<p class=MsoNormal>{{__('SdSchema is a web application for members to be able to register attendance in advance for activities that are held regularly, usually once a week')}}.
+    <br>
+    {{__('The need exists for activities that require a minimum number of people present for the activity to be carried out, for example square dancing where there must be at least eight people')}}.
+    <br>
+    {{__('The source code is open and available at')}} <a href="https://github.com/trygveb/Sqd">Github</a>.
+</p>
+{{__('To connect to a schedule, you first need to register, with email address and password')}}.
+<br>
+{{__('The schedule manager can then connect you to one or more schedules')}}.
+<br>
+{{__('Once registered, you will  be redirected directly to the schedule page when you log in, (if you are only connected to one schedule)')}}.
+{{__('If you are connected to more than one schedule, you must first select (click on) which schedule you want to access')}}.
+<br>
+{{__('Once on the schedule page, you can register your presence at future activity events')}}.
+<br>
+{{__('If you are registered as a couple in the schedule, you can register whether no one, one or two people are coming')}}.
+{{__('Otherwise, register Yes or No')}}.
+<br>
+{{__('The option Maybe is also included to indicate that you want to decide later')}}.
+<br>
+{{__('')}}
+<br>
+<br>
 För att skapa ett schema behöver du ha administratörsbehörighet. För att erhålla det måste du 
 <a href="{{route('contact')}}" >kontakta applikationsansvarig.</a>
 

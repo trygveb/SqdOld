@@ -1,5 +1,6 @@
 {
     "About": "Om",
+    "About SdSchema":"Om SdSchema",
     "Accept for": "Acceptera i",
     "According to the EU General Data Protection Regulation (GDPR), we must inform that we use cookies on this website. We use cookies only to keep track of your login so that we show correct data for you, and to know when we must ask you to accept cookies next time (which we must do regularly).": "Enligt dataskyddsförordningen (GDPR) måste vi informera om att vi använder cookies  (kakor) på denna webplats. Vi använder cookies enbart för att hålla reda på din inloggning så att vi visar korrekta data för dig, och för att veta när vi ska be dig acceptera cookies nästa gång (vilket vi måste göra regelbundet).",
     "administrator on": "administratör på",
@@ -74,6 +75,10 @@
     "Historical (from 2021-08-30) attendance status can be displayed (but not changed)": "Historisk (från 2021-08-30) närvarostatus kan visas (men inte ändras)",
     "Home": "Hem",
     "I have read the": "Jag har läst",
+    "If you are connected to more than one schedule, you must first select (click on) which schedule you want to access":
+        "Om du är ansluten till mer än ett schema måste du först välja (klicka på) vilket schema du vill komma till",
+    "If you are registered as a couple in the schedule, you can register whether no one, one or two people are coming":
+        "Om du är registrerad som ett par i schemat kan du registrera om ingen, en eller två personer kommer",
     "If you check Admin, that member will get the same authority as you, on this schedule.": "Om du markerar Admin får den medlemmen samma behörighet som du, för detta schema.",
     "If you check Remove, that member will be removed from this schedule, but will remain registered in SdSchema." :"Om du markerar Ta bort, kommer den medlemmen att tas bort från detta schema, men kommer att förbli registrerad i SdSchema",
     "If you did not create an account, no further action is required.": "Om du inte skapade ett konto kan du bortse från detta mail.",
@@ -124,7 +129,11 @@
     "Number=2 for pairs, otherwise 1." :"Antal=2 för par, annars 1.",
     "New schedule": "Nytt schema",
     "OK. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.": "OK. Låt oss bara veta din e-postadress så skickar vi dig en länk för återställning av lösenord som gör att du kan välja ett nytt.",
+    "Once on the schedule page, you can register your presence at future activity events":"Väl inne på schemasidan kan du registrera din närvaro på framtida aktivitetstillfällen",
+    "Once registered, you will  be redirected directly to the schedule page when you log in, (if you are only connected to one schedule)":
+         "När det är gjort kommer du omdirigeras direkt till schemasidan när du loggar in, (om du endast är ansluten till ett schema)",
     "Open the mail and click on the the button with text \":text\"": "Öppna mailet och klicka på knappen med texten \":text\"",
+    "Otherwise, register Yes or No":"Annars registrerar du Ja eller Nej",
     "Other schedules": "Andra scheman",
     "or": "eller",
     "Password": "Lösenord",
@@ -162,7 +171,8 @@
     "Schedules": "Scheman",
     "Schema name": "Schemanamn",
     "Show":"Visa",
-    "SdSchema has changed domain, from sqd.trygveb.se to schema.sqd.se": "SdSchema har bytt domän, från sqd.trygveb.se till schema.sqd.se",
+    "SdSchema is a web application for members to be able to register attendance in advance for activities that are held regularly, usually once a week":
+      "SdSchema är en webbapplikation som är till för att medlemmar ska kunna anmäla närvaro i förväg till aktiviteter som hålls regelbundet, oftast en gång i veckan",
     "Select schedule": "Välj schema",
     "Send Password Reset Link": "Skicka länk för att återställa lösenord",
     "Send e-mail": "Skicka e-post",
@@ -181,8 +191,12 @@
     "The email has the sender \":mailFromAdress\" and the title \":title\" and is signed with \":signed\"": "E-postmeddelandet har avsändare \":mailFromAdress\" och titeln \":title\" och är undertecknat med \":signed\"",
     "administrator at": "administratör på",
     "The information we collect from you is only used to contact you by e-mail when needed. We do not sell, trade, or otherwise transfer personally identifiable information to third parties.": "Den information vi samlar in från dig används enbart för att kontakta dig via e-post vid behov. Vi säljer, handlar, eller på annat sätt överför, inte personligt identifierbar information till utomstående parter.",
+    "The need exists for activities that require a minimum number of people present for the activity to be carried out, for example square dancing where there must be at least eight people":
+      "Behov finns för aktiviteter som kräver ett minsta antal personer närvarande för att verksamheten ska kunna genomföras, till exempel squaredans där det ska vara minst åtta personer",
+    "The option Maybe is also included to indicate that you want to decide later": "Alternativet Kanske finns också med för att ange att du vill bestämma dig senare",
     "The password must be at least seven characters, and contain characters from each of the following three categories:": "Lösenordet måste vara minst sju tecken långt, och innehålla tecken från var och en av de tre följande kategorierna:",
     "The person or persons who are administrators of a schedule have access to all participants email addresses. An administrator can grant administrator authority to any member who is registered on the schedule.": "Den eller de som är administratörer av ett schema har tillgång till alla deltagares e-postadresser. En administratör kan ge administratörsbehörighet till alla medlemmar som är registrerade på schemat.",
+    "The schedule manager can then connect you to one or more schedules":"Därefter kan schemaansvarig ansluta dig till ett eller flera scheman",
     "The source code is open and available at": "Källkoden är öppen och tillgänglig på",
     "Then you have to wait for the administrator to connect you to a schedule" : "Sedan måste du vänta på att administratören ansluter dig till ett schema",
     "There is a new menu at the top right with, among other things, privacy policy": "Det har kommit en ny meny uppe till höger med bland annat integritetspolicy",
@@ -190,6 +204,7 @@
     "This can not be undone. If the member wants to join again later, he/she must register again": "Detta kan inte göras ogjort. Om medlemmen vill vara med igen senare, måste denne anmäla sig igen",
     "This website is owned by": "Denna webbsida ägs av",
     "Thursdays": "Torsdagar",
+    "To connect to a schedule, you first need to register, with email address and password":"För att ansluta till ett schema måste du först registrera dig, med e-postadress och lösenord",
     "Starting at" : "Start klockan",
     "Tuesdays": "Tisdagar",
     "Update": "Uppdatera",
