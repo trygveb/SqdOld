@@ -24,6 +24,15 @@
 {{__('Otherwise, register Yes or No')}}.
 <br>
 {{__('The option Maybe is also included to indicate that you want to decide later')}}.
+<br><br>
+{{__('To create a schedule, you need to have sufficient authority')}}.
+{{__('To obtain it, you must')}} <a href="{{route('contact')}}">{{__('contact the application manager')}}.</a>
+<br>
+{{__('This authority includes the possibility to')}}:
+<br>
+{{__('')}}
+<br>
+{{__('')}}
 <br>
 {{__('')}}
 <br>
