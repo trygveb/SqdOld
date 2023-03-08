@@ -30,58 +30,18 @@
 <br>
 {{__('As Schedule Administrator you can')}}:
 <ul>
-    <li>{{__('create new schedules with name, description and a (default) day of the week and a (default) time')}}</li>
-    <li>{{__('connect registered members to your schedules')}}</li>
-    <li>{{__('In each schedule register whether the member represents one or two people')}}</li>
-    <li>{{__("In each schedule register a  'Name_in_schema' for each member")}}</li>
-    <li>{{__('')}}</li>
-    
-</ul>
-<br>
-{{__('')}}
-<br>
-{{__('')}}
-<br>
-<br>
-För att skapa ett schema behöver du ha administratörsbehörighet. För att erhålla det måste du 
-<a href="{{route('contact')}}" >kontakta applikationsansvarig.</a>
-
-
-
-
-<p> Som administratör kan duskapa nya scheman. Varje schema har ett
-namn, en beskrivning och en (standard) veckodag och ett (standard) klockslag.</p>
-
-<p>Administratören är alltid Schemaadministratör för de scheman
-hen har skapat, och kan också lägga till eller ta bort andra
-Schemaadministratörer.</p>
-
-<h2>Schemaadministratör</h2>
-
-<p class=MsoNormal>En Schemaadministratör kan </p>
-
-<ul>
-<li>Lägga till och ta bort datum för aktiviteten (aktivitetstillfällen)</li>
-<li>Uppdatera kommentarsfältet på aktivitetsdatum</li>
-<li>Lägga till och ta bort medlemmar</li>
-<li>Ange om medlemmen representerar en eller två personer</li>
-</ul>
-<h2>Medlem</h2>
-
-<p class=MsoNormal>En Medlem kan </p>
-
-<p class=MsoListParagraphCxSpFirst style='text-indent:-18.0pt'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Visa schemat</p>
-
-<p class=MsoListParagraphCxSpLast style='text-indent:-18.0pt'><span
-style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Registrera sin egen närvaro på <u>framtida</u>
-aktivitetstillfällen. En medelm som är registrerad som ett par kan ange 1,2,
-Nej eller Kanske, övriga kan ange Ja, Nej eller Kanske.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
+   <li>{{__('create new schedules with name, description and a (default) day of the week and a (default) time')}}</li>
+   <li>{{__('connect registered members to your schedules')}}</li>
+   <li>{{__('add and remove dates for schedule activities')}}</li>
+   <li>{{__('update the comment field for the respective activity date')}}</li>
+   <li>{{__('in each schedule register whether the member represents one or two people')}}</li>
+   <li>{{__("in each schedule register a  'Name_in_schema' for each member")}}<sup>1</sup></li>
+   <li>{{__('give limited authority on schedules to other members who can then')}}
+       {{__('add and remove dates, and update comment fields')}} </li>
+ </ul>
+1) Name_in_schema is the name that shows up for you in the schema.
+It must be unique in the schema, and may not be longer than 12 characters.
+The schema administrator gives each member or couple a Name_in_schema
 </div>
 
     
