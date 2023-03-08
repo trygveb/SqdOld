@@ -25,12 +25,18 @@
 <br>
 {{__('The option Maybe is also included to indicate that you want to decide later')}}.
 <br><br>
-{{__('To create a schedule, you need to have sufficient authority')}}.
+{{__('To create a schedule, you need to be Schedule Administrator')}}.
 {{__('To obtain it, you must')}} <a href="{{route('contact')}}">{{__('contact the application manager')}}.</a>
 <br>
-{{__('This authority includes the possibility to')}}:
-<br>
-{{__('')}}
+{{__('As Schedule Administrator you can')}}:
+<ul>
+    <li>{{__('create new schedules with name, description and a (default) day of the week and a (default) time')}}</li>
+    <li>{{__('connect registered members to your schedules')}}</li>
+    <li>{{__('In each schedule register whether the member represents one or two people')}}</li>
+    <li>{{__("In each schedule register a  'Name_in_schema' for each member")}}</li>
+    <li>{{__('')}}</li>
+    
+</ul>
 <br>
 {{__('')}}
 <br>
