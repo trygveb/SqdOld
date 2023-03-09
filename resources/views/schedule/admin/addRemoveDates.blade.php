@@ -1,6 +1,6 @@
 @extends('schedule.layout')
 @section('menu1')
-@if ($admin > 0)
+@if ($scheduleAdmin > 0)
 <x-schedule-admin-menu scheduleId="{{$schedule->id}}" />
 @endif
 @endsection
@@ -13,7 +13,7 @@
           {{ csrf_field() }}
           <input type="hidden" name="scheduleId" value="{{$schedule->id}}">
           <fieldset>
-            <legend>{{__('Enter a date to be added')}}</legend>
+            <legend>{{__('Enter dates to be added')}}</legend>
       {{__('Existing dates are')}} {{$weekdays}}{{__('s')}} kl. {{$danceTime}}
      {{__('Latest date is')}} {{$lastScheduleDate->schedule_date}}
       <br><br>
@@ -37,16 +37,17 @@
 
       </form>
      <br>
+     @if ($scheduleAdmin>1)
      <form action="{{ route('schedule.removeDates')}}" id="removeForm" method="POST">
           {{ csrf_field() }}
           <input type="hidden" name="scheduleId" value="{{$schedule->id}}">
           <fieldset>
-            <legend>Markera datum som skall tas bort</legend>
+            <legend>{{__('Select dates to be deleted')}}</legend>
             <table class="table table-bordered table-sm table-sd-schema" >
                <thead>
-                  <th class="text-nowrap text-center" style="width:25%;">Datum</th>
-                  <th class="text-nowrap text-center">Kommentar</th>
-                  <th class="text-nowrap text-center" style="padding:2px 5px 2px 5px;width:25%;">Ta bort</th>
+                  <th class="text-nowrap text-center" style="width:25%;">{{__('Date')}}</th>
+                  <th class="text-nowrap text-center">{{__('Comment')}}</th>
+                  <th class="text-nowrap text-center" style="padding:2px 5px 2px 5px;width:25%;">{{__('Delete')}}</th>
                </thead>
                <tbody>
          @foreach ($scheduleDates as $scheduleDate)
@@ -67,12 +68,8 @@
             
             <x-submit-button submitText="{{ __('Remove date(s)')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
                              my-id="removeButton" onclick-function="return checkDeletes()" />
-
-           
-            
-
          </fieldset>
-
+      @endif
      </form>
  </div>
 @section('scripts')

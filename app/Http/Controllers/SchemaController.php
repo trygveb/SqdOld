@@ -414,7 +414,7 @@ class SchemaController extends BaseController {
           'danceTime' => $danceTime,
           'nextDate' => $nextDate,
           'names' => $this->names(),
-          'admin' => Utility::getAdminForSchedule($scheduleId)
+          'scheduleAdmin' => Utility::getAdminForSchedule($scheduleId)
       ]);
    }
 
