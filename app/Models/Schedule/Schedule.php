@@ -17,13 +17,14 @@ class Schedule extends Model {
       return $this->hasMany(ScheduleDate::class);
    }
 
-   public function addMember($userId, $groupSize, $nameInSchema) {
+   public function addMember($userId, $groupSize,  $nameInSchema, $admin=0) {
 
       DB::beginTransaction();
       try {
          $memberSchedule = new MemberSchedule();
          $memberSchedule->user_id = $userId;
          $memberSchedule->group_size = $groupSize;
+         $memberSchedule->admin = $admin;
          $memberSchedule->schedule_id = $this->id;
          $memberSchedule->name_in_schema= $nameInSchema;
          $memberSchedule->save();

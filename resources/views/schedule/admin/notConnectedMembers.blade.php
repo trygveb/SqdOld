@@ -43,10 +43,10 @@
          <div class="form-info-text" id="help_text" style="display:none;">
          <ul>
             <li>{{__('Number=2 for pairs, otherwise 1.')}}</li>
-            <li>{{__('"Name in schedule" here is just a suggestion.')}}</li>
-            <li>{{__('"Name in schedule" should be short,maximum 12 characters.')}}</li>
-            <li>{{__('"Name in schedule" and Number will only apply if you check Connect.')}}</li>
-            <li>{{__('"Name in schedule" must be unique in the schedule, but may be different in different schedules.')}}</li>
+            <li>{{__('"Name_in_schedule" here is just a suggestion.')}}</li>
+            <li>{{__('"Name_in_schedule" should be short,maximum 12 characters.')}}</li>
+            <li>{{__('"Name_in_schedule" and Number will only apply if you check Connect.')}}</li>
+            <li>{{__('"Name_in_schedule" must be unique in the schedule, but may be different in different schedules.')}}</li>
          </ul><br>
          </div>
 
@@ -114,7 +114,7 @@ function checkUniqueNames() {
    duplicates=findDuplicates(textElementValues);
   
    if (duplicates.length > 0) {
-      alert("{{__('Name in schema is not unique')}}:"+duplicates);
+      alert("{{__('Name_in_schedule is not unique')}}:"+duplicates);
       return false;
    }
   return true;

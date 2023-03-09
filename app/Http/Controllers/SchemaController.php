@@ -361,8 +361,9 @@ class SchemaController extends BaseController {
       DB::beginTransaction();
       try {
          $schedule->save();
-         // Connect current user to the new schedule
-         $status = $schedule->addMember(Auth::user()->id, 0, $nameInSchema);
+         // Connect current user (Schema administrator) to the new schedule
+         // with admin=2 (Schema administrator authority)
+         $status = $schedule->addMember(Auth::user()->id, 1, $nameInSchema,2);
          if ($status != 'OK') {
             return back()->with('error', __('Schedule :name could not be registered! Status=:status',
                                     ['name' => $data['schedule_name'],
