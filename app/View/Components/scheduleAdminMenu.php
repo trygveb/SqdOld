@@ -1,20 +1,25 @@
 <?php
 
 namespace App\View\Components;
+use App\Models\User;
 
 use Illuminate\View\Component;
 
 class scheduleAdminMenu extends Component
 {
       public $scheduleId;
+      public $userId;
+      public $user;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($scheduleId)
+    public function __construct($scheduleId, $userId)
     {
         $this->scheduleId= $scheduleId;
+        $this->$userId= $userId;
+        $this->user= User::find($userId);
     }
 
     /**

@@ -45,14 +45,15 @@ class SchemaController extends BaseController {
       // Check if user is member or root, if not redirect back
 
       $editAllowed = true;
-      if ($memberSchedules->where('user_id', Auth::id())->count() == 0) {
+      $user=Auth::user();
+      if ($memberSchedules->where('user_id', $user->id)->count() == 0) {
          // User is not member
-         if (Auth::user()->isRoot()) {
+         if ($user->isRoot()) {
             // User is root, and may view but not edit
             $editAllowed = false;
          } else {
              // User is not root nor member. Redirect back
-            $vMemberSchedules = V_MemberSchedule::where('user_id', Auth::id())->get();
+            $vMemberSchedules = V_MemberSchedule::where('user_id', $user->id)->get();
             return view('schedule.welcome', [
                 'mySchedulesCount' => $vMemberSchedules->count(),
                 'vMemberSchedules' => $vMemberSchedules,
@@ -86,7 +87,7 @@ class SchemaController extends BaseController {
       return view('schedule.schema', [
           'schedule' => $schedule,
           'numberOfDates' => count($scheduleDates),
-          'currentUser' => Auth::user(),
+          'currentUser' => $user,
           'scheduleDates' => $scheduleDates,
           'statuses' => $statuses,
           'memberNames' => $memberNames,

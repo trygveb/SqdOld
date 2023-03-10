@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Schedule\Groupsize;
+use App\Models\Schedule\MemberSchedule;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordInterface;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -63,10 +63,20 @@ class User extends Authenticatable implements MustVerifyEmailContract, CanResetP
       //dd('hasVerifiedEmail');
       return !is_null($this->email_verified_at);
    }
-   
-   public function isSuperAdmin() {
+   public function isScheduleAdministrator() {
       return ($this->authority == 1);
    }
+   public function isScheduleOwner($scheduleId) {
+      $memberSchedule= MemberSchedule::where('user_id', $this->id)
+              ->where('schedule_id', $scheduleId)->first();
+      return $memberSchedule->admin==2;
+   }
+   public function hasLimitedAuthority($scheduleId) {
+      $memberSchedule= MemberSchedule::where('user_id', $this->id)
+              ->where('schedule_id', $scheduleId)->first();
+      return $memberSchedule->admin==1;
+   }
+
    public function isRoot() {
       return ($this->authority == 2);
    }
