@@ -21,7 +21,7 @@
               <th style="vertical-align:middle;" class="text-nowrap text-center">{{__('Show')}}</th>
               <th style="vertical-align:middle;" class="text-nowrap text-center">{{__('Name')}}</th>
               <th class="text-nowrap text-center" >{{__('Description')}}</th>
-              <th class="text-nowrap text-center" >{{__('Admin(s)')}}</th>
+              <th class="text-nowrap text-center" >{{__('Administrator')}}</th>
             </tr>
             <!--<tbody>-->
 

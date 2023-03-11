@@ -2,8 +2,8 @@
 @section('menu1')
 
 
-@if ($admin > 0)
-   <x-schedule-admin-menu scheduleId="{{$schedule->id}}" />
+@if ($scheduleAdmin)
+<x-schedule-admin-menu schedule-id="{{$schedule->id}}"  user-id="{{$currentUser->id}}"/>
 @endif
 
 @endsection

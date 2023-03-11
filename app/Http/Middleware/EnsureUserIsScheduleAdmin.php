@@ -10,7 +10,7 @@ use App\Classes\Utility;
 class EnsureUserIsScheduleAdmin {
 
    /**
-    * Check that user is ScheduleAdmin (=has admin authority on the schedule) or  is SuperAdmin or root 
+    * Check that user is ScheduleAdmin (=has admin authority on the schedule) or root 
     * The current scheduleId must be the last element in the current url
     * @param  \Illuminate\Http\Request  $request
     * @param  \Closure  $next
@@ -19,7 +19,7 @@ class EnsureUserIsScheduleAdmin {
    public function handle(Request $request, Closure $next) {
       if (Auth::check()) {
          $user = $request->user();
-         if ($user->isSuperAdmin() || $user->isRoot()) {
+         if ($user->isScheduleAdministrator() || $user->isRoot()) {
             return $next($request);  
          }
          $adminForSchedule = 0;

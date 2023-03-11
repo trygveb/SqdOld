@@ -1,7 +1,7 @@
 @extends('schedule.layout')
 
 @section('menu1')
-@if ($currentUser->isScheduleOwner($schedule->id) ||$currentUser->hasLimitedAuthority($schedule->id) )
+@if ($scheduleAdmin )
    <x-schedule-admin-menu schedule-id="{{$schedule->id}}"  user-id="{{$currentUser->id}}"/>
 @endif
 @endsection

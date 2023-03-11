@@ -108,7 +108,7 @@ Route::group(// Comment out this when running tests
                     Route::name('updateAttendance')->post('/schedule/updateAttendance', 'updateAttendance');
 
                     // Routes requiring superadmin authority (can create new schedules) /////////////////////////
-                    Route::middleware(['isSuperAdmin'])->group(function () {
+                    Route::middleware(['isScheduleAdmin'])->group(function () {
                        Route::name('showRegisterSchedule')->get('/admin/registerNewWchedule', 'showRegisterSchedule');
                        Route::name('registerNewSchedule')->post('/admin/registerNewSchedule', 'registerNewSchedule');
                        Route::name('showAdminSchemas')->get('admin//schedule/showSchedules', 'showAdminSchemas');

@@ -63,18 +63,29 @@ class User extends Authenticatable implements MustVerifyEmailContract, CanResetP
       //dd('hasVerifiedEmail');
       return !is_null($this->email_verified_at);
    }
+
    public function isScheduleAdministrator() {
-      return ($this->authority == 1);
+      return ($this->authority >= 1);
    }
+
    public function isScheduleOwner($scheduleId) {
-      $memberSchedule= MemberSchedule::where('user_id', $this->id)
-              ->where('schedule_id', $scheduleId)->first();
-      return $memberSchedule->admin==2;
+      $memberSchedule = MemberSchedule::where('user_id', $this->id)
+                      ->where('schedule_id', $scheduleId)->first();
+      if (is_null($memberSchedule)) {
+         return false;
+      } else {
+         return $memberSchedule->admin == 2;
+      }
    }
+
    public function hasLimitedAuthority($scheduleId) {
-      $memberSchedule= MemberSchedule::where('user_id', $this->id)
-              ->where('schedule_id', $scheduleId)->first();
-      return $memberSchedule->admin==1;
+      $memberSchedule = MemberSchedule::where('user_id', $this->id)
+                      ->where('schedule_id', $scheduleId)->first();
+      if (is_null($memberSchedule)) {
+         return false;
+      } else {
+         return $memberSchedule->admin == 1;
+      }
    }
 
    public function isRoot() {

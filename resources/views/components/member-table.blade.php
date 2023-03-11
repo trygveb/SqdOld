@@ -39,13 +39,21 @@
             <td style="padding:2px 5px 2px 5px;" class="text-center">
             @if ($member->admin == 1)
                <input type="checkbox"  class="cbAdmin"  name="{{$adminName}}" onclick="adminClicked(event)" checked>
+            @elseif ($member->admin == 2)
+               <input type="checkbox"  class="cbAdmin"  disabled name="{{$adminName}}" checked>
             @else
                <input type="checkbox"  class="cbAdmin"  name="{{$adminName}}" onclick="adminClicked(event)">
             @endif
             </td>
+            @if ($member->admin == 2)
+            <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
+                <input type="checkbox"  class="cbRemove"   id="{{$member->user_id}}" disabled name="{{$removeName}}" >
+            </td>
+            @else
             <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
                 <input type="checkbox"  class="cbRemove"   id="{{$member->user_id}}" name="{{$removeName}}" onclick="checkForm()">
             </td>
+            @endif
          @else
             <td class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">
                 <input type="checkbox"  class="cbConnect"   id="{{$member->user_id}}" name="{{$connectName}}" onclick="checkForm()">
