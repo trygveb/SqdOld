@@ -72,7 +72,7 @@
     "Full name": "Fullständigt namn",
     "Full name is generated automatically. No two users can have the same full name.":"Fullständigt namn skapas automatiskt. Det får inte finnas två användare med identiskt fullständigt namn.",
     "Get In Touch With Us": "Kontakta Oss",
-    "give limited authority on schedules to other members who can then":"ge begränsad behörighet på scheman till andra medlemmar, som då kan",
+    "give limited authority on the schedule to other members who can then":"ge begränsad behörighet på schemat till andra medlemmar, som då kan",
     "gladly send you another": "skickar vi gärna ett till",
     "Group-size": "Gruppstorlek",
     "Hello!": "Hej!",
@@ -87,7 +87,6 @@
     "If the member is registered as a couple, it will probably be something else":"Om medlemmen är registrerad som ett par så blir det förmodligen något annat",
     "If you are registered as a couple in the schedule, you can register whether zero, one or two people are coming":
         "Om du är registrerad som ett par i schemat kan du registrera om noll, en eller två personer kommer",
-    "If you check Admin, that member will get the same authority as you, on this schedule.": "Om du markerar Admin får den medlemmen samma behörighet som du, för detta schema.",
     "If you check Remove, that member will be removed from this schedule, but will remain registered in SdSchema." :"Om du markerar Ta bort, kommer den medlemmen att tas bort från detta schema, men kommer att förbli registrerad i SdSchema",
     "If you did not create an account, no further action is required.": "Om du inte skapade ett konto kan du bortse från detta mail.",
     "If you did not receive the email, we will": "Om du inte fått e-postmeddelandet",

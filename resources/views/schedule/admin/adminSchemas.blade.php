@@ -9,7 +9,7 @@
 
          <a  href="{{route('schedule.showRegisterSchedule')}}">{{__('Create new schedule')}}</a>
    
-        <form id="myForm" action="{{ route('schedule.register')}}" method="POST">
+        <form id="myForm" action="{{ route('schedule.updateSchedule')}}" method="POST">
           {{ csrf_field() }}
           <input type="hidden" name="userId" value="{{Auth::id()}}">
           <fieldset style="min-width:850px;">
@@ -27,9 +27,8 @@
 
         @foreach ($myVMemberSchedules as $myVMemberSchedule)
          @php
-            $schemaNameInput='name'.$myVMemberSchedule->schedule_id;
-            $schemaDescriptionInput='description'.$myVMemberSchedule->schedule_id;
-            $columnId='myCol_'.$myVMemberSchedule->schedule_id;
+            $schemaNameInput='name_'.$myVMemberSchedule->schedule_id;
+            $schemaDescriptionInput='description_'.$myVMemberSchedule->schedule_id;
          @endphp
                <tr class='status'>
                   <td class="text-nowrap" >

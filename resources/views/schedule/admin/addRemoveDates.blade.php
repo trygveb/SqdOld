@@ -1,6 +1,6 @@
 @extends('schedule.layout')
 @section('menu1')
-@if ($scheduleAdmin)
+@if ($isScheduleAdmin)
 <x-schedule-admin-menu schedule-id="{{$schedule->id}}"  user-id="{{$currentUser->id}}"/>
 @endif
 @endsection
@@ -37,7 +37,7 @@
 
       </form>
      <br>
-     @if ($scheduleAdmin>1)
+     @if ($isScheduleOwner || $isRoot)
      <form action="{{ route('schedule.removeDates')}}" id="removeForm" method="POST">
           {{ csrf_field() }}
           <input type="hidden" name="scheduleId" value="{{$schedule->id}}">
@@ -59,7 +59,7 @@
                      <td class="text-nowrap" style="padding:1px 7px;" >
                          {{$scheduleDate->comment}}
                      </td>
-                     <td style="text-align:center"><input type="checkbox"  class="inp" onclick="hideOrShowRemoveButton()" name="{{$deleteName}}"> Bort</td>
+                     <td style="text-align:center"><input type="checkbox"  class="inp" onclick="hideOrShowRemoveButton()" name="{{$deleteName}}"> {{__('Delete')}}</td>
                   </tr>
          @endforeach
                </tbody>

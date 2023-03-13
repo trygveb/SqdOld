@@ -1,6 +1,8 @@
 @extends('schedule.layout')
 @section('menu1')
+@if ($isScheduleAdmin)
    <x-schedule-admin-menu schedule-id="{{$schedule->id}}"  user-id="{{$currentUser->id}}"/>
+@endif
 @endsection
 @section('content')
 

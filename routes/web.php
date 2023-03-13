@@ -112,6 +112,7 @@ Route::group(// Comment out this when running tests
                        Route::name('showRegisterSchedule')->get('/admin/registerNewWchedule', 'showRegisterSchedule');
                        Route::name('registerNewSchedule')->post('/admin/registerNewSchedule', 'registerNewSchedule');
                        Route::name('showAdminSchemas')->get('admin//schedule/showSchedules', 'showAdminSchemas');
+                       Route::name('updateSchedule')->post('/admin/updateSchedule', 'updateSchedule');
 
                      });
 

@@ -416,7 +416,9 @@ class SchemaController extends BaseController {
           'danceTime' => $danceTime,
           'nextDate' => $nextDate,
           'names' => $this->names(),
-          'scheduleAdmin' => ($user->isScheduleOwner($schedule->id) || $user->hasLimitedAuthority($schedule->id) || $user->isRoot())
+          'isRoot' =>  $user->isRoot(),
+          'isScheduleAdmin' => $user->hasLimitedAuthority($schedule->id) ||$user->isScheduleOwner($schedule->id) ||   $user->isRoot(),
+          'isScheduleOwner' => $user->isScheduleOwner($schedule->id)
 
       ]);
    }
@@ -506,9 +508,12 @@ class SchemaController extends BaseController {
           'nonMembers' => $sortedNonMembers,
           'currentUser' => $currentUser,
           'emails' => $emails,
+          'status' => $status,
           'names' => $this->names(),
-          'scheduleAdmin' => ($currentUser->isScheduleOwner($schedule->id) || $currentUser->hasLimitedAuthority($schedule->id) || $currentUser->isRoot())
-,         'status' => $status
+          'isRoot' =>  $currentUser->isRoot(),
+          'isScheduleAdmin' => $currentUser->hasLimitedAuthority($schedule->id) ||$currentUser->isScheduleOwner($schedule->id) ||   $currentUser->isRoot(),
+          'isScheduleOwner' => $currentUser->isScheduleOwner($schedule->id)
+              
       ]);
    }
 
@@ -596,7 +601,16 @@ class SchemaController extends BaseController {
           'names' => $this->names()
       ]);
    }
-
+   
+   public function updateSchedule(Request $request) {
+       $data = request()->all();
+//      [name_6] => CF_A1
+//      [description_6] => Kalles
+       
+       dd(print_r($data, true));
+      return $this->showAdminSchemas();
+      
+   }
    // Show my schemas
    public function showMySchemas() {
       $myVMemberSchedules = V_MemberSchedule::where('user_id', Auth::id())->get();
@@ -624,15 +638,18 @@ class SchemaController extends BaseController {
       $scheduleDates = ScheduleDate::where('schedule_id', $scheduleId)
               ->where('schedule_date', '>=', $today)
               ->get();
+      $user= Auth::user();
       return view('schedule.admin.comments', [
           'schedule' => $schedule,
-          'currentUser' => Auth::user(),
+          'currentUser' => $user,
           'scheduleDates' => $scheduleDates,
           'names' => $this->names(),
-          'admin' => Utility::getAdminForSchedule($scheduleId)
+          'isRoot' =>  $user->isRoot(),
+          'isScheduleAdmin' => $user->hasLimitedAuthority($schedule->id) ||$user->isScheduleOwner($schedule->id) ||   $user->isRoot(),
+          'isScheduleOwner' => $user->isScheduleOwner($schedule->id)
       ]);
    }
-
+ 
 // Show view SchemaEdit for updating the member's attendance status
    public function showViewEdit(Schedule $schedule) {
 

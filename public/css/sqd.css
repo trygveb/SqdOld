@@ -7,7 +7,9 @@ and open the template in the editor.
     Created on : 2020-dec-21, 16:57:03
     Author     : Trygve
 */
-
+body {
+     background-color:#333;
+}
 input.status {
     
     margin-right:3px;

@@ -1,8 +1,7 @@
 @extends('schedule.layout')
 @section('menu1')
 
-
-@if ($scheduleAdmin)
+@if ($isScheduleAdmin)
 <x-schedule-admin-menu schedule-id="{{$schedule->id}}"  user-id="{{$currentUser->id}}"/>
 @endif
 
@@ -64,7 +63,6 @@
             <li>{{__('Number=2 for pairs, otherwise 1.')}}</li>
             <li>{{__('"Name_in_schedule" must be unique in the schedule, but may be different in different schedules.')}}</li>
             <li>{{__('"Name_in_schedule" should be short,maximum 12 characters.')}}</li>
-            <li>{{__('If you check Admin, that member will get the same authority as you, on this schedule.')}}</li>
             <li>{{__('If you check Remove, that member will be removed from this schedule, but will remain registered in SdSchema.')}}</li>
          </ul>
          </div>

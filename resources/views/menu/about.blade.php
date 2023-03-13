@@ -40,7 +40,7 @@
    <li>{{__('update the comment field for the respective activity date')}}</li>
    <li>{{__('in each schedule register whether the member represents one or two people')}}</li>
    <li>{{__('in each schedule register a "Name_in_schedule" for each member')}}<sup>1</sup></li>
-   <li>{{__('give limited authority on schedules to other members who can then')}}
+   <li>{{__('give limited authority on the schedule to other members who can then')}}
        {{__('add dates, and update comment fields')}} </li>
  </ul>
 <a name="name_in_schema">1)</a> {{__('"Name_in_schedule" is the name that shows up in the schema')}}.

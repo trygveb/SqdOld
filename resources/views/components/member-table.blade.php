@@ -8,7 +8,7 @@
    <th class="text-nowrap">{{__('Name_in_schedule')}}</th>
    <th class="text-nowrap">{{__('Number')}}</th>
    @if ($connected=="yes")
-      <th class="text-nowrap">Admin</th>
+      <th class="text-nowrap">Admin *</th>
       <th class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">{{__('Remove')}}</th>
    @else
       <th class="text-nowrap text-center" style="padding:2px 5px 2px 5px;">{{__('Connect')}}</th>
@@ -63,4 +63,7 @@
    @endforeach
    </tbody>
 </table>
+*) Admin= {{__('give limited authority on the schedule to other members who can then')}} 
+{{__('add dates, and update comment fields')}},
+<br>
 <br>
