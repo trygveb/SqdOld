@@ -6,7 +6,7 @@
 <div class="container">
     <h1 class="text-center"> {{ __('Release notes')}} for {{$names['application']}}  Version 2.2 </h1>
      <div style="margin-left:auto;margin-right:auto;  width: 60%;  border: 3px solid #ca7300;  padding: 10px;">
-      <h2>För Schemaskapare</h2>
+      <h2>För scheduleskapare</h2>
       <ul>
           <li>Sidan för att skapa nytt schema har fått följande nya fält</li>
          <ul>

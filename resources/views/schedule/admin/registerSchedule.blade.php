@@ -26,7 +26,7 @@
       </div>
 
       <div class="form-group row">
-          <label for="schedule_name" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Schema name') }} *</label>
+          <label for="schedule_name" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Schedule name') }} *</label>
           <div class="col-md-6">
               <input id="schedule_name" type="text" class="name_input form-control @error('schedule_name') is-invalid @enderror"
                      name="schedule_name"  value="{{ old('schedule_name') }}" maxlength="24" required  autofocus>
@@ -73,7 +73,7 @@
       <div class="form-group row mb-0">
           <div class="col-md-6 offset-md-4">
                <p style="float:right;">
-               <button type="submit"  onclick="checkForm()" class="btn btn-primary" id="submit-button" >{{ __('Register')}}</button>
+               <button type="submit"  onclick="checkForm()" class="btn btn-primary" id="submit-button" >{{ __('Register schedule')}}</button>
                <a style="margin-left:5px;" href="{{route($names['routeRoot'].'.home')}}" class="btn btn-secondary"> {{ __('Cancel')}}</a>
                </p>
           </div>

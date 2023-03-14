@@ -25,7 +25,7 @@
       <a class="btn btn-link" id="not_connected_rb"  href="{{route('schedule.showNotConnectedMembers',['scheduleId' => $schedule->id])}}">{{__('Not connected members')}}</a>
    </div>
    <div id="new_member_div" style="display:none;">
-      <a class="btn btn-link" id="new_member_rb"  href="{{route('schedule.showViewAdminRegisterMember',['scheduleId' => $schedule->id])}}">{{__('Register new member')}}</a>
+      <a class="btn btn-link" id="new_member_rb"  href="{{route('schedule.showAdminRegisterMember',['scheduleId' => $schedule->id])}}">{{__('Register new member')}}</a>
    </div>
    
    
