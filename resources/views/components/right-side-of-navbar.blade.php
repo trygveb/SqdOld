@@ -14,7 +14,7 @@
             <a class="dropdown-item" href="{{route('showRegisterForm')}}">{{ __('Register') }}</a>   
    @auth
    @if (Auth::user()->authority >0)                
-            <a class="dropdown-item" href="{{route('schedule.showAdminSchedules')}}" >{{ __('Manage schedules') }}
+            <a class="dropdown-item" href="{{route('schedule.showAdminSchemas')}}" >{{ __('Manage schedules') }}
             </a>
    @endif        
    @endauth
@@ -26,7 +26,7 @@
             {{ Auth::user()->complete_name }}
          </a>
          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-             <a class="dropdown-item" href="{{route('schedule.showMyschedules')}}" >{{ __('Schedules') }}
+             <a class="dropdown-item" href="{{route('schedule.showMySchemas')}}" >{{ __('Schedules') }}
             <a class="dropdown-item" href="{{ route('signout') }}"
                onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}
             </a>
