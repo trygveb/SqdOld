@@ -575,7 +575,8 @@ class SchemaController extends BaseController {
 
    // Show my schemas
    public function showAdminSchemas() {
-      if (Auth::user()->authority > 1) {
+      $user=Auth::user();
+      if ($user->isRoot()) {
          $myVMemberSchedules = collect([]);
          $schedules = Schedule::all();
          foreach ($schedules as $mySchedule) {
@@ -594,7 +595,7 @@ class SchemaController extends BaseController {
                          ->get()->implode('user_name', ',');
          $myVMemberSchedule->isAdmin = V_MemberSchedule::where('schedule_id', $myVMemberSchedule->schedule_id)
                          ->where('admin', 2)->where('user_id', Auth::id())
-                         ->get()->count();
+                         ->get()->count()+$user->isRoot();
       }
       return view('schedule.admin.adminSchemas', [
           'myVMemberSchedules' => $myVMemberSchedules,
@@ -604,10 +605,18 @@ class SchemaController extends BaseController {
    
    public function updateSchedule(Request $request) {
        $data = request()->all();
-//      [name_6] => CF_A1
-//      [description_6] => Kalles
-       
-       dd(print_r($data, true));
+       foreach ($data as $key => $value) {
+         if (substr($key, 0, 4) === 'name') {
+            $atoms = explode('_', $key);
+            $scheduleId = $atoms[1];
+            $schedule= Schedule::find($scheduleId);
+            $schedule->name=$value;
+            $description=$data['description_'.$scheduleId];
+            $schedule->description= $description;
+//            dd(print_r($value, true));
+            $schedule->save();
+         }
+       }
       return $this->showAdminSchemas();
       
    }

@@ -15,6 +15,8 @@
    @auth
    @if (Auth::user()->authority >0)                
             <a class="dropdown-item" href="{{route('schedule.showAdminSchemas')}}" >{{ __('Manage schedules') }}
+            <a class="dropdown-item" href="{{route('schedule.showRegisterSchedule')}}">{{__('Create new schedule')}}</a>
+
             </a>
    @endif        
    @endauth

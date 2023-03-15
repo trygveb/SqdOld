@@ -7,16 +7,16 @@
 
       <div class="table-responsive" style="overflow-x:auto; overflow-y:hidden;">
 
-         <a  href="{{route('schedule.showRegisterSchedule')}}">{{__('Create new schedule')}}</a>
    
         <form id="myForm" action="{{ route('schedule.updateSchedule')}}" method="POST">
           {{ csrf_field() }}
           <input type="hidden" name="userId" value="{{Auth::id()}}">
           <fieldset style="min-width:850px;">
-            <legend>{{__('Schedules')}}</legend>
+            <legend>{{__('My schedules')}}</legend>
+         
             
         <table class="table table-bordered">
-            <caption>{{__('My schedules')}}</caption>
+            <caption></caption>
             <tr>
               <th style="vertical-align:middle;" class="text-nowrap text-center">{{__('Show')}}</th>
               <th style="vertical-align:middle;" class="text-nowrap text-center">{{__('Name')}}</th>
@@ -58,7 +58,7 @@
  
          </table>
             <x-submit-button submitText="{{ __('Save changes')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('home')}}"/>
-              </fieldset>
+         </fieldset>
 
         </form>
      </div>
