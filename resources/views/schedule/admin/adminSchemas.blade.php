@@ -21,6 +21,7 @@
               <th style="vertical-align:middle;" class="text-nowrap text-center">{{__('Show')}}</th>
               <th style="vertical-align:middle;" class="text-nowrap text-center">{{__('Name')}}</th>
               <th class="text-nowrap text-center" >{{__('Description')}}</th>
+              <th class="text-nowrap text-center" >{{__('Weekday')}}</th>
               <th class="text-nowrap text-center" >{{__('Administrator')}}</th>
             </tr>
             <!--<tbody>-->
@@ -46,6 +47,22 @@
                        <input type="text" maxlength=48 size=36 name="{{$schemaDescriptionInput}}"  value="{{$myVMemberSchedule->schedule_description}}" >
                        @else
                        {{$myVMemberSchedule->schedule_description}}
+                       @endif
+                      
+                  </td>
+                  <td class="text-nowrap">
+                      @if ($myVMemberSchedule->isAdmin > 0)
+                        <select class="form-select" aria-label="{{ __('Weekday') }}" name="weekday" id="weekday-select" required>
+                           <option value="1">{{ __('Mondays')}}</option>
+                           <option value="2">{{ __('Tuesdays')}}</option>
+                           <option value="3">{{ __('Wednesdays')}}</option>
+                           <option value="4">{{ __('Thursdays')}}</option>
+                           <option value="5">{{ __('Fridays')}}</option>
+                           <option value="6">{{ __('Saturdays')}}</option>
+                           <option value="7">{{ __('Sundays')}}</option>
+                       </select>
+                       @else
+                       {{$myVMemberSchedule->default_weekday}}
                        @endif
                       
                   </td>

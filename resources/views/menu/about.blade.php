@@ -43,7 +43,8 @@
    <li>{{__('give limited authority on the schedule to other members who can then')}}
        {{__('add dates, and update comment fields')}} </li>
  </ul>
-<a name="name_in_schema">1)</a> {{__('"Name_in_schedule" is the name that shows up in the schema')}}.
+<a name="name_in_schema">1)</a> 
+{{__('"Name_in_schedule" is the name that will be displayed in the schedule')}}.
 {{__('The schedule administrator gives each member or couple an unique "Name_in_schedule"')}}.
 {{__("The default value is the member's first name")}}.
 {{__('If the member is registered as a couple, it will probably be something else')}}.

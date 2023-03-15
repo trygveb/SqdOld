@@ -21,7 +21,10 @@
 
       <div class="form-info-text" id="help_text" style="display:none;">
 
-      {{__('New schema help text.')}}
+      {{__('Weekday is a default value, and you can choose other weekdays when you add new dates to the schedule')}}.<br>
+      {{__('Starting time is curently only displayed in the')}} <a href="{{route('schedule.showAdminSchemas')}}">{{__('Manage Schedules')}}</a> {{__('page')}}.
+      {{__('"Name_in_schedule" is the name that will be displayed for you in the schedule')}}.
+      {{__('It may not be longer than 12 characters')}}.
       <br> <br>
       </div>
 
@@ -59,11 +62,11 @@
          <label for="schedule_time" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Starting at') }} *</label>
           <div class="col-md-6">
               <input id="schedule_time" type="time" class="name_input form-control @error('schedule_time') is-invalid @enderror"
-                     name="schedule_time"  required value="{{ old('schedule_time') }}">
+                     name="schedule_time"  required value="{{ old('schedule_time', '19:00') }}">
           </div>
       </div>
       <div class="form-group row">
-         <label for="name_in_schema" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Name in schema') }} *</label>
+         <label for="name_in_schema" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Name_in_schedule') }} *</label>
           <div class="col-md-6">
               <input id="name_in_schema" type="text" class="name_input form-control @error('name_in_schema') is-invalid @enderror"
                      name="name_in_schema"  required maxlength="12" value="{{ old('name_in_schema') }}">
@@ -73,12 +76,12 @@
       <div class="form-group row mb-0">
           <div class="col-md-6 offset-md-4">
                <p style="float:right;">
-               <button type="submit"  onclick="checkForm()" class="btn btn-primary" id="submit-button" >{{ __('Register')}}</button>
+               <button type="submit"  onclick="checkForm()" class="btn btn-primary" id="submit-button" >{{ __('Register schedule')}}</button>
                <a style="margin-left:5px;" href="{{route($names['routeRoot'].'.home')}}" class="btn btn-secondary"> {{ __('Cancel')}}</a>
                </p>
           </div>
       </div>
-
+* {{__('Required fields')}}
       </fieldset>
    </form>
 </div>

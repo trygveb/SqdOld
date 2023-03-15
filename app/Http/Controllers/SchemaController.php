@@ -581,6 +581,7 @@ class SchemaController extends BaseController {
          $schedules = Schedule::all();
          foreach ($schedules as $mySchedule) {
             $mySchedule->schedule_id = $mySchedule->id;
+            $mySchedule->default_weekday = $mySchedule->default_weekday;
             $mySchedule->schedule_name = $mySchedule->name;
             $mySchedule->schedule_description = $mySchedule->description;
             $myVMemberSchedules->push($mySchedule);
