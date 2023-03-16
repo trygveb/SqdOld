@@ -22,7 +22,7 @@
       <div class="form-info-text" id="help_text" style="display:none;">
 
       {{__('Weekday is a default value, and you can choose other weekdays when you add new dates to the schedule')}}.<br>
-      {{__('Starting time is curently only displayed in the')}} <a href="{{route('schedule.showAdminSchemas')}}">{{__('Manage Schedules')}}</a> {{__('page')}}.
+      {{__('Starting time is curently only displayed in the')}} <a href="{{route('schedule.showadminSchedules')}}">{{__('Manage Schedules')}}</a> {{__('page')}}.
       {{__('"Name_in_schedule" is the name that will be displayed for you in the schedule')}}.
       {{__('It may not be longer than 12 characters')}}.
       <br> <br>

@@ -574,7 +574,7 @@ class SchemaController extends BaseController {
    }
 
    // Show my schemas
-   public function showAdminSchemas() {
+   public function showadminSchedules() {
       $user=Auth::user();
       if ($user->isRoot()) {
          $myVMemberSchedules = collect([]);
@@ -582,12 +582,14 @@ class SchemaController extends BaseController {
          foreach ($schedules as $mySchedule) {
             $mySchedule->schedule_id = $mySchedule->id;
             $mySchedule->default_weekday = $mySchedule->default_weekday;
+            $mySchedule->default_start_time = substr($mySchedule->default_start_time,0,5);
             $mySchedule->schedule_name = $mySchedule->name;
             $mySchedule->schedule_description = $mySchedule->description;
             $myVMemberSchedules->push($mySchedule);
          }
       } else {
          $myVMemberSchedules = V_MemberSchedule::where('user_id', Auth::id())->where('admin', '>', 0)->get();
+         //dd(print_r($myVMemberSchedules, true));
       }
       //$myScheduleIds = $myVMemberSchedules->pluck('schedule_id');
       foreach ($myVMemberSchedules as $myVMemberSchedule) {
@@ -598,7 +600,7 @@ class SchemaController extends BaseController {
                          ->where('admin', 2)->where('user_id', Auth::id())
                          ->get()->count()+$user->isRoot();
       }
-      return view('schedule.admin.adminSchemas', [
+      return view('schedule.admin.adminSchedules', [
           'myVMemberSchedules' => $myVMemberSchedules,
           'names' => $this->names()
       ]);
@@ -618,7 +620,7 @@ class SchemaController extends BaseController {
             $schedule->save();
          }
        }
-      return $this->showAdminSchemas();
+      return $this->showadminSchedules();
       
    }
    // Show my schemas
