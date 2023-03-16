@@ -589,10 +589,14 @@ class SchemaController extends BaseController {
          }
       } else {
          $myVMemberSchedules = V_MemberSchedule::where('user_id', Auth::id())->where('admin', '>', 0)->get();
-         //dd(print_r($myVMemberSchedules, true));
+//         dd(print_r($myVMemberSchedules, true));
       }
       //$myScheduleIds = $myVMemberSchedules->pluck('schedule_id');
+        $isAdmin=0;
       foreach ($myVMemberSchedules as $myVMemberSchedule) {
+         if ($myVMemberSchedule->user_id===$user->id && $myVMemberSchedule->admin > 1) {
+            $isAdmin=1;
+         }
          $myVMemberSchedule->admins = V_MemberSchedule::where('schedule_id', $myVMemberSchedule->schedule_id)
                          ->where('admin', 2)
                          ->get()->implode('user_name', ',');
@@ -602,7 +606,8 @@ class SchemaController extends BaseController {
       }
       return view('schedule.admin.adminSchedules', [
           'myVMemberSchedules' => $myVMemberSchedules,
-          'names' => $this->names()
+          'names' => $this->names(),
+          'isAdmin' => $isAdmin
       ]);
    }
    
@@ -624,7 +629,7 @@ class SchemaController extends BaseController {
       
    }
    // Show my schemas
-   public function showMySchemas() {
+   public function showMySchedules() {
       $myVMemberSchedules = V_MemberSchedule::where('user_id', Auth::id())->get();
       foreach ($myVMemberSchedules as $myVMemberSchedule) {
          $myVMemberSchedule->admins = V_MemberSchedule::where('schedule_id', $myVMemberSchedule->schedule_id)

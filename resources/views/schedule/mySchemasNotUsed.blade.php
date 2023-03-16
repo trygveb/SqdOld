@@ -11,7 +11,7 @@
           {{ csrf_field() }}
           <input type="hidden" name="userId" value="{{Auth::id()}}">
           <fieldset>
-            <legend>{{__('Schedules')}}</legend>
+            <legend>{{__('Schedules')}} <a class="btn btn-link" style="float:right;" id="help_link" onclick="showHelp()" >{{__('Help')}}</a></legend>
             
         <table class="table table-bordered">
             <caption>{{__('My schedules')}}</caption>

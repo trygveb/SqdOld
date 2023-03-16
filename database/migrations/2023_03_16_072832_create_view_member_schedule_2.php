@@ -29,7 +29,7 @@ class CreateViewMemberSchedule2 extends Migration
             `t`.`name` AS `schedule_name`,
             `t`.`description` AS `schedule_description`,
             `t`.`default_weekday` AS `default_weekday`,
-            TIME_FORMAT(`t`.`default_start_time`,"%H %i") AS `default_start_time`,
+            TIME_FORMAT(`t`.`default_start_time`,"%H:%i") AS `default_start_time`,
             `t`.`password` AS `password`,
             `mt`.`group_size` AS `group_size`,
             `mt`.`admin` AS `admin`

@@ -12,7 +12,17 @@
           {{ csrf_field() }}
           <input type="hidden" name="userId" value="{{Auth::id()}}">
           <fieldset style="min-width:850px;">
-            <legend>{{__('My schedules')}}</legend>
+            <legend>{{__('My schedules')}}
+                @if ($isAdmin > 0)
+                <a class="btn btn-link" style="float:right;" id="help_link" onclick="showHelp()" >{{__('Help')}}</a>
+                @endif
+            </legend>
+      <div class="form-info-text" id="help_text" style="display:none;">
+
+      {{__('Weekday is a default value, and you can choose other weekdays when you add new dates to the schedule')}}.<br>
+      {{__('Starting time is curently only displayed in this page')}}.
+      <br>
+      </div>
          
             
         <table class="table table-bordered">
@@ -63,17 +73,33 @@
                            <option value="7" @if ($myVMemberSchedule->default_weekday==7) selected @endif>{{ __('Sundays')}}</option>
                        </select>
                        @else
-                        <select class="form-select" aria-label="{{ __('Weekday') }}" name="weekday" id="weekday-select" disabled >
-                           <option value="1" @if ($myVMemberSchedule->default_weekday==1) selected @endif>{{ __('Mondays')}}</option>
-                           <option value="2" @if ($myVMemberSchedule->default_weekday==2) selected @endif>{{ __('Tuesdays')}}</option>
-                           <option value="3" @if ($myVMemberSchedule->default_weekday==3) selected @endif>{{ __('Wednesdays')}}</option>
-                           <option value="4" @if ($myVMemberSchedule->default_weekday==4) selected @endif>{{ __('Thursdays')}}</option>
-                           <option value="5" @if ($myVMemberSchedule->default_weekday==5) selected @endif>{{ __('Fridays')}}</option>
-                           <option value="6" @if ($myVMemberSchedule->default_weekday==6) selected @endif>{{ __('Saturdays')}}</option>
-                           <option value="7" @if ($myVMemberSchedule->default_weekday==7) selected @endif>{{ __('Sundays')}}</option>
-                       </select>
+                       
+                        @switch($myVMemberSchedule->default_weekday)
+                            @case(1)
+                                {{ __('Mondays')}}
+                                @break
+                           @case(2)
+                                {{ __('Tuesdays')}}
+                                @break
+                           @case(3)
+                                {{ __('Wednesdays')}}
+                                @break
+                           @case(4)
+                                {{ __('Thursdays')}}
+                                @break
+                           @case(5)
+                                {{ __('Fridays')}}
+                                @break
+                           @case(6)
+                                {{ __('Saturdays')}}
+                                @break
+                           @case(7)
+                                {{ __('Sundays')}}
+                                @break
+                            @default
+                                {{ __('Unknown')}}
+                        @endswitch                       
                        @endif
-                      
                   </td>
                   <td>
                       @if ($myVMemberSchedule->isAdmin > 0)
@@ -91,7 +117,9 @@
          
  
          </table>
+            @if ($myVMemberSchedule->isAdmin > 0)
             <x-submit-button submitText="{{ __('Save changes')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('home')}}"/>
+            @endif
          </fieldset>
 
         </form>
@@ -102,6 +130,19 @@
 <script>
    // Fix Firefox bug for selected option 
    window.onload = function() { document.forms['firefoxSpecial'].reset(); };
+
+   function showHelp() {
+      var helpText = document.getElementById("help_text");
+      var helpLink= document.getElementById("help_link");
+      if (helpText.style.display === 'none') {
+         helpText.style.display='inline-block';
+         helpLink.innerHTML="{{__('Hide Help')}}";
+      } else {
+         helpText.style.display='none';
+         helpLink.innerHTML="{{__('Help')}}";
+      }
+   }
+   
 </script>
 @endsection
 
