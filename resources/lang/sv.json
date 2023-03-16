@@ -185,6 +185,8 @@
     "Schedule administration": "Schemaadministration",
     "Schedule administrators": "Schemaadministratörer",
     "Schedule for": "Schema för",
+    "Schedule description must not be longer than 48 characters":"Schemabeskrivningen får inte vara längre än 48 tecken",
+    "Schedule name must not be longer than 30 characters":"Schemanamnet får inte vara längre än 30 tecken",
     "Schedules": "Scheman",
     "Schema name": "Schemanamn",
     "see below":"se nedan",

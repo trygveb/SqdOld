@@ -2,12 +2,11 @@
 @section('menu1')
 @endsection
 @section('content')
-
+{{-- This view is used both for schedule admins and normal users.
+     It is a form, but the Submit and Help buttons are hidden if you not are a Schedule admin.
+   --}}
   <div class="container">
-
       <div class="table-responsive" style="overflow-x:auto; overflow-y:hidden;">
-
-   
         <form id="myForm" action="{{ route('schedule.updateSchedule')}}" method="POST" name="firefoxSpecial">
           {{ csrf_field() }}
           <input type="hidden" name="userId" value="{{Auth::id()}}">
@@ -18,13 +17,13 @@
                 @endif
             </legend>
       <div class="form-info-text" id="help_text" style="display:none;">
-
       {{__('Weekday is a default value, and you can choose other weekdays when you add new dates to the schedule')}}.<br>
-      {{__('Starting time is curently only displayed in this page')}}.
+      {{__('Starting time is curently only displayed in this page')}}.<br>
+      {{__('Schedule name must not be longer than 30 characters')}}.<br>
+      {{__('Schedule description must not be longer than 48 characters')}}.
+
       <br>
       </div>
-         
-            
         <table class="table table-bordered">
             <caption></caption>
             <tr>
@@ -41,6 +40,8 @@
          @php
             $schemaNameInput='name_'.$myVMemberSchedule->schedule_id;
             $schemaDescriptionInput='description_'.$myVMemberSchedule->schedule_id;
+            $weekdayInput='weekDay_'.$myVMemberSchedule->schedule_id;
+            $timeInput='time_'.$myVMemberSchedule->schedule_id;
          @endphp
                <tr class='status'>
                   <td class="text-nowrap" >
@@ -63,7 +64,7 @@
                   </td>
                   <td class="text-nowrap">
                       @if ($myVMemberSchedule->isAdmin > 0)
-                        <select class="form-select" aria-label="{{ __('Weekday') }}" name="weekday" id="weekday-select" required >
+                        <select class="form-select" aria-label="{{ __('Weekday') }}" name="{{$weekdayInput}}" id="weekday-select" required >
                            <option value="1" @if ($myVMemberSchedule->default_weekday==1) selected @endif>{{ __('Mondays')}}</option>
                            <option value="2" @if ($myVMemberSchedule->default_weekday==2) selected @endif>{{ __('Tuesdays')}}</option>
                            <option value="3" @if ($myVMemberSchedule->default_weekday==3) selected @endif>{{ __('Wednesdays')}}</option>
@@ -103,8 +104,8 @@
                   </td>
                   <td>
                       @if ($myVMemberSchedule->isAdmin > 0)
-                     <input id="schedule_time" type="time"  
-                     name="schedule_time"  required value="{{ $myVMemberSchedule->default_start_time }}"  step="60" >
+                     <input id="schedule_time" type="time"  name="{{$timeInput}}"
+                      required value="{{ $myVMemberSchedule->default_start_time }}"  step="60" >
                      @else
                      {{ $myVMemberSchedule->default_start_time }}
                      @endif
