@@ -21,17 +21,16 @@
 
       <div class="form-info-text" id="help_text" style="display:none;">
 
-      {{__('Weekday is a default value, and you can choose other weekdays when you add new dates to the schedule')}}.<br>
-      {{__('Starting time is curently only displayed in the')}} <a href="{{route('schedule.showMySchedules')}}">{{__('Manage Schedules')}}</a> {{__('page')}}.
-      {{__('"Name_in_schedule" is the name that will be displayed for you in the schedule')}}.
-      {{__('Schedule name must not be longer than 30 characters')}}.
-      {{__('Schedule description must not be longerthan 48 characters')}}.
-      {{__('It may not be longer than 12 characters')}}.
+      {{__('Schedule name must not be longer than 30 characters')}}.<br>
+      {{__('Schedule description must not be longer than 48 characters')}}.<br>
+      {{__('Weekday and starting time are default values, and you can choose other values when you add new dates to the schedule')}}.<br>
+      {{__('Starting time is curently only displayed in the')}} <a href="{{route('schedule.showMySchedules')}}">{{__('Manage Schedules')}}</a> {{__('page')}}.<br>
+      {{__('"Name_in_schedule" is the name that will be displayed for you in the schedule')}}. {{__('It may not be longer than 12 characters')}}.<br>
       <br> <br>
       </div>
 
       <div class="form-group row">
-          <label for="schedule_name" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Schema name') }} *</label>
+          <label for="schedule_name" class="label_name_input col-md-4 col-form-label text-md-right" >{{ __('Schedule name') }} *</label>
           <div class="col-md-6">
               <input id="schedule_name" type="text" class="name_input form-control @error('schedule_name') is-invalid @enderror"
                      name="schedule_name"  value="{{ old('schedule_name') }}" maxlength="24" required  autofocus>

@@ -251,8 +251,8 @@
     "We use functional cookies to improve user experience": "Vi använder funktionella cookies för att förbättra användarupplevelsen",
     "Wednesdays": "Onsdagar",
     "Weekday" : "Veckodag",
-    "Weekday is a default value, and you can choose other weekdays when you add new dates to the schedule":
-        "Veckodag är ett standardvärde och du kan välja andra veckodagar när du lägger till nya datum i schemat",
+    "Weekday and starting time are default values, and you can choose other values when you add new dates to the schedule":
+        "Veckodag och starttid är standardvärden och du kan välja andra värden när du lägger till nya datum i schemat",
     "Welcome to": "Välkommen till",
     "What is SdSchema":"Vad är SdSchema",
     "When you do that, a pop-up window will appear with a status message.": "När du gör det visas ett popup-fönster med ett statusmeddelande.",
