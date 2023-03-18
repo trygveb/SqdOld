@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<x-html-head title="sdSchema" />
+@yield('title')
+<x-html-head title="SdSchema" />
 <body>
    <div id="app">
       <nav class="navbar navbar-expand-sm navbar-light bg-light">
@@ -11,22 +12,16 @@
          </button>
 
          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-         @php
-            $admin = 1;
-         @endphp
-         @if ($admin > 0)    
             <ul class="navbar-nav mr-auto">
                <li class="nav-item dropdown">
-  @yield('menu1')
-                    
+                  @yield('menu1')
                </li>
             </ul>
-         @endif
             
 
                <!-- Left Side Of Navbar -->
-               <ul class="navbar-nav mr-auto">
-               </ul>
+<!--               <ul class="navbar-nav mr-auto">
+               </ul>-->
          <x-right-side-of-navbar />
          </div>
       </nav>

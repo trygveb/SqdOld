@@ -1,7 +1,5 @@
 @extends('schedule.layout')
 @section('menu1')
-
-
 @if ($admin > 0)
 <x-schedule-admin-menu schedule-id="{{$schedule->id}}"  user-id="{{$currentUser->id}}"/>
 @endif

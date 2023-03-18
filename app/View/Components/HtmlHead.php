@@ -13,7 +13,7 @@ class HtmlHead extends Component {
     *
     * @return void
     */
-   public function __construct($title) {
+   public function __construct($title="SdSchema") {
       $this->title = $title;
    }
 

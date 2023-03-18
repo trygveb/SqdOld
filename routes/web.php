@@ -96,7 +96,7 @@ Route::group(// Comment out this when running tests
                   Route::name('showEdit')->get('/schedule/edit/{schedule}', 'showViewEdit');
                   // Show user's schedules
                  // Route::name('showMySchedules')->get('/schedule/showSchedules', 'showMySchedules');
-                  Route::name('showMySchedules')->get('/admin/schedule/showSchedules', 'showadminSchedules');
+                  Route::name('showMySchedules')->get('/admin/schedule/showSchedules', 'showMySchedules');
 
 
                    // Register or unregister for schemas

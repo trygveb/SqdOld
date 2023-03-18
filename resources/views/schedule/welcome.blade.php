@@ -18,7 +18,7 @@
    @endguest
  
    @auth
-      &#x2B50; {{ __('New release')}} 2023-03-02 &#x2B50; <a href="{{route('schedule.release_2_2')}}">{{ __('Release notes')}}</a>
+      &#x2B50; {{ __('New release')}} 2023-03-18 &#x2B50; <a href="{{route('schedule.release_2_2')}}">{{ __('Release notes')}}</a>
       <br><br>
       @if (! Auth::user()->hasVerifiedEmail())
          <a href="{{route('verification.notice')}}">{{__('Please confirm your email')}}!</a>
