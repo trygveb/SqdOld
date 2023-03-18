@@ -9,22 +9,20 @@
 
 @endif
  <div class="container" style="max-width:800px;">
-   <h1>{{__('Register new schedule')}}</h1>
-
-   <div>
+     <div>
    <form method="POST" id="registrationForm" action="{{ route('schedule.registerNewSchedule') }}">
       <fieldset style="max-width:550px;">
        @csrf
        <input type="hidden" name="application" value="{{$names['application']}}" />
 
-       <legend id="legend">{{__('New schedule')}}<a class="btn btn-link" style="float:right;" id="help_link" onclick="showHelp()" >{{__('Help')}}</a></legend>
+       <legend id="legend">{{__('Register new schedule')}}<a class="btn btn-link" style="float:right;" id="help_link" onclick="showHelp()" >{{__('Help')}}</a></legend>
 
       <div class="form-info-text" id="help_text" style="display:none;">
 
       {{__('Schedule name must not be longer than 30 characters')}}.<br>
       {{__('Schedule description must not be longer than 48 characters')}}.<br>
       {{__('Weekday and starting time are default values, and you can choose other values when you add new dates to the schedule')}}.<br>
-      {{__('Starting time is curently only displayed in the')}} <a href="{{route('schedule.showMySchedules')}}">{{__('Manage Schedules')}}</a> {{__('page')}}.<br>
+      {{__('Starting time is curently only displayed in the page')}} <a href="{{route('schedule.showMySchedules')}}">{{__('My schedules')}}</a>.<br>
       {{__('"Name_in_schedule" is the name that will be displayed for you in the schedule')}}. {{__('It may not be longer than 12 characters')}}.<br>
       <br> <br>
       </div>
