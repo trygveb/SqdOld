@@ -41,18 +41,18 @@ class SchemaController extends BaseController {
 //Fetch data from the database
       $schedule = Schedule::find($scheduleId);
       $memberSchedules = MemberSchedule::where('schedule_id', $scheduleId)->get();
-      
+
       // Check if user is member or root, if not redirect back
 
       $editAllowed = true;
-      $user=Auth::user();
+      $user = Auth::user();
       if ($memberSchedules->where('user_id', $user->id)->count() == 0) {
          // User is not member
          if ($user->isRoot()) {
             // User is root, and may view but not edit
             $editAllowed = false;
          } else {
-             // User is not root nor member. Redirect back
+            // User is not root nor member. Redirect back
             $vMemberSchedules = V_MemberSchedule::where('user_id', $user->id)->get();
             return view('schedule.welcome', [
                 'mySchedulesCount' => $vMemberSchedules->count(),
@@ -93,20 +93,20 @@ class SchemaController extends BaseController {
           'memberNames' => $memberNames,
           'groups' => $groups,
           'statusSums' => $statusSums,
-         // 'admin' => Utility::getAdminForSchedule($scheduleId),
+          // 'admin' => Utility::getAdminForSchedule($scheduleId),
           'names' => $this->names(),
           'showHistory' => $showHistory,
           'editAllowed' => $editAllowed,
           'scheduleAdmin' => ($user->isScheduleOwner($schedule->id) || $user->hasLimitedAuthority($schedule->id) || $user->isRoot())
       ]);
    }
-   
 
    public function showReleaseNotes_2_2() {
       return view('schedule.releaseNotes_2_2', [
           'names' => $this->names(),
       ]);
    }
+
 //Called from the index function
    private function createNamesAndGroupsArrays($memberSchedules, &$names, &$groups) {
       foreach ($memberSchedules as $memberSchedule) {
@@ -365,7 +365,7 @@ class SchemaController extends BaseController {
          $schedule->save();
          // Connect current user (Schema administrator) to the new schedule
          // with admin=2 (Schema administrator authority)
-         $status = $schedule->addMember(Auth::user()->id, 1, $nameInSchema,2);
+         $status = $schedule->addMember(Auth::user()->id, 1, $nameInSchema, 2);
          if ($status != 'OK') {
             return back()->with('error', __('Schedule :name could not be registered! Status=:status',
                                     ['name' => $data['schedule_name'],
@@ -381,46 +381,50 @@ class SchemaController extends BaseController {
    }
 
    public function showAddRemoveDates($scheduleId) {
+      $user = Auth::user();
+      if ($user->isScheduleOwner($scheduleId) || $user->isRoot()) {
 
-      $schedule = Schedule::find($scheduleId);
-      $lastScheduleDate = $this->getLastScheduleDate($schedule);
+         $schedule = Schedule::find($scheduleId);
+         $lastScheduleDate = $this->getLastScheduleDate($schedule);
 
-      $danceTime = '19:00';   // TODO: Remve this hardcoded time
+         $danceTime = '19:00';   // TODO: Remve this hardcoded time
 // Create a Carbopnd date in order to calculate next date a week ahead, and the day of the week
-      $dt = Carbon::parse($lastScheduleDate->schedule_date);
-      $nextDate = substr($dt->addWeeks(1), 0, 10);
-      $currentLocale = LaravelLocalization::getCurrentLocale();
+         $dt = Carbon::parse($lastScheduleDate->schedule_date);
+         $nextDate = substr($dt->addWeeks(1), 0, 10);
+         $currentLocale = LaravelLocalization::getCurrentLocale();
 //      if ($currentLocale ==='se') {
 //         $currentLocale= 'sv';
 //      }
-      $weekDays = $dt->locale($currentLocale)->dayName;
+         $weekDays = $dt->locale($currentLocale)->dayName;
 
 // Get day of week (0=Sunday, e= Monday etc).
 // This non-ISO format is used to be compatible with Javascript
-      $weekDaysNumber = $dt->dayOfWeek;
+         $weekDaysNumber = $dt->dayOfWeek;
 
-      $mytime = Carbon::now();
-      $today = $mytime->toDateString();
+         $mytime = Carbon::now();
+         $today = $mytime->toDateString();
 
-      $scheduleDates = ScheduleDate::where('schedule_id', $schedule->id)
-              ->where('schedule_date', '>=', $today)
-              ->get();
-      $user=Auth::user();
-      return view('schedule.admin.addRemoveDates', [
-          'schedule' => $schedule,
-          'scheduleDates' => $scheduleDates,
-          'currentUser' => $user,
-          'weekdays' => $weekDays,
-          'weekDaysNumber' => $weekDaysNumber,
-          'lastScheduleDate' => $lastScheduleDate,
-          'danceTime' => $danceTime,
-          'nextDate' => $nextDate,
-          'names' => $this->names(),
-          'isRoot' =>  $user->isRoot(),
-          'isScheduleAdmin' => $user->hasLimitedAuthority($schedule->id) ||$user->isScheduleOwner($schedule->id) ||   $user->isRoot(),
-          'isScheduleOwner' => $user->isScheduleOwner($schedule->id)
+         $scheduleDates = ScheduleDate::where('schedule_id', $schedule->id)
+                 ->where('schedule_date', '>=', $today)
+                 ->get();
 
-      ]);
+         return view('schedule.admin.addRemoveDates', [
+             'schedule' => $schedule,
+             'scheduleDates' => $scheduleDates,
+             'currentUser' => $user,
+             'weekdays' => $weekDays,
+             'weekDaysNumber' => $weekDaysNumber,
+             'lastScheduleDate' => $lastScheduleDate,
+             'danceTime' => $danceTime,
+             'nextDate' => $nextDate,
+             'names' => $this->names(),
+             'isRoot' => $user->isRoot(),
+             'isScheduleAdmin' => $user->hasLimitedAuthority($schedule->id) || $user->isScheduleOwner($schedule->id) || $user->isRoot(),
+             'isScheduleOwner' => $user->isScheduleOwner($schedule->id)
+         ]);
+      } else {
+         return Redirect::back();
+      }
    }
 
 // Called from showViewAddRemoveDates
@@ -460,151 +464,159 @@ class SchemaController extends BaseController {
 
 // SHow the Members view
    public function ShowViewMembers($scheduleId, $status = []) {
-      $schedule = Schedule::find($scheduleId);
-      $currentUser= Auth::user();
-      $admin = V_MemberSchedule::where('schedule_id', $scheduleId)
-              ->where('user_id', $currentUser->id)
-              ->pluck('admin')
-              ->first();
-      if ($admin === 0 && $currentUser->authority === 0) {
-         return view('errors.403')->with('names', $this->names());
-      }
-      $createEmailListAction = new CreateEmailList();
-      $emailArray = $createEmailListAction->execute($schedule->id);
-      $emails = '';
-      foreach ($emailArray as $email) {
-         $emails .= $email . ', ';
-      }
-      $emails = substr($emails, 0, -2);
-      $vMemberSchedules = V_MemberSchedule::where('schedule_id', $schedule->id)
-              ->orderBy('user_name', 'asc')
-              ->get();
-      $memberUserIds = [];
-      foreach ($vMemberSchedules as $member) {
-         array_push($memberUserIds, $member->user_id);
-      }
-      $allUsers = User::all();
-
-      $nonMembers = collect();
-      foreach ($allUsers as $user) {
-         if (!in_array($currentUser->id, $memberUserIds)) {
-            $nonMember = new V_MemberSchedule();
-            $nonMember->schedule_id = $schedule->id;
-            $nonMember->user_id = $user->id;
-            $nonMember->user_name = $user->name;
-            $nonMember->schedule_name = $schedule->name;
-            $nonMember->name_in_schema = explode(" ", $user->name)[0];
-            $nonMember->email = $user->email;
-            $nonMember->admin = 0;
-            $nonMember->group_size = 1;          // TOD: FIX
-            $nonMembers->push($nonMember);
+      $currentUser = Auth::user();
+      if ($currentUser->isScheduleOwner($scheduleId) || $currentUser->isRoot()) {
+         $schedule = Schedule::find($scheduleId);
+         $admin = V_MemberSchedule::where('schedule_id', $scheduleId)
+                 ->where('user_id', $currentUser->id)
+                 ->pluck('admin')
+                 ->first();
+         if ($admin === 0 && $currentUser->authority === 0) {
+            return view('errors.403')->with('names', $this->names());
          }
+         $createEmailListAction = new CreateEmailList();
+         $emailArray = $createEmailListAction->execute($schedule->id);
+         $emails = '';
+         foreach ($emailArray as $email) {
+            $emails .= $email . ', ';
+         }
+         $emails = substr($emails, 0, -2);
+         $vMemberSchedules = V_MemberSchedule::where('schedule_id', $schedule->id)
+                 ->orderBy('user_name', 'asc')
+                 ->get();
+         $memberUserIds = [];
+         foreach ($vMemberSchedules as $member) {
+            array_push($memberUserIds, $member->user_id);
+         }
+         $allUsers = User::all();
+
+         $nonMembers = collect();
+         foreach ($allUsers as $user) {
+            if (!in_array($currentUser->id, $memberUserIds)) {
+               $nonMember = new V_MemberSchedule();
+               $nonMember->schedule_id = $schedule->id;
+               $nonMember->user_id = $user->id;
+               $nonMember->user_name = $user->name;
+               $nonMember->schedule_name = $schedule->name;
+               $nonMember->name_in_schema = explode(" ", $user->name)[0];
+               $nonMember->email = $user->email;
+               $nonMember->admin = 0;
+               $nonMember->group_size = 1;          // TOD: FIX
+               $nonMembers->push($nonMember);
+            }
+         }
+         $sortedNonMembers = $nonMembers->sortBy('user_name');
+         $sortedNonMembers->values()->all();
+         return view('schedule.admin.members', [
+             'schedule' => $schedule,
+             'vMemberSchedules' => $vMemberSchedules,
+             'nonMembers' => $sortedNonMembers,
+             'currentUser' => $currentUser,
+             'emails' => $emails,
+             'status' => $status,
+             'names' => $this->names(),
+             'isRoot' => $currentUser->isRoot(),
+             'isScheduleAdmin' => $currentUser->hasLimitedAuthority($schedule->id) || $currentUser->isScheduleOwner($schedule->id) || $currentUser->isRoot(),
+             'isScheduleOwner' => $currentUser->isScheduleOwner($schedule->id)
+         ]);
+      } else {
+         return Redirect::back();
       }
-      $sortedNonMembers = $nonMembers->sortBy('user_name');
-      $sortedNonMembers->values()->all();
-      return view('schedule.admin.members', [
-          'schedule' => $schedule,
-          'vMemberSchedules' => $vMemberSchedules,
-          'nonMembers' => $sortedNonMembers,
-          'currentUser' => $currentUser,
-          'emails' => $emails,
-          'status' => $status,
-          'names' => $this->names(),
-          'isRoot' =>  $currentUser->isRoot(),
-          'isScheduleAdmin' => $currentUser->hasLimitedAuthority($schedule->id) ||$currentUser->isScheduleOwner($schedule->id) ||   $currentUser->isRoot(),
-          'isScheduleOwner' => $currentUser->isScheduleOwner($schedule->id)
-              
-      ]);
    }
 
    public function ShowViewNotConnectedMembers($scheduleId, $status = []) {
-      $schedule = Schedule::find($scheduleId);
-      if (is_null($schedule)) {
-         dd("ShowNotViewMembers " . $scheduleId);
-      }
-      $admin = V_MemberSchedule::where('schedule_id', $scheduleId)
-              ->where('user_id', Auth::user()->id)
-              ->pluck('admin')
-              ->first();
-      if ($admin === 0 && Auth::user()->authority === 0) {
-         return view('errors.403')->with('names', $this->names());
-      }
-      $vMemberSchedules = V_MemberSchedule::where('schedule_id', $schedule->id)
-              ->orderBy('user_name', 'asc')
-              ->get();
-      $memberUserIds = [];
-      foreach ($vMemberSchedules as $member) {
-         array_push($memberUserIds, $member->user_id);
-      }
-      $allUsers = User::all();
+      $currentUser = Auth::user();
+      if ($currentUser->isScheduleOwner($scheduleId) || $currentUser->isRoot()) {
 
-      $nonMembers = collect();
-      $members = collect();
-      foreach ($allUsers as $user) {
-         if (!in_array($user->id, $memberUserIds)) {
-            $nonMember = new V_MemberSchedule();
-            $nonMember->schedule_id = $schedule->id;
-            $nonMember->user_id = $user->id;
-            $nonMember->user_name = $user->complete_name;
-            $nonMember->schedule_name = $schedule->name;
-            $nonMember->name_in_schema = explode(" ", $user->complete_name)[0];
-            $nonMember->email = $user->email;
-            $nonMember->admin = 0;
-            $nonMember->group_size = 1;
-            $nonMember->connected = 0;
-            $nonMembers->push($nonMember);
-         } else {
-            $member = V_MemberSchedule::where('user_id', $user->id)
-                            ->where('schedule_id', $schedule->id)->first();  //Only one is possible
-            $member->connected = 1;
-            $nonMembers->push($member);
+         $schedule = Schedule::find($scheduleId);
+         if (is_null($schedule)) {
+            dd("ShowNotViewMembers " . $scheduleId);
          }
+         $admin = V_MemberSchedule::where('schedule_id', $scheduleId)
+                 ->where('user_id', Auth::user()->id)
+                 ->pluck('admin')
+                 ->first();
+         if ($admin === 0 && Auth::user()->authority === 0) {
+            return view('errors.403')->with('names', $this->names());
+         }
+         $vMemberSchedules = V_MemberSchedule::where('schedule_id', $schedule->id)
+                 ->orderBy('user_name', 'asc')
+                 ->get();
+         $memberUserIds = [];
+         foreach ($vMemberSchedules as $member) {
+            array_push($memberUserIds, $member->user_id);
+         }
+         $allUsers = User::all();
+
+         $nonMembers = collect();
+         $members = collect();
+         foreach ($allUsers as $user) {
+            if (!in_array($user->id, $memberUserIds)) {
+               $nonMember = new V_MemberSchedule();
+               $nonMember->schedule_id = $schedule->id;
+               $nonMember->user_id = $user->id;
+               $nonMember->user_name = $user->complete_name;
+               $nonMember->schedule_name = $schedule->name;
+               $nonMember->name_in_schema = explode(" ", $user->complete_name)[0];
+               $nonMember->email = $user->email;
+               $nonMember->admin = 0;
+               $nonMember->group_size = 1;
+               $nonMember->connected = 0;
+               $nonMembers->push($nonMember);
+            } else {
+               $member = V_MemberSchedule::where('user_id', $user->id)
+                               ->where('schedule_id', $schedule->id)->first();  //Only one is possible
+               $member->connected = 1;
+               $nonMembers->push($member);
+            }
+         }
+         $sortedNonMembers = $nonMembers->sortBy('user_name');
+         $sortedNonMembers->values()->all();
+         return view('schedule..admin.notConnectedMembers', [
+             'schedule' => $schedule,
+             'nonMembers' => $sortedNonMembers,
+             'members' => $members,
+             'currentUser' => Auth::user(),
+             'names' => $this->names(),
+             'admin' => Utility::getAdminForSchedule($scheduleId),
+             'status' => $status
+         ]);
+      } else {
+         return Redirect::back();
       }
-      $sortedNonMembers = $nonMembers->sortBy('user_name');
-      $sortedNonMembers->values()->all();
-      return view('schedule..admin.notConnectedMembers', [
-          'schedule' => $schedule,
-          'nonMembers' => $sortedNonMembers,
-          'members' => $members,
-          'currentUser' => Auth::user(),
-          'names' => $this->names(),
-          'admin' => Utility::getAdminForSchedule($scheduleId),
-          'status' => $status
-      ]);
    }
 
-   // Show my schemas
    public function showMySchedules() {
-      $user=Auth::user();
-        $isAdmin=0;
+      $user = Auth::user();
+      $isAdmin = 0;
       if ($user->isRoot()) {
-         $isAdmin=1;
+         $isAdmin = 1;
          $myVMemberSchedules = collect([]);
          $schedules = Schedule::all();
          foreach ($schedules as $mySchedule) {
             $mySchedule->schedule_id = $mySchedule->id;
             $mySchedule->default_weekday = $mySchedule->default_weekday;
-            $mySchedule->default_start_time = substr($mySchedule->default_start_time,0,5);
+            $mySchedule->default_start_time = substr($mySchedule->default_start_time, 0, 5);
             $mySchedule->schedule_name = $mySchedule->name;
             $mySchedule->schedule_description = $mySchedule->description;
             $myVMemberSchedules->push($mySchedule);
          }
       } else {
-         $myVMemberSchedules = V_MemberSchedule::where('user_id', Auth::id())->where('admin', '>', 0)->get();
+         $myVMemberSchedules = V_MemberSchedule::where('user_id', Auth::id())->get();
 //         dd(print_r($myVMemberSchedules, true));
       }
       //$myScheduleIds = $myVMemberSchedules->pluck('schedule_id');
-      
+
       foreach ($myVMemberSchedules as $myVMemberSchedule) {
-         if ($myVMemberSchedule->user_id===$user->id && $myVMemberSchedule->admin > 1) {
-            $isAdmin=1;
+         if ($myVMemberSchedule->user_id === $user->id && $myVMemberSchedule->admin > 1) {
+            $isAdmin = 1;
          }
          $myVMemberSchedule->admins = V_MemberSchedule::where('schedule_id', $myVMemberSchedule->schedule_id)
                          ->where('admin', 2)
                          ->get()->implode('user_name', ',');
          $myVMemberSchedule->isAdmin = V_MemberSchedule::where('schedule_id', $myVMemberSchedule->schedule_id)
                          ->where('admin', 2)->where('user_id', Auth::id())
-                         ->get()->count()+$user->isRoot();
+                         ->get()->count() + $user->isRoot();
       }
       return view('schedule.mySchedules', [
           'myVMemberSchedules' => $myVMemberSchedules,
@@ -612,50 +624,51 @@ class SchemaController extends BaseController {
           'isAdmin' => $isAdmin
       ]);
    }
-   
+
    public function updateSchedule(Request $request) {
-       $data = request()->all();
-       foreach ($data as $key => $value) {
+      $data = request()->all();
+      foreach ($data as $key => $value) {
          if (substr($key, 0, 4) === 'name') {
             $atoms = explode('_', $key);
             $scheduleId = $atoms[1];
-            $schedule= Schedule::find($scheduleId);
-            $schedule->name=$value;
-            $description=$data['description_'.$scheduleId];
-            $schedule->description= $description;
-            $schedule->default_weekday=$data['weekDay_'.$scheduleId];;
-            $schedule->default_start_time=$data['time_'.$scheduleId];;
+            $schedule = Schedule::find($scheduleId);
+            $schedule->name = $value;
+            $description = $data['description_' . $scheduleId];
+            $schedule->description = $description;
+            $schedule->default_weekday = $data['weekDay_' . $scheduleId];
+            ;
+            $schedule->default_start_time = $data['time_' . $scheduleId];
+            ;
             $schedule->save();
          }
-       }
+      }
       return $this->showMySchedules();
-      
    }
-
 
 // Show view AdminComments
    public function showViewAdminComments($scheduleId) {
-
-// $schedule = Schedule::find($scheduleId);
-      $mytime = Carbon::now();
-      $today = $mytime->toDateString();
-//      $vMemberScheduleDates = V_MemberScheduleDate::where('schedule_date', '>=', $today)->get();
-      $schedule = Schedule::find($scheduleId);
-      $scheduleDates = ScheduleDate::where('schedule_id', $scheduleId)
-              ->where('schedule_date', '>=', $today)
-              ->get();
-      $user= Auth::user();
-      return view('schedule.admin.comments', [
-          'schedule' => $schedule,
-          'currentUser' => $user,
-          'scheduleDates' => $scheduleDates,
-          'names' => $this->names(),
-          'isRoot' =>  $user->isRoot(),
-          'isScheduleAdmin' => $user->hasLimitedAuthority($schedule->id) ||$user->isScheduleOwner($schedule->id) ||   $user->isRoot(),
-          'isScheduleOwner' => $user->isScheduleOwner($schedule->id)
-      ]);
+      $user = Auth::user();
+      if ($user->isScheduleOwner($scheduleId) || $user->hasLimitedAuthority($scheduleId)) {
+         $mytime = Carbon::now();
+         $today = $mytime->toDateString();
+         $schedule = Schedule::find($scheduleId);
+         $scheduleDates = ScheduleDate::where('schedule_id', $scheduleId)
+                 ->where('schedule_date', '>=', $today)
+                 ->get();
+         return view('schedule.admin.comments', [
+             'schedule' => $schedule,
+             'currentUser' => $user,
+             'scheduleDates' => $scheduleDates,
+             'names' => $this->names(),
+             'isRoot' => $user->isRoot(),
+             'isScheduleAdmin' => $user->hasLimitedAuthority($schedule->id) || $user->isScheduleOwner($schedule->id) || $user->isRoot(),
+             'isScheduleOwner' => $user->isScheduleOwner($schedule->id)
+         ]);
+      } else {
+         return Redirect::back();
+      }
    }
- 
+
 // Show view SchemaEdit for updating the member's attendance status
    public function showViewEdit(Schedule $schedule) {
 
@@ -675,7 +688,7 @@ class SchemaController extends BaseController {
             $statuses[$scheduleDate->id] = $memberScheduleForDate->status;
          }
       }
-      $memberSchedule= MemberSchedule::where('schedule_id', $schedule->id)
+      $memberSchedule = MemberSchedule::where('schedule_id', $schedule->id)
               ->where('user_id', Auth::user()->id)
               ->first();
 
@@ -689,7 +702,6 @@ class SchemaController extends BaseController {
           'statuses' => $statuses, // TODO: Only the statuses of the current user is needed
       ]);
    }
-   
 
 //Updating the member's attendance status
    public function updateAttendance(Request $request) {

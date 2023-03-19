@@ -29,7 +29,10 @@ class EnsureUserIsScheduleAdmin {
             $atoms = explode('/', $url);
             $scheduleId = $atoms[count($atoms) - 1];
             if (!is_numeric($scheduleId)) {
-               $data = request()->all();
+               $scheduleId= $data["scheduleId"] ?? null; 
+               if (is_null($scheduleId)) {
+                return redirect()->back();
+               }
                $scheduleId = $data["scheduleId"];               
             }
             $adminForSchedule= Utility::getAdminForSchedule($scheduleId);
