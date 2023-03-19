@@ -118,7 +118,7 @@
          
  
          </table>
-            @if ($myVMemberSchedule->isAdmin > 0)
+            @if ($isAdmin > 0)
             <x-submit-button submitText="{{ __('Save changes')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('home')}}"/>
             @endif
          </fieldset>

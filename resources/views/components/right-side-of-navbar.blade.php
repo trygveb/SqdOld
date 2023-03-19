@@ -22,10 +22,12 @@
             {{ Auth::user()->complete_name }}
          </a>
          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+      @if (Auth::user()->mySchedules()->count() >0)
              <a class="dropdown-item" href="{{route('schedule.showMySchedules')}}" >{{ __('My schedules') }}
-   @if (Auth::user()->authority >0)                
+      @endif        
+      @if (Auth::user()->authority >0)                
             <a class="dropdown-item" href="{{route('schedule.showRegisterSchedule')}}">{{__('Create new schedule')}}</a>
-   @endif        
+      @endif        
             <a class="dropdown-item" href="{{ route('signout') }}"
                onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}
             </a>
