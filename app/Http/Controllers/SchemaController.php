@@ -388,7 +388,7 @@ class SchemaController extends BaseController {
          $lastScheduleDate = $this->getLastScheduleDate($schedule);
 
          $danceTime = '19:00';   // TODO: Remve this hardcoded time
-// Create a Carbopnd date in order to calculate next date a week ahead, and the day of the week
+// Create a Carbon date in order to calculate next date a week ahead, and the day of the week
          $dt = Carbon::parse($lastScheduleDate->schedule_date);
          $nextDate = substr($dt->addWeeks(1), 0, 10);
          $currentLocale = LaravelLocalization::getCurrentLocale();
@@ -435,8 +435,12 @@ class SchemaController extends BaseController {
               ->first();
 
       if (is_null($lastScheduleDate)) {
+         
+         
+         
          $lastScheduleDate = new ScheduleDate();
-         $lastScheduleDate->schedule_date = substr(Carbon::now()->toISOString(), 0, 10);
+         $lastScheduleDate->schedule_date = substr(Carbon::now()->subWeek()->toISOString(), 0, 10);
+        
       }
       return $lastScheduleDate;
    }

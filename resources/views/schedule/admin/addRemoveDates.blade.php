@@ -14,8 +14,7 @@
           <input type="hidden" name="scheduleId" value="{{$schedule->id}}">
           <fieldset>
             <legend>{{__('Enter dates to be added')}}</legend>
-      {{__('Existing dates are')}} {{$weekdays}}{{__('s')}} kl. {{$danceTime}}
-     {{__('Latest date is')}} {{$lastScheduleDate->schedule_date}}
+      {{__('Standard weekday is')}} {{$weekdays}}{{__('s')}} kl. {{$danceTime}}
       <br><br>
          <div class="table-responsive" style="overflow-x:auto; overflow-y:hidden;">
              {{__('Add')}} <input type="number" id="quantity" name="quantity" min="1" max="15" size="4" value="1"> 
