@@ -28,7 +28,7 @@
               <option value="6">{{__('Saturdays')}}</option>
             </select>
               {{__('from')}} 
-             <input type="date" id="startDate" name="startDate", oninput="dateIsChanged()" value="{{$nextDate}}">
+             <input type="date" id="startDate" name="startDate", oninput="dateIsChanged()" min="{{$minDate}}" value="{{$minDate}}">
         </div>
           <br>
          <x-submit-button submitText="{{__('Add')}} {{__('date')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}" />
