@@ -18,7 +18,7 @@
       <br><br>
          <div class="table-responsive" style="overflow-x:auto; overflow-y:hidden;">
              {{__('Add')}} <input type="number" id="quantity" name="quantity" min="1" max="15" size="4" value="1"> 
-            <select id="weekdays">
+            <select id="weekdays" disabled style="background-color:#dddddd;">
               <option value="0">{{__('Sundays')}}</option>
               <option value="1">{{__('Mondays')}}</option>
               <option value="2">{{__('Tuesdays')}}</option>
@@ -28,7 +28,7 @@
               <option value="6">{{__('Saturdays')}}</option>
             </select>
               {{__('from')}} 
-             <input type="date" id="startDate" name="startDate", oninput="dateIsChanged()" min="{{$minDate}}" value="{{$minDate}}">
+             <input type="date" id="startDate" name="startDate", oninput="dateIsChanged()" min="{{$minDate}}" value="{{$nextDate}}">
         </div>
           <br>
          <x-submit-button submitText="{{__('Add')}} {{__('date')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}" />
