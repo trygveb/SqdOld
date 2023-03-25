@@ -28,10 +28,14 @@
               <option value="6">{{__('Saturdays')}}</option>
             </select>
               {{__('from')}} 
-             <input type="date" id="startDate" name="startDate", oninput="dateIsChanged()" min="{{$minDate}}" value="{{$nextDate}}">
+             <input type="date" id="startDate" name="startDate", oninput="dateIsChanged()" min="{{$minDate}}" max="{{$maxDate}}" value="{{$nextDate}}">
         </div>
           <br>
+          @if ($noMoreDates)
+          {{__('You have reached the maximun number of future dates')}} ({{config('app.maxNumberOfFutureDates')}})
+          @else
          <x-submit-button submitText="{{__('Add')}} {{__('date')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}" />
+         @endif
          </fieldset>
 
       </form>
@@ -42,6 +46,12 @@
           <input type="hidden" name="scheduleId" value="{{$schedule->id}}">
           <fieldset>
             <legend>{{__('Select dates to be deleted')}}</legend>
+         @if ($showHistory==0) 
+         <input type="checkbox" id="show_history" name="show_history" > <label for="show_history">{{__('Show historical dates')}}</label>
+         @else
+         <input type="checkbox" id="show_history" name="show_history" checked> <label for="show_history">{{__('Show historical dates')}}</label>
+         @endif
+
             <table class="table table-bordered table-sm table-sd-schema" >
                <thead>
                   <th class="text-nowrap text-center" style="width:25%;">{{__('Date')}}</th>
@@ -78,6 +88,16 @@ window.onload = function() {
   checkWeekday();
   hideOrShowRemoveButton();
 };
+const historyCheckbox = document.getElementById('show_history')
+
+historyCheckbox.addEventListener('change', (event) => {
+  if (event.currentTarget.checked) {
+      location.href = "{{route('schedule.showAddRemoveDates',['scheduleId' => $schedule->id, 'showHistory' => 1])}}";
+  } else {
+      location.href = "{{route('schedule.showAddRemoveDates',['scheduleId' => $schedule->id, 'showHistory' => 0])}}";
+  }
+})
+
 function checkWeekday() {
    let element = document.getElementById("weekdays");
     element.value = "{{$weekDaysNumber}}";

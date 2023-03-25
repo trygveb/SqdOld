@@ -141,6 +141,7 @@ return [
     'passwordFormat4' => env('PASSWORD_FORMAT_4'),
     'adminEmail' => env('ADMIN_EMAIL', 'adam@eve.com'),
     'cookieLifetime' => env('COOKIE_LIFETIME', 183),  // Lifetime for cookie for cookie consent
+    'maxNumberOfFutureDates' => env('MAX_NUMBER_OF_FUTURE_DATES', 50),
     'topDomain' =>env('TOP_DOMAIN'),
 
     /*

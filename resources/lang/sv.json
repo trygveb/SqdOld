@@ -264,6 +264,7 @@
     "You are not registered with any schedule yet": "Du är inte ansluten till något schema ännu",
     "You are not supposed to arrive here from domain:": "Det är inte meningen att du ska kunna komma hit från domän:",
     "You are receiving this email because we received a password reset request for your account.": "Du får detta eMail därför att vi har fått en begäran om att återställa ditt lösenord. Klicka på länken nedan för att skapa ett nytt lösenord",
+    "You have reached the maximun number of future dates":"Du har nått maximalt antal framtida datum",
     "You have signed-in": "Du är inloggad",
     "You must have at least one admin in each schedule": "Du måste ha minst en administratör i varje schema",
     "You will be removed from the schedule when you press the": "Du kommer att tas bort från schemat när du klickar på",

@@ -138,7 +138,7 @@ Route::group(// Comment out this when running tests
                        // Update comments
                        Route::name('updateComments')->post('/admin/updateComments', 'updateComments');
                        // Show add/remove dates view
-                       Route::name('showAddRemoveDates')->get('/admin/AddRemoveDates/{scheduleId}', 'showAddRemoveDates');
+                       Route::name('showAddRemoveDates')->get('/admin/AddRemoveDates/{scheduleId}/{showHistory?}', 'showAddRemoveDates');
                        // Add dates
                        Route::name('addDates')->post('/admin/addDates', 'addDates');
                        // Remove dates
