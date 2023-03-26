@@ -1,4 +1,4 @@
-<p style="margin-left: auto; margin-right: auto; width: 16em;">
+<p style="margin-left: auto; margin-right: auto;display:table;" >
 <button type="submit" class="btn btn-primary" id="{{$myId ?? ''}}" onclick="{{$onclickFunction ?? ''}}" > 
     {{$submitText}} 
 </button>

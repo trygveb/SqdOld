@@ -72,6 +72,9 @@
             connected="yes"
             :schedule="$schedule"
             :vMemberSchedules="$vMemberSchedules"   />
+    *) Admin= {{__('give limited authority on the schedule to other members who can then')}} 
+              {{__('add dates, and update comment fields')}},
+<br><br>
          <x-submit-button submitText="{{__('Update')}}"
                    cancelText="{{ __('Cancel')}}"
                    cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
