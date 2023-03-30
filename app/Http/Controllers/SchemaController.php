@@ -252,7 +252,6 @@ class SchemaController extends BaseController {
 // Returns Members view
    public function updateMember(Request $request) {
       $data = request()->all();
-
       $scheduleId = $data["scheduleId"];
 
 // Update admin flags and name_in_schema. Loop over all users in the schedule
@@ -268,11 +267,12 @@ class SchemaController extends BaseController {
       //foreach ($userIds as $userId) {
       foreach ($memberSchedules as $memberSchedule) {
          $userId = $memberSchedule->user_id;
+         $user= User::find($memberSchedule->user_id);
          $adminHtmlElementName = 'admin_' . $userId;  //name of html element
 //         dd(print_r($data, true));
          if ($request->has($adminHtmlElementName)) {
             $memberSchedule->admin = 1;
-         } else {
+         } else if (! $user->isScheduleOwner($scheduleId)) {
             $memberSchedule->admin = 0;
          }
 
@@ -292,8 +292,9 @@ class SchemaController extends BaseController {
             $this->removeMemberFromSchema($userId, $scheduleId, $scheduleDates);
          }
       }
+      return back()->with('success', __('The update succeeded'));
 
-      return $this->ShowViewMembers($scheduleId);
+      
    }
 
    private function checkNameInSchema($memberSchedules, $request) {

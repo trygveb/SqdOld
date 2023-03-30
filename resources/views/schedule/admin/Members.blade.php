@@ -30,6 +30,13 @@
 @endif
 
  <div class="container" style="max-width:800px;">
+     @if ($message = Session::get('success'))
+<div class="alert alert-success alert-block">
+	<button type="button" class="close" data-dismiss="alert">×</button>	
+        <strong>{{ $message }}</strong>
+</div>
+@endif
+
    <h1>{{__('Manage members for schedule')}}  <a href="{{route('schedule.index', ['scheduleId' => $schedule->id])}}">{{$schedule->name}}</a></h1>
    <span class="link_text">{{__('Show')}}:</span>
    <div id="connected_div" style="display:none;">
@@ -122,15 +129,7 @@ function copyEmailAdresses() {
 function checkForm(status=0) {
    fixSubmitButton(status);
 }
-function adminClicked(e) {
-   var n=countAdmins();
-   if (n===0) {
-      e.target.checked= true;
-      alert("{{__('You must have at least one admin in each schedule')}}");
-   } else {
-       submitButton.disabled = false;
-   }
-}
+
 
 //Change text on submit button if members are marked for removal
 function fixSubmitButton(status=0) {
@@ -166,16 +165,6 @@ function checkUniqueNames() {
 };
 
 
-function countAdmins() {
-   var checkBoxes=  document.querySelectorAll('.cbAdmin');
-   let n=0;
-   for (let i = 0; i < checkBoxes.length; i++) {
-      if (checkBoxes[i].checked) {
-         n++;
-      }
-   }
-   return n;
-};
 
 function countDeletes() {
    var checkBoxes=  document.querySelectorAll('.cbRemove');
