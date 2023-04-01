@@ -154,7 +154,7 @@ class SchemaController extends BaseController {
          array_push($statusSums, $sum);
       }
    }
-   
+
 // Show view SchemaEdit for updating the member's attendance status
    public function showViewEdit(Schedule $schedule) {
 
@@ -448,12 +448,12 @@ class SchemaController extends BaseController {
       //foreach ($userIds as $userId) {
       foreach ($memberSchedules as $memberSchedule) {
          $userId = $memberSchedule->user_id;
-         $user= User::find($memberSchedule->user_id);
+         $user = User::find($memberSchedule->user_id);
          $adminHtmlElementName = 'admin_' . $userId;  //name of html element
 //         dd(print_r($data, true));
          if ($request->has($adminHtmlElementName)) {
             $memberSchedule->admin = 1;
-         } else if (! $user->isScheduleOwner($scheduleId)) {
+         } else if (!$user->isScheduleOwner($scheduleId)) {
             $memberSchedule->admin = 0;
          }
 
@@ -474,8 +474,6 @@ class SchemaController extends BaseController {
          }
       }
       return back()->with('success', __('The update succeeded'));
-
-      
    }
 
    private function checkNameInSchema($memberSchedules, $request) {
@@ -514,8 +512,6 @@ class SchemaController extends BaseController {
       $memberSchedule->delete();
    }
 
-   
- 
 ////////////////////////////////////////////////////////////// 
 // Show the Register New User Form
    public function showRegisterUser($scheduleId) {
@@ -562,7 +558,7 @@ class SchemaController extends BaseController {
       }
       DB::commit();
 
-      return back()->with('success', __('Schedule :name has been registered!', ['name' => $data['schedule_name']]));
+      return back()->with('success', __('Schedule :name has been registered', ['name' => $data['schedule_name']]));
    }
 
    public function showAddRemoveDates($scheduleId, $showHistory = 0) {
@@ -580,16 +576,16 @@ class SchemaController extends BaseController {
          $weekDayName = $nextScheduleDate->locale($currentLocale)->dayName;
          $today = Carbon::now()->toDateString();
          $numberOfFutureScheduleDates = ScheduleDate::where('schedule_id', $schedule->id)
-                 ->where('schedule_date', '>=', $today)
-                 ->get()->count();
+                         ->where('schedule_date', '>=', $today)
+                         ->get()->count();
 
          if ($showHistory == 0) {
             $scheduleDates = ScheduleDate::where('schedule_id', $schedule->id)
-                 ->where('schedule_date', '>=', $today)
-                 ->get();
+                    ->where('schedule_date', '>=', $today)
+                    ->get();
          } else {
             $scheduleDates = ScheduleDate::where('schedule_id', $schedule->id)
-                 ->get();
+                    ->get();
          }
 
          return view('schedule.admin.addRemoveDates', [
@@ -601,7 +597,7 @@ class SchemaController extends BaseController {
              'danceTime' => substr($danceTime, 0, 5),
              'nextDate' => $nextScheduleDate->toDateString(),
              'minDate' => $minScheduleDate->toDateString(),
-             'maxDate' => $this->getMaxScheduleDate( $numberOfFutureScheduleDates)->toDateString(),
+             'maxDate' => $this->getMaxScheduleDate($numberOfFutureScheduleDates)->toDateString(),
              'noMoreDates' => $numberOfFutureScheduleDates >= config('app.maxNumberOfFutureDates'),
              'names' => $this->names(),
              'showHistory' => $showHistory,
@@ -630,12 +626,13 @@ class SchemaController extends BaseController {
          $minScheduleDate = $now;
       } else {
          $minScheduleDate = Carbon::createFromFormat('Y-m-d', $lastScheduleDate->schedule_date)->addDays(1);
-          if ($now->greaterThan($minScheduleDate)) {
-             $minScheduleDate= $now;
-          }
+         if ($now->greaterThan($minScheduleDate)) {
+            $minScheduleDate = $now;
+         }
       }
       return $minScheduleDate;
    }
+
    /**
     * Return the maximum allowed schedule date for a schedule.
     * It is one year from now, unless the maximum number of dates is too large
@@ -644,9 +641,9 @@ class SchemaController extends BaseController {
     */
    private function getMaxScheduleDate($numberOfFutureScheduleDates) {
       if ($numberOfFutureScheduleDates >= config('app.maxNumberOfFutureDates')) {
-         $maxScheduleDate= Carbon::now()->subDay();
+         $maxScheduleDate = Carbon::now()->subDay();
       } else {
-         $maxScheduleDate=Carbon::now()->addYear();
+         $maxScheduleDate = Carbon::now()->addYear();
       }
       return $maxScheduleDate;
    }
@@ -722,7 +719,6 @@ class SchemaController extends BaseController {
       ]);
    }
 
-
    public function showMySchedules() {
       $user = Auth::user();
       $isAdmin = 0;
@@ -786,7 +782,7 @@ class SchemaController extends BaseController {
 // Show view AdminComments
    public function showViewAdminComments($scheduleId) {
       $user = Auth::user();
-      if ($user->isScheduleOwner($scheduleId) || $user->hasLimitedAuthority($scheduleId)) {
+      if ($user->isScheduleOwner($scheduleId) || $user->hasLimitedAuthority($scheduleId) || $user->isRoot()) {
          $mytime = Carbon::now();
          $today = $mytime->toDateString();
          $schedule = Schedule::find($scheduleId);
@@ -806,9 +802,10 @@ class SchemaController extends BaseController {
          return Redirect::back();
       }
    }
+
 // Update comemnts for one or more dates
    public function updateComments(Request $request) {
-      
+
       $data = request()->all();
       $scheduleId = 0;
       foreach ($data as $key => $value) {
@@ -827,11 +824,14 @@ class SchemaController extends BaseController {
       return back()->with('success', __('The update succeeded'));
    }
 
-   
-
-
    public function welcome() {
-      $vMemberSchedules = V_MemberSchedule::where('user_id', Auth::user()->id)->get();
+      $user = Auth::user();
+      
+      if ($user->isRoot()) {
+         $vMemberSchedules = V_MemberSchedule::all()->unique('schedule_id');
+      } else {
+         $vMemberSchedules = V_MemberSchedule::where('user_id', Auth::user()->id)->get();
+      }
       $count = $vMemberSchedules->count();
 
       return view('schedule.welcome', [

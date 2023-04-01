@@ -63,10 +63,15 @@ class User extends Authenticatable implements MustVerifyEmailContract, CanResetP
       //dd('hasVerifiedEmail');
       return !is_null($this->email_verified_at);
    }
-    public function mySchedules()     {
-        $memberSchedules = MemberSchedule::where('user_id', $this->id)->get();
-        return $memberSchedules;
-    }
+
+   public function mySchedules() {
+      if ($this->isRoot()) {
+         $memberSchedules = MemberSchedule::all()->unique('schedule_id');
+      } else {
+         $memberSchedules = MemberSchedule::where('user_id', $this->id)->get();
+      }
+      return $memberSchedules;
+   }
 
    public function isScheduleAdministrator() {
       return ($this->authority >= 1);
