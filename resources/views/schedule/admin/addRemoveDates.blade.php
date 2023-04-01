@@ -9,7 +9,7 @@
  <div class="container">
 
      <br>
-      <form action="{{ route('schedule.addDates')}}" method="POST">
+      <form action="{{ route('schedule.addDates',['scheduleId' => $schedule->id])}}" method="POST">
           {{ csrf_field() }}
           <input type="hidden" name="scheduleId" value="{{$schedule->id}}">
           <fieldset>
@@ -40,23 +40,20 @@
 
       </form>
      <br>
-     @if ($isScheduleOwner || $isRoot)
+    
      <form action="{{ route('schedule.removeDates')}}" id="removeForm" method="POST">
           {{ csrf_field() }}
           <input type="hidden" name="scheduleId" value="{{$schedule->id}}">
           <fieldset>
             <legend>{{__('Select dates to be deleted')}}</legend>
-         @if ($showHistory==0) 
-         <input type="checkbox" id="show_history" name="show_history" > <label for="show_history">{{__('Show historical dates')}}</label>
-         @else
-         <input type="checkbox" id="show_history" name="show_history" checked> <label for="show_history">{{__('Show historical dates')}}</label>
-         @endif
 
             <table class="table table-bordered table-sm table-sd-schema" >
                <thead>
                   <th class="text-nowrap text-center" style="width:25%;">{{__('Date')}}</th>
                   <th class="text-nowrap text-center">{{__('Comment')}}</th>
+                  @if ($isScheduleOwner || $isRoot)
                   <th class="text-nowrap text-center" style="padding:2px 5px 2px 5px;width:25%;">{{__('Delete')}}</th>
+                  @endif
                </thead>
                <tbody>
          @foreach ($scheduleDates as $scheduleDate)
@@ -68,35 +65,31 @@
                      <td class="text-nowrap" style="padding:1px 7px;" >
                          {{$scheduleDate->comment}}
                      </td>
+                     @if ($isScheduleOwner || $isRoot)
                      <td style="text-align:center"><input type="checkbox"  class="inp" onclick="hideOrShowRemoveButton()" name="{{$deleteName}}"> {{__('Delete')}}</td>
+                     @endif
                   </tr>
          @endforeach
                </tbody>
             </table>
             <br>
-            
+             @if ($isScheduleOwner || $isRoot)
             <x-submit-button submitText="{{ __('Remove date(s)')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}"
                              my-id="removeButton" onclick-function="return checkDeletes()" />
+             @endif
          </fieldset>
-      @endif
+     
      </form>
  </div>
 @section('scripts')
 <script>
  
 window.onload = function() {
-  checkWeekday();
-  hideOrShowRemoveButton();
+   checkWeekday();
+    // hideOrShowRemoveButton();
 };
-const historyCheckbox = document.getElementById('show_history')
 
-historyCheckbox.addEventListener('change', (event) => {
-  if (event.currentTarget.checked) {
-      location.href = "{{route('schedule.showAddRemoveDates',['scheduleId' => $schedule->id, 'showHistory' => 1])}}";
-  } else {
-      location.href = "{{route('schedule.showAddRemoveDates',['scheduleId' => $schedule->id, 'showHistory' => 0])}}";
-  }
-})
+
 
 function checkWeekday() {
    let element = document.getElementById("weekdays");

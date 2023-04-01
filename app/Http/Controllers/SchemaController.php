@@ -211,6 +211,55 @@ class SchemaController extends BaseController {
    }
 
 ////////////////////////////////////////////////////////////// Date handling
+   
+   public function showAddRemoveDates($scheduleId) {
+      $user = Auth::user();
+      if ($user->isScheduleOwner($scheduleId) || $user->hasLimitedAuthority($scheduleId) || $user->isRoot()) {
+
+         $schedule = Schedule::find($scheduleId);
+
+         $danceDay = $schedule->default_weekday;
+         $danceTime = $schedule->default_start_time;
+
+         $minScheduleDate = $this->getMinScheduleDate($schedule);
+         $nextScheduleDate = $this->getNextScheduleDate($schedule);
+         $currentLocale = LaravelLocalization::getCurrentLocale();
+         $weekDayName = $nextScheduleDate->locale($currentLocale)->dayName;
+         $today = Carbon::now()->toDateString();
+         $numberOfFutureScheduleDates = ScheduleDate::where('schedule_id', $schedule->id)
+                         ->where('schedule_date', '>=', $today)
+                         ->get()->count();
+
+//         if ($showHistory == 0) {
+            $scheduleDates = ScheduleDate::where('schedule_id', $schedule->id)
+                    ->where('schedule_date', '>=', $today)
+                    ->get();
+//         } else {
+//            $scheduleDates = ScheduleDate::where('schedule_id', $schedule->id)
+//                    ->get();
+//         }
+
+         return view('schedule.admin.addRemoveDates', [
+             'schedule' => $schedule,
+             'scheduleDates' => $scheduleDates,
+             'currentUser' => $user,
+             'weekdays' => $weekDayName,
+             'weekDaysNumber' => $danceDay,
+             'danceTime' => substr($danceTime, 0, 5),
+             'nextDate' => $nextScheduleDate->toDateString(),
+             'minDate' => $minScheduleDate->toDateString(),
+             'maxDate' => $this->getMaxScheduleDate($numberOfFutureScheduleDates)->toDateString(),
+             'noMoreDates' => $numberOfFutureScheduleDates >= config('app.maxNumberOfFutureDates'),
+             'names' => $this->names(),
+             'isRoot' => $user->isRoot(),
+             'isScheduleAdmin' => $user->hasLimitedAuthority($schedule->id) || $user->isScheduleOwner($schedule->id) || $user->isRoot(),
+             'isScheduleOwner' => $user->isScheduleOwner($schedule->id)
+         ]);
+      } else {
+         return Redirect::back();
+      }
+   }
+
 // Add dates to a schedule 
 // Returns to Add/Remove dates menu
    public function addDates(Request $request) {
@@ -263,6 +312,94 @@ class SchemaController extends BaseController {
       }
 //      $schedule = Schedule::find($scheduleId);
       return redirect(route('schedule.showAddRemoveDates', ['scheduleId' => $scheduleId]));
+   }
+
+   /**
+    * Return the last schedule date for a schedule, plus one day.
+    * If no date exist, or the last schedule date is in the past, return today's date
+    * @param Schedule      $schedule
+    * @return Carbon date 
+    */
+   private function getMinScheduleDate($schedule) {
+      $now = Carbon::now();
+      $lastScheduleDate = ScheduleDate::where('schedule_id', $schedule->id)
+              ->orderByDesc('schedule_date')
+              ->first();
+
+      if (is_null($lastScheduleDate)) {
+         $minScheduleDate = $now;
+      } else {
+         $minScheduleDate = Carbon::createFromFormat('Y-m-d', $lastScheduleDate->schedule_date)->addDays(1);
+         if ($now->greaterThan($minScheduleDate)) {
+            $minScheduleDate = $now;
+         }
+      }
+      return $minScheduleDate;
+   }
+
+   /**
+    * Return the maximum allowed schedule date for a schedule.
+    * It is one year from now, unless the maximum number of dates is too large
+    * @param  int    $numberOfFutureScheduleDates
+    * @return Carbon date 
+    */
+   private function getMaxScheduleDate($numberOfFutureScheduleDates) {
+      if ($numberOfFutureScheduleDates >= config('app.maxNumberOfFutureDates')) {
+         $maxScheduleDate = Carbon::now()->subDay();
+      } else {
+         $maxScheduleDate = Carbon::now()->addYear();
+      }
+      return $maxScheduleDate;
+   }
+
+   /**
+    * Return a suggestion for the next schedule date for a schedule, .
+    * If no date exist, or if the last existing schedule date is too far in the past,
+    * return nearest coming default weekday
+    * @param Schedule      $schedule
+    * @return Carbon date 
+    */
+   private function getNextScheduleDate($schedule) {
+      $now = Carbon::now();
+      $lastScheduleDate = ScheduleDate::where('schedule_id', $schedule->id)
+              ->orderByDesc('schedule_date')
+              ->first();
+
+      if (is_null($lastScheduleDate)) {
+         $nextScheduleDate = $this->getNearestDefaultWeekday($schedule, $now);
+      } else {
+         $carbonLastScheduleDate = Carbon::createFromFormat('Y-m-d', $lastScheduleDate->schedule_date);
+         // Normally $nextScheduleDate is seven days after $lastScheduleDate
+         // But if $lastScheduleDate is not on a standard weekday, add a number less than seven
+         $dow = $carbonLastScheduleDate->dayOfWeekIso;
+         $delta = $schedule->default_weekday - $dow;
+         if ($delta <= 0) {
+            $delta += 7;
+         }
+         $nextScheduleDate = Carbon::createFromFormat('Y-m-d', $lastScheduleDate->schedule_date)->addDays($delta);
+         //$nextScheduleDate must be today or a day in the future
+         if ($now->greaterThan($nextScheduleDate)) {
+            $nextScheduleDate = $this->getNearestDefaultWeekday($schedule, $now);
+         }
+      }
+
+      return $nextScheduleDate;
+   }
+
+   /**
+    * Return the date for the nearest coming default weekday
+    * @param Schedule      $schedule
+    * @param Carbon date   $now
+    * @return Carbon date
+    */
+   private function getNearestDefaultWeekday($schedule, $now) {
+      $dow = $now->dayOfWeekIso;
+      $delta = $schedule->default_weekday - $dow;
+
+      if ($delta < 0) {
+         $delta += 7;
+      }
+      return $now->addDays($delta);
    }
 
 // Private function called from addDates
@@ -561,143 +698,8 @@ class SchemaController extends BaseController {
       return back()->with('success', __('Schedule :name has been registered', ['name' => $data['schedule_name']]));
    }
 
-   public function showAddRemoveDates($scheduleId, $showHistory = 0) {
-      $user = Auth::user();
-      if ($user->isScheduleOwner($scheduleId) || $user->isRoot()) {
 
-         $schedule = Schedule::find($scheduleId);
-
-         $danceDay = $schedule->default_weekday;
-         $danceTime = $schedule->default_start_time;
-
-         $minScheduleDate = $this->getMinScheduleDate($schedule);
-         $nextScheduleDate = $this->getNextScheduleDate($schedule);
-         $currentLocale = LaravelLocalization::getCurrentLocale();
-         $weekDayName = $nextScheduleDate->locale($currentLocale)->dayName;
-         $today = Carbon::now()->toDateString();
-         $numberOfFutureScheduleDates = ScheduleDate::where('schedule_id', $schedule->id)
-                         ->where('schedule_date', '>=', $today)
-                         ->get()->count();
-
-         if ($showHistory == 0) {
-            $scheduleDates = ScheduleDate::where('schedule_id', $schedule->id)
-                    ->where('schedule_date', '>=', $today)
-                    ->get();
-         } else {
-            $scheduleDates = ScheduleDate::where('schedule_id', $schedule->id)
-                    ->get();
-         }
-
-         return view('schedule.admin.addRemoveDates', [
-             'schedule' => $schedule,
-             'scheduleDates' => $scheduleDates,
-             'currentUser' => $user,
-             'weekdays' => $weekDayName,
-             'weekDaysNumber' => $danceDay,
-             'danceTime' => substr($danceTime, 0, 5),
-             'nextDate' => $nextScheduleDate->toDateString(),
-             'minDate' => $minScheduleDate->toDateString(),
-             'maxDate' => $this->getMaxScheduleDate($numberOfFutureScheduleDates)->toDateString(),
-             'noMoreDates' => $numberOfFutureScheduleDates >= config('app.maxNumberOfFutureDates'),
-             'names' => $this->names(),
-             'showHistory' => $showHistory,
-             'isRoot' => $user->isRoot(),
-             'isScheduleAdmin' => $user->hasLimitedAuthority($schedule->id) || $user->isScheduleOwner($schedule->id) || $user->isRoot(),
-             'isScheduleOwner' => $user->isScheduleOwner($schedule->id)
-         ]);
-      } else {
-         return Redirect::back();
-      }
-   }
-
-   /**
-    * Return the last schedule date for a schedule, plus one day.
-    * If no date exist, or the last schedule date is in the past, return today's date
-    * @param Schedule      $schedule
-    * @return Carbon date 
-    */
-   private function getMinScheduleDate($schedule) {
-      $now = Carbon::now();
-      $lastScheduleDate = ScheduleDate::where('schedule_id', $schedule->id)
-              ->orderByDesc('schedule_date')
-              ->first();
-
-      if (is_null($lastScheduleDate)) {
-         $minScheduleDate = $now;
-      } else {
-         $minScheduleDate = Carbon::createFromFormat('Y-m-d', $lastScheduleDate->schedule_date)->addDays(1);
-         if ($now->greaterThan($minScheduleDate)) {
-            $minScheduleDate = $now;
-         }
-      }
-      return $minScheduleDate;
-   }
-
-   /**
-    * Return the maximum allowed schedule date for a schedule.
-    * It is one year from now, unless the maximum number of dates is too large
-    * @param  int    $numberOfFutureScheduleDates
-    * @return Carbon date 
-    */
-   private function getMaxScheduleDate($numberOfFutureScheduleDates) {
-      if ($numberOfFutureScheduleDates >= config('app.maxNumberOfFutureDates')) {
-         $maxScheduleDate = Carbon::now()->subDay();
-      } else {
-         $maxScheduleDate = Carbon::now()->addYear();
-      }
-      return $maxScheduleDate;
-   }
-
-   /**
-    * Return a suggestion for the next schedule date for a schedule, .
-    * If no date exist, or if the last existing schedule date is too far in the past,
-    * return nearest coming default weekday
-    * @param Schedule      $schedule
-    * @return Carbon date 
-    */
-   private function getNextScheduleDate($schedule) {
-      $now = Carbon::now();
-      $lastScheduleDate = ScheduleDate::where('schedule_id', $schedule->id)
-              ->orderByDesc('schedule_date')
-              ->first();
-
-      if (is_null($lastScheduleDate)) {
-         $nextScheduleDate = $this->getNearestDefaultWeekday($schedule, $now);
-      } else {
-         $carbonLastScheduleDate = Carbon::createFromFormat('Y-m-d', $lastScheduleDate->schedule_date);
-         // Normally $nextScheduleDate is seven days after $lastScheduleDate
-         // But if $lastScheduleDate is not on a standard weekday, add a number less than seven
-         $dow = $carbonLastScheduleDate->dayOfWeekIso;
-         $delta = $schedule->default_weekday - $dow;
-         if ($delta <= 0) {
-            $delta += 7;
-         }
-         $nextScheduleDate = Carbon::createFromFormat('Y-m-d', $lastScheduleDate->schedule_date)->addDays($delta);
-         //$nextScheduleDate must be today or a day in the future
-         if ($now->greaterThan($nextScheduleDate)) {
-            $nextScheduleDate = $this->getNearestDefaultWeekday($schedule, $now);
-         }
-      }
-
-      return $nextScheduleDate;
-   }
-
-   /**
-    * Return the date for the nearest coming default weekday
-    * @param Schedule      $schedule
-    * @param Carbon date   $now
-    * @return Carbon date
-    */
-   private function getNearestDefaultWeekday($schedule, $now) {
-      $dow = $now->dayOfWeekIso;
-      $delta = $schedule->default_weekday - $dow;
-
-      if ($delta < 0) {
-         $delta += 7;
-      }
-      return $now->addDays($delta);
-   }
-
+/////////////////////////////////////////////////////////////////////////////
    public function ShowViewAdminRegisterMember($scheduleId, $status = []) {
       $schedule = Schedule::find($scheduleId);
       if (is_null($schedule)) {

@@ -140,7 +140,7 @@ Route::group(// Comment out this when running tests
                        // Show add/remove dates view
                        Route::name('showAddRemoveDates')->get('/admin/AddRemoveDates/{scheduleId}/{showHistory?}', 'showAddRemoveDates');
                        // Add dates
-                       Route::name('addDates')->post('/admin/addDates', 'addDates');
+                       Route::name('addDates')->post('/admin/addDates/{scheduleId}', 'addDates');
                        // Remove dates
                        Route::name('removeDates')->post('/admin/removeDates', 'removeDates');
                     });
