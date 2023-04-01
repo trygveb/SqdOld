@@ -18,28 +18,24 @@ class EnsureUserIsScheduleAdmin {
     */
    public function handle(Request $request, Closure $next) {
       if (Auth::check()) {
-         $user = $request->user();
+         $user = Auth::user();
+
          if ($user->isScheduleAdministrator() || $user->isRoot()) {
-            return $next($request);  
+            return $next($request);
          }
          $adminForSchedule = 0;
          $url = url()->full();
          if (str_contains($url, '/admin/')) {
-//            dd($url);
             $atoms = explode('/', $url);
             $scheduleId = $atoms[count($atoms) - 1];
+            //dd('0');
             if (!is_numeric($scheduleId)) {
-               $scheduleId= $data["scheduleId"] ?? null; 
                if (is_null($scheduleId)) {
-                return redirect()->back();
+                  return redirect()->back();
                }
-               $scheduleId = $data["scheduleId"];               
             }
-            $adminForSchedule= Utility::getAdminForSchedule($scheduleId);
-               // $adminForSchedule = V_MemberSchedule::where('schedule_id', $scheduleId)
-               //      ->where('user_id', Auth::user()->id)
-               //      ->pluck('admin')
-               //      ->first();
+
+            $adminForSchedule = Utility::getAdminForSchedule($scheduleId);
          }
          if ($adminForSchedule > 0) {
             return $next($request);  // User has "schema" privileges 
@@ -47,7 +43,6 @@ class EnsureUserIsScheduleAdmin {
       }
       // No authority, just go back with no message
       return redirect()->back();
-
    }
 
 }

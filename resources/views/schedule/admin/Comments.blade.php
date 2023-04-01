@@ -15,9 +15,16 @@
     }
 @endphp
   <div class="container">
+ @if ($message = Session::get('success'))
+   <div class="alert alert-success alert-block">
+      <button type="button" class="close" data-dismiss="alert">×</button>	
+        <strong>{{ $message }}</strong>
+   </div>
+@endif
+      
       <div class="table-responsive" style="overflow-x:auto; overflow-y:hidden;">
 
-        <form id="myForm" action="{{ route('schedule.updateComments')}}" method="POST">
+        <form id="myForm" action="{{ route('schedule.updateComments',['scheduleId' => $schedule->id])}}" method="POST">
           {{ csrf_field() }}
           <input type="hidden" name="scheduleId" value="{{$schedule->id}}">
           <fieldset>

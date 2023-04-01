@@ -136,7 +136,7 @@ Route::group(// Comment out this when running tests
                        Route::name('showRegisterUser')->get('/admin/showRegisterUser/{scheduleId}', 'showRegisterUser');
 
                        // Update comments
-                       Route::name('updateComments')->post('/admin/updateComments', 'updateComments');
+                       Route::name('updateComments')->post('/admin/updateComments/{scheduleId}', 'updateComments');
                        // Show add/remove dates view
                        Route::name('showAddRemoveDates')->get('/admin/AddRemoveDates/{scheduleId}/{showHistory?}', 'showAddRemoveDates');
                        // Add dates

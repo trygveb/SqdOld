@@ -30,11 +30,11 @@
 @endif
 
  <div class="container" style="max-width:800px;">
-     @if ($message = Session::get('success'))
-<div class="alert alert-success alert-block">
-	<button type="button" class="close" data-dismiss="alert">×</button>	
+ @if ($message = Session::get('success'))
+   <div class="alert alert-success alert-block">
+      <button type="button" class="close" data-dismiss="alert">×</button>	
         <strong>{{ $message }}</strong>
-</div>
+   </div>
 @endif
 
    <h1>{{__('Manage members for schedule')}}  <a href="{{route('schedule.index', ['scheduleId' => $schedule->id])}}">{{$schedule->name}}</a></h1>
