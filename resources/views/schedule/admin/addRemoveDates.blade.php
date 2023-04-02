@@ -1,8 +1,7 @@
 @extends('schedule.layout')
 @section('menu1')
 @if ($isScheduleAdmin)
-<x-schedule-admin-menu schedule-id="{{$schedule->id}}"  user-id="{{$currentUser->id}}"/>
-@endif
+<x-schedule-admin-menu schedule-id="{{$schedule->id}}"  manageMembers="{{$manageMembers}}"/>@endif
 @endsection
 @section('content')
 <h1>{{__('Add/Remove dates for schedule')}} <a href="{{route('schedule.index', ['scheduleId' => $schedule->id])}}">{{$schedule->name}}</a></h1>

@@ -8,18 +8,16 @@ use Illuminate\View\Component;
 class scheduleAdminMenu extends Component
 {
       public $scheduleId;
-      public $userId;
-      public $user;
+      public $manageMembers;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($scheduleId, $userId)
+    public function __construct($scheduleId, $manageMembers)
     {
         $this->scheduleId= $scheduleId;
-        $this->$userId= $userId;
-        $this->user= User::find($userId);
+        $this->manageMembers= $manageMembers;
     }
 
     /**

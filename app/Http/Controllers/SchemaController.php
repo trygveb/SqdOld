@@ -97,6 +97,7 @@ class SchemaController extends BaseController {
           'names' => $this->names(),
           'showHistory' => $showHistory,
           'editAllowed' => $editAllowed,
+          'manageMembers' => ($user->isScheduleOwner($scheduleId) || $user->isRoot()),
           'scheduleAdmin' => ($user->isScheduleOwner($schedule->id) || $user->hasLimitedAuthority($schedule->id) || $user->isRoot())
       ]);
    }
@@ -252,7 +253,8 @@ class SchemaController extends BaseController {
              'noMoreDates' => $numberOfFutureScheduleDates >= config('app.maxNumberOfFutureDates'),
              'names' => $this->names(),
              'isRoot' => $user->isRoot(),
-             'isScheduleAdmin' => $user->hasLimitedAuthority($schedule->id) || $user->isScheduleOwner($schedule->id) || $user->isRoot(),
+             'manageMembers' => ($user->isScheduleOwner($scheduleId) || $user->isRoot()),
+             'isScheduleAdmin' => $user->hasLimitedAuthority($schedule->id) || $user->isScheduleOwner($scheduleId) || $user->isRoot(),
              'isScheduleOwner' => $user->isScheduleOwner($schedule->id)
          ]);
       } else {
@@ -468,6 +470,7 @@ class SchemaController extends BaseController {
              'status' => $status,
              'names' => $this->names(),
              'isRoot' => $currentUser->isRoot(),
+             'manageMembers' => ($currentUser->isScheduleOwner($schedule->id) || $currentUser->isRoot()),
              'isScheduleAdmin' => $currentUser->hasLimitedAuthority($schedule->id) || $currentUser->isScheduleOwner($schedule->id) || $currentUser->isRoot(),
              'isScheduleOwner' => $currentUser->isScheduleOwner($schedule->id)
          ]);
@@ -524,12 +527,13 @@ class SchemaController extends BaseController {
          }
          $sortedNonMembers = $nonMembers->sortBy('user_name');
          $sortedNonMembers->values()->all();
-         return view('schedule..admin.notConnectedMembers', [
+         return view('schedule.admin.notConnectedMembers', [
              'schedule' => $schedule,
              'nonMembers' => $sortedNonMembers,
              'members' => $members,
              'currentUser' => Auth::user(),
              'names' => $this->names(),
+             'manageMembers' => ($currentUser->isScheduleOwner($schedule->id) || $currentUser->isRoot()),
              'admin' => Utility::getAdminForSchedule($scheduleId),
              'status' => $status
          ]);
@@ -702,14 +706,15 @@ class SchemaController extends BaseController {
 /////////////////////////////////////////////////////////////////////////////
    public function ShowViewAdminRegisterMember($scheduleId, $status = []) {
       $schedule = Schedule::find($scheduleId);
+      $user=Auth::user();
       if (is_null($schedule)) {
          dd("ShowNotViewMembers " . $scheduleId);
       }
       $admin = V_MemberSchedule::where('schedule_id', $scheduleId)
-              ->where('user_id', Auth::user()->id)
+              ->where('user_id', $user->id)
               ->pluck('admin')
               ->first();
-      if ($admin === 0 && Auth::user()->isRoot() == 0) {
+      if ($admin === 0 && $user->isRoot() == 0) {
          return view('errors.403')->with('names', $this->names());
       }
       return view('schedule.admin.registerMember', [
@@ -717,6 +722,7 @@ class SchemaController extends BaseController {
           'currentUser' => Auth::user(),
           'names' => $this->names(),
           'admin' => Utility::getAdminForSchedule($scheduleId),
+          'manageMembers' => ($user->isScheduleOwner($scheduleId) || $user->isRoot()),
           'status' => $status
       ]);
    }
@@ -797,6 +803,7 @@ class SchemaController extends BaseController {
              'scheduleDates' => $scheduleDates,
              'names' => $this->names(),
              'isRoot' => $user->isRoot(),
+             'manageMembers' => ($user->isScheduleOwner($schedule->id) || $user->isRoot()),
              'isScheduleAdmin' => $user->hasLimitedAuthority($schedule->id) || $user->isScheduleOwner($schedule->id) || $user->isRoot(),
              'isScheduleOwner' => $user->isScheduleOwner($schedule->id)
          ]);
