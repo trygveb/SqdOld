@@ -143,6 +143,7 @@ return [
     'cookieLifetime' => env('COOKIE_LIFETIME', 183),  // Lifetime for cookie for cookie consent
     'maxNumberOfFutureDates' => env('MAX_NUMBER_OF_FUTURE_DATES', 50),
     'topDomain' =>env('TOP_DOMAIN'),
+    'showNewrelease' => env('SHOW_NEW_RELEASE', false),
 
     /*
     |--------------------------------------------------------------------------

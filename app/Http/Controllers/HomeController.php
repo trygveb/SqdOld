@@ -33,8 +33,6 @@ class HomeController extends BaseController {
     * @return view
     */
    public function home() {
-//      $fullUrl = request()->fullUrl();
-     // dd($fullUrl); //"http://schema.dev.sqd.se/sv
       if ($this->names()['application']==='SdSchema') {
          return $this->schemaHome();
       } elseif ($this->names()['application']==='SdCalls') {
@@ -76,15 +74,14 @@ class HomeController extends BaseController {
             //dd('schemaGuest, verified');
             $vMemberSchedules = V_MemberSchedule::where('user_id', Auth::user()->id)->get();
             $count = $vMemberSchedules->count();
-            if ($count == 1) {
-               $url= sprintf('%s/schedule/show/%d', $urlRoot,$vMemberSchedules[0]->schedule_id);
+            if (config('app.showNewrelease') || $count > 1) {
+               $url= sprintf('%s/welcome', $urlRoot);
                return redirect($url);
             } else {
-               $url= sprintf('%s/welcome', $urlRoot);
+               $url= sprintf('%s/schedule/show/%d', $urlRoot,$vMemberSchedules[0]->schedule_id);
                return redirect($url);
             }
          } else {
-//               dd('email Not Verified');
             return view('auth.verify-email-notice')
                ->with('emailVerified','NO')
                ->with('names', $this->names());

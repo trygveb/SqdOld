@@ -12,11 +12,12 @@
           {{ csrf_field() }}
           <input type="hidden" name="scheduleId" value="{{$schedule->id}}">
           <fieldset>
+      @if ($maxNumberOfFutureDates > 0)
             <legend>{{__('Enter dates to be added')}}</legend>
-      {{__('Standard weekday is')}} {{$weekdays}}{{__('s')}} kl. {{$danceTime}}
-      <br><br>
+         {{__('Standard weekday is')}} {{$weekdays}}{{__('s')}} kl. {{$danceTime}}
+         <br><br>
          <div class="table-responsive" style="overflow-x:auto; overflow-y:hidden;">
-             {{__('Add')}} <input type="number" id="quantity" name="quantity" min="1" max="15" size="4" value="1"> 
+             {{__('Add')}} <input type="number" id="quantity" name="quantity" min="1" max="{{$maxNumberOfFutureDates}}" size="4" value="1"> 
             <select id="weekdays" disabled style="background-color:#dddddd;">
               <option value="0">{{__('Sundays')}}</option>
               <option value="1">{{__('Mondays')}}</option>
@@ -28,13 +29,15 @@
             </select>
               {{__('from')}} 
              <input type="date" id="startDate" name="startDate", oninput="dateIsChanged()" min="{{$minDate}}" max="{{$maxDate}}" value="{{$nextDate}}">
+
         </div>
           <br>
-          @if ($noMoreDates)
+      @endif
+      @if ($maxNumberOfFutureDates < 1)
           {{__('You have reached the maximun number of future dates')}} ({{config('app.maxNumberOfFutureDates')}})
-          @else
+      @else
          <x-submit-button submitText="{{__('Add')}} {{__('date')}}" cancelText="{{ __('Cancel')}}" cancelUrl="{{route('schedule.index', ['scheduleId' => $schedule->id])}}" />
-         @endif
+      @endif
          </fieldset>
 
       </form>

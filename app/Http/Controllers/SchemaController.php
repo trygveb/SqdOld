@@ -103,8 +103,10 @@ class SchemaController extends BaseController {
    }
 
    public function showReleaseNotes_2_2() {
+       $user = Auth::user();
       return view('schedule.releaseNotes_2_2', [
           'names' => $this->names(),
+          'isRoot' => $user->isRoot()
       ]);
    }
 
@@ -231,14 +233,9 @@ class SchemaController extends BaseController {
                          ->where('schedule_date', '>=', $today)
                          ->get()->count();
 
-//         if ($showHistory == 0) {
             $scheduleDates = ScheduleDate::where('schedule_id', $schedule->id)
                     ->where('schedule_date', '>=', $today)
                     ->get();
-//         } else {
-//            $scheduleDates = ScheduleDate::where('schedule_id', $schedule->id)
-//                    ->get();
-//         }
 
          return view('schedule.admin.addRemoveDates', [
              'schedule' => $schedule,
@@ -250,7 +247,7 @@ class SchemaController extends BaseController {
              'nextDate' => $nextScheduleDate->toDateString(),
              'minDate' => $minScheduleDate->toDateString(),
              'maxDate' => $this->getMaxScheduleDate($numberOfFutureScheduleDates)->toDateString(),
-             'noMoreDates' => $numberOfFutureScheduleDates >= config('app.maxNumberOfFutureDates'),
+             'maxNumberOfFutureDates' => config('app.maxNumberOfFutureDates')-$numberOfFutureScheduleDates ,
              'names' => $this->names(),
              'isRoot' => $user->isRoot(),
              'manageMembers' => ($user->isScheduleOwner($scheduleId) || $user->isRoot()),

@@ -28,13 +28,15 @@
              <li>Sidan "Scheman" har bytt namn till "Mina scheman", och har fått lite mer information</li>
          </ul>
    </div>
-     <br>
-     <div style="margin-left:auto;margin-right:auto;  width: 60%;  border: 3px solid #ca7300;  padding: 10px;">
-      <h2>Kommande förbättringar</h2>
-         <ul>
-              <li>Kvittering på lyckad uppdatering på fler formulär</li>
-             <li>Möjlighet för Schemaadministratörer att ändra närvarostatus på alla schemamedlemmar</li>
-         </ul>
-   </div>    
+@if ($isRoot)
+   <br>
+   <div style="margin-left:auto;margin-right:auto;  width: 60%;  border: 3px solid #ca7300;  padding: 10px;">
+   <h2>Kommande förbättringar</h2>
+      <ul>
+           <li>Kvittering på lyckad uppdatering på fler formulär</li>
+          <li>Möjlighet för Schemaadministratörer att ändra närvarostatus på alla schemamedlemmar</li>
+      </ul>
+   </div>
+@endif
 </div>
 @endsection
