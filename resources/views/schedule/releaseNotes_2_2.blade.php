@@ -18,6 +18,7 @@
           <li>På sidan "Mina scheman" kan du nu ändra namn och andra attribut för scheman som du administrerar</li>
           <li>Diverse hjälptexter inlagda</li>
           <li>Kvittering på lyckad uppdatering inlagd på vissa formulär</li>
+          <li>Datum måste läggas till i tidsordning</li>
       </ul>
    </div>
     <br>
@@ -35,6 +36,7 @@
       <ul>
            <li>Kvittering på lyckad uppdatering på fler formulär</li>
           <li>Möjlighet för Schemaadministratörer att ändra närvarostatus på alla schemamedlemmar</li>
+          <li>Hjälptext på Hantera Datum</li>
       </ul>
    </div>
 @endif
