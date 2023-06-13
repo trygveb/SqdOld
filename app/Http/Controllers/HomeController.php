@@ -29,6 +29,15 @@ class HomeController extends BaseController {
    }
 
    /**
+    * Show sdCalls welcome view for authenticated and verified users
+    * @return view
+    */
+   public function showLaravel() {
+      return view('laravel');
+   }
+   
+   
+   /**
     *  For sqd.se, NOT logged in, application not selected
     * @return view
     */

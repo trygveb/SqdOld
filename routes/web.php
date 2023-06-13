@@ -150,6 +150,8 @@ Route::group(// Comment out this when running tests
         });   // Comment out this when running tests
 // Routes not needing localization /////////////////////////////////////////////
 Route::get('/switchLocale', [HomeController::class, 'switchLocale'])->name('switchLocale');
+Route::get('/showLaravel', [HomeController::class, 'showLaravel'])->name('showLaravel');
+
 
 // Routes in dev environment only ///////////////////////////////////////////////
 Route::domain('schema.dev.sqd.se')->group(function () {
